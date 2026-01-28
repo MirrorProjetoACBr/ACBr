@@ -30,12 +30,17 @@
         balToledoBCS21,
         balPrecision,
         balDigitron_UL,
-        balLibratekWT3000IR, 
+        balLibratekWT3000IR,
         balToledoTi420,
-        balWeightechWT27R_ETH, 
-        balCapital, 
-        balMarte, 
-        balLenkeLK2500, 
-        balWeighTRUTest
+        balWeightechWT27R_ETH,
+        balCapital,
+        balMarte,
+        balLenkeLK2500,
+        balWeighTRUTest,
+        balUranoUDC,
+        balSiciliano,
+        balTrentin,
+        balWeightechWT3000IR_ABS,
+        balRamuza
     }
 }
