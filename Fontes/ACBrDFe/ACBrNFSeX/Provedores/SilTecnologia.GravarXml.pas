@@ -63,7 +63,7 @@ type
 
   TNFSeW_SilTecnologiaAPIPropria = class(TNFSeW_PadraoNacional)
   protected
-
+    procedure Configuracao; override;
   public
     function GerarXml: Boolean; override;
   end;
@@ -98,6 +98,12 @@ begin
 end;
 
 { TNFSeW_SilTecnologiaAPIPropria }
+
+procedure TNFSeW_SilTecnologiaAPIPropria.Configuracao;
+begin
+  inherited Configuracao;
+  GerarIBSCBSNFSe := true;
+end;
 
 function TNFSeW_SilTecnologiaAPIPropria.GerarXml: Boolean;
 var
