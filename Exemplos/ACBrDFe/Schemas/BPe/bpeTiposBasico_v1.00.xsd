@@ -806,10 +806,10 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 													</xs:restriction>
 												</xs:simpleType>
 											</xs:element>
-											<xs:element name="vTotDFe" type="TDec_1302" minOccurs="0">
+											<xs:element name="vTotDFe" type="TDec_1302">
 												<xs:annotation>
 													<xs:documentation>Valor total do documento fiscal 
-(vBP - vDesconto + total do IBS + total da CBS) - vINSSRet </xs:documentation>
+vBP+ total do IBS + total da CBS</xs:documentation>
 												</xs:annotation>
 											</xs:element>
 										</xs:sequence>
