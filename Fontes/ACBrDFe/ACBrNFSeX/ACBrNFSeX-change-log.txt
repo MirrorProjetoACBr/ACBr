@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/01/2026
+-- Tinus.Provider --
+[-] ACBR-884 - Ajuste visando sanar AV ao tratar retorno de emissão de nota.
+   Por: Diego Folieni
 -- SpeedGov.GravarXml --
 [*] ACBR-8730 - Ajustes para emissão de NFS-e utilizando o SpeedGov.
    Por: João Antonio
