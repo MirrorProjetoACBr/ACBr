@@ -90,7 +90,7 @@ procedure TNFSeW_SpeedGov.Configuracao;
 begin
   inherited Configuracao;
 
-//  PrefixoPadrao := 'p1';
+  FormatoItemListaServico := filsNaoSeAplica;
 end;
 
 function TNFSeW_SpeedGov.DeveGerarControleIBSCBS: Boolean;
@@ -169,7 +169,7 @@ begin
                                              NFSe.Servico.CodigoMunicipio, ''));
 
   Result.AppendChild(AddNode(tcStr, '#38', 'CTribNac', 6, 6, 1,
-                                            NFSe.Servico.ItemListaServico, ''));
+                                            NFSe.Servico.CodigoServicoNacional, ''));
 
   Result.AppendChild(AddNode(tcStr, '#38', 'TribIssqn', 1, 1, 1,
                    tribISSQNToStr(NFSe.Servico.Valores.tribMun.tribISSQN), ''));
@@ -180,8 +180,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#38', 'OpSimpNac', 1, 1, 1,
                                   OptanteSNToStr(NFSe.OptanteSN), DSC_INDOPSN));
 
-  Result.AppendChild(AddNode(tcStr, '#38', 'RegEspTrib', 1, 1, 1,
-      FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN));
+//  Result.AppendChild(AddNode(tcStr, '#38', 'RegEspTrib', 1, 1, 1,
+//    FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN));
 
   if NFSe.OptanteSN = osnOptanteMEEPP then
     Result.AppendChild(AddNode(tcStr, '#38', 'RegApTribSN', 1, 1, 1,

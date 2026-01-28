@@ -43,6 +43,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+28/01/2026
+-- SpeedGov.GravarXml --
+[*] ACBR-8730 - Ajustes para emissão de NFS-e utilizando o SpeedGov.
+   Por: João Antonio
+
 27/01/2026
 -- PadraoNacional.GravarXml/PadraoNacional.Provider --
 [*] Ajuste visando gerar corretamente o ID da NFS-e
