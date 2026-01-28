@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/01/2026
+-- ACBrMDFeDAMDFeFPDF --
+[-] Correção para não duplicar os títulos do grupo Vale Pedágio quando não houverem informações - https://www.projetoacbr.com.br/forum/topic/89878-acbr-8578-acbrlibmdfeconsolemt-ajustes-na-impress%C3%A3o-do-damdfe/?&_rid=62658#findComment-584357
+   Por: Renato Rubinho
+
 27/01/2026
 -- ACBrMDFeDAMDFeFPDF --
 [-] Correção na impressão da chave da NFe ou CTe
