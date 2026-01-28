@@ -44,6 +44,9 @@ Símbolo : Significado
 
 
 28/01/2026
+-- ISSDigital.Provider --
+[+] Implementado o ConsultarStatusDps o ConsultarDps.
+   Por: Italo Giurizzato Junior
 -- Tinus.Provider --
 [-] ACBR-8846 - Ajuste visando sanar AV ao tratar retorno de emissão de nota.
    Por: Diego Folieni
