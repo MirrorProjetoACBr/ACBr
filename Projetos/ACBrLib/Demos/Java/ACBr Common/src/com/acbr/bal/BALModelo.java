@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -12,8 +12,8 @@ import java.util.Map;
  *
  * @author rften
  */
-public enum  BALModelo {
-    balNenhum(0), 
+public enum BALModelo {
+    balNenhum(0),
     balFilizola(1),
     balToledo(2),
     balToledo2090(3),
@@ -34,33 +34,44 @@ public enum  BALModelo {
     balMicheletti(18),
     balAlfa(19),
     balToledo9091_8530_8540(20),
-    balWeightechWT1000(21), 
+    balWeightechWT1000(21),
     balMarelCG62XL(22),
     balWeightechWT3000_ABS(23),
     balToledo2090N(24),
     balToledoBCS21(25),
     balPrecision(26),
-    balDigitron_UL(27);
-    
-    
+    balDigitron_UL(27),
+    balLibratekWT3000IR(28),
+    balToledoTi420(29),
+    balWeightechWT27R_ETH(30), 
+    balCapital(31), 
+    balMarte(32),
+    balLenkeLK2500(33),
+    balWeighTRUTest(34),
+    balUranoUDC(35),
+    balSiciliano(36),
+    balTrentin(37),
+    balWeightechWT3000IR_ABS(38),
+    balRamuza(39);
+
     private static final Map<Integer, BALModelo> map;
-    private final int enumValue; 
-    
+    private final int enumValue;
+
     static {
         map = new HashMap<>();
         for (BALModelo value : BALModelo.values()) {
             map.put(value.asInt(), value);
         }
     }
-    
+
     public static BALModelo valueOf(int value) {
         return map.get(value);
     }
-    
+
     private BALModelo(int id) {
         this.enumValue = id;
     }
-    
+
     public int asInt() {
         return enumValue;
     }
