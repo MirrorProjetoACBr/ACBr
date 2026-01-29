@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2026
+-- Conam.LerXml --
+[*] ACBr-8775 Ajuste para ler o arquivo INI as seções referente ao IBS/CBS.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXServicos --
 [*] ACBr-8839 A cidade Farroupilha/RS esta usando a API própria do provedor. 
    Por: Desenv. AT Info Sistemas

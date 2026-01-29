@@ -515,6 +515,8 @@ begin
   LerINIIdentificacaoPrestador(AINIRec);
   LerINIListaEmail(AINIRec);
   LerINIValoresTribFederal(AINIRec);
+  // Reforma Tributária
+  LerINIIBSCBS(AINIRec, NFSe.IBSCBS);
 end;
 
 procedure TNFSeR_Conam.LerINIIdentificacaoNFSe(AINIRec: TMemIniFile);
