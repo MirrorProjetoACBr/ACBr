@@ -700,22 +700,16 @@ begin
                          '<xMotivo>' + xMotivo + '</xMotivo>';
 
       teRejeicaoPrestador:
-        xCamposEvento := '<infRej>' +
-                           '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
-                           '<xMotivo>' + xMotivo + '</xMotivo>' +
-                         '</infRej>';
+        xCamposEvento := '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                         '<xMotivo>' + xMotivo + '</xMotivo>';
 
       teRejeicaoTomador:
-        xCamposEvento := '<infRej>' +
-                           '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
-                           '<xMotivo>' + xMotivo + '</xMotivo>' +
-                         '</infRej>';
+        xCamposEvento := '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                         '<xMotivo>' + xMotivo + '</xMotivo>';
 
       teRejeicaoIntermediario:
-        xCamposEvento := '<infRej>' +
-                           '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
-                           '<xMotivo>' + xMotivo + '</xMotivo>' +
-                         '</infRej>';
+        xCamposEvento := '<cMotivo>' + IntToStr(cMotivo) + '</cMotivo>' +
+                         '<xMotivo>' + xMotivo + '</xMotivo>';
     else
       // teConfirmacaoPrestador, teConfirmacaoTomador,
       // ConfirmacaoIntermediario

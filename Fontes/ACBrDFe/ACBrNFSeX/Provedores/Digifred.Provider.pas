@@ -535,8 +535,8 @@ begin
     XmlRps.InfElemento := 'infNFSe';
     XmlRps.DocElemento := 'NFSe';
 
-    EnviarEvento.InfElemento := 'evento ';
-    EnviarEvento.DocElemento := 'evento ';
+    EnviarEvento.InfElemento := 'infEvento';
+    EnviarEvento.DocElemento := 'evento';
   end;
 
   with ConfigAssinar do

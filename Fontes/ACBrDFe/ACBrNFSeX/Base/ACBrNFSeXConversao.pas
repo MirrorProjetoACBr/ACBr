@@ -481,11 +481,11 @@ const
 type
   TtpDedRed = (drAlimentacao, drMateriais, drProducaoExt, drReembolso,
                drRepasseConsorciado, drRepassePlanoSaude, drServicos,
-               drSubEmpreitada, drOutrasDeducoes);
+               drSubEmpreitada, drOutrasDeducoes, drProfissionalParceiro);
 
 const
   TtpDedRedArrayStrings: array[TtpDedRed] of string = ('1', '2', '3', '4',
-    '5', '6', '7', '8', '99');
+    '5', '6', '7', '8', '99', '9');
 
 type
   TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao,
@@ -13403,17 +13403,17 @@ end;
 function tpDedRedToStr(const t: TtpDedRed): string;
 begin
   result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6', '7', '8', '99'],
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '99', '9'],
     [drAlimentacao, drMateriais, drProducaoExt, drReembolso, drRepasseConsorciado,
-     drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes]);
+     drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes, drProfissionalParceiro]);
 end;
 
 function StrTotpDedRed(out ok: Boolean; const s: string): TtpDedRed;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5', '6', '7', '8', '99'],
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '99', '9'],
     [drAlimentacao, drMateriais, drProducaoExt, drReembolso, drRepasseConsorciado,
-     drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes]);
+     drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes, drProfissionalParceiro]);
 end;
 
 function tribISSQNToStr(const t: TtribISSQN): string;
@@ -13630,17 +13630,17 @@ function tpEventoToDesc(const t: TtpEvento): string;
 begin
   result := EnumeradoToStr(t,
                          ['Cancelamento de NFS-e',
-                          'Cancelamento de NFS-e por Substituicao',
-                          'Solicitacao de Analise Fiscal para Cancelamento de NFS-e',
+                          'Cancelamento de NFS-e por Substituição',
+                          'Solicitação de Análise Fiscal para Cancelamento de NFS-e',
                           'Cancelamento de NFS-e Deferido por Análise Fiscal',
                           'Cancelamento de NFS-e Indeferido por Análise Fiscal',
-                          'Confirmação do Prestador',
-                          'Confirmação do Tomador',
-                          'Confirmação do Intermediário',
+                          'Manifestação de NFS-e - Confirmação do Prestador',
+                          'Manifestação de NFS-e - Confirmação do Tomador',
+                          'Manifestação de NFS-e - Confirmação do Intermediário',
                           'Confirmação Tácita',
-                          'Rejeição do Prestador',
-                          'Rejeição do Tomador',
-                          'Rejeição do Intermediário',
+                          'Manifestação de NFS-e - Rejeição do Prestador',
+                          'Manifestação de NFS-e - Rejeição do Tomador',
+                          'Manifestação de NFS-e - Rejeição do Intermediário',
                           'Anulação da Rejeição',
                           'Cancelamento de NFS-e por Ofício',
                           'Bloqueio de NFS-e por Ofício',

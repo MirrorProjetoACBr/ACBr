@@ -1427,6 +1427,9 @@ begin
     NFSe.Servico.Valores.Aliquota := NFSe.infNFSe.valores.Aliquota;
     NFSe.Servico.Valores.ValorIss := NFSe.infNFSe.valores.ValorIss;
   end;
+
+  if NFSe.OutrasInformacoes = '' then
+    NFSe.OutrasInformacoes := ObterConteudo(ANode.Childrens.FindAnyNs('xOutInf'), tcStr);
 end;
 
 procedure TNFSeR_PadraoNacional.LerXMLValorTotalTributos(

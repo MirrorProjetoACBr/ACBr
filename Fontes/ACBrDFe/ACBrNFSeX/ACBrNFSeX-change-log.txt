@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2026
+-- ACBrNFSeXConversao/PadraoNacional.Provider/PadraoNacional.LerXml/Pronim.Provider/Digifred.Provider --
+[*] ACBR-8678 - Ajustes visando compatibilização com os schemas mais recentes disponibilizados.
+    Por: Diego Folieni
 -- Conam.LerXml --
 [*] ACBr-8775 Ajuste para ler o arquivo INI as seções referente ao IBS/CBS.
    Por: Italo Giurizzato Junior
