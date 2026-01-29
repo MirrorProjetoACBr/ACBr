@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2026
+-- Diversos --
+[*] Ajustes na geração e leitura do arquivo INI visando o Padrão Nacional.
+    Por: Italo Giurizzato Junior
 -- Infisc.GravarXml --
 [*] Ajustes na geração do XML - Layout Próprio do provedor.
     Por: Juliomar Marchetti

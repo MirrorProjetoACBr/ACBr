@@ -2116,15 +2116,13 @@ begin
   AINIRec.WriteString(LSecao, 'CNPJCPF', Dest.CNPJCPF);
   AINIRec.WriteString(LSecao, 'NIF', Dest.NIF);
   AINIRec.WriteString(LSecao, 'cNaoNIF', NaoNIFToStr(Dest.cNaoNIF));
-  AINIRec.WriteString(LSecao, 'xNome', Dest.xNome);
+  AINIRec.WriteString(LSecao, 'RazaoSocial', Dest.xNome);
 
+  AINIRec.WriteInteger(LSecao, 'CodigoMunicipio', Dest.ender.endNac.cMun);
   AINIRec.WriteString(LSecao, 'CEP', Dest.ender.endNac.CEP);
-  AINIRec.WriteInteger(LSecao, 'cMun', Dest.ender.endNac.cMun);
-  AINIRec.WriteInteger(LSecao, 'cPais', Dest.ender.endExt.cPais);
-  AINIRec.WriteString(LSecao, 'cEndPost', Dest.ender.endExt.cEndPost);
-  AINIRec.WriteString(LSecao, 'xCidade', Dest.ender.endExt.xCidade);
-  AINIRec.WriteString(LSecao, 'xEstProvReg', Dest.ender.endExt.xEstProvReg);
-
+  AINIRec.WriteInteger(LSecao, 'CodigoPais', Dest.ender.endExt.cPais);
+  AINIRec.WriteString(LSecao, 'xMunicipio', Dest.ender.endExt.xCidade);
+  AINIRec.WriteString(LSecao, 'UF', Dest.ender.UF);
   AINIRec.WriteString(LSecao, 'Logradouro', Dest.ender.xLgr);
   AINIRec.WriteString(LSecao, 'Numero', Dest.ender.nro);
   AINIRec.WriteString(LSecao, 'Complemento', Dest.ender.xCpl);
@@ -2132,6 +2130,14 @@ begin
 
   AINIRec.WriteString(LSecao, 'Telefone', Dest.fone);
   AINIRec.WriteString(LSecao, 'Email', Dest.email);
+
+  // Incluido para atender o provedor SigISSWeb
+  AINIRec.WriteString(LSecao, 'InscricaoMunicipal', Dest.IM);
+  AINIRec.WriteString(LSecao, 'InscricaoMunicipal', Dest.IE);
+  AINIRec.WriteString(LSecao, 'xPais', Dest.xPais);
+
+  // Incluido para atender o provedor Publica
+  AINIRec.WriteString(LSecao, 'TipoServico', Dest.TipoServico);
 end;
 
 procedure TNFSeWClass.GerarINIImovel(AINIRec: TMemIniFile;

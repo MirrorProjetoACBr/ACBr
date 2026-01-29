@@ -540,7 +540,7 @@ begin
   if NFSe.infNFSe.dhProc > 0 then
     ldhProc := DateTimeTodh(NFSe.infNFSe.dhProc) + GetUTC(NFSe.Prestador.Endereco.UF, NFSe.infNFSe.dhProc)
   else
-    ldhProc := DateTimeTodh(NFSe.DataEmissaoRPS) + GetUTC(NFSe.Prestador.Endereco.UF, NFSe.DataEmissaoRPS);
+    ldhProc := DateTimeTodh(NFSe.DataEmissaoRps) + GetUTC(NFSe.Prestador.Endereco.UF, NFSe.DataEmissaoRps);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'dhProc', 25, 25, 1, ldhProc, ''));
 
@@ -577,6 +577,8 @@ begin
 end;
 
 function TNFSeW_PadraoNacional.GerarXMLInfDps: TACBrXmlNode;
+var
+  dhEmissao: TdateTime;
 begin
   Result := CreateElement('infDPS');
 
@@ -586,9 +588,12 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tpAmb', 1, 1, 1,
                                               TipoAmbienteToStr(Ambiente), ''));
 
+  dhEmissao := NFSe.DataEmissaoRps;
+  if dhEmissao = 0 then
+    dhEmissao := NFSe.DataEmissao;
+
   Result.AppendChild(AddNode(tcStr, '#1', 'dhEmi', 25, 25, 1,
-               DateTimeTodh(NFSe.DataEmissao) +
-               GetUTC(NFSe.Prestador.Endereco.UF, NFSe.DataEmissao), DSC_DEMI));
+    DateTimeTodh(dhEmissao) + GetUTC(NFSe.Prestador.Endereco.UF, dhEmissao), DSC_DEMI));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'verAplic', 1, 20, 1,
                                                             NFSe.verAplic, ''));
@@ -1248,7 +1253,24 @@ begin
 
     Result.AppendChild(AddNode(tcStr, '#1', 'xInfComp', 1, 2000, 0,
                                           NFSe.Servico.infoCompl.xInfComp, ''));
+  end;
+end;
 
+function TNFSeW_PadraoNacional.GerarXMLgItemPed: TACBrXMLNode;
+var
+  i: Integer;
+begin
+  Result := nil;
+
+  if NFSe.Servico.infoCompl.gItemPed.Count > 0 then
+  begin
+    Result := CreateElement('gItemPed');
+
+    for i := 0 to NFSe.Servico.infoCompl.gItemPed.Count - 1 do
+    begin
+      Result.AppendChild(AddNode(tcStr, '#1', 'xItemPed', 1, 60, 1,
+                                NFSe.Servico.infoCompl.gItemPed[i].xItemPed));
+    end;
   end;
 end;
 
@@ -1461,24 +1483,6 @@ begin
 
       Result.AppendChild(AddNode(tcStr, '#1', 'email', 1, 80, 0,
                                                             Contato.Email, ''));
-    end;
-  end;
-end;
-
-function TNFSeW_PadraoNacional.GerarXMLgItemPed: TACBrXMLNode;
-var
-  i: Integer;
-begin
-  Result := nil;
-
-  if NFSe.Servico.infoCompl.gItemPed.Count > 0 then
-  begin
-    Result := CreateElement('gItemPed');
-
-    for i := 0 to NFSe.Servico.infoCompl.gItemPed.Count - 1 do
-    begin
-      Result.AppendChild(AddNode(tcStr, '#1', 'xItemPed', 1, 60, 1,
-                                NFSe.Servico.infoCompl.gItemPed[i].xItemPed));
     end;
   end;
 end;
@@ -1895,7 +1899,7 @@ begin
 
   AINIRec.WriteString(LSecao, 'Numero', NFSe.IdentificacaoRps.Numero);
   AINIRec.WriteString(LSecao, 'Serie', NFSe.IdentificacaoRps.Serie);
-  AINIRec.WriteString(LSecao, 'DataEmissao', DateTimeTodh(NFSe.DataEmissao));
+  AINIRec.WriteString(LSecao, 'DataEmissaoRPS', DateTimeTodh(NFSe.DataEmissaoRps));
   AINIRec.WriteString(LSecao, 'Competencia', DateTimeTodh(NFSe.Competencia));
   AINIRec.WriteString(LSecao, 'verAplic', NFSe.verAplic);
   AINIRec.WriteString(LSecao, 'tpEmit', tpEmitToStr(NFSe.tpEmit));
@@ -1916,7 +1920,7 @@ procedure TNFSeW_PadraoNacional.GerarINIDadosPrestador(AINIRec: TMemIniFile);
 begin
   LSecao := 'Prestador';
 
-  AINIRec.WriteString(LSecao, 'CNPJ', NFSe.Prestador.IdentificacaoPrestador.CpfCnpj);
+  AINIRec.WriteString(LSecao, 'CNPJCPF', NFSe.Prestador.IdentificacaoPrestador.CpfCnpj);
   AINIRec.WriteString(LSecao, 'InscricaoMunicipal', NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal);
   AINIRec.WriteString(LSecao, 'NIF', NFSe.Prestador.IdentificacaoPrestador.NIF);
   AINIRec.WriteString(LSecao, 'cNaoNIF', NaoNIFToStr(NFSe.Prestador.IdentificacaoPrestador.cNaoNIF));
@@ -1939,7 +1943,7 @@ begin
 
   AINIRec.WriteString(LSecao, 'opSimpNac', OptanteSNToStr(NFSe.OptanteSN));
   AINIRec.WriteString(LSecao, 'RegimeApuracaoSN', RegimeApuracaoSNToStr(NFSe.RegimeApuracaoSN));
-  AINIRec.WriteString(LSecao, 'Regime', FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao));
+  AINIRec.WriteString(LSecao, 'RegimeEspTrib', FpAOwner.RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao));
 end;
 
 procedure TNFSeW_PadraoNacional.GerarINIDadosTomador(AINIRec: TMemIniFile);
@@ -2157,6 +2161,7 @@ begin
   AINIRec.WriteString(LSecao, 'NIF', fornec.Identificacao.NIF);
   AINIRec.WriteString(LSecao, 'cNaoNIF', NaoNIFToStr(fornec.Identificacao.cNaoNIF));
   AINIRec.WriteString(LSecao, 'CAEPF', fornec.Identificacao.CAEPF);
+  AINIRec.WriteString(LSecao, 'RazaoSocial', fornec.RazaoSocial);
 
   AINIRec.WriteString(LSecao, 'CEP', fornec.Endereco.CEP);
   AINIRec.WriteString(LSecao, 'xMunicipio', fornec.Endereco.xMunicipio);
@@ -2177,6 +2182,7 @@ begin
   AINIRec.WriteString(LSecao, 'tribISSQN', tribISSQNToStr(NFSe.Servico.Valores.tribMun.tribISSQN));
   AINIRec.WriteInteger(LSecao, 'cPaisResult', NFSe.Servico.Valores.tribMun.cPaisResult);
 //  AINIRec.WriteString(LSecao, 'tpBM', tpBMToStr(NFSe.Servico.Valores.tribMun.tpBM));
+  AINIRec.WriteString(LSecao, 'nBM', NFSe.Servico.Valores.tribMun.nBM);
   AINIRec.WriteFloat(LSecao, 'vRedBCBM', NFSe.Servico.Valores.tribMun.vRedBCBM);
   AINIRec.WriteFloat(LSecao, 'pRedBCBM', NFSe.Servico.Valores.tribMun.pRedBCBM);
   AINIRec.WriteString(LSecao, 'tpSusp', tpSuspToStr(NFSe.Servico.Valores.tribMun.tpSusp));
@@ -2222,7 +2228,7 @@ procedure TNFSeW_PadraoNacional.GerarINIDadosEmitente(
 begin
   LSecao := 'Emitente';
 
-  AINIRec.WriteString(LSecao, 'CNPJ', NFSe.infNFSe.emit.Identificacao.CpfCnpj);
+  AINIRec.WriteString(LSecao, 'CNPJCPF', NFSe.infNFSe.emit.Identificacao.CpfCnpj);
   AINIRec.WriteString(LSecao, 'InscricaoMunicipal', NFSe.infNFSe.emit.Identificacao.InscricaoMunicipal);
 
   AINIRec.WriteString(LSecao, 'RazaoSocial', NFSe.infNFSe.emit.RazaoSocial);

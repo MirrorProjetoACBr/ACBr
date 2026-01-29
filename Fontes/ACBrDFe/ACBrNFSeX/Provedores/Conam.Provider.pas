@@ -252,7 +252,7 @@ var
   RegApTribSN, TribTpSusp, TribProcSusp: string;
   I, QtdTributos, QtdReg40, QtdReg50: Integer;
   vTotServicos, vTotISS, vTotISSRetido, vTotDeducoes, vTotTributos,
-  AliquotaSN: Double;
+  vAliquota: Double;
   OptanteSimples: TnfseSimNao;
   ExigibilidadeISS: TnfseExigibilidadeISS;
   DataOptanteSimples, DataInicial, DataFinal: TDateTime;
@@ -327,8 +327,8 @@ begin
 
       DataInicial := Nota.NFSe.DataEmissao;
       DataFinal := DataInicial;
-      AliquotaSN := Nota.NFSe.Servico.Valores.AliquotaSN;
-      Aliquota := FormatFloat('#.00', AliquotaSN);
+      vAliquota := Nota.NFSe.Servico.Valores.Aliquota;
+      Aliquota := FormatFloat('#.00', vAliquota);
       Aliquota := StringReplace(Aliquota, '.', ',', [rfReplaceAll]);
     end;
 

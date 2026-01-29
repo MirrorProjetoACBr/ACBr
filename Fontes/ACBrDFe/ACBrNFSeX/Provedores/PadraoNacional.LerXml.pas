@@ -1658,6 +1658,9 @@ begin
     NFSe.IdentificacaoRps.Serie := AINIRec.ReadString(sSecao, 'Serie', '0');
 
     sData := AINIRec.ReadString(sSecao, 'DataEmissao', '');
+    if sData = '' then
+      sData := AINIRec.ReadString(sSecao, 'DataEmissaoRPS', '');
+
     if sData <> '' then
     begin
       NFSe.DataEmissao := StringToDateTimeDef(sData, 0);
@@ -1697,7 +1700,7 @@ begin
   sSecao := 'Emitente';
   if AINIRec.SectionExists(sSecao) then
   begin
-    NFSe.infNFSe.emit.Identificacao.CpfCnpj := AINIRec.ReadString(sSecao, 'CNPJ', '');
+    NFSe.infNFSe.emit.Identificacao.CpfCnpj := AINIRec.ReadString(sSecao, 'CNPJCPF', AINIRec.ReadString(sSecao, 'CNPJ', ''));
     NFSe.infNFSe.emit.Identificacao.InscricaoMunicipal := AINIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
 
     NFSe.infNFSe.emit.RazaoSocial := AINIRec.ReadString(sSecao, 'RazaoSocial', '');
@@ -1759,13 +1762,13 @@ end;
 
 procedure TNFSeR_PadraoNacional.LerINIDadosPrestador(AINIRec: TMemIniFile);
 var
-  sSecao: string;
+  sSecao, sCampo: string;
   Ok: Boolean;
 begin
   sSecao := 'Prestador';
   if AINIRec.SectionExists(sSecao) then
   begin
-    NFSe.Prestador.IdentificacaoPrestador.CpfCnpj := AINIRec.ReadString(sSecao, 'CNPJ', '');
+    NFSe.Prestador.IdentificacaoPrestador.CpfCnpj := AINIRec.ReadString(sSecao, 'CNPJCPF', AINIRec.ReadString(sSecao, 'CNPJ', ''));
     NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal := AINIRec.ReadString(sSecao, 'InscricaoMunicipal', '');
 
     NFSe.Prestador.IdentificacaoPrestador.Nif := AINIRec.ReadString(sSecao, 'NIF', '');
@@ -1792,7 +1795,8 @@ begin
     if AINIRec.ReadString(sSecao, 'RegimeApuracaoSN', '') <> '' then
       NFSe.RegimeApuracaoSN := StrToRegimeApuracaoSN(Ok, AINIRec.ReadString(sSecao, 'RegimeApuracaoSN', '1'));
 
-    NFSe.RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, AINIRec.ReadString(sSecao, 'Regime', '0'));
+    sCampo := AINIRec.ReadString(sSecao, 'RegimeEspTrib', AINIRec.ReadString(sSecao, 'Regime', '0'));
+    NFSe.RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, sCampo);
   end;
 end;
 
@@ -2074,6 +2078,7 @@ begin
     fornec.Identificacao.Nif := AINIRec.ReadString(sSecao, 'NIF', '');
     fornec.Identificacao.cNaoNIF := StrToNaoNIF(Ok, AINIRec.ReadString(sSecao, 'cNaoNIF', '0'));
     fornec.Identificacao.CAEPF := AINIRec.ReadString(sSecao, 'CAEPF', '');
+    fornec.RazaoSocial := AINIRec.ReadString(sSecao, 'RazaoSocial', '');
 
     fornec.Endereco.CEP := AINIRec.ReadString(sSecao, 'CEP', '');
     fornec.Endereco.xMunicipio := AINIRec.ReadString(sSecao, 'xMunicipio', '');
