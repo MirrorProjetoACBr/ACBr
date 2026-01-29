@@ -383,7 +383,7 @@ begin
   J := 1;
   for I := 0 to retDistDFeInt.docZip.Count - 1 do
   begin
-    if (Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.Id) <> '' ) then
+    if (Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.nProt) <> '' ) then
     begin
       Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), Tipo, Codificacao);
       Item.Processar(retDistDFeInt.docZip.Items[I].procEvento.RetinfEvento,
