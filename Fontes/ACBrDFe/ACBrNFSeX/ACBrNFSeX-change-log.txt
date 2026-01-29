@@ -41,13 +41,15 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
 29/01/2026
+-- Infisc.GravarXml --
+[*] Ajustes na geração do XML - Layout Próprio do provedor.
+    Por: Juliomar Marchetti
 -- ACBrNFSeXServicos --
 [*] Ataualizado Peixoto de Azevedo/MT 
    https://www.projetoacbr.com.br/forum/topic/89879-erro-peixoto-de-azevedo-mt-erro-de-conex%C3%A3o-extra-content-at-the-end-of-the-document/
    Por: Daniel de Morais Infocotidiano
-
-29/01/2026
 -- Saatri.Provider --
 [*] ACBr-8866 Correção na grafia da tag de retorno do envio em lote no modo síncrono.
     Por: João Antônio

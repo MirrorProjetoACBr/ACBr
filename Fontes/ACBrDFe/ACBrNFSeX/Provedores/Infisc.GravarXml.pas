@@ -634,16 +634,11 @@ begin
     Result.AppendChild(AddNode(tcStr, '#1', 'chaveAcessoSubstituida', 0, 1, 0,
                                                                        '', ''));
 
-    if ((NFSe.Producao = snSim) and (Now >= EncodeDate(2026, 1, 1))) or
-       (NFSe.Producao <> snSim) then
-    begin
-      if NFSe.Prestador.Endereco.CodigoMunicipio <> '' then
-         Result.AppendChild(AddNode(tcStr, '#1', 'cLocPrestacao', 1, 15, 1,
+    Result.AppendChild(AddNode(tcStr, '#1', 'cLocPrestacao', 1, 15, 1,
                                   NFSe.Prestador.Endereco.CodigoMunicipio, ''));
 
-      Result.AppendChild(AddNode(tcInt, '#1', 'cPaisPrestacao', 1, 4, 1,
+    Result.AppendChild(AddNode(tcInt, '#1', 'cPaisPrestacao', 1, 4, 1,
                                        NFSe.Prestador.Endereco.CodigoPais, ''));
-    end;
   end;
 end;
 
@@ -1066,7 +1061,8 @@ begin
 
   if (FPVersao = ve101) and ((NFSe.Servico.ItemServico[Item].ValorPIS > 0) or
      (NFSe.Servico.ItemServico[Item].ValorCOFINS > 0)) then
-    Result.AppendChild(AddNode(tcStr, '#1', 'tpRetPisCofins', 1, 1, 1, '1', ''));
+    Result.AppendChild(AddNode(tcStr, '#1', 'tpRetPisCofins', 1, 1, 1,
+         tpRetPisCofinsToStr(nfse.Servico.Valores.tribFed.tpRetPisCofins), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'cNBS', 9, 9, 0,
                                                    NFSe.Servico.CodigoNBS, ''));
