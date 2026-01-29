@@ -211,7 +211,7 @@ begin
 
   Result := Executar('http://nfse.abrasf.org.br/Infse/RecepcionarLoteRpsSincrono', Request,
                      DadosUsuario,
-                     ['outputXML', 'EnviarLoteRpsSincronoResposta'],
+                     ['outputXML', 'EnviarLoteRpsResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
 end;
 

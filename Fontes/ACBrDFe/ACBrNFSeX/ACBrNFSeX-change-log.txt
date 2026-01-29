@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2026
+-- Saatri.Provider --
+[*] ACBr-8866 Correção na grafia da tag de retorno do envio em lote no modo síncrono.
+    Por: João Antônio
 -- ACBrNFSeXConversao --
 [*] ACBr-8889 Melhoria na função de conversão do código IBGE do pais para a sigla em ISO2.
     Por: Maxuel.Santana
