@@ -41,7 +41,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-28/01/2026
+
+29/01/2026
+-- ACBrNFSeXConversao --
+[*] ACBr-8889 Melhoria na função de conversão do código IBGE do pais para a sigla em ISO2.
+    Por: Maxuel.Santana
 -- SilTecnologia.GravarXml.pas --
 [*] ACBr-8859 feita sobrescrita da configuração para aplicar GerarIBSCBSNFSe (true) para gerar o grupo q nao estava sendo gerado
 	https://discord.com/channels/798697718800318484/800042186783588364/1466129929988079831

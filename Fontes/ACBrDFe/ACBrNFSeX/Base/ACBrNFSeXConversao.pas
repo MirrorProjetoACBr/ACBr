@@ -876,6 +876,7 @@ function NaoNIFToStr(const t: TNaoNIF): string;
 
 function CodIBGEPaisToSiglaISO2(t: Integer): string;
 function SiglaISO2ToCodIBGEPais(const t: string): Integer;
+function CodIBGEPaisToDescricao(t: Integer): string;
 
 function CodIBGEPaisToCodISO(t: Integer): Integer;
 function CodISOPaisToCodIBGE(t: Integer): Integer;
@@ -919,6 +920,268 @@ function StrTotpOperGovNFSe(const s: string): TtpOperGovNFSe;
 function modoPrestServToStr(const t: TmodoPrestServ): string;
 function StrTomodoPrestServ(const s: string): TmodoPrestServ;
 *)
+type
+  TPais = record
+    CodPaisIBGE: Integer;
+    DescricaoPaisIBGE: string;
+    ISO2: string;
+    {Comentário utilizado para justificar o mapeamento IBGE x ISO2 nos casos em que a
+     descrição do país não foi suficiente.}
+    Comentario: string;
+  end;
+
+const
+  Paises: array[0..247] of TPais = (
+    (CodPaisIBGE:132; DescricaoPaisIBGE:'AFEGANISTAO'; ISO2:'AF'; Comentario:''),
+    (CodPaisIBGE:175; DescricaoPaisIBGE:'ALBANIA, REPUBLICA DA'; ISO2:'AL'; Comentario:''),
+    (CodPaisIBGE:230; DescricaoPaisIBGE:'ALEMANHA'; ISO2:'DE'; Comentario:''),
+    (CodPaisIBGE:310; DescricaoPaisIBGE:'BURKINA FASO'; ISO2:'BF'; Comentario:''),
+    (CodPaisIBGE:370; DescricaoPaisIBGE:'ANDORRA'; ISO2:'AD'; Comentario:''),
+    (CodPaisIBGE:400; DescricaoPaisIBGE:'ANGOLA'; ISO2:'AO'; Comentario:''),
+    (CodPaisIBGE:418; DescricaoPaisIBGE:'ANGUILLA'; ISO2:'AI'; Comentario:''),
+    (CodPaisIBGE:434; DescricaoPaisIBGE:'ANTIGUA E BARBUDA'; ISO2:'AG'; Comentario:''),
+    (CodPaisIBGE:477; DescricaoPaisIBGE:'ANTILHAS HOLANDESAS'; ISO2:'NL'; Comentario:'Regiao da Holanda.'),
+    (CodPaisIBGE:531; DescricaoPaisIBGE:'ARABIA SAUDITA'; ISO2:'SA'; Comentario:''),
+    (CodPaisIBGE:590; DescricaoPaisIBGE:'ARGELIA'; ISO2:'DZ'; Comentario:''),
+    (CodPaisIBGE:639; DescricaoPaisIBGE:'ARGENTINA'; ISO2:'AR'; Comentario:''),
+    (CodPaisIBGE:647; DescricaoPaisIBGE:'ARMENIA, REPUBLICA DA'; ISO2:'AM'; Comentario:''),
+    (CodPaisIBGE:655; DescricaoPaisIBGE:'ARUBA'; ISO2:'AW'; Comentario:''),
+    (CodPaisIBGE:698; DescricaoPaisIBGE:'AUSTRALIA'; ISO2:'AU'; Comentario:''),
+    (CodPaisIBGE:728; DescricaoPaisIBGE:'AUSTRIA'; ISO2:'AT'; Comentario:''),
+    (CodPaisIBGE:736; DescricaoPaisIBGE:'AZERBAIJAO, REPUBLICA DO'; ISO2:'AZ'; Comentario:''),
+    (CodPaisIBGE:779; DescricaoPaisIBGE:'BAHAMAS, ILHAS'; ISO2:'BS'; Comentario:''),
+    (CodPaisIBGE:809; DescricaoPaisIBGE:'BAHREIN, ILHAS'; ISO2:'BH'; Comentario:''),
+    (CodPaisIBGE:817; DescricaoPaisIBGE:'BANGLADESH'; ISO2:'BD'; Comentario:''),
+    (CodPaisIBGE:833; DescricaoPaisIBGE:'BARBADOS'; ISO2:'BB'; Comentario:''),
+    (CodPaisIBGE:850; DescricaoPaisIBGE:'BELARUS, REPUBLICA DA'; ISO2:'BY'; Comentario:''),
+    (CodPaisIBGE:876; DescricaoPaisIBGE:'BELGICA'; ISO2:'BE'; Comentario:''),
+    (CodPaisIBGE:884; DescricaoPaisIBGE:'BELIZE'; ISO2:'BZ'; Comentario:''),
+    (CodPaisIBGE:906; DescricaoPaisIBGE:'BERMUDAS'; ISO2:'BM'; Comentario:''),
+    (CodPaisIBGE:930; DescricaoPaisIBGE:'MIANMAR (BIRMANIA)'; ISO2:'MM'; Comentario:''),
+    (CodPaisIBGE:973; DescricaoPaisIBGE:'BOLIVIA'; ISO2:'BO'; Comentario:''),
+    (CodPaisIBGE:981; DescricaoPaisIBGE:'BOSNIA-HERZEGOVINA (REPUBLICA DA)'; ISO2:'BA'; Comentario:''),
+    (CodPaisIBGE:1015; DescricaoPaisIBGE:'BOTSUANA'; ISO2:'BW'; Comentario:''),
+    (CodPaisIBGE:1058; DescricaoPaisIBGE:'BRASIL'; ISO2:'BR'; Comentario:''),
+    (CodPaisIBGE:1082; DescricaoPaisIBGE:'BRUNEI'; ISO2:'BN'; Comentario:''),
+    (CodPaisIBGE:1112; DescricaoPaisIBGE:'BULGARIA, REPUBLICA DA'; ISO2:'BG'; Comentario:''),
+    (CodPaisIBGE:1155; DescricaoPaisIBGE:'BURUNDI'; ISO2:'BI'; Comentario:''),
+    (CodPaisIBGE:1198; DescricaoPaisIBGE:'BUTAO'; ISO2:'BT'; Comentario:''),
+    (CodPaisIBGE:1279; DescricaoPaisIBGE:'CABO VERDE, REPUBLICA DE'; ISO2:'CV'; Comentario:''),
+    (CodPaisIBGE:1376; DescricaoPaisIBGE:'CAYMAN, ILHAS'; ISO2:'KY'; Comentario:''),
+    (CodPaisIBGE:1414; DescricaoPaisIBGE:'CAMBOJA'; ISO2:'KH'; Comentario:''),
+    (CodPaisIBGE:1457; DescricaoPaisIBGE:'CAMAROES'; ISO2:'CM'; Comentario:''),
+    (CodPaisIBGE:1490; DescricaoPaisIBGE:'CANADA'; ISO2:'CA'; Comentario:''),
+    (CodPaisIBGE:1504; DescricaoPaisIBGE:'GUERNSEY, ILHA DO CANAL (INCLUI ALDERNEY E SARK)'; ISO2:'GG'; Comentario:''),
+    (CodPaisIBGE:1508; DescricaoPaisIBGE:'JERSEY, ILHA DO CANAL'; ISO2:'JE'; Comentario:''),
+    (CodPaisIBGE:1511; DescricaoPaisIBGE:'CANARIAS, ILHAS'; ISO2:'ES'; Comentario:'Regiao administrativa da Espanha.'),
+    (CodPaisIBGE:1538; DescricaoPaisIBGE:'CAZAQUISTAO, REPUBLICA DO'; ISO2:'KZ'; Comentario:''),
+    (CodPaisIBGE:1546; DescricaoPaisIBGE:'CATAR'; ISO2:'QA'; Comentario:''),
+    (CodPaisIBGE:1589; DescricaoPaisIBGE:'CHILE'; ISO2:'CL'; Comentario:''),
+    (CodPaisIBGE:1600; DescricaoPaisIBGE:'CHINA, REPUBLICA POPULAR'; ISO2:'CN'; Comentario:''),
+    (CodPaisIBGE:1619; DescricaoPaisIBGE:'FORMOSA (TAIWAN)'; ISO2:'TW'; Comentario:''),
+    (CodPaisIBGE:1635; DescricaoPaisIBGE:'CHIPRE'; ISO2:'CY'; Comentario:''),
+    (CodPaisIBGE:1651; DescricaoPaisIBGE:'COCOS(KEELING),ILHAS'; ISO2:'CC'; Comentario:''),
+    (CodPaisIBGE:1694; DescricaoPaisIBGE:'COLOMBIA'; ISO2:'CO'; Comentario:''),
+    (CodPaisIBGE:1732; DescricaoPaisIBGE:'COMORES, ILHAS'; ISO2:'KM'; Comentario:''),
+    (CodPaisIBGE:1775; DescricaoPaisIBGE:'CONGO'; ISO2:'CG'; Comentario:''),
+    (CodPaisIBGE:1830; DescricaoPaisIBGE:'COOK, ILHAS'; ISO2:'CK'; Comentario:''),
+    (CodPaisIBGE:1872; DescricaoPaisIBGE:'COREIA, REP.POP.DEMOCRATICA'; ISO2:'KP'; Comentario:''),
+    (CodPaisIBGE:1902; DescricaoPaisIBGE:'COREIA, REPUBLICA DA'; ISO2:'KR'; Comentario:''),
+    (CodPaisIBGE:1937; DescricaoPaisIBGE:'COSTA DO MARFIM'; ISO2:'CI'; Comentario:''),
+    (CodPaisIBGE:1953; DescricaoPaisIBGE:'CROACIA (REPUBLICA DA)'; ISO2:'HR'; Comentario:''),
+    (CodPaisIBGE:1961; DescricaoPaisIBGE:'COSTA RICA'; ISO2:'CR'; Comentario:''),
+    (CodPaisIBGE:1988; DescricaoPaisIBGE:'COVEITE'; ISO2:'KW'; Comentario:'Nome antigo do pais (Kuwait).'),
+    (CodPaisIBGE:1996; DescricaoPaisIBGE:'CUBA'; ISO2:'CU'; Comentario:''),
+    (CodPaisIBGE:2003; DescricaoPaisIBGE:'CURACAO'; ISO2:'CW'; Comentario:''),
+    (CodPaisIBGE:2291; DescricaoPaisIBGE:'BENIN'; ISO2:'BJ'; Comentario:''),
+    (CodPaisIBGE:2321; DescricaoPaisIBGE:'DINAMARCA'; ISO2:'DK'; Comentario:''),
+    (CodPaisIBGE:2356; DescricaoPaisIBGE:'DOMINICA,ILHA'; ISO2:'DM'; Comentario:''),
+    (CodPaisIBGE:2399; DescricaoPaisIBGE:'EQUADOR'; ISO2:'EC'; Comentario:''),
+    (CodPaisIBGE:2402; DescricaoPaisIBGE:'EGITO'; ISO2:'EG'; Comentario:''),
+    (CodPaisIBGE:2437; DescricaoPaisIBGE:'ERITREIA'; ISO2:'ER'; Comentario:''),
+    (CodPaisIBGE:2445; DescricaoPaisIBGE:'EMIRADOS ARABES UNIDOS'; ISO2:'AE'; Comentario:''),
+    (CodPaisIBGE:2453; DescricaoPaisIBGE:'ESPANHA'; ISO2:'ES'; Comentario:''),
+    (CodPaisIBGE:2461; DescricaoPaisIBGE:'ESLOVENIA, REPUBLICA DA'; ISO2:'SI'; Comentario:''),
+    (CodPaisIBGE:2470; DescricaoPaisIBGE:'ESLOVACA, REPUBLICA'; ISO2:'SK'; Comentario:''),
+    (CodPaisIBGE:2496; DescricaoPaisIBGE:'ESTADOS UNIDOS'; ISO2:'US'; Comentario:''),
+    (CodPaisIBGE:2518; DescricaoPaisIBGE:'ESTONIA, REPUBLICA DA'; ISO2:'EE'; Comentario:''),
+    (CodPaisIBGE:2534; DescricaoPaisIBGE:'ETIOPIA'; ISO2:'ET'; Comentario:''),
+    (CodPaisIBGE:2550; DescricaoPaisIBGE:'FALKLAND (ILHAS MALVINAS)'; ISO2:'FK'; Comentario:''),
+    (CodPaisIBGE:2593; DescricaoPaisIBGE:'FEROE, ILHAS'; ISO2:'FO'; Comentario:''),
+    (CodPaisIBGE:2674; DescricaoPaisIBGE:'FILIPINAS'; ISO2:'PH'; Comentario:''),
+    (CodPaisIBGE:2712; DescricaoPaisIBGE:'FINLANDIA'; ISO2:'FI'; Comentario:''),
+    (CodPaisIBGE:2755; DescricaoPaisIBGE:'FRANCA'; ISO2:'FR'; Comentario:''),
+    (CodPaisIBGE:2810; DescricaoPaisIBGE:'GABAO'; ISO2:'GA'; Comentario:''),
+    (CodPaisIBGE:2852; DescricaoPaisIBGE:'GAMBIA'; ISO2:'GM'; Comentario:''),
+    (CodPaisIBGE:2895; DescricaoPaisIBGE:'GANA'; ISO2:'GH'; Comentario:''),
+    (CodPaisIBGE:2917; DescricaoPaisIBGE:'GEORGIA, REPUBLICA DA'; ISO2:'GE'; Comentario:''),
+    (CodPaisIBGE:2933; DescricaoPaisIBGE:'GIBRALTAR'; ISO2:'GI'; Comentario:''),
+    (CodPaisIBGE:2976; DescricaoPaisIBGE:'GRANADA'; ISO2:'GD'; Comentario:''),
+    (CodPaisIBGE:3018; DescricaoPaisIBGE:'GRECIA'; ISO2:'GR'; Comentario:''),
+    (CodPaisIBGE:3050; DescricaoPaisIBGE:'GROENLANDIA'; ISO2:'GL'; Comentario:''),
+    (CodPaisIBGE:3093; DescricaoPaisIBGE:'GUADALUPE'; ISO2:'GP'; Comentario:''),
+    (CodPaisIBGE:3131; DescricaoPaisIBGE:'GUAM'; ISO2:'GU'; Comentario:''),
+    (CodPaisIBGE:3174; DescricaoPaisIBGE:'GUATEMALA'; ISO2:'GT'; Comentario:''),
+    (CodPaisIBGE:3255; DescricaoPaisIBGE:'GUIANA FRANCESA'; ISO2:'GF'; Comentario:''),
+    (CodPaisIBGE:3298; DescricaoPaisIBGE:'GUINE'; ISO2:'GN'; Comentario:''),
+    (CodPaisIBGE:3310; DescricaoPaisIBGE:'GUINE-EQUATORIAL'; ISO2:'GQ'; Comentario:''),
+    (CodPaisIBGE:3344; DescricaoPaisIBGE:'GUINE-BISSAU'; ISO2:'GW'; Comentario:''),
+    (CodPaisIBGE:3379; DescricaoPaisIBGE:'GUIANA'; ISO2:'GY'; Comentario:''),
+    (CodPaisIBGE:3417; DescricaoPaisIBGE:'HAITI'; ISO2:'HT'; Comentario:''),
+    (CodPaisIBGE:3450; DescricaoPaisIBGE:'HONDURAS'; ISO2:'HN'; Comentario:''),
+    (CodPaisIBGE:3514; DescricaoPaisIBGE:'HONG KONG'; ISO2:'HK'; Comentario:''),
+    (CodPaisIBGE:3557; DescricaoPaisIBGE:'HUNGRIA, REPUBLICA DA'; ISO2:'HU'; Comentario:''),
+    (CodPaisIBGE:3573; DescricaoPaisIBGE:'IEMEN'; ISO2:'YE'; Comentario:''),
+    (CodPaisIBGE:3595; DescricaoPaisIBGE:'MAN, ILHA DE'; ISO2:'IM'; Comentario:''),
+    (CodPaisIBGE:3611; DescricaoPaisIBGE:'INDIA'; ISO2:'IN'; Comentario:''),
+    (CodPaisIBGE:3654; DescricaoPaisIBGE:'INDONESIA'; ISO2:'ID'; Comentario:''),
+    (CodPaisIBGE:3697; DescricaoPaisIBGE:'IRAQUE'; ISO2:'IQ'; Comentario:''),
+    (CodPaisIBGE:3727; DescricaoPaisIBGE:'IRA, REPUBLICA ISLAMICA DO'; ISO2:'IR'; Comentario:''),
+    (CodPaisIBGE:3751; DescricaoPaisIBGE:'IRLANDA'; ISO2:'IE'; Comentario:''),
+    (CodPaisIBGE:3794; DescricaoPaisIBGE:'ISLANDIA'; ISO2:'IS'; Comentario:''),
+    (CodPaisIBGE:3832; DescricaoPaisIBGE:'ISRAEL'; ISO2:'IL'; Comentario:''),
+    (CodPaisIBGE:3867; DescricaoPaisIBGE:'ITALIA'; ISO2:'IT'; Comentario:''),
+    (CodPaisIBGE:3913; DescricaoPaisIBGE:'JAMAICA'; ISO2:'JM'; Comentario:''),
+    (CodPaisIBGE:3964; DescricaoPaisIBGE:'JOHNSTON, ILHAS'; ISO2:'US'; Comentario:'Territorio sob soberania dos EUA.'),
+    (CodPaisIBGE:3999; DescricaoPaisIBGE:'JAPAO'; ISO2:'JP'; Comentario:''),
+    (CodPaisIBGE:4030; DescricaoPaisIBGE:'JORDANIA'; ISO2:'JO'; Comentario:''),
+    (CodPaisIBGE:4111; DescricaoPaisIBGE:'KIRIBATI'; ISO2:'KI'; Comentario:''),
+    (CodPaisIBGE:4200; DescricaoPaisIBGE:'LAOS, REP.POP.DEMOCR.DO'; ISO2:'LA'; Comentario:''),
+    (CodPaisIBGE:4235; DescricaoPaisIBGE:'LEBUAN,ILHAS'; ISO2:'MY'; Comentario:'Regiao administrativa da Malasia.'),
+    (CodPaisIBGE:4260; DescricaoPaisIBGE:'LESOTO'; ISO2:'LS'; Comentario:''),
+    (CodPaisIBGE:4278; DescricaoPaisIBGE:'LETONIA, REPUBLICA DA'; ISO2:'LV'; Comentario:''),
+    (CodPaisIBGE:4316; DescricaoPaisIBGE:'LIBANO'; ISO2:'LB'; Comentario:''),
+    (CodPaisIBGE:4340; DescricaoPaisIBGE:'LIBERIA'; ISO2:'LR'; Comentario:''),
+    (CodPaisIBGE:4383; DescricaoPaisIBGE:'LIBIA'; ISO2:'LY'; Comentario:''),
+    (CodPaisIBGE:4405; DescricaoPaisIBGE:'LIECHTENSTEIN'; ISO2:'LI'; Comentario:''),
+    (CodPaisIBGE:4421; DescricaoPaisIBGE:'LITUANIA, REPUBLICA DA'; ISO2:'LT'; Comentario:''),
+    (CodPaisIBGE:4456; DescricaoPaisIBGE:'LUXEMBURGO'; ISO2:'LU'; Comentario:''),
+    (CodPaisIBGE:4472; DescricaoPaisIBGE:'MACAU'; ISO2:'MO'; Comentario:''),
+    (CodPaisIBGE:4499; DescricaoPaisIBGE:'MACEDONIA, ANT.REP.IUGOSLAVA'; ISO2:'MK'; Comentario:''),
+    (CodPaisIBGE:4502; DescricaoPaisIBGE:'MADAGASCAR'; ISO2:'MG'; Comentario:''),
+    (CodPaisIBGE:4525; DescricaoPaisIBGE:'MADEIRA, ILHA DA'; ISO2:'PT'; Comentario:'Regiao administrativa de Portugal.'),
+    (CodPaisIBGE:4553; DescricaoPaisIBGE:'MALASIA'; ISO2:'MY'; Comentario:''),
+    (CodPaisIBGE:4588; DescricaoPaisIBGE:'MALAVI'; ISO2:'MW'; Comentario:''),
+    (CodPaisIBGE:4618; DescricaoPaisIBGE:'MALDIVAS'; ISO2:'MV'; Comentario:''),
+    (CodPaisIBGE:4642; DescricaoPaisIBGE:'MALI'; ISO2:'ML'; Comentario:''),
+    (CodPaisIBGE:4677; DescricaoPaisIBGE:'MALTA'; ISO2:'MT'; Comentario:''),
+    (CodPaisIBGE:4723; DescricaoPaisIBGE:'MARIANAS DO NORTE'; ISO2:'MP'; Comentario:''),
+    (CodPaisIBGE:4740; DescricaoPaisIBGE:'MARROCOS'; ISO2:'MA'; Comentario:''),
+    (CodPaisIBGE:4766; DescricaoPaisIBGE:'MARSHALL,ILHAS'; ISO2:'MH'; Comentario:''),
+    (CodPaisIBGE:4774; DescricaoPaisIBGE:'MARTINICA'; ISO2:'MQ'; Comentario:''),
+    (CodPaisIBGE:4855; DescricaoPaisIBGE:'MAURICIO'; ISO2:'MU'; Comentario:''),
+    (CodPaisIBGE:4880; DescricaoPaisIBGE:'MAURITANIA'; ISO2:'MR'; Comentario:''),
+    (CodPaisIBGE:4885; DescricaoPaisIBGE:'MAYOTTE (ILHAS FRANCESAS)'; ISO2:'YT'; Comentario:''),
+    (CodPaisIBGE:4901; DescricaoPaisIBGE:'MIDWAY, ILHAS'; ISO2:'US'; Comentario:'Territorio sob soberania dos EUA.'),
+    (CodPaisIBGE:4936; DescricaoPaisIBGE:'MEXICO'; ISO2:'MX'; Comentario:''),
+    (CodPaisIBGE:4944; DescricaoPaisIBGE:'MOLDAVIA, REPUBLICA DA'; ISO2:'MD'; Comentario:''),
+    (CodPaisIBGE:4952; DescricaoPaisIBGE:'MONACO'; ISO2:'MC'; Comentario:''),
+    (CodPaisIBGE:4979; DescricaoPaisIBGE:'MONGOLIA'; ISO2:'MN'; Comentario:''),
+    (CodPaisIBGE:4985; DescricaoPaisIBGE:'MONTENEGRO'; ISO2:'ME'; Comentario:''),
+    (CodPaisIBGE:4995; DescricaoPaisIBGE:'MICRONESIA'; ISO2:'FM'; Comentario:''),
+    (CodPaisIBGE:5010; DescricaoPaisIBGE:'MONTSERRAT,ILHAS'; ISO2:'MS'; Comentario:''),
+    (CodPaisIBGE:5053; DescricaoPaisIBGE:'MOCAMBIQUE'; ISO2:'MZ'; Comentario:''),
+    (CodPaisIBGE:5070; DescricaoPaisIBGE:'NAMIBIA'; ISO2:'NA'; Comentario:''),
+    (CodPaisIBGE:5088; DescricaoPaisIBGE:'NAURU'; ISO2:'NR'; Comentario:''),
+    (CodPaisIBGE:5118; DescricaoPaisIBGE:'CHRISTMAS,ILHA (NAVIDAD)'; ISO2:'CX'; Comentario:''),
+    (CodPaisIBGE:5177; DescricaoPaisIBGE:'NEPAL'; ISO2:'NP'; Comentario:''),
+    (CodPaisIBGE:5215; DescricaoPaisIBGE:'NICARAGUA'; ISO2:'NI'; Comentario:''),
+    (CodPaisIBGE:5258; DescricaoPaisIBGE:'NIGER'; ISO2:'NE'; Comentario:''),
+    (CodPaisIBGE:5282; DescricaoPaisIBGE:'NIGERIA'; ISO2:'NG'; Comentario:''),
+    (CodPaisIBGE:5312; DescricaoPaisIBGE:'NIUE,ILHA'; ISO2:'NU'; Comentario:''),
+    (CodPaisIBGE:5355; DescricaoPaisIBGE:'NORFOLK,ILHA'; ISO2:'NF'; Comentario:''),
+    (CodPaisIBGE:5380; DescricaoPaisIBGE:'NORUEGA'; ISO2:'NO'; Comentario:''),
+    (CodPaisIBGE:5428; DescricaoPaisIBGE:'NOVA CALEDONIA'; ISO2:'NC'; Comentario:''),
+    (CodPaisIBGE:5452; DescricaoPaisIBGE:'PAPUA NOVA GUINE'; ISO2:'PG'; Comentario:''),
+    (CodPaisIBGE:5487; DescricaoPaisIBGE:'NOVA ZELANDIA'; ISO2:'NZ'; Comentario:''),
+    (CodPaisIBGE:5517; DescricaoPaisIBGE:'VANUATU'; ISO2:'VU'; Comentario:''),
+    (CodPaisIBGE:5568; DescricaoPaisIBGE:'OMA'; ISO2:'OM'; Comentario:''),
+    (CodPaisIBGE:5665; DescricaoPaisIBGE:'PACIFICO,ILHAS DO (POSSESSAO DOS EUA)'; ISO2:'UM'; Comentario:''),
+    (CodPaisIBGE:5738; DescricaoPaisIBGE:'PAISES BAIXOS (HOLANDA)'; ISO2:'NL'; Comentario:''),
+    (CodPaisIBGE:5754; DescricaoPaisIBGE:'PALAU'; ISO2:'PW'; Comentario:''),
+    (CodPaisIBGE:5762; DescricaoPaisIBGE:'PAQUISTAO'; ISO2:'PK'; Comentario:''),
+    (CodPaisIBGE:5780; DescricaoPaisIBGE:'PALESTINA'; ISO2:'PS'; Comentario:''),
+    (CodPaisIBGE:5800; DescricaoPaisIBGE:'PANAMA'; ISO2:'PA'; Comentario:''),
+    (CodPaisIBGE:5860; DescricaoPaisIBGE:'PARAGUAI'; ISO2:'PY'; Comentario:''),
+    (CodPaisIBGE:5894; DescricaoPaisIBGE:'PERU'; ISO2:'PE'; Comentario:''),
+    (CodPaisIBGE:5932; DescricaoPaisIBGE:'PITCAIRN,ILHA'; ISO2:'PN'; Comentario:''),
+    (CodPaisIBGE:5991; DescricaoPaisIBGE:'POLINESIA FRANCESA'; ISO2:'PF'; Comentario:''),
+    (CodPaisIBGE:6033; DescricaoPaisIBGE:'POLONIA, REPUBLICA DA'; ISO2:'PL'; Comentario:''),
+    (CodPaisIBGE:6076; DescricaoPaisIBGE:'PORTUGAL'; ISO2:'PT'; Comentario:''),
+    (CodPaisIBGE:6114; DescricaoPaisIBGE:'PORTO RICO'; ISO2:'PR'; Comentario:''),
+    (CodPaisIBGE:6238; DescricaoPaisIBGE:'QUENIA'; ISO2:'KE'; Comentario:''),
+    (CodPaisIBGE:6254; DescricaoPaisIBGE:'QUIRGUIZ, REPUBLICA'; ISO2:'KG'; Comentario:''),
+    (CodPaisIBGE:6289; DescricaoPaisIBGE:'REINO UNIDO'; ISO2:'GB'; Comentario:''),
+    (CodPaisIBGE:6408; DescricaoPaisIBGE:'REPUBLICA CENTRO-AFRICANA'; ISO2:'CF'; Comentario:''),
+    (CodPaisIBGE:6475; DescricaoPaisIBGE:'REPUBLICA DOMINICANA'; ISO2:'DO'; Comentario:''),
+    (CodPaisIBGE:6602; DescricaoPaisIBGE:'REUNIAO, ILHA'; ISO2:'RE'; Comentario:''),
+    (CodPaisIBGE:6653; DescricaoPaisIBGE:'ZIMBABUE'; ISO2:'ZW'; Comentario:''),
+    (CodPaisIBGE:6700; DescricaoPaisIBGE:'ROMENIA'; ISO2:'RO'; Comentario:''),
+    (CodPaisIBGE:6750; DescricaoPaisIBGE:'RUANDA'; ISO2:'RW'; Comentario:''),
+    (CodPaisIBGE:6769; DescricaoPaisIBGE:'RUSSIA, FEDERACAO DA'; ISO2:'RU'; Comentario:''),
+    (CodPaisIBGE:6777; DescricaoPaisIBGE:'SALOMAO, ILHAS'; ISO2:'SB'; Comentario:''),
+    (CodPaisIBGE:6781; DescricaoPaisIBGE:'SAINT KITTS E NEVIS'; ISO2:'KN'; Comentario:'Mesmo pais: SAINT KITTS E NEVIS ou SAO CRISTOVAO E NEVES.'),
+    (CodPaisIBGE:6858; DescricaoPaisIBGE:'SAARA OCIDENTAL'; ISO2:'EH'; Comentario:''),
+    (CodPaisIBGE:6874; DescricaoPaisIBGE:'EL SALVADOR'; ISO2:'SV'; Comentario:''),
+    (CodPaisIBGE:6904; DescricaoPaisIBGE:'SAMOA'; ISO2:'WS'; Comentario:''),
+    (CodPaisIBGE:6912; DescricaoPaisIBGE:'SAMOA AMERICANA'; ISO2:'AS'; Comentario:''),
+    (CodPaisIBGE:6955; DescricaoPaisIBGE:'SAO CRISTOVAO E NEVES,ILHAS'; ISO2:'KN'; Comentario:''),
+    (CodPaisIBGE:6971; DescricaoPaisIBGE:'SAN MARINO'; ISO2:'SM'; Comentario:''),
+    (CodPaisIBGE:6980; DescricaoPaisIBGE:'SAO MARTINHO, ILHA DE (PARTE FRANCESA)'; ISO2:'MF'; Comentario:''),
+    (CodPaisIBGE:6998; DescricaoPaisIBGE:'SAO MARTINHO, ILHA DE (PARTE HOLANDESA)'; ISO2:'SX'; Comentario:''),
+    (CodPaisIBGE:7005; DescricaoPaisIBGE:'SAO PEDRO E MIQUELON'; ISO2:'PM'; Comentario:''),
+    (CodPaisIBGE:7056; DescricaoPaisIBGE:'SAO VICENTE E GRANADINAS'; ISO2:'VC'; Comentario:''),
+    (CodPaisIBGE:7102; DescricaoPaisIBGE:'SANTA HELENA'; ISO2:'SH'; Comentario:''),
+    (CodPaisIBGE:7153; DescricaoPaisIBGE:'SANTA LUCIA'; ISO2:'LC'; Comentario:''),
+    (CodPaisIBGE:7200; DescricaoPaisIBGE:'SAO TOME E PRINCIPE, ILHAS'; ISO2:'ST'; Comentario:''),
+    (CodPaisIBGE:7285; DescricaoPaisIBGE:'SENEGAL'; ISO2:'SN'; Comentario:''),
+    (CodPaisIBGE:7315; DescricaoPaisIBGE:'SEYCHELLES'; ISO2:'SC'; Comentario:''),
+    (CodPaisIBGE:7358; DescricaoPaisIBGE:'SERRA LEOA'; ISO2:'SL'; Comentario:''),
+    (CodPaisIBGE:7370; DescricaoPaisIBGE:'SERVIA'; ISO2:'RS'; Comentario:''),
+    (CodPaisIBGE:7412; DescricaoPaisIBGE:'CINGAPURA'; ISO2:'SG'; Comentario:''),
+    (CodPaisIBGE:7447; DescricaoPaisIBGE:'SIRIA, REPUBLICA ARABE DA'; ISO2:'SY'; Comentario:''),
+    (CodPaisIBGE:7480; DescricaoPaisIBGE:'SOMALIA'; ISO2:'SO'; Comentario:''),
+    (CodPaisIBGE:7501; DescricaoPaisIBGE:'SRI LANKA'; ISO2:'LK'; Comentario:''),
+    (CodPaisIBGE:7544; DescricaoPaisIBGE:'ESWATINI'; ISO2:'SZ'; Comentario:'Pais ISO com nome atualizado (ex-Suazilandia).'),
+    (CodPaisIBGE:7560; DescricaoPaisIBGE:'AFRICA DO SUL'; ISO2:'ZA'; Comentario:''),
+    (CodPaisIBGE:7595; DescricaoPaisIBGE:'SUDAO'; ISO2:'SD'; Comentario:''),
+    (CodPaisIBGE:7600; DescricaoPaisIBGE:'SUDAO DO SUL'; ISO2:'SS'; Comentario:''),
+    (CodPaisIBGE:7641; DescricaoPaisIBGE:'SUECIA'; ISO2:'SE'; Comentario:''),
+    (CodPaisIBGE:7676; DescricaoPaisIBGE:'SUICA'; ISO2:'CH'; Comentario:''),
+    (CodPaisIBGE:7706; DescricaoPaisIBGE:'SURINAME'; ISO2:'SR'; Comentario:''),
+    (CodPaisIBGE:7722; DescricaoPaisIBGE:'TADJIQUISTAO, REPUBLICA DO'; ISO2:'TJ'; Comentario:''),
+    (CodPaisIBGE:7765; DescricaoPaisIBGE:'TAILANDIA'; ISO2:'TH'; Comentario:''),
+    (CodPaisIBGE:7803; DescricaoPaisIBGE:'TANZANIA, REP.UNIDA DA'; ISO2:'TZ'; Comentario:''),
+    (CodPaisIBGE:7820; DescricaoPaisIBGE:'TERRITORIO BRIT.OC.INDICO'; ISO2:'IO'; Comentario:''),
+    (CodPaisIBGE:7838; DescricaoPaisIBGE:'DJIBUTI'; ISO2:'DJ'; Comentario:''),
+    (CodPaisIBGE:7889; DescricaoPaisIBGE:'CHADE'; ISO2:'TD'; Comentario:''),
+    (CodPaisIBGE:7919; DescricaoPaisIBGE:'TCHECA, REPUBLICA'; ISO2:'CZ'; Comentario:''),
+    (CodPaisIBGE:7951; DescricaoPaisIBGE:'TIMOR LESTE'; ISO2:'TL'; Comentario:''),
+    (CodPaisIBGE:8001; DescricaoPaisIBGE:'TOGO'; ISO2:'TG'; Comentario:''),
+    (CodPaisIBGE:8052; DescricaoPaisIBGE:'TOQUELAU,ILHAS'; ISO2:'TK'; Comentario:''),
+    (CodPaisIBGE:8109; DescricaoPaisIBGE:'TONGA'; ISO2:'TO'; Comentario:''),
+    (CodPaisIBGE:8150; DescricaoPaisIBGE:'TRINIDAD E TOBAGO'; ISO2:'TT'; Comentario:''),
+    (CodPaisIBGE:8206; DescricaoPaisIBGE:'TUNISIA'; ISO2:'TN'; Comentario:''),
+    (CodPaisIBGE:8230; DescricaoPaisIBGE:'TURCAS E CAICOS,ILHAS'; ISO2:'TC'; Comentario:''),
+    (CodPaisIBGE:8249; DescricaoPaisIBGE:'TURCOMENISTAO, REPUBLICA DO'; ISO2:'TM'; Comentario:''),
+    (CodPaisIBGE:8273; DescricaoPaisIBGE:'TURQUIA'; ISO2:'TR'; Comentario:''),
+    (CodPaisIBGE:8281; DescricaoPaisIBGE:'TUVALU'; ISO2:'TV'; Comentario:''),
+    (CodPaisIBGE:8311; DescricaoPaisIBGE:'UCRANIA'; ISO2:'UA'; Comentario:''),
+    (CodPaisIBGE:8338; DescricaoPaisIBGE:'UGANDA'; ISO2:'UG'; Comentario:''),
+    (CodPaisIBGE:8451; DescricaoPaisIBGE:'URUGUAI'; ISO2:'UY'; Comentario:''),
+    (CodPaisIBGE:8478; DescricaoPaisIBGE:'UZBEQUISTAO, REPUBLICA DO'; ISO2:'UZ'; Comentario:''),
+    (CodPaisIBGE:8486; DescricaoPaisIBGE:'VATICANO, EST.DA CIDADE DO'; ISO2:'VA'; Comentario:''),
+    (CodPaisIBGE:8508; DescricaoPaisIBGE:'VENEZUELA'; ISO2:'VE'; Comentario:''),
+    (CodPaisIBGE:8583; DescricaoPaisIBGE:'VIETNA'; ISO2:'VN'; Comentario:''),
+    (CodPaisIBGE:8630; DescricaoPaisIBGE:'VIRGENS,ILHAS (BRITANICAS)'; ISO2:'VG'; Comentario:''),
+    (CodPaisIBGE:8664; DescricaoPaisIBGE:'VIRGENS,ILHAS (E.U.A.)'; ISO2:'VI'; Comentario:''),
+    (CodPaisIBGE:8702; DescricaoPaisIBGE:'FIJI'; ISO2:'FJ'; Comentario:''),
+    (CodPaisIBGE:8737; DescricaoPaisIBGE:'WAKE, ILHA'; ISO2:'US'; Comentario:'Territorio sob soberania dos EUA.'),
+    (CodPaisIBGE:8885; DescricaoPaisIBGE:'CONGO, REPUBLICA DEMOCRATICA DO'; ISO2:'CD'; Comentario:''),
+    (CodPaisIBGE:8907; DescricaoPaisIBGE:'ZAMBIA'; ISO2:'ZM'; Comentario:''),
+    (CodPaisIBGE:8958; DescricaoPaisIBGE:'ZONA DO CANAL DO PANAMA'; ISO2:'PA'; Comentario:'Região do Panama.')
+  );
+
 const
   SiglaISO2Pais: array[0..247] of string = ('AF', 'AL', 'CW', 'DE', 'BF', 'AD',
         'AO', 'AI', 'AQ', 'AG', 'SA', 'DZ', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ',
@@ -13441,7 +13704,19 @@ end;
 function CodIBGEPaisToSiglaISO2(t: Integer): string;
 var
   i: Integer;
+  SiglaISO2: string;
 begin
+  SiglaISO2 :='';
+
+  for I := Low(Paises) to High(Paises) do
+    if Paises[I].CodPaisIBGE = t then
+    begin
+      SiglaISO2 := Paises[I].ISO2;
+      Break;
+    end;
+
+  Result := SiglaISO2;
+{
   Result := 'ZZ';
 
   for i := Low(CodigoIBGEPais) to High(CodigoIBGEPais) do
@@ -13452,6 +13727,7 @@ begin
       exit;
     end;
   end;
+  }
 end;
 
 function SiglaISO2ToCodIBGEPais(const t: string): Integer;
@@ -13468,6 +13744,23 @@ begin
       exit;
     end;
   end;
+end;
+
+function CodIBGEPaisToDescricao(t: Integer): string;
+var
+  i: Integer;
+  Descricao: string;
+begin
+  Descricao :='';
+
+  for I := Low(Paises) to High(Paises) do
+    if Paises[I].CodPaisIBGE = t then
+    begin
+      Descricao := Paises[I].DescricaoPaisIBGE;
+      Break;
+    end;
+
+  Result := Descricao;
 end;
 
 function CodIBGEPaisToCodISO(t: Integer): Integer;
