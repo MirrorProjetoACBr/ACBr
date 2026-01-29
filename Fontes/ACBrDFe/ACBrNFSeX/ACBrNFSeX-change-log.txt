@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/01/2026
+-- ACBrNFSeXServicos --
+[*] ACBr-8839 A cidade Farroupilha/RS esta usando a API própria do provedor. 
+   Por: Desenv. AT Info Sistemas
 -- Diversos --
 [*] Ajustes na geração e leitura do arquivo INI visando o Padrão Nacional.
     Por: Italo Giurizzato Junior
@@ -50,7 +53,7 @@ Símbolo : Significado
 [*] Ajustes na geração do XML - Layout Próprio do provedor.
     Por: Juliomar Marchetti
 -- ACBrNFSeXServicos --
-[*] Ataualizado Peixoto de Azevedo/MT 
+[*] Atualizado Peixoto de Azevedo/MT 
    https://www.projetoacbr.com.br/forum/topic/89879-erro-peixoto-de-azevedo-mt-erro-de-conex%C3%A3o-extra-content-at-the-end-of-the-document/
    Por: Daniel de Morais Infocotidiano
 -- Saatri.Provider --
