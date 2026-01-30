@@ -142,6 +142,9 @@ type
     procedure PrepararConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); override;
     procedure TratarRetornoConsultaNFSeporChave(Response: TNFSeConsultaNFSeResponse); override;
 
+    procedure PrepararConsultarEvento(Response: TNFSeConsultarEventoResponse); override;
+    procedure TratarRetornoConsultarEvento(Response: TNFSeConsultarEventoResponse); override;
+
   end;
 
 implementation
@@ -892,6 +895,22 @@ begin
   Method := 'GET';
 end;
 
+procedure TACBrNFSeProviderPronimAPIPropria.PrepararConsultarEvento(
+  Response: TNFSeConsultarEventoResponse);
+var
+  AErro: TNFSeEventoCollectionItem;
+begin
+  if EstaVazio(Response.ChaveNFSe) then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod118;
+    AErro.Descricao := ACBrStr(Desc118);
+    Exit;
+  end;
+  Path := '/ConsultarEventos/' + Response.ChaveNFSe;
+  Response.ArquivoEnvio := Path;
+  Method := 'GET';
+end;
 
 procedure TACBrNFSeProviderPronimAPIPropria.TratarRetornoConsultaNFSeporChave(
   Response: TNFSeConsultaNFSeResponse);
@@ -1100,6 +1119,105 @@ begin
 
             LerNFSe(NFSeXml);
           end;
+        end;
+      end;
+    except
+      on E:Exception do
+      begin
+        AErro := Response.Erros.New;
+        AErro.Codigo := Cod999;
+        AErro.Descricao := ACBrStr(Desc999 + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(Document);
+  end;
+end;
+
+procedure TACBrNFSeProviderPronimAPIPropria.TratarRetornoConsultarEvento(
+  Response: TNFSeConsultarEventoResponse);
+var
+  Document, JSon: TACBrJSONObject;
+  DocumentArray, JSonLoteEventos: TACBrJSONArray;
+  i: Integer;
+  AErro: TNFSeEventoCollectionItem;
+  AResumo: TNFSeResumoCollectionItem;
+  IDEvento, ArquivoXml, nomeArq: string;
+  DocumentXml: TACBrXmlDocument;
+  ANode: TACBrXmlNode;
+  Ok: Boolean;
+begin
+  if (Response.ArquivoRetorno = '') or (Response.ArquivoRetorno = '[]') then
+  begin
+    AErro := Response.Erros.New;
+    AErro.Codigo := Cod201;
+    AErro.Descricao := ACBrStr(Desc201);
+    Exit
+  end;
+
+  DocumentArray := TACBrJSONArray.Parse(Response.ArquivoRetorno);
+
+  try
+    try
+      ProcessarMensagemDeErros(Document, Response);
+      Response.Sucesso := (Response.Erros.Count = 0);
+
+      JSonLoteEventos := DocumentArray;
+
+      for i := 0 to JSonLoteEventos.Count-1 do
+      begin
+
+        JSon := JSonLoteEventos.ItemAsJSONObject[i];
+        Response.Data := Json.AsISODateTime['dataInclusao'];
+        AResumo := Response.Resumos.New;
+        AResumo.TipoEvento := 'e' + JSon.AsString['tipo'];
+        AResumo.TipoDoc := 'Evento de ' +
+                           tpEventoToDesc(StrTotpEvento(Ok, AResumo.TipoEvento));
+
+        ArquivoXml := JSon.AsString['xmlGZipB64'];
+        ArquivoXml := DeCompress(DecodeBase64(ArquivoXml));
+        if ArquivoXml = '' then
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod203;
+          AErro.Descricao := ACBrStr(Desc203);
+          Exit
+        end;
+        DocumentXml := TACBrXmlDocument.Create;
+        try
+          try
+            DocumentXml.LoadFromXml(ArquivoXml);
+
+            ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
+
+            IDEvento := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+
+            Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
+            Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
+            Response.idEvento := IDEvento;
+            Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
+            Response.XmlRetorno := ArquivoXml;
+
+            Response.SucessoCanc := (Response.tpEvento = teCancelamento);
+
+            ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
+            ANode := ANode.Childrens.FindAnyNs('infPedReg');
+
+            Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
+
+            nomeArq := '';
+            SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml, nomeArq);
+            Response.PathNome := nomeArq;
+          except
+            on E:Exception do
+            begin
+              AErro := Response.Erros.New;
+              AErro.Codigo := Cod999;
+              AErro.Descricao := Desc999 + E.Message;
+            end;
+          end;
+        finally
+          FreeAndNil(DocumentXml);
         end;
       end;
     except

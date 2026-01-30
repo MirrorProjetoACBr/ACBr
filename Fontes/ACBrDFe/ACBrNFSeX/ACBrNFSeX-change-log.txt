@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 30/01/2026
 -- Pronim.Provider.pas --
+[*] ACBR-8869 - Ajustado Consultar Evento
+	https://www.projetoacbr.com.br/forum/topic/89807-nfse-pronim-consulta-nfse-por-chave
+    Por: Daniel de Morais Infocotidiano
+
+30/01/2026
+-- Pronim.Provider.pas --
 [*] ACBR-8869 - Ajustado Consulta por chave, mapeado tbm a propriedade situação que nao estava mapeada;
 	https://www.projetoacbr.com.br/forum/topic/89807-nfse-pronim-consulta-nfse-por-chave
     Por: Daniel de Morais Infocotidiano
