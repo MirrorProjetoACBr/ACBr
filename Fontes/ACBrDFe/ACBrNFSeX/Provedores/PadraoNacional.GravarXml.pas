@@ -552,7 +552,12 @@ begin
   xmlNode := GerarXMLValoresNFSe;
   Result.AppendChild(xmlNode);
 
-  if GerarIBSCBSNFSe then
+  {Uso da Administração Tributária Municipal}
+  if VersaoNFSe = ve101 then
+    Result.AppendChild(AddNode(tcStr, '#1', 'xOutInf', 1, 15, 0,
+                                                   NFSe.OutrasInformacoes, ''));
+
+  if GerarIBSCBSNFSe and (NFSe.OptanteSN = osnNaoOptante) then
   begin
     xmlNode := GerarXMLIBSCBSNFSe;
     Result.AppendChild(xmlNode);

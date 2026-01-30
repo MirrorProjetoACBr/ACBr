@@ -102,7 +102,8 @@ end;
 procedure TNFSeW_SilTecnologiaAPIPropria.Configuracao;
 begin
   inherited Configuracao;
-  GerarIBSCBSNFSe := true;
+
+  GerarIBSCBSNFSe := True;
 end;
 
 function TNFSeW_SilTecnologiaAPIPropria.GerarXml: Boolean;
