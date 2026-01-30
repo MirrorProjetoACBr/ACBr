@@ -511,6 +511,25 @@ var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
   sAux: string;
+  procedure LerICMS(const AICMSNode: TACBrXmlNode);
+  begin
+    if not Assigned(AICMSNode) then
+      exit;
+    Item.Imposto.ICMS.CST := StrToCSTICMS(ObterConteudo(AICMSNode.Childrens.FindAnyNs('CST'), tcStr));
+    Item.Imposto.ICMS.vBC := ObterConteudo(AICMSNode.Childrens.FindAnyNs('vBC'), tcDe2);
+    Item.Imposto.ICMS.pICMS := ObterConteudo(AICMSNode.Childrens.FindAnyNs('pICMS'), tcDe2);
+    Item.Imposto.ICMS.vICMS := ObterConteudo(AICMSNode.Childrens.FindAnyNs('vICMS'), tcDe2);
+    Item.Imposto.ICMS.pFCP := ObterConteudo(AICMSNode.Childrens.FindAnyNs('pFCP'), tcDe4);
+    Item.Imposto.ICMS.vFCP := ObterConteudo(AICMSNode.Childrens.FindAnyNs('vFCP'), tcDe2);
+    Item.Imposto.ICMS.pRedBC := ObterConteudo(AICMSNode.Childrens.FindAnyNs('pRedBC'), tcDe2);
+    Item.Imposto.ICMS.vICMSDeson := ObterConteudo(AICMSNode.Childrens.FindAnyNs('vICMSDeson'), tcDe2);
+    Item.Imposto.ICMS.cBenef := ObterConteudo(AICMSNode.Childrens.FindAnyNs('cBenef'), tcStr);
+
+    sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indSN'), tcStr);
+    Item.Imposto.ICMS.indSN := tiNao;
+    if sAux = '1' then
+      Item.Imposto.ICMS.indSN := tiSim;
+  end;
 begin
   if not Assigned(Item) then Exit;
   if not Assigned(ANode) then Exit;
@@ -522,25 +541,12 @@ begin
 
   if Item.Imposto.indSemCST = tiNao then
   begin
-    AuxNode := ANode.Childrens.Items[0];
-
-    if (AuxNode <> nil) then
-    begin
-      Item.Imposto.ICMS.CST := StrToCSTICMS(ObterConteudo(AuxNode.Childrens.FindAnyNs('CST'), tcStr));
-      Item.Imposto.ICMS.vBC := ObterConteudo(AuxNode.Childrens.FindAnyNs('vBC'), tcDe2);
-      Item.Imposto.ICMS.pICMS := ObterConteudo(AuxNode.Childrens.FindAnyNs('pICMS'), tcDe2);
-      Item.Imposto.ICMS.vICMS := ObterConteudo(AuxNode.Childrens.FindAnyNs('vICMS'), tcDe2);
-      Item.Imposto.ICMS.pFCP := ObterConteudo(AuxNode.Childrens.FindAnyNs('pFCP'), tcDe4);
-      Item.Imposto.ICMS.vFCP := ObterConteudo(AuxNode.Childrens.FindAnyNs('vFCP'), tcDe2);
-      Item.Imposto.ICMS.pRedBC := ObterConteudo(AuxNode.Childrens.FindAnyNs('pRedBC'), tcDe2);
-      Item.Imposto.ICMS.vICMSDeson := ObterConteudo(AuxNode.Childrens.FindAnyNs('vICMSDeson'), tcDe2);
-      Item.Imposto.ICMS.cBenef := ObterConteudo(AuxNode.Childrens.FindAnyNs('cBenef'), tcStr);
-
-      sAux := ObterConteudo(ANode.Childrens.FindAnyNs('indSN'), tcStr);
-      Item.Imposto.ICMS.indSN := tiNao;
-      if sAux = '1' then
-        Item.Imposto.ICMS.indSN := tiSim;
-    end;
+    LerICMS(ANode.Childrens.FindAnyNs('ICMS00'));
+    LerICMS(ANode.Childrens.FindAnyNs('ICMS20'));
+    LerICMS(ANode.Childrens.FindAnyNs('ICMS40'));
+    LerICMS(ANode.Childrens.FindAnyNs('ICMS51'));
+    LerICMS(ANode.Childrens.FindAnyNs('ICMS90'));
+    LerICMS(ANode.Childrens.FindAnyNs('ICMSSN'));
 
     Item.Imposto.ICMSUFDest.Clear;
     ANodes := ANode.Childrens.FindAllAnyNs('ICMSUFDest');

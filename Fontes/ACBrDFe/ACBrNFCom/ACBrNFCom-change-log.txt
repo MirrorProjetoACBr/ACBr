@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2026
+-- ACBrNFComXmlReader --
+[-] Ajuste visando a correta leitura do grupo ICMS conforme as varias tags possíveis.
+   Por: Diego Folieni
+
 09/12/2025
 -- ACBrNFComXmlReader --
 [*] ACBR-8500 - Implementada leitura da tag tpFat do xml
