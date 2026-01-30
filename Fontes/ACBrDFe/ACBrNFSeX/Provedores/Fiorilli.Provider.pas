@@ -657,7 +657,7 @@ end;
 function TACBrNFSeProviderFiorilliAPIPropria.PrepararArquivoEnvio(
   const aXml: string; aMetodo: TMetodo): string;
 begin
-  if aMetodo in [tmGerar, tmEnviarEvento] then
+  if aMetodo in [tmGerar, tmRecepcionarSincrono, tmRecepcionar, tmEnviarEvento] then
     Result := ChangeLineBreak(aXml, '');
 end;
 
@@ -713,12 +713,11 @@ begin
                               ConfigMsgDados.XmlRps.InfElemento, '', '', '',
                               IdAttr);
 
-      Response.ArquivoEnvio := Nota.XmlRps;
     end;
 
     SalvarXmlRps(Nota);
 
-    ListaDps := ListaDps + Nota.XmlRps;
+    ListaDps := ListaDps + RemoverDeclaracaoXML(Nota.XmlRps);
   end;
 
   if Response.ModoEnvio = meUnitario then
