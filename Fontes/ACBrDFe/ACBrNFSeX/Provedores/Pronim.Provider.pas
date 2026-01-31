@@ -1137,7 +1137,7 @@ end;
 procedure TACBrNFSeProviderPronimAPIPropria.TratarRetornoConsultarEvento(
   Response: TNFSeConsultarEventoResponse);
 var
-  Document, JSon: TACBrJSONObject;
+  JSon: TACBrJSONObject;
   DocumentArray, JSonLoteEventos: TACBrJSONArray;
   i: Integer;
   AErro: TNFSeEventoCollectionItem;
@@ -1159,14 +1159,12 @@ begin
 
   try
     try
-      ProcessarMensagemDeErros(Document, Response);
+      ProcessarMensagemDeErros(DocumentArray.ItemAsJSONObject[0], Response);
       Response.Sucesso := (Response.Erros.Count = 0);
-
       JSonLoteEventos := DocumentArray;
 
       for i := 0 to JSonLoteEventos.Count-1 do
       begin
-
         JSon := JSonLoteEventos.ItemAsJSONObject[i];
         Response.Data := Json.AsISODateTime['dataInclusao'];
         AResumo := Response.Resumos.New;
@@ -1187,27 +1185,21 @@ begin
         try
           try
             DocumentXml.LoadFromXml(ArquivoXml);
-
             ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
-
             IDEvento := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
-
             Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
             Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
             Response.idEvento := IDEvento;
             Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
             Response.XmlRetorno := ArquivoXml;
-
             Response.SucessoCanc := (Response.tpEvento = teCancelamento);
-
             ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
             ANode := ANode.Childrens.FindAnyNs('infPedReg');
-
             Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
-
             nomeArq := '';
             SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml, nomeArq);
             Response.PathNome := nomeArq;
+            AResumo.NomeArq:=nomeArq;
           except
             on E:Exception do
             begin
@@ -1229,7 +1221,7 @@ begin
       end;
     end;
   finally
-    FreeAndNil(Document);
+    FreeAndNil(DocumentArray);
   end;
 end;
 

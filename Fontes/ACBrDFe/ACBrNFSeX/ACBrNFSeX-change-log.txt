@@ -41,7 +41,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+-- Pronim.Provider.pas --
+[-] ACBR-8869 - Ajustado Consultar Evento, Corrigido para solucionar AV
+	https://www.projetoacbr.com.br/forum/topic/89807-nfse-pronim-consulta-nfse-por-chave
+    Por: Daniel de Morais Infocotidiano
 30/01/2026
 -- Fiorilli.Provider --
 [-] Ajustes visando correta geração dos arquivos no envio em lote síncrono e assíncrono para nova API.
