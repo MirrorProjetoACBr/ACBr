@@ -84,20 +84,14 @@ end;
 procedure TACBrGNREGuiaRL.ImprimirGuia(AGNRE: TGNRERetorno = nil);
 var
   i: integer;
-  frlGuiaRLRetrato: TfrlGuiaRLRetrato;
 begin
-  frlGuiaRLRetrato := TfrlGuiaRLRetrato.Create(Self);
 
   try
-    frlGuiaRLRetrato.RLGNRe.PageSetup.PaperSize   :=fpA4;
-    frlGuiaRLRetrato.RLGNRe.PageSetup.PaperHeight :=297.0;
-    frlGuiaRLRetrato.RLGNRe.PageSetup.PaperWidth  :=210.0;
-
     if AGNRE = nil then
     begin
       for i:=0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count -1 do
       begin
-        frlGuiaRLRetrato.Imprimir(Self,
+        TfrlGuiaRLRetrato.Imprimir(Self,
            TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE,
            Email,
            Fax,
@@ -116,7 +110,7 @@ begin
     end
     else
     begin
-      frlGuiaRLRetrato.Imprimir(Self,
+      TfrlGuiaRLRetrato.Imprimir(Self,
            AGNRE,
            Email,
            Fax,
@@ -133,7 +127,7 @@ begin
            PrintDialog);
     end;
   finally
-    frlGuiaRLRetrato.Free;
+
   end;
 end;
 

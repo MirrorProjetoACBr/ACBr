@@ -45,6 +45,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2026
+-- ACBrGNReGuiaRLClass --
+--ACBrGNReGuiaRLRetrato --
+[-] ACBr-8878: Corrige Duplicate name: A component named "frlGuiaRLRetrato" already exists
+[-] Mitigação para AV ao atribuir valor a variavel RepresentacaoNumerica.Caption
+  Por:doszapro
+
 27/09/2025
 -- ACBrGNREGuiaClass --
 [*] Comentado a propriedade TamanhoPapel, pois não é utilizada pelo componente.
