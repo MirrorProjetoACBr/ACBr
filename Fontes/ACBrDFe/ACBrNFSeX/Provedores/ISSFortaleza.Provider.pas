@@ -331,10 +331,10 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns1:ConsultarLoteRpsV3' + NameSpace + '>';
+  Request := '<ns1:ConsultarLoteRpsV4' + NameSpace + '>';
   Request := Request + '<Cabecalho>' + XmlToStr(ACabecalho) + '</Cabecalho>';
   Request := Request + '<ConsultarLoteRpsEnvio>' + XmlToStr(AMSG) + '</ConsultarLoteRpsEnvio>';
-  Request := Request + '</ns1:ConsultarLoteRpsV3>';
+  Request := Request + '</ns1:ConsultarLoteRpsV4>';
 
   Result := Executar('', Request,
                      ['ConsultarLoteRpsResposta', 'ConsultarLoteRpsResposta'],
@@ -363,10 +363,10 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns1:ConsultarNfsePorRpsV3' + NameSpace + '>';
+  Request := '<ns1:ConsultarNfsePorRpsV4' + NameSpace + '>';
   Request := Request + '<Cabecalho>' + XmlToStr(ACabecalho) + '</Cabecalho>';
   Request := Request + '<ConsultarNfseRpsEnvio>' + XmlToStr(AMSG) + '</ConsultarNfseRpsEnvio>';
-  Request := Request + '</ns1:ConsultarNfsePorRpsV3>';
+  Request := Request + '</ns1:ConsultarNfsePorRpsV4>';
 
   Result := Executar('', Request,
                      ['ConsultarNfseRpsResposta', 'ConsultarNfseRpsResposta'],
@@ -379,10 +379,10 @@ var
 begin
   FPMsgOrig := AMSG;
 
-  Request := '<ns1:ConsultarNfseV3' + NameSpace + '>';
+  Request := '<ns1:ConsultarNfseV4' + NameSpace + '>';
   Request := Request + '<Cabecalho>' + XmlToStr(ACabecalho) + '</Cabecalho>';
   Request := Request + '<ConsultarNfseEnvio>' + XmlToStr(AMSG) + '</ConsultarNfseEnvio>';
-  Request := Request + '</ns1:ConsultarNfseV3>';
+  Request := Request + '</ns1:ConsultarNfseV4>';
 
   Result := Executar('', Request,
                      ['ConsultarNfseResposta', 'ConsultarNfseResposta'],

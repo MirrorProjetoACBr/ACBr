@@ -1169,6 +1169,9 @@ begin
 
     ID := chNFSe + OnlyNumber(tpEventoToStr(tpEvento));
 
+    if (nPedRegEvento <= 0) or (nPedRegEvento > 1) then
+      nPedRegEvento := 1;
+
     IdAttrPRE := 'Id="' + 'PRE' + ID + '"';
     IdAttrEVT := 'Id="' + 'EVT' + ID + '"' + FormatFloat('000', nPedRegEvento);
 
@@ -1237,7 +1240,7 @@ begin
                      FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', dhEvento) +
                      GetUTC(xUF, dhEvento) +
                    '</dhProc>' +
-                   '<nDFSe>' + '0' + '</nDFSe>' +
+                   '<nDFSe>' + '1' + '</nDFSe>' +
                     xEvento +
                  '</infEvento>' +
                '</evento>';
