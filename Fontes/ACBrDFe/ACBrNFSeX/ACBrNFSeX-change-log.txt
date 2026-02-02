@@ -43,11 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/02/2026
+-- SilTecnologia.Provider --
+[*] Possível solução para o erro ao enviar o evento de cancelamento.
+   Por: Italo Giurizzato Junior
 -- Pronim.Provider.pas --
 [*] Ajustado para evitar AV
     Por: Daniel de Morais Infocotidiano
-
-02/02/2026
 -- Conam.GravarXml --
 [*] Ajustes nas function: GerarReg50 e GerarReg50Item.
    Por: Italo Giurizzato Junior

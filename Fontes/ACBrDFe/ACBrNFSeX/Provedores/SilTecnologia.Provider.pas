@@ -1170,7 +1170,7 @@ begin
     ID := chNFSe + OnlyNumber(tpEventoToStr(tpEvento));
 
     IdAttrPRE := 'Id="' + 'PRE' + ID + '"';
-    IdAttrEVT := 'Id="' + 'EVT' + ID + '"';
+    IdAttrEVT := 'Id="' + 'EVT' + ID + '"' + FormatFloat('000', nPedRegEvento);
 
     case tpEvento of
       teCancelamento:
