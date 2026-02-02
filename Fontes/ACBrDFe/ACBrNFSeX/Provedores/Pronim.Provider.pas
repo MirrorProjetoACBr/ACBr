@@ -1159,7 +1159,15 @@ begin
 
   try
     try
-      ProcessarMensagemDeErros(DocumentArray.ItemAsJSONObject[0], Response);
+      if DocumentArray.Count > 0 then
+        ProcessarMensagemDeErros(DocumentArray.ItemAsJSONObject[0], Response)
+      else
+        begin
+          AErro := Response.Erros.New;
+          AErro.Codigo := Cod201;
+          AErro.Descricao := ACBrStr(Desc201);
+          Exit
+        end;
       Response.Sucesso := (Response.Erros.Count = 0);
       JSonLoteEventos := DocumentArray;
 
