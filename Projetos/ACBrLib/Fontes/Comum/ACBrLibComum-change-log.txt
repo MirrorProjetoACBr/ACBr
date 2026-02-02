@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2026
+
+-- ACBrLibComum --
+[-] Previne a inicialização da biblioteca quando a exceção EACBrConversaoEnumeradoException for lançada
+[*] Esse erro indica que há configuração de enumerado inválidas no ACBrLib.ini 
+  Por:doszapro
+  
 07/01/2026
 -- ACBrLibComum --
 [-] Previne vazamento de tamanho da eChaveCrypt no log da lib.

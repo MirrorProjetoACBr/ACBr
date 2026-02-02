@@ -39,6 +39,7 @@ interface
 uses
   Classes,
   SysUtils,
+  ACBrBase,
   {$IfDef FPC}
    fileinfo,
   {$EndIf}
@@ -729,9 +730,17 @@ begin
 
     Result := 0;
   except
+
     on E: EACBrLibException do
     begin
       Result := E.Erro;
+      LiberarLib(libHandle);
+    end;
+
+
+    on E: EACBrConversaoEnumeradoException do
+    begin
+      Result:= ErrConfigLer;
       LiberarLib(libHandle);
     end;
 
