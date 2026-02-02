@@ -62,7 +62,7 @@ type
     function GerarReg40: TACBrXmlNode;
     function GerarReg40Item(const Sigla, Conteudo: string): TACBrXmlNode;
     function GerarReg50: TACBrXmlNode;
-    function GerarReg50Item(const TipoEnd: string): TACBrXmlNode;
+    function GerarReg50Item(const TipoEnd: Integer): TACBrXmlNode;
 
     function GerarXmlItemDestinatario(Dest: TDadosdaPessoa): TACBrXmlNode;
     function GerarXMLItemEnderecoDestinatario(Ender: TEnder): TACBrXmlNode;
@@ -605,7 +605,7 @@ begin
 
   if NFSe.IBSCBS.dest.xNome <> '' then
   begin
-    xmlNode := GerarReg50Item('1');
+    xmlNode := GerarReg50Item(1);
     Result.AppendChild(xmlNode);
 
     Inc(FQtdReg50);
@@ -613,7 +613,7 @@ begin
 
   if NFSe.ConstrucaoCivil.nCei <> '' then
   begin
-    xmlNode := GerarReg50Item('2');
+    xmlNode := GerarReg50Item(2);
     Result.AppendChild(xmlNode);
 
     Inc(FQtdReg50);
@@ -621,25 +621,25 @@ begin
 
   if NFSe.IBSCBS.imovel.cCIB <> '' then
   begin
-    xmlNode := GerarReg50Item('3');
+    xmlNode := GerarReg50Item(3);
     Result.AppendChild(xmlNode);
 
     Inc(FQtdReg50);
   end;
 end;
 
-function TNFSeW_Conam.GerarReg50Item(const TipoEnd: string): TACBrXmlNode;
-var
-  Tipo: Integer;
+function TNFSeW_Conam.GerarReg50Item(const TipoEnd: Integer): TACBrXmlNode;
 begin
   Result := CreateElement('Reg50Item');
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'TipoEnd', 1, 1, 1, TipoEnd, ''));
+  Result.AppendChild(AddNode(tcInt, '#1', 'TipoEnd', 1, 1, 1, TipoEnd, ''));
 
-  case Tipo of
+  case TipoEnd of
     1: Result.AppendChild(GerarXmlItemDestinatario(NFSe.IBSCBS.dest));
     2: Result.AppendChild(GerarXmlItemObra(NFSe.ConstrucaoCivil));
-    3: Result.AppendChild(GerarXmlItemImovel(NFSe.IBSCBS.imovel));
+  else
+    // TipoEnd = 3
+    Result.AppendChild(GerarXmlItemImovel(NFSe.IBSCBS.imovel));
   end;
 end;
 
