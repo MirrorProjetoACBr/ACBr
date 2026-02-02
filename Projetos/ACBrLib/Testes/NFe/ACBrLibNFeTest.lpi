@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <AlwaysBuild Value="True"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="ACBrLibNFeTest"/>
       <Scaled Value="True"/>
       <ResourceType Value="res"/>
@@ -22,8 +22,48 @@
       <Attributes pvaPrivateBuild="True"/>
       <StringTable ProductVersion="0.0.0.0"/>
     </VersionInfo>
-    <BuildModes Count="1">
-      <Item1 Name="Default" Default="True"/>
+    <BuildModes Count="2">
+      <Item1 Name="Win32-i386-Debug" Default="True"/>
+      <Item2 Name="Linux-x64">
+        <MacroValues Count="1">
+          <Macro1 Name="ACBrDir" Value="$(ACBR_HOME)"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\ACBrLibNFeTest"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
+            <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\NFe;..\..\..\ACBrMonitorPLUS\Lazarus;..\..\..\..\Fontes\ACBrOpenSSL"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="2"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <RunWithoutDebug Value="True"/>
+              <UseLineInfoUnit Value="False"/>
+            </Debugging>
+            <Options>
+              <PassLinkerOptions Value="True"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-k-L../../Fontes/NFe/bin/Linux/MT"/>
+          </Other>
+        </CompilerOptions>
+      </Item2>
+      <SharedMatrixOptions Count="1">
+        <Item1 ID="575833535749" Modes="Linux-x64" Type="IDEMacro" MacroName="ACBrDir" Value="$(ACBR_HOME)"/>
+      </SharedMatrixOptions>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -48,7 +88,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="ACBrLibNFeTest.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -61,6 +101,10 @@
         <Filename Value="..\..\Fontes\NFe\ACBrLibNFeStaticImport.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -71,11 +115,12 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
-      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\NFe;..\..\..\ACBrMonitorPLUS\Lazarus"/>
+      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\NFe;..\..\..\ACBrMonitorPLUS\Lazarus;..\..\..\..\Fontes\ACBrOpenSSL"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>
       <TargetCPU Value="i386"/>
+      <TargetOS Value="win32"/>
     </CodeGeneration>
     <Linking>
       <Options>
@@ -84,6 +129,9 @@
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="-k-L ./Testes/NFe/bin"/>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="4">

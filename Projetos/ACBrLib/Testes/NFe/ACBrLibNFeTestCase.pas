@@ -51,6 +51,7 @@ type
     procedure Test_NFE_Inicializar_Com_DiretorioInvalido;
     procedure Test_NFE_Inicializar;
     procedure Test_NFE_Inicializar_Ja_Inicializado;
+    procedure Teste_NFE_Inicializar_Ini_Erro_Conversao_Enumerado;
     procedure Test_NFE_Finalizar;
     procedure Test_NFE_Finalizar_Ja_Finalizado;
     procedure Test_NFE_Nome_Obtendo_LenBuffer;
@@ -59,6 +60,7 @@ type
     procedure Test_NFE_Nome_Lendo_Buffer_Tamanho_Menor;
     procedure Test_NFE_Versao;
     procedure Test_NFE_ConfigLerValor;
+
   end;
 
 implementation
@@ -68,12 +70,22 @@ uses
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Com_DiretorioInvalido;
 var
-  Handle: THandle;
+  plibHandle: TLibHandle;
+  pathACBrLib : Pansichar;
 begin
 
   try
     //NFE_Finalizar(Handle);
-    AssertEquals(ErrDiretorioNaoExiste, NFE_Inicializar(Handle,'C:\NAOEXISTE\ACBrLib.ini',''));
+
+    pathACBrLib :=
+    {$IFDEF WIN32}
+    'C:\NAOEXISTE\ACBrLib.ini';
+    {$else}
+
+    '/NAOEXISTE/ACBrLib.ini';
+    {$endif}
+
+    AssertEquals(ErrDiretorioNaoExiste, NFE_Inicializar(plibHandle,pathACBrLib,''));
   except
   on E: Exception do
      ShowMessage( 'Error: '+ E.ClassName + #13#10 + E.Message );
@@ -83,7 +95,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, NFE_Finalizar(Handle));
@@ -91,16 +103,29 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Ja_Inicializado;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, NFE_Finalizar(Handle));
 end;
 
+procedure TTestACBrNFeLib.Teste_NFE_Inicializar_Ini_Erro_Conversao_Enumerado;
+var
+  handle: TLibHandle;
+  iniInvalido : Pansichar;
+begin
+  iniInvalido :='[Memory]' +
+    sLineBreak+'[NFe]' +
+    sLineBreak+ 'Ambiente=2'+
+    sLineBreak;
+  AssertEquals(ErrConfigLer, NFE_Inicializar(handle,iniInvalido, ''));
+
+end;
+
 procedure TTestACBrNFeLib.Test_NFE_Finalizar;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
 begin
   AssertEquals(ErrOk, NFE_Inicializar(Handle,'',''));
   AssertEquals(ErrOk, NFE_Finalizar(Handle));
@@ -108,7 +133,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Finalizar_Ja_Finalizado;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
 begin
 
   try
@@ -124,7 +149,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Obtendo_LenBuffer;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
   Bufflen: Integer;
 begin
   // Obtendo o Tamanho //
@@ -137,7 +162,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Identico;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -152,7 +177,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Maior;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -168,7 +193,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Nome_Lendo_Buffer_Tamanho_Menor;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
   AStr: String;
   Bufflen: Integer;
 begin
@@ -183,7 +208,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_Versao;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
@@ -203,7 +228,7 @@ end;
 
 procedure TTestACBrNFeLib.Test_NFE_ConfigLerValor;
 var
-  Handle: THandle;
+  Handle: TLibHandle;
   Bufflen: Integer;
   AStr: String;
 begin
