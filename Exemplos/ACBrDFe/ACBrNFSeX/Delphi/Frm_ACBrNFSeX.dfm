@@ -1714,9 +1714,9 @@ object frmACBrNFSe: TfrmACBrNFSe
     TabOrder = 1
     object pgRespostas: TPageControl
       Left = 1
-      Top = 204
+      Top = 222
       Width = 567
-      Height = 438
+      Height = 420
       ActivePage = TabSheet8
       Align = alClient
       TabOrder = 0
@@ -1727,7 +1727,7 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 410
+          Height = 392
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -1746,11 +1746,11 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 410
+          Height = 392
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000382E0000E62100000000000000000000000000000000000000000000
+            4C000000382E0000692000000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1764,11 +1764,11 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 410
+          Height = 392
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000382E0000E62100000000000000000000000000000000000000000000
+            4C000000382E0000692000000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1781,11 +1781,11 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 410
+          Height = 392
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000382E0000E62100000000000000000000000000000000000000000000
+            4C000000382E0000692000000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1797,7 +1797,7 @@ object frmACBrNFSe: TfrmACBrNFSe
       Left = 1
       Top = 41
       Width = 567
-      Height = 163
+      Height = 181
       ActivePage = tsDemais
       Align = alTop
       TabOrder = 1
@@ -1807,7 +1807,7 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 135
+          Height = 153
           ActivePage = tsEnvios
           Align = alClient
           TabOrder = 0
@@ -2160,7 +2160,7 @@ object frmACBrNFSe: TfrmACBrNFSe
           Left = 0
           Top = 0
           Width = 559
-          Height = 136
+          Height = 150
           ActivePage = tsEnvios1
           Align = alTop
           TabOrder = 0
@@ -2304,6 +2304,21 @@ object frmACBrNFSe: TfrmACBrNFSe
           object tsConsultas1: TTabSheet
             Caption = 'Consultas'
             ImageIndex = 3
+            object Label52: TLabel
+              Left = 8
+              Top = 104
+              Width = 536
+              Height = 13
+              Caption = 
+                '(*) Servi'#231'os Implementados por alguns provedores que adotaram o ' +
+                'layout do Padr'#227'o Nacional.'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
             object btnConsultarDPSPorChavePN: TButton
               Left = 3
               Top = 10
@@ -2363,9 +2378,18 @@ object frmACBrNFSe: TfrmACBrNFSe
               Top = 72
               Width = 177
               Height = 25
-              Caption = 'Consultar Situa'#231#227'o'
+              Caption = 'Consultar Situa'#231#227'o (*)'
               TabOrder = 6
               OnClick = btnConsultarSitPNClick
+            end
+            object btnConsultarLotePN: TButton
+              Left = 369
+              Top = 72
+              Width = 177
+              Height = 25
+              Caption = 'Consultar Lote (*)'
+              TabOrder = 7
+              OnClick = btnConsultarLotePNClick
             end
           end
           object tsConsultarParametros: TTabSheet
@@ -2507,7 +2531,6 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.Geral.Emitente.DadosEmitente.Email = 'contato@provedor.com.br'
     Configuracoes.Geral.FormatoDiscriminacao = fdTabulado
     Configuracoes.Arquivos.OrdenacaoPath = <>
-    Configuracoes.Arquivos.TabServicosExt = True
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
