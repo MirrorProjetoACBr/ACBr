@@ -155,6 +155,7 @@ type
 type
 
   EACBrException = class(Exception);
+  EACBrConversaoEnumeradoException = class(EACBrException);
 
 TACBrAboutInfo = (ACBrAbout);
 

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2026
+-- ACBrBase --
+[+] ACBR-8791: Adiciona Exceção EACBrConversaoEnumeradoException para tratar erros de conversão de enumerado.
+  Por: doszpro
+
 25/11/2025
 -- ACBrUtil.DateTime --
 [+] Inclusão da função 'DateToIso8601';

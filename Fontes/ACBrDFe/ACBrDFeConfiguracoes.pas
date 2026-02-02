@@ -845,6 +845,8 @@ begin
 end;
 
 procedure TWebServicesConf.LerIni(const AIni: TCustomIniFile);
+var
+  i : integer;
 begin
   UF := AIni.ReadString(CDFeSessaoIni, 'UF', UF);
   TimeZoneConf.ModoDeteccao := TTimeZoneModoDeteccao(AIni.ReadInteger(CDFeSessaoIni, 'TimeZone.Modo', Integer(TimeZoneConf.ModoDeteccao)));
@@ -857,7 +859,12 @@ begin
 
   if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
   begin
-    Ambiente := TpcnTipoAmbiente( AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Ambiente', Integer(Ambiente)));
+    i:= AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Ambiente', Integer(Ambiente));
+    if ( ( i < 0 ) or ( i > 1) ) then
+       raise EACBrConversaoEnumeradoException.Create(IntToStr(i) + 'não é valor válido para Ambiente');
+
+
+    Ambiente := TpcnTipoAmbiente( i );
     Salvar := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarWS', Salvar);
     TimeOut := AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Timeout', TimeOut);
     TimeOutPorThread := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'TimeoutPorThread', TimeOutPorThread);

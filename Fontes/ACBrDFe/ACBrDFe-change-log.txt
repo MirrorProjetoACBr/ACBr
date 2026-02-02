@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/02/2026
+-- ACBrDFeConfiguracoes --
+[-] Corrige erro de conversão de Enumerado para TpcnTipoAmbiente
+ Por: doszapro
+
 23/01/2026
 -- ACBrDFeWebService --
 [-] ACBR-8847: Ajuste visando a correta geração do fuso horário no envio de eventos.
