@@ -1159,7 +1159,7 @@ begin
 
   try
     try
-      if DocumentArray.Count > 0 then
+      if Assigned(DocumentArray) and (DocumentArray.Count > 0) then
         ProcessarMensagemDeErros(DocumentArray.ItemAsJSONObject[0], Response)
       else
         begin
