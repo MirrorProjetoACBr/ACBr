@@ -1173,7 +1173,7 @@ begin
       nPedRegEvento := 1;
 
     IdAttrPRE := 'Id="' + 'PRE' + ID + '"';
-    IdAttrEVT := 'Id="' + 'EVT' + ID + '"' + FormatFloat('000', nPedRegEvento);
+    IdAttrEVT := 'Id="' + 'EVT' + ID + FormatFloat('000', nPedRegEvento)+ '"';
 
     case tpEvento of
       teCancelamento:

@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/02/2026
+-- SilTecnologia.Provider --
+[-] Correção na montagem do ID do Evento.
+   Por: Italo Giurizzato Junior
 -- ISSFortaleza.Provider --
 [*] ACBR-8896 - Ajustes para a versão 4 dos serviços do provedor.
    Por: Italo Giurizzato Junior
