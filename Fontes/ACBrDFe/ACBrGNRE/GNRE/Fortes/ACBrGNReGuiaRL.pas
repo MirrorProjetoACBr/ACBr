@@ -50,7 +50,6 @@ uses
   RLPDFFilter, 
   RLConsts,
   pgnreGNRERetorno,
-  rlTypes,
   ACBrGNRE2;
 
 type
@@ -146,14 +145,7 @@ begin
       FMargemEsquerda := AMargemEsquerda;
       FMargemDireita := AMargemDireita;
       FImpressora := AImpressora;
-
-    if assigned(RLGNRe) then
-    begin
-    RLGNRe.PageSetup.PaperSize:= fpA4;
-   // RLGNRe.PageSetup.PaperSize:=  0;//TRLPaperSize.fpA4;
-    RLGNRe.PageSetup.PaperHeight:=297.0;
-    RLGNRe.PageSetup.PaperWidth:=210.0;
-    end;
+      
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
 
