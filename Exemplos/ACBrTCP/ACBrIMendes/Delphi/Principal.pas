@@ -129,7 +129,7 @@ uses
   {$IfDef FPC}
    fpjson, jsonparser, jsonscanner,
   {$Else}
-    {$IFDEF DELPHIXE6_UP}JSON,{$ENDIF}
+    {$IFDEF DELPHI26_UP}JSON,{$ENDIF}
   {$EndIf}
   IniFiles, synacode, TypInfo,
   ACBrUtil.Base,
@@ -201,9 +201,9 @@ end;
 
 procedure TfrPrincipal.FormCreate(Sender: TObject);
 begin
-  LerConfiguracao;
   InicializarBitmaps;
   InicializarComponentesDefault;
+  LerConfiguracao;
   if ConfiguracaoValida then
     pgImendes.ActivePage := tsEndpoints
   else
@@ -319,7 +319,7 @@ var
   jdata: TJSONData;
   ms: TMemoryStream;
 {$ELSE}
-  {$IFDEF DELPHIXE6_UP}
+  {$IFDEF DELPHI26_UP}
   var
     wJsonValue: TJSONValue;
   {$ENDIF}
@@ -344,7 +344,7 @@ begin
         jdata.Free;
     end;
     {$ELSE}
-      {$IFDEF DELPHIXE6_UP}
+      {$IFDEF DELPHI26_UP}
       wJsonValue := TJSONObject.ParseJSONValue(AJSON);
       try
         if Assigned(wJsonValue) then
