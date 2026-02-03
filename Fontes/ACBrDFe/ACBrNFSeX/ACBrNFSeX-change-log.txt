@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 03/02/2026
+-- ACBrNFSeXConversao/PadraoNacional.GravarXml/PadraoNacional.LerXml/PadraoNacional.Provider --
+[-] Correção na leitura do arquivo INI para os provedores Citta, Digifred e SilTecnologia,
+    seção ValoresNFSe.
+-- Fiorilli.GravarXml --
+[-] Correção, estava gerando a tag CodigoNbs indevidamente.
+   Por: Italo Giurizzato Junior
 -- Ginfes.LerXml --
 [*] ACBR-8812: Ajuste para ler os campos conforme gravados em Ginfes.GravarXml.
     https://www.projetoacbr.com.br/forum/topic/89457-ginfes-problema-na-leitura-do-ini-rt/

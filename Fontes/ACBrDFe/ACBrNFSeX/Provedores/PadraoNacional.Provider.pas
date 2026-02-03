@@ -1517,20 +1517,20 @@ function TACBrNFSeProviderPadraoNacional.RegimeEspecialTributacaoToStr(
   const t: TnfseRegimeEspecialTributacao): string;
 begin
   Result := EnumeradoToStr(t,
-                         ['0', '1', '2', '3', '4', '5', '6'],
+                         ['0', '1', '2', '3', '4', '5', '6', '9'],
                          [retNenhum, retCooperativa, retEstimativa,
                          retMicroempresaMunicipal, retNotarioRegistrador,
-                         retISSQNAutonomos, retSociedadeProfissionais]);
+                         retISSQNAutonomos, retSociedadeProfissionais, retOutros]);
 end;
 
 function TACBrNFSeProviderPadraoNacional.StrToRegimeEspecialTributacao(
   out ok: boolean; const s: string): TnfseRegimeEspecialTributacao;
 begin
   Result := StrToEnumerado(ok, s,
-                        ['0', '1', '2', '3', '4', '5', '6'],
+                        ['0', '1', '2', '3', '4', '5', '6', '9'],
                         [retNenhum, retCooperativa, retEstimativa,
                          retMicroempresaMunicipal, retNotarioRegistrador,
-                         retISSQNAutonomos, retSociedadeProfissionais]);
+                         retISSQNAutonomos, retSociedadeProfissionais, retOutros]);
 end;
 
 function TACBrNFSeProviderPadraoNacional.RegimeEspecialTributacaoDescricao(
@@ -1544,6 +1544,7 @@ begin
     retNotarioRegistrador:     Result := '4 - Notário ou Registrador';
     retISSQNAutonomos:         Result := '5 - Profissional Autônomo';
     retSociedadeProfissionais: Result := '6 - Sociedade de Profissionais';
+    retOutros:                 Result := '9 - Outros';
   else
     Result := '';
   end;

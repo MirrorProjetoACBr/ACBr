@@ -915,18 +915,21 @@ begin
 
     with NFSe.Servico.Valores do
     begin
-      BaseCalculo := ValorServicos - ValorDeducoes - DescontoIncondicionado;
+      if (BaseCalculo = 0) and (ValorLiquidoNfse = 0) and (ValorTotalNotaFiscal = 0) then
+      begin
+        BaseCalculo := ValorServicos - ValorDeducoes - DescontoIncondicionado;
 
-      if tribFed.tpRetPisCofins = trpcNaoRetido then
-         RetencoesFederais := ValorInss + ValorIr + ValorCsll
-      else
-         RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+        if tribFed.tpRetPisCofins = trpcNaoRetido then
+           RetencoesFederais := ValorInss + ValorIr + ValorCsll
+        else
+           RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
 
-      ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
-                 ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
+        ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                   ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
 
-      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                              DescontoIncondicionado;
+        ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                                DescontoIncondicionado;
+      end;
     end;
 
     // Reforma Tributária
@@ -1424,8 +1427,11 @@ begin
     NFSe.OutrasInformacoes := ObterConteudo(AuxNode.Childrens.FindAnyNs('xOutInf'), tcStr);
     NFSe.OutrasInformacoes := StringReplace(NFSe.OutrasInformacoes, FpQuebradeLinha,
                                                     sLineBreak, [rfReplaceAll]);
+    NFSe.Servico.Valores.BaseCalculo := NFSe.infNFSe.valores.BaseCalculo;
     NFSe.Servico.Valores.Aliquota := NFSe.infNFSe.valores.Aliquota;
     NFSe.Servico.Valores.ValorIss := NFSe.infNFSe.valores.ValorIss;
+    NFSe.Servico.Valores.ValorIssRetido := NFSe.infNFSe.valores.vTotalRet;
+    NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.infNFSe.valores.ValorLiquidoNfse;
   end;
 
   if NFSe.OutrasInformacoes = '' then
@@ -1591,7 +1597,6 @@ begin
   LerINIValoresTribMun(AINIRec);
   LerINIValoresTribFederal(AINIRec);
   LerINIValoresTotalTrib(AINIRec);
-  LerINIValoresTotalTrib(AINIRec);
 
   // Reforma Tributária
   LerINIIBSCBS(AINIRec, NFSe.IBSCBS);
@@ -1600,18 +1605,21 @@ begin
 
   with NFSe.Servico.Valores do
   begin
-    BaseCalculo := ValorServicos - ValorDeducoes - DescontoIncondicionado;
+    if (BaseCalculo = 0) and (ValorLiquidoNfse = 0) and (ValorTotalNotaFiscal = 0) then
+    begin
+      BaseCalculo := ValorServicos - ValorDeducoes - DescontoIncondicionado;
 
-    if tribFed.tpRetPisCofins = trpcNaoRetido then
-       RetencoesFederais := ValorInss + ValorIr + ValorCsll
-    else
-       RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+      if tribFed.tpRetPisCofins = trpcNaoRetido then
+         RetencoesFederais := ValorInss + ValorIr + ValorCsll
+      else
+         RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
 
-    ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
-               ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
+      ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
+                 ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
 
-    ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
-                            DescontoIncondicionado;
+      ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
+                              DescontoIncondicionado;
+    end;
   end;
 end;
 
@@ -1758,8 +1766,11 @@ begin
     NFSe.infNFSe.valores.ValorLiquidoNfse := StringToFloatDef(AINIRec.ReadString(sSecao, 'vLiq', ''), 0);
     NFSe.OutrasInformacoes := AINIRec.ReadString(sSecao, 'xOutInf', '');
 
+    NFSe.Servico.Valores.BaseCalculo := NFSe.infNFSe.valores.BaseCalculo;
     NFSe.Servico.Valores.Aliquota := NFSe.infNFSe.valores.Aliquota;
     NFSe.Servico.Valores.ValorIss := NFSe.infNFSe.valores.ValorIss;
+    NFSe.Servico.Valores.ValorIssRetido := NFSe.infNFSe.valores.vTotalRet;
+    NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.infNFSe.valores.ValorLiquidoNfse;
   end;
 end;
 

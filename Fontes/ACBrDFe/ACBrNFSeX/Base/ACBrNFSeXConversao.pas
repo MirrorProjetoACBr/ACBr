@@ -481,11 +481,11 @@ const
 type
   TtpDedRed = (drAlimentacao, drMateriais, drProducaoExt, drReembolso,
                drRepasseConsorciado, drRepassePlanoSaude, drServicos,
-               drSubEmpreitada, drOutrasDeducoes, drProfissionalParceiro);
+               drSubEmpreitada, drProfissionalParceiro, drOutrasDeducoes);
 
 const
   TtpDedRedArrayStrings: array[TtpDedRed] of string = ('1', '2', '3', '4',
-    '5', '6', '7', '8', '99', '9');
+    '5', '6', '7', '8', '9', '99');
 
 type
   TtribISSQN = (tiOperacaoTributavel, tiImunidade, tiExportacao,
@@ -524,6 +524,10 @@ type
   TCST = (cstVazio, cst00, cst01, cst02, cst03, cst04, cst05, cst06, cst07,
           cst08, cst09);
 
+const
+  TCSTArrayStrings: array[TCST] of string = ('', '00', '01', '02', '03', '04',
+    '05', '06', '07', '08', '09');
+
 type
   TCSTPis = (cstPisVazio, cstPis00, cstPis01, cstPis02, cstPis03, cstPis04,
              cstPis05, cstPis06, cstPis07, cstPis08, cstPis09);
@@ -531,10 +535,6 @@ type
 const
   TCSTPisArrayStrings: array[TCSTPis] of string = ('', '00', '01', '02', '03',
     '04', '05', '06', '07', '08', '09');
-
-const
-  TCSTArrayStrings: array[TCST] of string = ('', '00', '01', '02', '03', '04',
-    '05', '06', '07', '08', '09');
 
 type
   TtpRetPisCofins = (trpcRetido, trpcNaoRetido, trpcPISRetido, trpcCOFINSRetido);
@@ -13403,17 +13403,19 @@ end;
 function tpDedRedToStr(const t: TtpDedRed): string;
 begin
   result := EnumeradoToStr(t,
-                           ['1', '2', '3', '4', '5', '6', '7', '8', '99', '9'],
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '99'],
     [drAlimentacao, drMateriais, drProducaoExt, drReembolso, drRepasseConsorciado,
-     drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes, drProfissionalParceiro]);
+     drRepassePlanoSaude, drServicos, drSubEmpreitada, drProfissionalParceiro,
+     drOutrasDeducoes]);
 end;
 
 function StrTotpDedRed(out ok: Boolean; const s: string): TtpDedRed;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1', '2', '3', '4', '5', '6', '7', '8', '99', '9'],
+                           ['1', '2', '3', '4', '5', '6', '7', '8', '9', '99'],
     [drAlimentacao, drMateriais, drProducaoExt, drReembolso, drRepasseConsorciado,
-     drRepassePlanoSaude, drServicos, drSubEmpreitada, drOutrasDeducoes, drProfissionalParceiro]);
+     drRepassePlanoSaude, drServicos, drSubEmpreitada, drProfissionalParceiro,
+     drOutrasDeducoes]);
 end;
 
 function tribISSQNToStr(const t: TtribISSQN): string;

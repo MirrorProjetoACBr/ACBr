@@ -532,6 +532,13 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'tpEmis', 1, 1, 1, '2'
                                        {tpEmisToStr(NFSe.infNFSe.tpEmis)}, ''));
 
+  {
+        Situações possíveis:
+        100 - NFS-e Gerada;
+        102 - NFS-e de Decisão Judicial;
+        103 - NFS-e Avulsa;
+        107 - NFS-e MEI;
+  }
   Result.AppendChild(AddNode(tcInt, '#1', 'cStat', 1, 3, 1, '100', ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'tpAmb', 1, 1, NrOcorrtpAmb,
