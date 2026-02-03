@@ -61,14 +61,14 @@ type
     procedure LerIdentificacaoRps(const ANode: TACBrXmlNode);
     procedure LerServico(const ANode: TACBrXmlNode); virtual;
     procedure LerItensServico(const ANode: TACBrXmlNode);
-    procedure LerValores(const ANode: TACBrXmlNode);
+    procedure LerValores(const ANode: TACBrXmlNode); virtual;
 
     procedure LerPrestadorServico(const ANode: TACBrXmlNode);
     procedure LerEnderecoPrestadorServico(const ANode: TACBrXmlNode; const aTag: string);
     procedure LerIdentificacaoPrestador(const ANode: TACBrXmlNode);
     procedure LerContatoPrestador(const ANode: TACBrXmlNode);
 
-    procedure LerTomadorServico(const ANode: TACBrXmlNode);
+    procedure LerTomadorServico(const ANode: TACBrXmlNode); virtual;
     procedure LerIdentificacaoTomador(const ANode: TACBrXmlNode);
     procedure LerEnderecoTomador(const ANode: TACBrXmlNode);
     procedure LerContatoTomador(const ANode: TACBrXmlNode);
@@ -1210,6 +1210,7 @@ begin
     NFSe.Servico.CodigoTributacaoMunicipio := AINIRec.ReadString(LSecao, 'CodigoTributacaoMunicipio', '');
     NFSe.Servico.Discriminacao := ChangeLineBreak(AINIRec.ReadString(LSecao, 'Discriminacao', ''), FpAOwner.ConfigGeral.QuebradeLinha);
     NFSe.Servico.CodigoMunicipio := AINIRec.ReadString(LSecao, 'CodigoMunicipio', '');
+    NFSe.Servico.CodigoNBS := AINIRec.ReadString(LSecao, 'CodigoNBS', '');
     {
     NFSe.Servico.MunicipioIncidencia := AINIRec.ReadInteger(LSecao, 'MunicipioIncidencia', 0);
     NFSe.Servico.xMunicipioIncidencia := AINIRec.ReadString(LSecao, 'xMunicipioIncidencia', '');

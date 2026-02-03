@@ -38,6 +38,8 @@ interface
 
 uses
   SysUtils, Classes, StrUtils, IniFiles,
+  ACBrNFSeXClass,
+  ACBrXmlDocument,
   ACBrNFSeXLerXml_ABRASFv1;
 
 type
@@ -45,13 +47,20 @@ type
 
   TNFSeR_Ginfes = class(TNFSeR_ABRASFv1)
   protected
+    procedure LerServico(const ANode: TACBrXmlNode); override;
+    procedure LerXMLComercioExterior(const ANode: TACBrXmlNode);
+
+    procedure LerValores(const ANode: TACBrXmlNode); override;
+    procedure LerXMLTrib(const ANode: TACBrXmlNode);
+
+    procedure LerTomadorServico(const ANode: TACBrXmlNode); override;
+    procedure LerXMLTomadorEnderecoExterior(const ANode: TACBrXmlNode);
+
     procedure LerINISecaoValores(const AINIRec: TMemIniFile); override;
     procedure LerINIValoresTribFederal(AINIRec: TMemIniFile);
     procedure LerINIValoresTotalTrib(AINIRec: TMemIniFile);
     procedure LerINIComercioExterior(AINIRec: TMemIniFile);
-
   public
-
   end;
 
 implementation
@@ -65,6 +74,127 @@ uses
 // Essa unit tem por finalidade exclusiva ler o XML do provedor:
 //     Ginfes
 //==============================================================================
+
+procedure TNFSeR_Ginfes.LerServico(const ANode: TACBrXmlNode);
+var
+  ServicoNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) then Exit;
+
+  inherited LerServico(ANode);
+                                                   
+  ServicoNode := ANode.Childrens.FindAnyNs('Servico');
+  if not Assigned(ServicoNode) then
+    Exit;
+
+  NFSe.Servico.CodigoNBS := ObterConteudo(ServicoNode.Childrens.FindAnyNs('CodigoNbs'), tcStr);
+  LerXMLComercioExterior(ServicoNode);
+end;
+
+procedure TNFSeR_Ginfes.LerXMLComercioExterior(const ANode: TACBrXmlNode);
+var
+  comExtNode: TACBrXmlNode;
+  comexT: TmecAFComexT;
+  ok: Boolean;
+begin
+  if not Assigned(ANode) then Exit;
+
+  comExtNode := ANode.Childrens.FindAnyNs('comExt');
+  if not Assigned(comExtNode) then
+    Exit;
+
+  NFSe.Servico.comExt.mdPrestacao := ObterConteudo(comExtNode.Childrens.FindAnyNs('mdPrestacao'), tcStr);
+  NFSe.Servico.comExt.vincPrest := ObterConteudo(comExtNode.Childrens.FindAnyNs('vincPrest'), tcStr);
+  NFSe.Servico.comExt.tpMoeda := ObterConteudo(comExtNode.Childrens.FindAnyNs('tpMoeda'), tcStr);
+  NFSe.Servico.comExt.vServMoeda := ObterConteudo(comExtNode.Childrens.FindAnyNs('vServMoeda'), tcInt);
+  NFSe.Servico.comExt.mecAFComexP := ObterConteudo(comExtNode.Childrens.FindAnyNs('mecAFComexP'), tcDe2);
+  NFSe.Servico.comExt.movTempBens := ObterConteudo(comExtNode.Childrens.FindAnyNs('movTempBens'), tcStr);
+  NFSe.Servico.comExt.nDI := ObterConteudo(comExtNode.Childrens.FindAnyNs('nDI'), tcStr);
+  NFSe.Servico.comExt.nRE := ObterConteudo(comExtNode.Childrens.FindAnyNs('nRE'), tcStr);
+  NFSe.Servico.comExt.mdic := ObterConteudo(comExtNode.Childrens.FindAnyNs('mdic'), tcInt);
+
+  ok := False;
+  comexT := StrTomecAFComexT(ok, ObterConteudo(comExtNode.Childrens.FindAnyNs('mecAFComexT'), tcStr));
+  if ok then
+    NFSe.Servico.comExt.mecAFComexT := comexT;
+end;
+
+procedure TNFSeR_Ginfes.LerXMLTrib(const ANode: TACBrXmlNode);
+var
+  tribNode, totTribNode, pTotTribNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) then Exit;
+
+  totTribNode := Nil;
+  tribNode := ANode.Childrens.FindAnyNs('trib');
+  if Assigned(tribNode) then
+    totTribNode := tribNode.Childrens.FindAnyNs('totTrib');
+
+  if not (Assigned(tribNode) and Assigned(totTribNode)) then
+    Exit;
+
+  NFSe.Servico.Valores.totTrib.pTotTribSN := ObterConteudo(totTribNode.Childrens.FindAnyNs('pTotTribSN'), tcDe2);
+
+  pTotTribNode := tribNode.Childrens.FindAnyNs('pTotTrib');
+  if Assigned(pTotTribNode) then
+  begin
+    NFSe.Servico.Valores.totTrib.pTotTribFed := ObterConteudo(pTotTribNode.Childrens.FindAnyNs('pTotTribFed'), tcDe2);
+    NFSe.Servico.Valores.totTrib.pTotTribEst := ObterConteudo(pTotTribNode.Childrens.FindAnyNs('pTotTribEst'), tcDe2);
+    NFSe.Servico.Valores.totTrib.pTotTribMun := ObterConteudo(pTotTribNode.Childrens.FindAnyNs('pTotTribMun'), tcDe2);
+  end;
+end;
+
+procedure TNFSeR_Ginfes.LerValores(const ANode: TACBrXmlNode);
+var
+  ValoresNode, IBSCBSNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) then Exit;
+                               
+  inherited LerValores(ANode);
+
+  ValoresNode := ANode.Childrens.FindAnyNs('Valores');
+  if not Assigned(ValoresNode) then
+    Exit;
+
+  LerXMLTrib(ValoresNode);
+
+  IBSCBSNode := ValoresNode.Childrens.FindAnyNs('IBSCBS');
+  if Assigned(IBSCBSNode) then
+  begin
+    LerXMLIBSCBSDPS(IBSCBSNode, NFSe.IBSCBS);
+    LerXMLIBSCBSNFSe(IBSCBSNode, NFSe.infNFSe.IBSCBS);
+  end;
+end;
+
+procedure TNFSeR_Ginfes.LerTomadorServico(const ANode: TACBrXmlNode);
+var
+  TomadorNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) then Exit;
+
+  inherited LerTomadorServico(ANode);
+
+  TomadorNode := ANode.Childrens.FindAnyNs('Tomador');
+  if Assigned(TomadorNode) then
+    LerXMLTomadorEnderecoExterior(TomadorNode);
+end;
+
+procedure TNFSeR_Ginfes.LerXMLTomadorEnderecoExterior(const ANode: TACBrXmlNode);
+var
+  EndExNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) then Exit;
+
+  EndExNode := ANode.Childrens.FindAnyNs('EnderecoExterior');
+  if not Assigned(EndExNode) then
+    Exit;
+
+  NFSe.Tomador.Endereco.CodigoPais := CodISOPaisToCodIBGE(ObterConteudo(EndExNode.Childrens.FindAnyNs('CodigoPais'), tcInt));
+  NFSe.Tomador.Endereco.Endereco := ObterConteudo(EndExNode.Childrens.FindAnyNs('EnderecoCompletoExterior'), tcStr);
+  NFSe.Tomador.Endereco.CEP := ObterConteudo(EndExNode.Childrens.FindAnyNs('cEndPost'), tcStr);
+  NFSe.Tomador.Endereco.xMunicipio := ObterConteudo(EndExNode.Childrens.FindAnyNs('xCidade'), tcStr);
+  NFSe.Tomador.Endereco.UF := ObterConteudo(EndExNode.Childrens.FindAnyNs('xEstProvReg'), tcStr);
+end;
 
 procedure TNFSeR_Ginfes.LerINISecaoValores(const AINIRec: TMemIniFile);
 begin

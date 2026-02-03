@@ -858,6 +858,7 @@ begin
   AINIRec.WriteString(FpSecao, 'xMunicipioIncidencia',NFSe.Servico.xMunicipioIncidencia);
   AINIRec.WriteString(FpSecao, 'MunicipioPrestacaoServico', NFSe.Servico.MunicipioPrestacaoServico);
   AINIRec.WriteFloat(FpSecao,'ValorTotalRecebido', NFSe.Servico.ValorTotalRecebido);
+  AINIRec.WriteString(FpSecao, 'CodigoNBS', NFSe.Servico.CodigoNBS);
 end;
 
 procedure TNFSeW_ABRASFv1.GerarINISecaoDeducoes(const AINIRec: TMemIniFile);

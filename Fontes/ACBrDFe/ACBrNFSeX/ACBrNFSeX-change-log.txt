@@ -42,6 +42,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/02/2026
+-- Ginfes.LerXml --
+[*] ACBR-8812: Ajuste para ler os campos conforme gravados em Ginfes.GravarXml.
+    https://www.projetoacbr.com.br/forum/topic/89457-ginfes-problema-na-leitura-do-ini-rt/
+
+-- ACBrNFSeXGravarXml_ABRASFv1, ACBrNFSeXGravarXml_ABRASFv2 --
+[+] Inclusão da gravação de CodigoNBS no método GerarINISecaoServico.
+
+-- ACBrNFSeXLerXml_ABRASFv1 --
+[*] Alteração dos métodos LerValores e LerTomadorServico para virtual;
+[+] Inclusão da leitura do CodigoNBS no método LerINISecaoServico.
+    por: Elias
+
 02/02/2026
 -- SilTecnologia.Provider --
 [-] Correção na montagem do ID do Evento.
