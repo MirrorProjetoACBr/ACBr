@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/02/2026
+-- PadraoNacional.GravarXml --
+[*] ACBR-8881 - Ajustes nos tamanhos e cardinalidades e alguns campos para coincidir com os schemas do Padrão Nacional.
+   Por: Valter Patrick
 -- ACBRNFSeXGravarXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv1/SpeedGov.GravarXml/SpeedGov.LerXml --
 [-] ACBR-8730 - Ajustes para o correto preenchimento das propriedades o ler um XML e um INI.
    Por: Diego Folieni

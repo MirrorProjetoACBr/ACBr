@@ -365,7 +365,7 @@ begin
 
   Result.AppendChild(AddNode(tcStr, '#1', 'xNome', 1, 300, 0, Nome, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xFant', 1, 300, 0, Fantasia, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'xFant', 1, 150, 0, Fantasia, ''));
 
   Result.AppendChild(GerarXMLEnderecoEmitente);
 
@@ -381,7 +381,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'vCalcDR', 1, 15, 0,
                                        NFSe.Servico.Valores.ValorDeducoes, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'tpBM', 1, 15, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'tpBM', 1, 1, 0,
                              tpBMToStr(NFSe.Servico.Valores.tribMun.tpBM), ''));
 
   case NFSe.Servico.Valores.tribMun.tpBM of
@@ -401,7 +401,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'vBC', 1, 15, 0,
                                          NFSe.Servico.Valores.BaseCalculo, ''));
 
-  Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqAplic', 1, 15, 0,
+  Result.AppendChild(AddNode(tcDe2, '#1', 'pAliqAplic', 1, 3, 0,
                                             NFSe.Servico.Valores.Aliquota, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'vISSQN', 1, 15, 0,
@@ -414,7 +414,7 @@ begin
                                     NFSe.Servico.Valores.ValorLiquidoNfse, ''));
 
   if VersaoNFSe = ve100 then
-    Result.AppendChild(AddNode(tcStr, '#1', 'xOutInf', 1, 15, 0,
+    Result.AppendChild(AddNode(tcStr, '#1', 'xOutInf', 1, 2000, 0,
                                                    NFSe.OutrasInformacoes, ''));
 end;
 
@@ -496,14 +496,14 @@ begin
     end;
   end;
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xLocEmi', 1, 60, 1, xLocEmi, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'xLocEmi', 1, 150, 1, xLocEmi, ''));
 
   xLocPrestacao := ObterNomeMunicipioUF(StrToIntDef(NFSe.Servico.CodigoMunicipio, 0), xUF);
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xLocPrestacao', 1, 60, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'xLocPrestacao', 1, 150, 1,
                                                             xLocPrestacao, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'nNFSe', 1, 1, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'nNFSe', 1, 13, 1,
                                              NFSe.IdentificacaoRps.Numero, ''));
 
   if NFSe.infNFSe.IBSCBS.cLocalidadeIncid > 0 then
@@ -517,11 +517,11 @@ begin
   if xLocIncid = '' then
     xLocIncid := ObterNomeMunicipioUF(cLocIncid, xUF);
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'cLocIncid', 7, 7, 1, cLocIncid, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'cLocIncid', 7, 7, 0, cLocIncid, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xLocIncid', 1, 60, 1, xLocIncid, ''));
+  Result.AppendChild(AddNode(tcStr, '#1', 'xLocIncid', 1, 150, 0, xLocIncid, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'xTribNac', 1, 7, 1,
+  Result.AppendChild(AddNode(tcStr, '#1', 'xTribNac', 1, 600, 1,
                  ItemListaServicoDescricao(NFSe.Servico.ItemListaServico), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'verAplic', 1, 20, 1,
