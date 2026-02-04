@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/02/2026
+--GeisWeb.GravarXml --
+[-] ACBR-8895 - Ajuste visando sanar problema de leitura do XML quando não houver finNFSe no arquivo.
+   Por: Diego Folieni
 -- PadraoNacional.GravarXml --
 [*] ACBR-8881 - Ajustes nos tamanhos e cardinalidades e alguns campos para coincidir com os schemas do Padrão Nacional.
    Por: Valter Patrick
