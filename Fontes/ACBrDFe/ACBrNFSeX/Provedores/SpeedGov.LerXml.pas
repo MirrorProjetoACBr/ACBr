@@ -87,16 +87,18 @@ end;
 procedure TNFSeR_SpeedGov.LerDadosDPS(const ANode: TACBrXmlNode);
 var
   Ok: Boolean;
+  lSerie, lNumero: String;
+  lCompetencia: TDateTime;
 begin
   if not Assigned(ANode) then
     exit;
 
   NFSe.tpEmit := StrTotpEmit(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('TpEmit'), tcStr));
-  NFSe.DataEmissao := StringToDateTimeDef(ObterConteudo(ANode.Childrens.FindAnyNs('DhEmi'), tcStr), 0);
+  NFSe.DataEmissaoRPS := Iso8601ToDateTime(ObterConteudo(ANode.Childrens.FindAnyNs('DhEmi'), tcStr));
   NFSe.verAplic := ObterConteudo(ANode.Childrens.FindAnyNs('VerAplic'), tcStr);
   NFSe.cLocEmi := ObterConteudo(ANode.Childrens.FindAnyNs('CLocEmi'), tcStr);
   NFSe.Servico.CodigoMunicipio := ObterConteudo(ANode.Childrens.FindAnyNs('CLocPrestacao'), tcStr);
-  NFSe.Servico.ItemListaServico := ObterConteudo(ANode.Childrens.FindAnyNs('CTribNac'), tcStr);
+  NFSe.Servico.CodigoServicoNacional := ObterConteudo(ANode.Childrens.FindAnyNs('CTribNac'), tcStr);
   NFSe.Servico.Valores.tribMun.tribISSQN := StrTotribISSQN(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('TribIssqn'), tcStr));
   NFSe.Servico.Valores.tribMun.tpRetISSQN := StrTotpRetISSQN(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('TpRetIssqn'), tcStr));
   NFSe.OptanteSN := StrToOptanteSN(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('OpSimpNac'), tcStr));
@@ -105,9 +107,17 @@ begin
   if NFSe.OptanteSN = osnOptanteMEEPP then
     NFSe.RegimeApuracaoSN := StrToRegimeApuracaoSN(Ok, ObterConteudo(ANode.Childrens.FindAnyNs('RegApTribSN'), tcStr));
 
-  NFSe.IdentificacaoRps.Serie := ObterConteudo(ANode.Childrens.FindAnyNs('serie'), tcStr);
-  NFSe.IdentificacaoRps.Numero := ObterConteudo(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
-  NFSe.Competencia := ObterConteudo(ANode.Childrens.FindAnyNs('dCompet'), tcDat);
+  lSerie := ObterConteudo(ANode.Childrens.FindAnyNs('serie'), tcStr);
+  lNumero := ObterConteudo(ANode.Childrens.FindAnyNs('nDPS'), tcStr);
+  lCompetencia := ObterConteudo(ANode.Childrens.FindAnyNs('dCompet'), tcDat);
+  if (lSerie <> '') then
+    NFSe.IdentificacaoRps.Serie := lSerie;
+
+  if (lNumero <> '') then
+    NFSe.IdentificacaoRps.Numero := lNumero;
+
+  if (lCompetencia > 0) then
+    NFSe.Competencia := lCompetencia;
 end;
 
 procedure TNFSeR_SpeedGov.LerDestinatario(const ANode: TACBrXmlNode);
@@ -213,6 +223,7 @@ begin
     NFSe.Servico.Valores.BaseCalculoPisCofins := StringToFloatDef(AINIRec.ReadString(lSecao, 'BaseCalculoPisCofins', ''), 0);
     NFSe.Servico.Valores.CSTPis :=  ACBrNFSeXConversao.StrToCSTPis(Ok, AINIRec.ReadString(lSecao, 'CSTPis', ''));
     NFSe.Servico.Valores.tpRetPisCofins := StrTotpRetPisCofins(Ok, AINIRec.ReadString(lSecao, 'tpRetPisCofins', ''));
+    NFSe.Servico.Valores.tribMun.tribISSQN := StrTotribISSQN(Ok, AINIRec.ReadString(lSecao, 'tribISSQN', ''));
   end;
 end;
 

@@ -1102,7 +1102,7 @@ end;
 
 procedure TNFSeR_ABRASFv1.LerINISecaoPrestador(const AINIRec: TMemIniFile);
 var
-  LSecao: String;
+  LSecao, lAuxStr: String;
   Ok: Boolean;
 begin
   LSecao := 'Prestador';
@@ -1112,6 +1112,13 @@ begin
     NFSe.RegimeEspecialTributacao := FpAOwner.StrToRegimeEspecialTributacao(Ok, AINIRec.ReadString(LSecao, 'Regime', ''));
     NFSe.OptanteSimplesNacional := FpAOwner.StrToSimNao(Ok, AINIRec.ReadString(LSecao, 'OptanteSN', ''));
     NFSe.IncentivadorCultural := FpAOwner.StrToSimNao(Ok, AINIRec.ReadString(LSecao, 'IncentivadorCultural', ''));
+    lAuxStr := AINIRec.ReadString(LSecao, 'RegimeApuracaoSN', '');
+    if lAuxStr <> '' then
+      NFSe.RegimeApuracaoSN := StrToRegimeApuracaoSN(Ok, lAuxStr);
+
+    lAuxStr := AINIRec.ReadString(LSecao, 'opSimpNac', '');
+    if lAuxStr <> '' then
+      NFSe.OptanteSN := StrToOptanteSN(Ok, lAuxStr);
 
     NFSe.Prestador.IdentificacaoPrestador.CpfCnpj := AINIRec.ReadString(LSecao, 'CNPJ', '');
     NFSe.Prestador.IdentificacaoPrestador.InscricaoMunicipal := AINIRec.ReadString(LSecao, 'InscricaoMunicipal', '');
@@ -1206,6 +1213,7 @@ begin
   begin
     NFSe.Servico.ItemListaServico := AINIRec.ReadString(LSecao, 'ItemListaServico', '');
     NFSe.Servico.xItemListaServico := AINIRec.ReadString(LSecao, 'xItemListaServico', '');
+    NFSe.Servico.CodigoServicoNacional := AINIRec.ReadString(LSecao, 'cTribNac', '');
     NFSe.Servico.CodigoCnae := AINIRec.ReadString(LSecao, 'CodigoCnae', '');
     NFSe.Servico.CodigoTributacaoMunicipio := AINIRec.ReadString(LSecao, 'CodigoTributacaoMunicipio', '');
     NFSe.Servico.Discriminacao := ChangeLineBreak(AINIRec.ReadString(LSecao, 'Discriminacao', ''), FpAOwner.ConfigGeral.QuebradeLinha);

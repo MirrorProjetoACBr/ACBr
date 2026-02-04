@@ -850,6 +850,7 @@ begin
   FpSecao:= 'Servico';
   AINIRec.WriteString(FpSecao, 'ItemListaServico', NFSe.Servico.ItemListaServico);
   AINIRec.WriteString(FpSecao, 'xItemListaServico', NFSe.Servico.xItemListaServico);
+  AINIRec.WriteString(FpSecao, 'cTribNac', NFSe.Servico.CodigoServicoNacional);
   AINIRec.WriteString(FpSecao, 'CodigoCnae', NFSe.Servico.CodigoCnae);
   AINIRec.WriteString(FpSecao, 'CodigoTributacaoMunicipio', NFSe.Servico.CodigoTributacaoMunicipio);
   AINIRec.WriteString(FpSecao, 'Discriminacao', ChangeLineBreak(NFSe.Servico.Discriminacao, FpAOwner.ConfigGeral.QuebradeLinha));

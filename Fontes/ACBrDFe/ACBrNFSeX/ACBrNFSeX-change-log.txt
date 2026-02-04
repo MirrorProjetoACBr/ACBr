@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2026
+-- ACBRNFSeXGravarXml_ABRASFv1/ACBrNFSeXLerXml_ABRASFv1/SpeedGov.GravarXml/SpeedGov.LerXml --
+[-] ACBR-8730 - Ajustes para o correto preenchimento das propriedades o ler um XML e um INI.
+   Por: Diego Folieni
+
 03/02/2026
 -- ACBrNFSeXConversao/PadraoNacional.GravarXml/PadraoNacional.LerXml/PadraoNacional.Provider --
 [-] Correção na leitura do arquivo INI para os provedores Citta, Digifred e SilTecnologia,

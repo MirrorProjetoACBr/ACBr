@@ -66,6 +66,7 @@ type
 
     //======Arquivo INI===========================================
     procedure GerarINISecaoIdentificacaoNFSe(const AINIRec: TMemIniFile); override;
+    procedure GerarINISecaoValores(const AINIRec: TMemIniFile); override;
     procedure GerarINIIBSCBSValores(AINIRec: TMemIniFile; Valores: Tvalorestrib); override;
   public
     function GerarIni: string; override;
@@ -394,6 +395,15 @@ begin
   lSecao := 'IdentificacaoNFSe';
   AINIRec.WriteString(lSecao, 'cLocEmi', NFSe.cLocEmi);
   AINIRec.WriteString(lSecao, 'verAplic', NFSe.verAplic);
+end;
+
+procedure TNFSeW_SpeedGov.GerarINISecaoValores(const AINIRec: TMemIniFile);
+var
+  lSecao: String;
+begin
+  inherited GerarINISecaoValores(AINIRec);
+  lSecao := 'Valores';
+  AINIRec.WriteString(lSecao, 'tribISSQN', tribISSQNToStr(NFSe.Servico.Valores.tribMun.tribISSQN));
 end;
 
 function TNFSeW_SpeedGov.GerarServico: TACBrXmlNode;
