@@ -517,8 +517,9 @@ begin
   DataLimitePagamento2.Caption := DataLimitePagamento.Caption;
   DataLimitePagamento3.Caption := DataLimitePagamento.Caption;
 
- {RepresentacaoNumerica.Caption := FormatMaskText('00000000000 0 00000000000 0 00000000000 0 00000000000 0;0',
-                                   FGNRe.RepresentacaoNumerica);}
+  if Trim(FGNRe.RepresentacaoNumerica) <> '' then
+     RepresentacaoNumerica.Caption := FormatMaskText('00000000000 0 00000000000 0 00000000000 0 00000000000 0;0',
+                                   FGNRe.RepresentacaoNumerica);
   RepresentacaoNumerica2.Caption := RepresentacaoNumerica.Caption;
   RepresentacaoNumerica3.Caption := RepresentacaoNumerica.Caption;
 
