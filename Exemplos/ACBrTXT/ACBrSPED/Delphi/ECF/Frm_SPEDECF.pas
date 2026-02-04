@@ -1425,6 +1425,34 @@ begin
         end;
       end;
 
+      // INFORMAÇÕES DE PERÍODOS ANTERIORES
+      for i := 0 to 0 do
+      begin
+        with RegistroY720New do
+        begin
+          LUC_LIQ := 10;
+          DT_LUC_LIQ := ACBrSPEDECF1.DT_INI;
+          REC_BRUT_ANT := 10;
+          INTIMACAO := 'N';
+          INT_ATRASO := 'N';
+        end;
+      end;
+
+      // IDENTIFICAÇÃO DOS DONATÁRIOS/DESTINATÁRIOS DE DEDUÇÕES DO IRPJ/CSLL
+      for i := 0 to 0 do
+      begin
+        with RegistroY730New do
+        begin
+          DEDUCAO := '0001';
+          TIPO := '0001';
+          DATA := ACBrSPEDECF1.DT_INI;
+          TIPO_DESTINATARIO := 'PJ';
+          DESTINATARIO := '12345678000195';
+          VALOR := 10;
+          OBSERVACAO := 'OBSERVACAO';
+        end;
+      end;
+
       // OUTRAS INFORMAÇÕES
       for i := 0 to 0 do
       begin

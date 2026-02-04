@@ -146,12 +146,20 @@ type
     fIND_PROJ: string;
     fVIG_FIM:  TDateTime;
     fVIG_INI:  TDateTime;
+    FCNPJ_INCENTIVO: string;
+    FNCM_INCENTIVO: string;
+    FREC_LIQ_INCENTIVO: double;
+    FVL_INCENTIVO: double;
   public
     property IND_ATIV: string read fIND_ATIV write fIND_ATIV;
     property IND_PROJ: string read fIND_PROJ write fIND_PROJ;
     property ATO_CONC: string read fATO_CONC write fATO_CONC;
     property VIG_INI: TDateTime read fVIG_INI write fVIG_INI;
     property VIG_FIM: TDateTime read fVIG_FIM write fVIG_FIM;
+    property CNPJ_INCENTIVO: string read FCNPJ_INCENTIVO write FCNPJ_INCENTIVO;
+    property NCM_INCENTIVO: string read FNCM_INCENTIVO write FNCM_INCENTIVO;
+    property REC_LIQ_INCENTIVO: double read FREC_LIQ_INCENTIVO write FREC_LIQ_INCENTIVO;
+    property VL_INCENTIVO: double read FVL_INCENTIVO write FVL_INCENTIVO;
   end;
 
   TRegistroX280List = class(TObjectList)

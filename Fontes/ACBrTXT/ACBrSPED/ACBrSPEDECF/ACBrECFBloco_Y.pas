@@ -68,6 +68,8 @@ type
   TRegistroY681List = class;
   TRegistroY682List = class;
   TRegistroY690List = class;
+  TRegistroY720List = class;
+  TRegistroY730List = class;
   TRegistroY800 = class;
 
 
@@ -94,6 +96,8 @@ type
     FRegistroY680 : TRegistroY680List;
     FRegistroY682 : TRegistroY682List;
     FRegistroY690 : TRegistroY690List;
+    FRegistroY720 : TRegistroY720List;
+    FRegistroY730 : TRegistroY730List;
     FRegistroY800 : TRegistroY800;
   public
     constructor Create; virtual;  /// Create
@@ -119,6 +123,8 @@ type
     property RegistroY680 : TRegistroY680List read FRegistroY680 write FRegistroY680;
     property RegistroY682 : TRegistroY682List read FRegistroY682 write FRegistroY682;
     property RegistroY690 : TRegistroY690List read FRegistroY690 write FRegistroY690;
+    property RegistroY720 : TRegistroY720List read FRegistroY720 write FRegistroY720;
+    property RegistroY730 : TRegistroY730List read FRegistroY730 write FRegistroY730;
     property RegistroY800 : TRegistroY800     read FRegistroY800 write FRegistroY800;  
   end;
 
@@ -889,6 +895,70 @@ type
     property Items[Index: Integer]: TRegistroY690 read GetItem write SetItem;
   end;
 
+  /// Registro Y720 - INFORMAÇÕES DE PERÍODOS ANTERIORES
+
+  { TRegistroY720 }
+
+  TRegistroY720 = class(TBlocos)
+  private
+    FLUC_LIQ: variant;
+    FDT_LUC_LIQ: TDateTime;
+    FREC_BRUT_ANT: variant;
+    FINTIMACAO: string;
+    FINT_ATRASO: string;
+  public
+    property LUC_LIQ: variant read FLUC_LIQ write FLUC_LIQ;
+    property DT_LUC_LIQ: TDateTime read FDT_LUC_LIQ write FDT_LUC_LIQ;
+    property REC_BRUT_ANT: variant read FREC_BRUT_ANT write FREC_BRUT_ANT;
+    property INTIMACAO: string read FINTIMACAO write FINTIMACAO;
+    property INT_ATRASO: string read FINT_ATRASO write FINT_ATRASO;
+  end;
+
+  /// Registro Y720 - Lista
+
+  TRegistroY720List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY720;
+    procedure SetItem(Index: Integer; const Value: TRegistroY720);
+  public
+    function New: TRegistroY720;
+    property Items[Index: Integer]: TRegistroY720 read GetItem write SetItem;
+  end;
+
+  /// Registro Y730 - IDENTIFICAÇÃO DOS DONATÁRIOS/DESTINATÁRIOS DE DEDUÇÕES DO IRPJ/CSLL
+
+  { TRegistroY730 }
+
+  TRegistroY730 = class(TBlocos)
+  private
+    FDEDUCAO: string;
+    FTIPO: string;
+    FDATA: TDateTime;
+    FTIPO_DESTINATARIO: string;
+    FDESTINATARIO: string;
+    FVALOR: variant;
+    FOBSERVACAO: string;
+  public
+    property DEDUCAO: string read FDEDUCAO write FDEDUCAO;
+    property TIPO: string read FTIPO write FTIPO;
+    property DATA: TDateTime read FDATA write FDATA;
+    property TIPO_DESTINATARIO: string read FTIPO_DESTINATARIO write FTIPO_DESTINATARIO;
+    property DESTINATARIO: string read FDESTINATARIO write FDESTINATARIO;
+    property VALOR: variant read FVALOR write FVALOR;
+    property OBSERVACAO: string read FOBSERVACAO write FOBSERVACAO;
+  end;
+
+  /// Registro Y730 - Lista
+
+  TRegistroY730List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroY730;
+    procedure SetItem(Index: Integer; const Value: TRegistroY730);
+  public
+    function New: TRegistroY730;
+    property Items[Index: Integer]: TRegistroY730 read GetItem write SetItem;
+  end;
+
   /// Registro Y800 - Outras Informações
 
   TRegistroY800 = class
@@ -1394,6 +1464,42 @@ begin
    inherited;
 end;
 
+{ TRegistroY720List }
+
+function TRegistroY720List.GetItem(Index: Integer): TRegistroY720;
+begin
+  Result := TRegistroY720(Inherited Items[Index]);
+end;
+
+function TRegistroY720List.New: TRegistroY720;
+begin
+  Result := TRegistroY720.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY720List.SetItem(Index: Integer; const Value: TRegistroY720);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroY730List }
+
+function TRegistroY730List.GetItem(Index: Integer): TRegistroY730;
+begin
+  Result := TRegistroY730(Inherited Items[Index]);
+end;
+
+function TRegistroY730List.New: TRegistroY730;
+begin
+  Result := TRegistroY730.Create;
+  Add(Result);
+end;
+
+procedure TRegistroY730List.SetItem(Index: Integer; const Value: TRegistroY730);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistroY001 }
 
 constructor TRegistroY001.Create;
@@ -1419,6 +1525,8 @@ begin
   FRegistroY680 := TRegistroY680List.Create;
   FRegistroY682 := TRegistroY682List.Create;
   FRegistroY690 := TRegistroY690List.Create;
+  FRegistroY720 := TRegistroY720List.Create;
+  FRegistroY730 := TRegistroY730List.Create;
   FRegistroY800 := TRegistroY800.Create;
   IND_DAD := idComDados;
 end;
@@ -1445,6 +1553,8 @@ begin
   FRegistroY680.Free;
   FRegistroY682.Free;
   FRegistroY690.Free;
+  FRegistroY720.Free;
+  FRegistroY730.Free;
   FRegistroY800.Free;
   inherited;
 end;

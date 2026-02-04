@@ -94,6 +94,8 @@ type
     function RegistroY681New: TRegistroY681;
     function RegistroY682New: TRegistroY682;
     function RegistroY690New: TRegistroY690;
+    function RegistroY720New: TRegistroY720;
+    function RegistroY730New: TRegistroY730;
     function RegistroY800New: TRegistroY800;
 
     procedure WriteRegistroY001;
@@ -117,6 +119,8 @@ type
     procedure WriteRegistroY680;
     procedure WriteRegistroY682;
     procedure WriteRegistroY690;
+    procedure WriteRegistroY720;
+    procedure WriteRegistroY730;
     procedure WriteRegistroY800;
     procedure WriteRegistroY990;
 
@@ -311,6 +315,16 @@ begin
   Result := FRegistroY001.RegistroY690.New;
 end;
 
+function TBloco_Y.RegistroY720New: TRegistroY720;
+begin
+  Result := FRegistroY001.RegistroY720.New;
+end;
+
+function TBloco_Y.RegistroY730New: TRegistroY730;
+begin
+  Result := FRegistroY001.RegistroY730.New;
+end;
+
 function TBloco_Y.RegistroY800New: TRegistroY800;
 begin
   Result := FRegistroY001.RegistroY800;
@@ -348,6 +362,8 @@ begin
     WriteRegistroY680;
     WriteRegistroY682;
     WriteRegistroY690;
+    WriteRegistroY720;
+    WriteRegistroY730;
     WriteRegistroY800;
   end;
 end;
@@ -939,6 +955,63 @@ begin
         Add(LFill('Y690') +
             LFill(MES, 2) +
             VLFill(VL_REC_BRU, 19, 2));
+      end;
+
+      FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
+    end;
+  end;
+end;
+
+procedure TBloco_Y.WriteRegistroY720;
+var
+  intFor: integer;
+  strLinha: string;
+begin
+  if Assigned(FRegistroY001.RegistroY720) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY720.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY720.Items[intFor] do
+      begin
+        strLinha := LFill('Y720') +
+                    VLFill(LUC_LIQ, 19) +
+                    LFill(DT_LUC_LIQ) +
+                    VLFill(REC_BRUT_ANT, 19) +
+                    LFill(INTIMACAO) +
+                    LFill(INT_ATRASO);
+
+        Add(strLinha);
+      end;
+
+      FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
+    end;
+  end;
+end;
+
+procedure TBloco_Y.WriteRegistroY730;
+var
+  intFor: integer;
+  strLinha: string;
+begin
+  if Bloco_0.Registro0000.COD_VER < ECFVersao1200 then
+    exit;
+
+  if Assigned(FRegistroY001.RegistroY730) then
+  begin
+    for intFor := 0 to FRegistroY001.RegistroY730.Count - 1 do
+    begin
+      with FRegistroY001.RegistroY730.Items[intFor] do
+      begin
+        strLinha := LFill('Y730') +
+                    LFill(DEDUCAO) +
+                    LFill(TIPO) +
+                    LFill(DATA) +
+                    LFill(TIPO_DESTINATARIO) +
+                    LFill(DESTINATARIO) +
+                    VLFill(VALOR, 19) +
+                    LFill(OBSERVACAO);
+
+        Add(strLinha);
       end;
 
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;

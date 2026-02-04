@@ -504,6 +504,7 @@ end;
 procedure TBloco_X.WriteRegistroX280;
 var
   intFor: integer;
+  strLinha: String;
 begin
   if Assigned(FRegistroX001.RegistroX280) then
   begin
@@ -511,12 +512,22 @@ begin
     begin
       with FRegistroX001.RegistroX280.Items[intFor] do
       begin
-        Add(LFill('X280')     +
+        strLinha :=
+            LFill('X280')     +
             LFill(IND_ATIV,2) +
             LFill(IND_PROJ,2) +
             LFill(ATO_CONC)   +
             LFill(VIG_INI)    +
-            LFill(VIG_FIM));
+            LFill(VIG_FIM);
+
+        if Bloco_0.Registro0000.COD_VER >= ECFVersao1200 then
+          strLinha := strLinha +
+             LFill(CNPJ_INCENTIVO) +
+             LFill(NCM_INCENTIVO) +
+             VLFill(REC_LIQ_INCENTIVO, 19) +
+             VLFill(VL_INCENTIVO, 19);
+
+        Add(strLinha);
       end;
       FRegistroX990.QTD_LIN := FRegistroX990.QTD_LIN + 1;
     end;

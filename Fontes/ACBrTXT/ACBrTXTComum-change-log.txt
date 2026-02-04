@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2026
+-- Frm_SPEDECF, ACBrECFBloco_0, ACBrECFBloco_0_Class, ACBrECFBloco_X, ACBrECFBloco_X_Class, ACBrECFBloco_Y, ACBrECFBloco_Y_Class, ACBrECFBlocos --
+[+] ACBR-8905 - Implementações para o Leiaute 0012 do ECF - https://www.projetoacbr.com.br/forum/topic/90022-publicado-manual-da-escritura%C3%A7%C3%A3o-cont%C3%A1bil-fiscal-com-leiaute-12-para-o-ano-calend%C3%A1rio-de-2025-e-situa%C3%A7%C3%B5es-especiais-2026/
+  Por: Renato Rubinho
+
 09/01/2026
 -- ACBrEFDBlocos, ACBrEPCBlocos, ACBrTXTUtils --
 [*] Adicionados itens nos enumerados e array de strings contemplando os CSTs de ICMS monofásico de Importação Direta e Adquiridos no Mercado Interno
