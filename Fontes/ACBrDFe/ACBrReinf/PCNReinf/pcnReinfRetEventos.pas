@@ -693,7 +693,7 @@ begin
     while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
     begin
       evento.New;
-      evento.Items[i].Id           := FLeitor.rAtributo('id', 'evento');
+      evento.Items[i].Id           := FLeitor.rAtributo('Id', 'evento');
       evento.Items[i].ArquivoReinf := RetornarConteudoEntre(Leitor.Grupo, '>', '</evento');
 
       if leitor.rExtrai(4, 'evtRet') <> '' then
@@ -707,7 +707,7 @@ begin
         begin
           if leitor.rExtrai(4, 'evtTotal') <> '' then
           begin
-            FId := Leitor.rAtributo('id=');
+            FId := Leitor.rAtributo('Id=');
 
             if leitor.rExtrai(5, 'ideEvento') <> '' then
               IdeEvento.perApur := leitor.rCampo(tcStr, 'perApur');
