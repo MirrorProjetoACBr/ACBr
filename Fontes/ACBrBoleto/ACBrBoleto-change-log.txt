@@ -48,6 +48,14 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+04/02/2026
+-- ACBrBoletoW_BancoBrasil_API  --
+[*] Criado regras de validação para quantidadeDiasProtesto conforme manual BB
+   ACBR-8768 https://www.projetoacbr.com.br/forum/topic/89184-erro-nos-dias-de-protesto-na-api-banco-brasil/
+   Noticia: https://www.projetoacbr.com.br/forum/topic/90123-implementada-regra-de-valida%C3%A7ao-acbrboleto-banco-do-brasil-api-quantidadediasprotesto/
+   Por: Desenv. AT Info Sistemas / Daniel de Morais InfoCotidiano 
+[-] Ajustado a propriedade indicadorPermissaoRecebimentoParcial para enviar "N" qdo tpNao_Aceita_Valor_Divergente
+   Por: Daniel de Morais InfoCotidiano 
 
 15/12/2025
 -- ACBrBancoVortx --
