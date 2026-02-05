@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/02/2026
+-- Sudoeste.GravarXml --
+[*] Alterado a procedure Configuração para não gerar a tag CodigoNBS.
+   Por: Italo Giurizzato Junior
 -- PadraoNacional.LerXml --
 [*] Ajustes no calculo do valor total e valor liquido da nota no que se refere a retenção.
    Por: Italo Giurizzato Junior

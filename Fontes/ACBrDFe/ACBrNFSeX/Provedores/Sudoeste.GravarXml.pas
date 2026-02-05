@@ -68,6 +68,7 @@ procedure TNFSeW_Sudoeste202.Configuracao;
 begin
   inherited Configuracao;
 
+  NrOcorrCodigoNBS := -1;
   FormatoAliq := tcDe2;
   GerarIDRps := True;
   DivAliq100 := True;
