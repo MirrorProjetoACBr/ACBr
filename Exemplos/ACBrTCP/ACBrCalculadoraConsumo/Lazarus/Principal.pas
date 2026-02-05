@@ -46,7 +46,8 @@ uses
   Classes, Windows, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls,
   ExtDlgs, ExtCtrls, Buttons, StdCtrls, Spin, Grids,
   {$IfDef FPC}DateTimePicker,{$EndIf}
-  ACBrCalculadoraConsumo;
+  ACBrCalculadoraConsumo,
+  ACBrCalculadoraConsumo.Schemas;
 
 const
   CURL_ACBR = 'https://projetoacbr.com.br/tef/';
@@ -67,13 +68,18 @@ type
     btDadosAbertosAliquotaMun: TBitBtn;
     btDadosAbertosAliquotaUF: TBitBtn;
     btDadosAbertosAliquotaUniao: TBitBtn;
+    btDadosAbertosClassifPorDFeConsultar: TBitBtn;
+    btDadosAbertosSitTribCbsIbs: TBitBtn;
     btDadosAbertosClassifIdSTConsultar: TBitBtn;
     btDadosAbertosClassifImpostoSeletivo: TBitBtn;
     btDadosAbertosClassifCbsIbs: TBitBtn;
+    btDadosAbertosSitTribImpostoSeletivo: TBitBtn;
     btDadosAbertosMunicipiosConsultar: TBitBtn;
     btDadosAbertosFundConsultar: TBitBtn;
     btDadosAbertosNBSConsultar: TBitBtn;
     btDadosAbertosNCMConsultar: TBitBtn;
+    btConsultarTiposValidacao: TBitBtn;
+    btConsultarTiposGeracao: TBitBtn;
     btValidarXml: TBitBtn;
     btRegimeGeralGerarXml: TBitBtn;
     btGerarXML: TBitBtn;
@@ -86,6 +92,9 @@ type
     btRegimeGeralPreencher: TBitBtn;
     cbConfigLogNivel: TComboBox;
     cbDadosAbertosMunicipiosUF: TComboBox;
+    cbGerarXMLTipoDocumento: TComboBox;
+    cbValidarXMLTipo: TComboBox;
+    cbValidarXMLSubtipo: TComboBox;
     edBaseCalculoCIBSAcrescimos: TEdit;
     edBaseCalculoCIBSAjusteValorOper: TEdit;
     edBaseCalculoCIBSCOFINS: TEdit;
@@ -130,6 +139,9 @@ type
     edDadosAbertosAliquotasData: TDateTimePicker;
     edDadosAbertosAliquotaUFCod: TEdit;
     edDadosAbertosClassifData: TDateTimePicker;
+    edDadosAbertosClassifPorDFeSigla: TEdit;
+    edDadosAbertosClassifPorDFecClassTrib: TEdit;
+    edDadosAbertosSitTribData: TDateTimePicker;
     edDadosAbertosFundData: TDateTimePicker;
     edDadosAbertosClassifIdST: TEdit;
     edDadosAbertosNBS: TEdit;
@@ -137,8 +149,6 @@ type
     edDadosAbertosNCM: TEdit;
     edDadosAbertosNCMData: TDateTimePicker;
     edRegimeGeralId: TEdit;
-    edValidarXMLTipo: TEdit;
-    edValidarXMLSubtipo: TEdit;
     edRegimeGeralVersao: TEdit;
     edRegimeGeralCodMun: TEdit;
     edRegimeGeralUF: TEdit;
@@ -153,15 +163,22 @@ type
     gbDadosAbertosAliquotasData: TGroupBox;
     gbDadosAbertosAliquotaUF: TGroupBox;
     gbDadosAbertosAliquotaUniao: TGroupBox;
+    gbDadosAbertosClassifPorDFe: TGroupBox;
+    gbDadosAbertosSitTribCbsIbs: TGroupBox;
     gbDadosAbertosClassifData: TGroupBox;
+    gbDadosAbertosSitTribData: TGroupBox;
     gbDadosAbertosClassifIdST: TGroupBox;
     gbDadosAbertosClassifImpostoSeletivo: TGroupBox;
     gbDadosAbertosClassifCbsIbs: TGroupBox;
+    gbDadosAbertosSitTribImpostoSeletivo: TGroupBox;
     gbGerarXML: TGroupBox;
     gbValidarXml: TGroupBox;
     gbRegimeGeralItens: TGroupBox;
     gbRegimeGeral: TGroupBox;
     ImageList1: TImageList;
+    Label1: TLabel;
+    lbDadosAbertosClassifPorDFeSigla: TLabel;
+    lbDadosAbertosClassifPorDFecClassTrib: TLabel;
     lbRegimeGeralId: TLabel;
     lbValidarXMLTipo: TLabel;
     lbValidarXMLSubtipo: TLabel;
@@ -232,6 +249,12 @@ type
     mmRegimeGeralResponse: TMemo;
     OpenPictureDialog1: TOpenPictureDialog;
     pcCalculadora: TPageControl;
+    pnDadosAbertosClassifPorDFe: TPanel;
+    pnDadosAbertosSitTrib: TPanel;
+    pnDadosAbertosSitTribCbsIbs: TPanel;
+    pnDadosAbertosSitTribData: TPanel;
+    pnDadosAbertosSitTribImpostoSeletivo: TPanel;
+    pnConsultarTipos: TPanel;
     pnEndpointsLogRodape1: TPanel;
     pnGerarXMLBotoes: TPanel;
     pnDadosAbertosVersaoCab: TPanel;
@@ -275,11 +298,15 @@ type
     pnRegimeGeralItens: TPanel;
     pnRegimeGeralBotoes: TPanel;
     sgDadosAbertosClassif: TStringGrid;
+    sgDadosAbertosSitTrib: TStringGrid;
     sgDadosAbertosUFs: TStringGrid;
     sgDadosAbertosMunicipios: TStringGrid;
     sgDadosAbertosFund: TStringGrid;
+    sgConsultarTipos: TStringGrid;
     sgRegimeGeralItens: TStringGrid;
     Splitter1: TSplitter;
+    tsConsultarTipos: TTabSheet;
+    tsDadosAbertosSitTrib: TTabSheet;
     tsCalculadora: TTabSheet;
     tsGerarXML: TTabSheet;
     tsValidarXml: TTabSheet;
@@ -304,11 +331,16 @@ type
     procedure btConfigLerParametrosClick(Sender: TObject);
     procedure btConfigProxySenhaClick(Sender: TObject);
     procedure btConfigSalvarClick(Sender: TObject);
+    procedure btConsultarTiposGeracaoClick(Sender: TObject);
+    procedure btConsultarTiposValidacaoClick(Sender: TObject);
     procedure btDadosAbertosAliquotaMunClick(Sender: TObject);
     procedure btDadosAbertosAliquotaUFClick(Sender: TObject);
     procedure btDadosAbertosAliquotaUniaoClick(Sender: TObject);
     procedure btDadosAbertosClassifCbsIbsClick(Sender: TObject);
     procedure btDadosAbertosClassifIdSTConsultarClick(Sender: TObject);
+    procedure btDadosAbertosClassifPorDFeConsultarClick(Sender: TObject);
+    procedure btDadosAbertosSitTribCbsIbsClick(Sender: TObject);
+    procedure btDadosAbertosSitTribImpostoSeletivoClick(Sender: TObject);
     procedure btDadosAbertosClassifImpostoSeletivoClick(Sender: TObject);
     procedure btDadosAbertosFundConsultarClick(Sender: TObject);
     procedure btDadosAbertosMunicipiosConsultarClick(Sender: TObject);
@@ -337,7 +369,9 @@ type
     procedure InicializarComponentesDefault;
     procedure AdicionarLog(aMsg: String);
 
+    procedure PreencherTiposDFe(aObj: IACBrCalcDFeTiposResponse);
     procedure PreencherClassificacoes(aObj: IACBrCalcClassifTributariasResponse);
+    procedure PreencherSituacoesTributarias(aObj: IACBrCalcSituacoesTributariasResponse);
   public
     function NomeArquivoConfig: String;
   end;
@@ -351,7 +385,7 @@ uses
   {$IfDef FPC}
    fpjson, jsonparser, jsonscanner,
   {$Else}
-    {$IFDEF DELPHIXE6_UP}JSON,{$ENDIF}
+    {$IFDEF DELPHI26_UP}JSON,{$ENDIF}
   {$EndIf}
   synautil, synacode, IniFiles, DateUtils, StrUtils,
   ACBrUtil.Base,
@@ -428,7 +462,7 @@ var
 begin
   i := sgRegimeGeralItens.RowCount;
   sgRegimeGeralItens.RowCount := i+1;
-  sgRegimeGeralItens.Cells[0, i] := IntToStr(i+1);
+  sgRegimeGeralItens.Cells[0, i] := IntToStr(i);
   sgRegimeGeralItens.Cells[1, i] := edRegimeGeralItensCST.Text;
   sgRegimeGeralItens.Cells[2, i] := edRegimeGeralItensBC.Text;
   sgRegimeGeralItens.Cells[3, i] := edRegimeGeralItenscClassTrib.Text;
@@ -439,7 +473,12 @@ end;
 
 procedure TfrPrincipal.btRegimeGeralItensLimparClick(Sender: TObject);
 begin
+  sgRegimeGeralItens.ClearRows;
   sgRegimeGeralItens.RowCount := 1;
+  sgRegimeGeralItens.Cells[0, 0] := 'Numero';
+  sgRegimeGeralItens.Cells[1, 0] := 'CST';
+  sgRegimeGeralItens.Cells[2, 0] := 'Base Calculo';
+  sgRegimeGeralItens.Cells[3, 0] := 'cClassTrib';
 end;
 
 procedure TfrPrincipal.btRegimeGeralPreencherClick(Sender: TObject);
@@ -591,17 +630,18 @@ end;
 procedure TfrPrincipal.btValidarXmlClick(Sender: TObject);
 var
   wOk: Boolean;
+  wTipo: TACBrCalcTipoDocumento;
+  wSubtipo: TACBrCalcSubtipoDocumento;
 begin
-  if EstaVazio(edValidarXMLTipo.Text) or EstaVazio(edValidarXMLSubtipo.Text) then
+  if EstaZerado(cbValidarXMLTipo.ItemIndex) or EstaZerado(cbValidarXMLSubtipo.ItemIndex) then
   begin
     ShowMessage('Preencha os campos tipo/subtipo!');
     Exit;
   end;
 
-  wOk := ACBrCalculadoraConsumo1.ValidarXML(
-           edValidarXMLTipo.Text,
-           edValidarXMLSubtipo.Text,
-           mmValidarXml.Lines.Text);
+  wTipo := TACBrCalcTipoDocumento(cbValidarXMLTipo.ItemIndex);
+  wSubtipo := TACBrCalcSubtipoDocumento(cbValidarXMLSubtipo.ItemIndex);
+  wOk := ACBrCalculadoraConsumo1.ValidarXML(wTipo, wSubtipo, mmValidarXml.Lines.Text);
   if wOk then
   begin
     AdicionarLog('[VALIDADO COM SUCESSO]');
@@ -616,6 +656,7 @@ procedure TfrPrincipal.btGerarXMLClick(Sender: TObject);
 var
   wOk: Boolean;
   resp: AnsiString;
+  wTipoDoc: TACBrCalcTipoDocumento;
 begin
   if EstaVazio(mmGerarXML.Lines.Text) then
   begin
@@ -623,8 +664,9 @@ begin
     Exit;
   end;
 
+  wTipoDoc := TACBrCalcTipoDocumento(cbGerarXMLTipoDocumento.ItemIndex);
   ACBrCalculadoraConsumo1.GerarXMLRequest.AsJSON := mmGerarXML.Lines.Text;
-  wOk := ACBrCalculadoraConsumo1.GerarXML(resp);
+  wOk := ACBrCalculadoraConsumo1.GerarXML(wTipoDoc, resp);
   if wOk then
   begin
     AdicionarLog('[GERADO COM SUCESSO]');
@@ -637,6 +679,38 @@ end;
 procedure TfrPrincipal.btConfigSalvarClick(Sender: TObject);
 begin
   GravarConfiguracao;
+end;
+
+procedure TfrPrincipal.btConsultarTiposGeracaoClick(Sender: TObject);
+var
+  wOk: Boolean;
+  resp: IACBrCalcDFeTiposResponse;
+begin
+  wOk := ACBrCalculadoraConsumo1.ConsultarDFesParaGeracao(resp);
+  if (not wOk) then
+  begin
+    AdicionarLog(FormatarJSON(ACBrCalculadoraConsumo1.RespostaErro.AsJSON));
+    Exit;
+  end;
+
+  AdicionarLog('[CONSULTADO COM SUCESSO]');
+  PreencherTiposDFe(resp);
+end;
+
+procedure TfrPrincipal.btConsultarTiposValidacaoClick(Sender: TObject);
+var
+  wOk: Boolean;
+  resp: IACBrCalcDFeTiposResponse;
+begin
+  wOk := ACBrCalculadoraConsumo1.ConsultarDFesParaValidacao(resp);
+  if (not wOk) then
+  begin
+    AdicionarLog(FormatarJSON(ACBrCalculadoraConsumo1.RespostaErro.AsJSON));
+    Exit;
+  end;
+
+  AdicionarLog('[CONSULTADO COM SUCESSO]');
+  PreencherTiposDFe(resp);
 end;
 
 procedure TfrPrincipal.btDadosAbertosAliquotaMunClick(Sender: TObject);
@@ -741,6 +815,56 @@ begin
 
   AdicionarLog('[CONSULTADO COM SUCESSO]');
   PreencherClassificacoes(resp);
+end;
+
+procedure TfrPrincipal.btDadosAbertosClassifPorDFeConsultarClick(Sender: TObject);
+var
+  wOk: Boolean;
+  resp: IACBrCalcClassifTribPorDFeResponse;
+begin
+  wOk := ACBrCalculadoraConsumo1.DadosAbertos.ConsultarClassTribCbsIbsPorDFe(edDadosAbertosClassifData.DateTime,
+           edDadosAbertosClassifPorDFeSigla.Text, edDadosAbertosClassifPorDFecClassTrib.Text, resp);
+  if (not wOk) then
+  begin
+    AdicionarLog(FormatarJSON(ACBrCalculadoraConsumo1.DadosAbertos.RespostaErro.AsJSON));
+    ShowMessage(ACBrCalculadoraConsumo1.DadosAbertos.RespostaErro.detail);
+    Exit;
+  end;
+
+  AdicionarLog('[CONSULTADO COM SUCESSO]');
+  AdicionarLog(FormatarJSON(resp.ToJson));
+end;
+
+procedure TfrPrincipal.btDadosAbertosSitTribCbsIbsClick(Sender: TObject);
+var
+  wOk: Boolean;
+  resp: IACBrCalcSituacoesTributariasResponse;
+begin
+  wOk := ACBrCalculadoraConsumo1.DadosAbertos.ConsultarSituacaoTribCbsIbs(edDadosAbertosSitTribData.DateTime, resp);
+  if (not wOk) then
+  begin
+    AdicionarLog(FormatarJSON(ACBrCalculadoraConsumo1.DadosAbertos.RespostaErro.AsJSON));
+    Exit;
+  end;
+
+  AdicionarLog('[CONSULTADO COM SUCESSO]');
+  PreencherSituacoesTributarias(resp);
+end;
+
+procedure TfrPrincipal.btDadosAbertosSitTribImpostoSeletivoClick(Sender: TObject);
+var
+  wOk: Boolean;
+  resp: IACBrCalcSituacoesTributariasResponse;
+begin
+  wOk := ACBrCalculadoraConsumo1.DadosAbertos.ConsultarSituacaoTribImpostoSeletivo(edDadosAbertosSitTribData.DateTime, resp);
+  if (not wOk) then
+  begin
+    AdicionarLog(FormatarJSON(ACBrCalculadoraConsumo1.DadosAbertos.RespostaErro.AsJSON));
+    Exit;
+  end;
+
+  AdicionarLog('[CONSULTADO COM SUCESSO]');
+  PreencherSituacoesTributarias(resp);
 end;
 
 procedure TfrPrincipal.btDadosAbertosClassifImpostoSeletivoClick(Sender: TObject);
@@ -912,7 +1036,7 @@ var
   jdata: TJSONData;
   ms: TMemoryStream;
 {$ELSE}
-  {$IFDEF DELPHIXE6_UP}
+  {$IFDEF DELPHI26_UP}
   var
     wJsonValue: TJSONValue;
   {$ENDIF}
@@ -937,7 +1061,7 @@ begin
         jdata.Free;
     end;
     {$ELSE}
-      {$IFDEF DELPHIXE6_UP}
+      {$IFDEF DELPHI26_UP}
       wJsonValue := TJSONObject.ParseJSONValue(AJSON);
       try
         if Assigned(wJsonValue) then
@@ -1060,14 +1184,51 @@ begin
 end;
 
 procedure TfrPrincipal.InicializarComponentesDefault;
+var
+  i: Integer;
 begin
-  //
+  pcPrincipal.TabIndex := 0;
+  pcEndpoints.TabIndex := 0;
+  pcCalculadora.TabIndex := 0;
+  pcBaseCalculo.TabIndex := 0;
+  pcDadosAbertos.TabIndex := 0;
+
+  cbGerarXMLTipoDocumento.Items.Clear;
+  for i := 0 to Integer(High(TACBrCalcTipoDocumento)) do
+    cbGerarXMLTipoDocumento.Items.Add(CalcTipoDocumentoToString(TACBrCalcTipoDocumento(i)));
+  cbGerarXMLTipoDocumento.ItemIndex := 0;
+
+  cbValidarXMLTipo.Items.Clear;
+  for i := 0 to Integer(High(TACBrCalcTipoDocumento)) do
+    cbValidarXMLTipo.Items.Add(CalcTipoDocumentoToString(TACBrCalcTipoDocumento(i)));
+  cbValidarXMLTipo.ItemIndex := 0;
+
+  cbValidarXMLSubtipo.Items.Clear;
+  for i := 0 to Integer(High(TACBrCalcSubtipoDocumento)) do
+    cbValidarXMLSubtipo.Items.Add(CalcSubtipoDocumentoToString(TACBrCalcSubtipoDocumento(i)));
+  cbValidarXMLSubtipo.ItemIndex := 0;
 end;
 
 procedure TfrPrincipal.AdicionarLog(aMsg: String);
 begin
   if Assigned(mmEndpointsLog) then
     mmEndpointsLog.Lines.Add(aMsg);
+end;
+
+procedure TfrPrincipal.PreencherTiposDFe(aObj: IACBrCalcDFeTiposResponse);
+var
+  i: Integer;
+begin
+  sgConsultarTipos.RowCount := (aObj.dfeTipos.Count + 1);
+  sgConsultarTipos.Cells[0, 0] := 'Nome';
+  sgConsultarTipos.Cells[1, 0] := 'Mnemonico';
+  sgConsultarTipos.Cells[2, 0] := 'Versao Nota Tecnica';
+  for i := 0 to aObj.dfeTipos.Count-1 do
+  begin
+    sgConsultarTipos.Cells[0, i+1] := aObj.dfeTipos[i].nome;
+    sgConsultarTipos.Cells[1, i+1] := aObj.dfeTipos[i].mnemonico;
+    sgConsultarTipos.Cells[2, i+1] := aObj.dfeTipos[i].versaoNotaTecnica;
+  end;
 end;
 
 procedure TfrPrincipal.PreencherClassificacoes(aObj: IACBrCalcClassifTributariasResponse);
@@ -1093,6 +1254,22 @@ begin
     sgDadosAbertosClassif.Cells[5, i+1] := IfThen(aObj.classificacoes[i].incompativelComSuspensao, 'Sim', 'Nao');
     sgDadosAbertosClassif.Cells[6, i+1] := IfThen(aObj.classificacoes[i].exigeGrupoDesoneracao, 'Sim', 'Nao');
     sgDadosAbertosClassif.Cells[7, i+1] := IfThen(aObj.classificacoes[i].possuiPercentualReducao, 'Sim', 'Nao');
+  end;
+end;
+
+procedure TfrPrincipal.PreencherSituacoesTributarias(aObj: IACBrCalcSituacoesTributariasResponse);
+var
+  i: Integer;
+begin
+  sgDadosAbertosSitTrib.RowCount := (aObj.situacoesTributarias.Count + 1);
+  sgDadosAbertosSitTrib.Cells[0, 0] := 'ID';
+  sgDadosAbertosSitTrib.Cells[1, 0] := 'Codigo';
+  sgDadosAbertosSitTrib.Cells[2, 0] := 'Descricao';
+  for i := 0 to aObj.situacoesTributarias.Count-1 do
+  begin
+    sgDadosAbertosSitTrib.Cells[0, i+1] := IntToStr(aObj.situacoesTributarias[i].id);
+    sgDadosAbertosSitTrib.Cells[1, i+1] := aObj.situacoesTributarias[i].codigo;
+    sgDadosAbertosSitTrib.Cells[2, i+1] := aObj.situacoesTributarias[i].descricao;
   end;
 end;
 

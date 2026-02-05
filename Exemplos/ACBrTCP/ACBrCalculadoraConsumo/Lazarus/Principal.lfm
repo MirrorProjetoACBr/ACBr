@@ -6969,6 +6969,160 @@ object frPrincipal: TfrPrincipal
                 end
               end
             end
+            object tsDadosAbertosSitTrib: TTabSheet
+              Caption = 'Situacoes Tributarias'
+              ClientHeight = 421
+              ClientWidth = 598
+              object pnDadosAbertosSitTrib: TPanel
+                Left = 0
+                Height = 421
+                Top = 0
+                Width = 598
+                Align = alClient
+                BevelOuter = bvNone
+                ClientHeight = 421
+                ClientWidth = 598
+                TabOrder = 0
+                object sgDadosAbertosSitTrib: TStringGrid
+                  Left = 0
+                  Height = 317
+                  Top = 104
+                  Width = 598
+                  Align = alBottom
+                  Anchors = [akTop, akLeft, akRight, akBottom]
+                  ColCount = 3
+                  FixedCols = 0
+                  Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goSmoothScroll]
+                  TabOrder = 3
+                  TitleStyle = tsNative
+                  ColWidths = (
+                    85
+                    97
+                    409
+                  )
+                  Cells = (
+                    3
+                    0
+                    0
+                    'ID'
+                    1
+                    0
+                    'Codigo'
+                    2
+                    0
+                    'Descricao'
+                  )
+                end
+                object gbDadosAbertosSitTribImpostoSeletivo: TGroupBox
+                  Left = 216
+                  Height = 70
+                  Top = 15
+                  Width = 166
+                  Caption = 'Imposto Seletivo'
+                  ClientHeight = 50
+                  ClientWidth = 162
+                  TabOrder = 1
+                  object pnDadosAbertosSitTribImpostoSeletivo: TPanel
+                    Left = 0
+                    Height = 50
+                    Top = 0
+                    Width = 162
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 50
+                    ClientWidth = 162
+                    TabOrder = 0
+                    object btDadosAbertosSitTribImpostoSeletivo: TBitBtn
+                      Left = 15
+                      Height = 30
+                      Top = 6
+                      Width = 132
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 8
+                      OnClick = btDadosAbertosSitTribImpostoSeletivoClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object gbDadosAbertosSitTribCbsIbs: TGroupBox
+                  Left = 407
+                  Height = 70
+                  Top = 15
+                  Width = 166
+                  Caption = 'CBs e IBS'
+                  ClientHeight = 50
+                  ClientWidth = 162
+                  TabOrder = 2
+                  object pnDadosAbertosSitTribCbsIbs: TPanel
+                    Left = 0
+                    Height = 50
+                    Top = 0
+                    Width = 162
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 50
+                    ClientWidth = 162
+                    TabOrder = 0
+                    object btDadosAbertosSitTribCbsIbs: TBitBtn
+                      Left = 15
+                      Height = 30
+                      Top = 6
+                      Width = 132
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 8
+                      OnClick = btDadosAbertosSitTribCbsIbsClick
+                      TabOrder = 0
+                    end
+                  end
+                end
+                object gbDadosAbertosSitTribData: TGroupBox
+                  Left = 25
+                  Height = 70
+                  Top = 15
+                  Width = 166
+                  Caption = 'Data Consulta'
+                  ClientHeight = 50
+                  ClientWidth = 162
+                  TabOrder = 0
+                  object pnDadosAbertosSitTribData: TPanel
+                    Left = 0
+                    Height = 50
+                    Top = 0
+                    Width = 162
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 50
+                    ClientWidth = 162
+                    TabOrder = 0
+                    object edDadosAbertosSitTribData: TDateTimePicker
+                      Left = 15
+                      Height = 23
+                      Top = 10
+                      Width = 132
+                      CenturyFrom = 1941
+                      MaxDate = 2958465
+                      MinDate = -53780
+                      AutoSize = False
+                      TabOrder = 0
+                      TrailingSeparator = False
+                      TextForNullDate = 'NULL'
+                      LeadingZeros = True
+                      Kind = dtkDate
+                      TimeFormat = tf24
+                      TimeDisplay = tdHMS
+                      DateMode = dmComboBox
+                      Date = 46388
+                      Time = 0.565578831017774
+                      UseDefaultSeparators = True
+                      HideDateTimeParts = []
+                      MonthNames = 'Long'
+                    end
+                  end
+                end
+              end
+            end
             object tsDadosAbertosNCM: TTabSheet
               Caption = 'NCM'
               ClientHeight = 421
@@ -7278,35 +7432,35 @@ object frPrincipal: TfrPrincipal
                 ClientWidth = 598
                 TabOrder = 0
                 object gbDadosAbertosClassifIdST: TGroupBox
-                  Left = 200
-                  Height = 70
-                  Top = 15
-                  Width = 244
+                  Left = 25
+                  Height = 75
+                  Top = 96
+                  Width = 220
                   Caption = 'ID Situacao Tributaria'
-                  ClientHeight = 50
-                  ClientWidth = 240
+                  ClientHeight = 55
+                  ClientWidth = 216
                   TabOrder = 1
                   object pnDadosAbertosClassifIdST: TPanel
                     Left = 0
-                    Height = 50
+                    Height = 55
                     Top = 0
-                    Width = 240
+                    Width = 216
                     Align = alClient
                     BevelOuter = bvNone
-                    ClientHeight = 50
-                    ClientWidth = 240
+                    ClientHeight = 55
+                    ClientWidth = 216
                     TabOrder = 0
                     object edDadosAbertosClassifIdST: TEdit
                       Left = 15
                       Height = 23
-                      Top = 10
-                      Width = 75
+                      Top = 15
+                      Width = 60
                       TabOrder = 0
                     end
                     object btDadosAbertosClassifIdSTConsultar: TBitBtn
-                      Left = 105
+                      Left = 80
                       Height = 30
-                      Top = 6
+                      Top = 11
                       Width = 120
                       Caption = 'Consultar'
                       Images = ImageList1
@@ -7367,29 +7521,29 @@ object frPrincipal: TfrPrincipal
                   )
                 end
                 object gbDadosAbertosClassifImpostoSeletivo: TGroupBox
-                  Left = 25
+                  Left = 216
                   Height = 70
-                  Top = 95
-                  Width = 154
+                  Top = 15
+                  Width = 166
                   Caption = 'Imposto Seletivo'
                   ClientHeight = 50
-                  ClientWidth = 150
+                  ClientWidth = 162
                   TabOrder = 2
                   object pnDadosAbertosClassifImpostoSeletivo: TPanel
                     Left = 0
                     Height = 50
                     Top = 0
-                    Width = 150
+                    Width = 162
                     Align = alClient
                     BevelOuter = bvNone
                     ClientHeight = 50
-                    ClientWidth = 150
+                    ClientWidth = 162
                     TabOrder = 0
                     object btDadosAbertosClassifImpostoSeletivo: TBitBtn
                       Left = 15
                       Height = 30
                       Top = 6
-                      Width = 120
+                      Width = 132
                       Caption = 'Consultar'
                       Images = ImageList1
                       ImageIndex = 8
@@ -7399,29 +7553,29 @@ object frPrincipal: TfrPrincipal
                   end
                 end
                 object gbDadosAbertosClassifCbsIbs: TGroupBox
-                  Left = 200
+                  Left = 407
                   Height = 70
-                  Top = 95
-                  Width = 154
+                  Top = 15
+                  Width = 166
                   Caption = 'CBs e IBS'
                   ClientHeight = 50
-                  ClientWidth = 150
+                  ClientWidth = 162
                   TabOrder = 3
                   object pnDadosAbertosClassifCbsIbs: TPanel
                     Left = 0
                     Height = 50
                     Top = 0
-                    Width = 150
+                    Width = 162
                     Align = alClient
                     BevelOuter = bvNone
                     ClientHeight = 50
-                    ClientWidth = 150
+                    ClientWidth = 162
                     TabOrder = 0
                     object btDadosAbertosClassifCbsIbs: TBitBtn
                       Left = 15
                       Height = 30
                       Top = 6
-                      Width = 120
+                      Width = 132
                       Caption = 'Consultar'
                       Images = ImageList1
                       ImageIndex = 8
@@ -7434,26 +7588,26 @@ object frPrincipal: TfrPrincipal
                   Left = 25
                   Height = 70
                   Top = 15
-                  Width = 154
+                  Width = 166
                   Caption = 'Data Consulta'
                   ClientHeight = 50
-                  ClientWidth = 150
+                  ClientWidth = 162
                   TabOrder = 0
                   object pnDadosAbertosClassifData: TPanel
                     Left = 0
                     Height = 50
                     Top = 0
-                    Width = 150
+                    Width = 162
                     Align = alClient
                     BevelOuter = bvNone
                     ClientHeight = 50
-                    ClientWidth = 150
+                    ClientWidth = 162
                     TabOrder = 0
                     object edDadosAbertosClassifData: TDateTimePicker
                       Left = 15
                       Height = 23
                       Top = 10
-                      Width = 120
+                      Width = 132
                       CenturyFrom = 1941
                       MaxDate = 2958465
                       MinDate = -53780
@@ -7471,6 +7625,68 @@ object frPrincipal: TfrPrincipal
                       UseDefaultSeparators = True
                       HideDateTimeParts = []
                       MonthNames = 'Long'
+                    end
+                  end
+                end
+                object gbDadosAbertosClassifPorDFe: TGroupBox
+                  Left = 264
+                  Height = 75
+                  Top = 96
+                  Width = 309
+                  Caption = 'CBS/IBS com base no DFe e cClassTrib'
+                  ClientHeight = 55
+                  ClientWidth = 305
+                  TabOrder = 5
+                  object pnDadosAbertosClassifPorDFe: TPanel
+                    Left = 0
+                    Height = 55
+                    Top = 0
+                    Width = 305
+                    Align = alClient
+                    BevelOuter = bvNone
+                    ClientHeight = 55
+                    ClientWidth = 305
+                    TabOrder = 0
+                    object edDadosAbertosClassifPorDFeSigla: TEdit
+                      Left = 15
+                      Height = 23
+                      Top = 20
+                      Width = 60
+                      TabOrder = 0
+                    end
+                    object btDadosAbertosClassifPorDFeConsultar: TBitBtn
+                      Left = 158
+                      Height = 30
+                      Top = 13
+                      Width = 132
+                      Caption = 'Consultar'
+                      Images = ImageList1
+                      ImageIndex = 8
+                      OnClick = btDadosAbertosClassifPorDFeConsultarClick
+                      TabOrder = 2
+                    end
+                    object edDadosAbertosClassifPorDFecClassTrib: TEdit
+                      Left = 86
+                      Height = 23
+                      Top = 20
+                      Width = 60
+                      TabOrder = 1
+                    end
+                    object lbDadosAbertosClassifPorDFeSigla: TLabel
+                      Left = 15
+                      Height = 15
+                      Top = 5
+                      Width = 48
+                      Caption = 'Sigla DFe'
+                      ParentColor = False
+                    end
+                    object lbDadosAbertosClassifPorDFecClassTrib: TLabel
+                      Left = 86
+                      Height = 15
+                      Top = 5
+                      Width = 52
+                      Caption = 'cClassTrib'
+                      ParentColor = False
                     end
                   end
                 end
@@ -7679,10 +7895,10 @@ object frPrincipal: TfrPrincipal
             Height = 459
             Top = 0
             Width = 606
-            ActivePage = tsBaseCalculoIS
+            ActivePage = tsBaseCalculoCIBS
             Align = alClient
             TabHeight = 30
-            TabIndex = 0
+            TabIndex = 1
             TabOrder = 0
             TabWidth = 146
             object tsBaseCalculoIS: TTabSheet
@@ -8227,13 +8443,81 @@ object frPrincipal: TfrPrincipal
             Height = 459
             Top = 0
             Width = 606
-            ActivePage = tsRegimeGeral
+            ActivePage = tsConsultarTipos
             Align = alClient
             Images = ImageList1
             TabHeight = 30
             TabIndex = 0
             TabOrder = 0
             TabWidth = 146
+            object tsConsultarTipos: TTabSheet
+              Caption = 'Consultar Tipos DFe'
+              ClientHeight = 421
+              ClientWidth = 598
+              object pnConsultarTipos: TPanel
+                Left = 0
+                Height = 421
+                Top = 0
+                Width = 598
+                Align = alClient
+                BevelOuter = bvNone
+                ClientHeight = 421
+                ClientWidth = 598
+                TabOrder = 0
+                object btConsultarTiposValidacao: TBitBtn
+                  Left = 25
+                  Height = 30
+                  Top = 25
+                  Width = 160
+                  Caption = 'Validação de XML'
+                  Images = ImageList1
+                  ImageIndex = 8
+                  OnClick = btConsultarTiposValidacaoClick
+                  TabOrder = 0
+                end
+                object sgConsultarTipos: TStringGrid
+                  Left = 0
+                  Height = 341
+                  Top = 80
+                  Width = 598
+                  Align = alBottom
+                  Anchors = [akTop, akLeft, akRight, akBottom]
+                  ColCount = 3
+                  FixedCols = 0
+                  Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goSmoothScroll]
+                  TabOrder = 2
+                  TitleStyle = tsNative
+                  ColWidths = (
+                    144
+                    145
+                    259
+                  )
+                  Cells = (
+                    3
+                    0
+                    0
+                    'Nome'
+                    1
+                    0
+                    'Mnemonico'
+                    2
+                    0
+                    'Versao Nota Tecnica'
+                  )
+                end
+                object btConsultarTiposGeracao: TBitBtn
+                  Left = 208
+                  Height = 30
+                  Top = 25
+                  Width = 160
+                  Caption = 'Criação de XML'
+                  Images = ImageList1
+                  ImageIndex = 8
+                  OnClick = btConsultarTiposGeracaoClick
+                  TabOrder = 1
+                end
+              end
+            end
             object tsRegimeGeral: TTabSheet
               Caption = 'Regime Geral'
               ClientHeight = 421
@@ -8266,7 +8550,7 @@ object frPrincipal: TfrPrincipal
                   BevelOuter = bvNone
                   ClientHeight = 45
                   ClientWidth = 564
-                  TabOrder = 0
+                  TabOrder = 5
                   object btRegimeGeralCalcular: TBitBtn
                     Left = 200
                     Height = 30
@@ -8279,7 +8563,7 @@ object frPrincipal: TfrPrincipal
                     TabOrder = 1
                   end
                   object btRegimeGeralPreencher: TBitBtn
-                    Left = 16
+                    Left = 15
                     Height = 30
                     Top = 6
                     Width = 176
@@ -8295,7 +8579,7 @@ object frPrincipal: TfrPrincipal
                   Height = 23
                   Top = 20
                   Width = 123
-                  TabOrder = 1
+                  TabOrder = 0
                 end
                 object lbRegimeGeralId: TLabel
                   Left = 15
@@ -8309,7 +8593,7 @@ object frPrincipal: TfrPrincipal
                   Height = 23
                   Top = 20
                   Width = 123
-                  TabOrder = 2
+                  TabOrder = 1
                 end
                 object lbRegimeGeralVersao: TLabel
                   Left = 153
@@ -8323,7 +8607,7 @@ object frPrincipal: TfrPrincipal
                   Height = 23
                   Top = 20
                   Width = 123
-                  TabOrder = 3
+                  TabOrder = 2
                 end
                 object lbRegimeGeralCodMun: TLabel
                   Left = 291
@@ -8337,7 +8621,7 @@ object frPrincipal: TfrPrincipal
                   Height = 23
                   Top = 20
                   Width = 123
-                  TabOrder = 4
+                  TabOrder = 3
                 end
                 object lbRegimeGeralUF: TLabel
                   Left = 429
@@ -8355,7 +8639,7 @@ object frPrincipal: TfrPrincipal
                   Caption = 'Itens'
                   ClientHeight = 102
                   ClientWidth = 560
-                  TabOrder = 5
+                  TabOrder = 4
                   object pnRegimeGeralItens: TPanel
                     Left = 0
                     Height = 102
@@ -8372,7 +8656,7 @@ object frPrincipal: TfrPrincipal
                       Top = 16
                       Width = 85
                       Caption = 'Add'
-                      TabOrder = 2
+                      TabOrder = 3
                       OnClick = btRegimeGeralItensAddClick
                     end
                     object edRegimeGeralItensCST: TEdit
@@ -8417,35 +8701,35 @@ object frPrincipal: TfrPrincipal
                         item
                           Title.Alignment = taCenter
                           Title.Caption = 'Numero'
-                          Width = 139
+                          Width = 135
                         end                      
                         item
                           Title.Alignment = taCenter
                           Title.Caption = 'CST'
-                          Width = 139
+                          Width = 135
                         end                      
                         item
                           Title.Alignment = taCenter
                           Title.Caption = 'Base Calculo'
-                          Width = 139
+                          Width = 135
                         end                      
                         item
                           Title.Alignment = taCenter
                           Title.Caption = 'cClassTrib'
-                          Width = 139
+                          Width = 134
                         end>
                       DefaultRowHeight = 15
                       FixedCols = 0
                       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goSmoothScroll]
                       RowCount = 1
                       ScrollBars = ssVertical
-                      TabOrder = 4
+                      TabOrder = 5
                       TitleStyle = tsNative
                       ColWidths = (
-                        139
-                        139
-                        139
-                        139
+                        135
+                        135
+                        135
+                        134
                       )
                     end
                     object btRegimeGeralItensLimpar: TButton
@@ -8454,7 +8738,7 @@ object frPrincipal: TfrPrincipal
                       Top = 16
                       Width = 85
                       Caption = 'Limpar'
-                      TabOrder = 3
+                      TabOrder = 4
                       OnClick = btRegimeGeralItensLimparClick
                     end
                     object edRegimeGeralItenscClassTrib: TEdit
@@ -8462,7 +8746,7 @@ object frPrincipal: TfrPrincipal
                       Height = 23
                       Top = 18
                       Width = 105
-                      TabOrder = 5
+                      TabOrder = 2
                     end
                     object lbRegimeGeralItenscClassTrib: TLabel
                       Left = 254
@@ -8515,7 +8799,7 @@ object frPrincipal: TfrPrincipal
                 TabOrder = 0
                 object mmGerarXML: TMemo
                   Left = 0
-                  Height = 136
+                  Height = 128
                   Top = 0
                   Width = 564
                   Align = alClient
@@ -8524,24 +8808,40 @@ object frPrincipal: TfrPrincipal
                 end
                 object pnGerarXMLBotoes: TPanel
                   Left = 0
-                  Height = 45
-                  Top = 136
+                  Height = 53
+                  Top = 128
                   Width = 564
                   Align = alBottom
                   BevelOuter = bvNone
-                  ClientHeight = 45
+                  ClientHeight = 53
                   ClientWidth = 564
                   TabOrder = 1
                   object btGerarXML: TBitBtn
-                    Left = 13
+                    Left = 183
                     Height = 30
-                    Top = 7
+                    Top = 15
                     Width = 120
                     Caption = 'Gerar'
                     Images = ImageList1
                     ImageIndex = 14
                     OnClick = btGerarXMLClick
                     TabOrder = 0
+                  end
+                  object cbGerarXMLTipoDocumento: TComboBox
+                    Left = 20
+                    Height = 23
+                    Top = 20
+                    Width = 148
+                    ItemHeight = 15
+                    Style = csDropDownList
+                    TabOrder = 1
+                  end
+                  object Label1: TLabel
+                    Left = 20
+                    Height = 15
+                    Top = 5
+                    Width = 89
+                    Caption = 'Tipo Documento'
                   end
                 end
               end
@@ -8588,22 +8888,15 @@ object frPrincipal: TfrPrincipal
                   ClientWidth = 564
                   TabOrder = 1
                   object btValidarXml: TBitBtn
-                    Left = 290
+                    Left = 352
                     Height = 30
-                    Top = 18
+                    Top = 20
                     Width = 120
                     Caption = 'Validar'
                     Images = ImageList1
                     ImageIndex = 14
                     OnClick = btValidarXmlClick
                     TabOrder = 2
-                  end
-                  object edValidarXMLTipo: TEdit
-                    Left = 15
-                    Height = 23
-                    Top = 25
-                    Width = 123
-                    TabOrder = 0
                   end
                   object lbValidarXMLTipo: TLabel
                     Left = 15
@@ -8612,19 +8905,30 @@ object frPrincipal: TfrPrincipal
                     Width = 23
                     Caption = 'Tipo'
                   end
-                  object edValidarXMLSubtipo: TEdit
-                    Left = 152
-                    Height = 23
-                    Top = 25
-                    Width = 123
-                    TabOrder = 1
-                  end
                   object lbValidarXMLSubtipo: TLabel
-                    Left = 152
+                    Left = 184
                     Height = 15
                     Top = 10
                     Width = 41
                     Caption = 'Subtipo'
+                  end
+                  object cbValidarXMLTipo: TComboBox
+                    Left = 15
+                    Height = 23
+                    Top = 25
+                    Width = 148
+                    ItemHeight = 15
+                    Style = csDropDownList
+                    TabOrder = 0
+                  end
+                  object cbValidarXMLSubtipo: TComboBox
+                    Left = 184
+                    Height = 23
+                    Top = 25
+                    Width = 148
+                    ItemHeight = 15
+                    Style = csDropDownList
+                    TabOrder = 1
                   end
                 end
               end
