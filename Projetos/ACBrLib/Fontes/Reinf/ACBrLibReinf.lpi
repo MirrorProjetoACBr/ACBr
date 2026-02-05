@@ -13,6 +13,7 @@
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrLibReinf"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>

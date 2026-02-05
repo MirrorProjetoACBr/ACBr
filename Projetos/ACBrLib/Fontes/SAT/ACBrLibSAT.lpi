@@ -13,6 +13,7 @@
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrLibSAT"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -262,9 +263,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDEBUG 
--dNOGUI
--dMT"/>
+            <CustomOptions Value="-dDEBUG  -dNOGUI -dMT"/>
           </Other>
         </CompilerOptions>
       </Item7>

@@ -16,6 +16,7 @@
       <XPManifest>
         <DpiAware Value="True/PM"/>
       </XPManifest>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>

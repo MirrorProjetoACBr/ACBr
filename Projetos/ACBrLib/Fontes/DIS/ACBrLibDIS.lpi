@@ -13,6 +13,7 @@
       <MainUnit Value="0"/>
       <Title Value="ACBrLibDIS"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>

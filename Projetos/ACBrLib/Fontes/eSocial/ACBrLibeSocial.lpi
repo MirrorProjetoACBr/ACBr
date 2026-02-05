@@ -13,6 +13,7 @@
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrLibeSocial"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
     <Version Value="12"/>
@@ -13,9 +13,7 @@
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ACBrLibCTe"/>
       <ResourceType Value="res"/>
-      <XPManifest>
-        <DpiAware Value="True/PM"/>
-      </XPManifest>
+      <UseXPManifest Value="True"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -266,9 +264,7 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDEBUG 
--dNOGUI 
--dMT"/>
+            <CustomOptions Value="-dDEBUG  -dNOGUI  -dMT"/>
           </Other>
         </CompilerOptions>
       </Item7>
