@@ -919,10 +919,18 @@ begin
       begin
         BaseCalculo := ValorServicos - ValorDeducoes - DescontoIncondicionado;
 
-        if tribFed.tpRetPisCofins = trpcNaoRetido then
-           RetencoesFederais := ValorInss + ValorIr + ValorCsll
+        case tribFed.tpRetPisCofins of
+          trpcNaoRetido:
+            RetencoesFederais := ValorInss + ValorIr + ValorCsll;
+
+          trpcPISRetido:
+            RetencoesFederais := ValorPis + ValorInss + ValorIr + ValorCsll;
+
+          trpcCOFINSRetido:
+            RetencoesFederais := ValorCofins + ValorInss + ValorIr + ValorCsll;
         else
-           RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+          RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+        end;
 
         ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                    ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
@@ -1609,10 +1617,18 @@ begin
     begin
       BaseCalculo := ValorServicos - ValorDeducoes - DescontoIncondicionado;
 
-      if tribFed.tpRetPisCofins = trpcNaoRetido then
-         RetencoesFederais := ValorInss + ValorIr + ValorCsll
+      case tribFed.tpRetPisCofins of
+        trpcNaoRetido:
+          RetencoesFederais := ValorInss + ValorIr + ValorCsll;
+
+        trpcPISRetido:
+          RetencoesFederais := ValorPis + ValorInss + ValorIr + ValorCsll;
+
+        trpcCOFINSRetido:
+          RetencoesFederais := ValorCofins + ValorInss + ValorIr + ValorCsll;
       else
-         RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+        RetencoesFederais := ValorPis + ValorCofins + ValorInss + ValorIr + ValorCsll;
+      end;
 
       ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                  ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2026
+-- PadraoNacional.LerXml --
+[*] Ajustes no calculo do valor total e valor liquido da nota no que se refere a retenção.
+   Por: Italo Giurizzato Junior
+
 04/02/2026
 --GeisWeb.GravarXml --
 [-] ACBR-8895 - Ajuste visando sanar problema de leitura do XML quando não houver finNFSe no arquivo.
