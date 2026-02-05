@@ -763,10 +763,6 @@ begin
       PercentualCargaTributariaEstadual := StringToFloatDef(AINIRec.ReadString(sSecao, 'PercentualCargaTributariaEstadual', ''), 0);
       ValorCargaTributariaEstadual := StringToFloatDef(AINIRec.ReadString(sSecao, 'ValorCargaTributariaEstadual', ''), 0);
 
-      // Provedor PadraoNacional
-      verAplic := AINIRec.ReadString(sSecao, 'verAplic', 'ACBrNFSeX-1.00');
-      tpEmit := StrTotpEmit(Ok, AINIRec.ReadString(sSecao, 'tpEmit', '1'));
-
       // Provedor Governa
       RegRec := StrToRegRec(Ok, AINIRec.ReadString(sSecao, 'RegRec', ''));
       // Provedor Governa e Prescon
@@ -793,14 +789,6 @@ begin
       RpsSubstituido.Numero := AINIRec.ReadString(sSecao, 'Numero', '');
       RpsSubstituido.Serie := AINIRec.ReadString(sSecao, 'Serie', '');
       RpsSubstituido.Tipo := FpAOwner.StrToTipoRPS(Ok, AINIRec.ReadString(sSecao, 'Tipo', '1'));
-    end;
-
-    sSecao := 'NFSeSubstituicao';
-    if AINIRec.SectionExists(sSecao) then
-    begin
-      subst.chSubstda := AINIRec.ReadString(sSecao, 'chSubstda', '');
-      subst.cMotivo := StrTocMotivo(Ok, AINIRec.ReadString(sSecao, 'cMotivo', ''));
-      subst.xMotivo := AINIRec.ReadString(sSecao, 'xMotivo', '');
     end;
 
     sSecao := 'NFSeCancelamento';
@@ -1017,6 +1005,7 @@ begin
       // Provedor IssNet e Padrão Nacional
       Servico.CodigoNBS := AINIRec.ReadString(sSecao, 'CodigoNBS', '');
       Servico.CodigoInterContr := AINIRec.ReadString(sSecao, 'CodigoInterContr', '');
+      NFSe.infNFSe.xNBS := AINIRec.ReadString(sSecao, 'xNBS', '');
 
       // Provedor SoftPlan
       Servico.CFPS := AINIRec.ReadString(sSecao, 'CFPS', '');
