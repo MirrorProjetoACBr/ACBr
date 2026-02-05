@@ -247,7 +247,7 @@ end;
 function TNFSeRClass.NormatizarItemListaServico(const Codigo: string): string;
 var
   Item: Integer;
-  xCodigo: string;
+  xCodigo, lResultProprio, lResultNacional: string;
 begin
   Result := Codigo;
 
@@ -261,7 +261,15 @@ begin
 
     xCodigo := FormatFloat('0000', Item);
 
-    Result := Copy(xCodigo, 1, 2) + '.' + Copy(xCodigo, 3, 2);
+    lResultProprio := Copy(xCodigo, 1, 2) + '.' + Copy(xCodigo, 3, 2);
+
+    xCodigo := PadLeft(IntToStr(Item), 6, '0');
+    lResultNacional := Copy(xCodigo, 1, 2) + '.' + Copy(xCodigo, 3, 2) + '.' + Copy(xCodigo, 5, 2);
+
+    if ItemListaServicoDescricao(lResultProprio) <> '' then
+      Result := lResultProprio
+    else
+      Result := lResultNacional;
   end;
 end;
 

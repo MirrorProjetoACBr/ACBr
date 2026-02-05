@@ -44,6 +44,8 @@ Símbolo : Significado
 
 05/02/2026
 -- ACBrNFSeXLerXml --
+[-] ACBR-8756 - Ajuste visando correta normatização do campo ItemListaServico nos casos que vier com 5 dígitos.
+   Por: Diego Folieni
 [*] Incluído a leitura do campo xNBS na seção Serviço.
    Por: Italo Giurizzato Junior
 -- Sudoeste.GravarXml --
