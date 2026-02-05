@@ -179,7 +179,7 @@ type
 
     function GerarXMLIBSCBSTribValores(valores: Tvalorestrib): TACBrXmlNode; virtual;
     function GerarXMLgReeRepRes(gReeRepRes: TgReeRepRes): TACBrXmlNode;
-    function GerarXMLDocumentos: TACBrXmlNodeArray;
+    function GerarXMLDocumentos: TACBrXmlNodeArray; virtual;
     function GerarXMLdFeNacional(dFeNacional: TdFeNacional): TACBrXmlNode;
     function GerarXMLdocFiscalOutro(docFiscalOutro: TdocFiscalOutro): TACBrXmlNode;
     function GerarXMLdocOutro(docOutro: TdocOutro): TACBrXmlNode;
@@ -2043,7 +2043,8 @@ begin
   Result.AppendChild(AddNode(tcStr, '#1', 'cCredPres', 2, 2, NrOcorrcCredPres,
                                         cCredPresToStr(gIBSCBS.cCredPres), ''));
 
-  if (gIBSCBS.gTribRegular.CSTReg <> cstNenhum) and GerarTribRegular then
+  if (gIBSCBS.gTribRegular.CSTReg <> cstNenhum) and
+     (gIBSCBS.gTribRegular.cClassTribReg <> '') and GerarTribRegular then
     Result.AppendChild(GerarXMLgTribRegular(gIBSCBS.gTribRegular));
 
   if ((gIBSCBS.gDif.pDifUF > 0) or (gIBSCBS.gDif.pDifMun > 0) or

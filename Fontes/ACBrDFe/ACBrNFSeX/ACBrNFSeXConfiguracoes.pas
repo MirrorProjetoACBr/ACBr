@@ -570,10 +570,15 @@ begin
   }
   aValor := FPIniParams.ReadString(FxProvedor, 'Versao', '');
 
-  if aValor = '' then
-    FVersao := StrToVersaoNFSe(Ok, FPIniParams.ReadString(CodIBGE, 'Versao', '1.00'))
+  if aValor <> '' then
+    FVersao := StrToVersaoNFSe(Ok, aValor)
   else
-    FVersao := StrToVersaoNFSe(Ok, aValor);
+  begin
+    aValor := FPIniParams.ReadString(CodIBGE, 'Versao', '');
+
+    if aValor <> '***' then
+      FVersao := StrToVersaoNFSe(Ok, FPIniParams.ReadString(CodIBGE, 'Versao', '1.00'));
+  end;
 
   {
     Verifica se na seção do município consta o Params,
