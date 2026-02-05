@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2026
+-- ACBrCalculadoraConsumo, ACBrCalculadoraConsumo.Schemas --
+[*] Ajustes para adaptar o componente após alteraçoes nas especificações da documentação
+    por: Elias
+
 02/02/2026
 -- ACBrLogme --
 [+] Inclusão do novo componente ACBrLogme

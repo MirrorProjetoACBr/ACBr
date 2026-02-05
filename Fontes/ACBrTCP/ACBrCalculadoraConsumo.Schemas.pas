@@ -31,6 +31,8 @@
 {       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
+// Doc: https://piloto-cbs.tributos.gov.br/servico/calculadora-consumo/api/swagger-ui/index.html
+
 {$I ACBr.inc}
 
 unit ACBrCalculadoraConsumo.Schemas;
@@ -49,8 +51,12 @@ const
   cACBrCalcEndpointUFs = 'ufs';
   cACBrCalcEndpointNCM = 'ncm';
   cACBrCalcEndpointNBS = 'nbs';
+  cACBrCalcEndpointXML = 'xml';
   cACBrCalcEndpointVersao = 'versao';
   cACBrCalcEndpointCbsIbs = 'cbs-ibs';
+  cACBrCalcEndpointPedagio = 'pedagio';
+  cACBrCalcEndpointGenerate = 'generate';
+  cACBrCalcEndpointValidate = 'validate';
   cACBrCalcEndpointAliqUF = 'aliquota-uf';
   cACBrCalcEndpointGerarXml = 'gerar-xml';
   cACBrCalcEndpointMunicipios = 'municipios';
@@ -72,6 +78,28 @@ type
 
   EACBrCalcAuthError = class(Exception);
   EACBrCalcDataSend = class(Exception);
+
+  { TACBrCalcTipoDocumento }
+
+  TACBrCalcTipoDocumento = (
+    ctdNenhum,
+    ctdNFe,
+    ctdNfce,
+    ctdNfse,
+    ctdCte,
+    ctdCteSimplificado,
+    ctdBpe,
+    ctdBpeTm,
+    ctdNf3e
+  );
+
+  { TACBrCalcSubtipoDocumento }
+
+  TACBrCalcSubtipoDocumento = (
+    csbNenhum,
+    csbGrupo,
+    csbNota
+  );
 
   { TACBrCalcErro }
   TACBrCalcErro = class(TACBrAPISchema)
@@ -209,9 +237,9 @@ type
     property descricao: String read fdescricao write fdescricao;
   end;
 
-  { TACBrCalcSituacaoTributariaResponse }
+  { TACBrCalcSituacoesTributarias }
 
-  TACBrCalcSituacaoTributariaResponse = class(TACBrAPISchemaArray)
+  TACBrCalcSituacoesTributarias = class(TACBrAPISchemaArray)
   private
     function GetItem(Index: Integer): TACBrCalcSituacaoTributaria;
     procedure SetItem(Index: Integer; AValue: TACBrCalcSituacaoTributaria);
@@ -270,6 +298,42 @@ type
     property Items[Index: Integer]: TACBrCalcFundamentacaoLegal read GetItem write SetItem; default;
   end;
 
+  { TACBrCalcDFeClassificacao }
+
+  TACBrCalcDFeClassificacao = class(TACBrAPISchema)
+  private
+    ftipo: Integer;
+    fsigla: String;
+    fdescricao: String;
+  protected
+    procedure AssignSchema(aSource: TACBrAPISchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrCalcDFeClassificacao);
+
+    property tipo: Integer read ftipo write ftipo;
+    property sigla: String read fsigla write fsigla;
+    property descricao: String read fdescricao write fdescricao;
+  end;
+
+  { TACBrCalcDFeClassificacaoLista }
+
+  TACBrCalcDFeClassificacaoLista = class(TACBrAPISchemaArray)
+  private
+    function GetItem(Index: Integer): TACBrCalcDFeClassificacao;
+    procedure SetItem(Index: Integer; AValue: TACBrCalcDFeClassificacao);
+  protected
+    function NewSchema: TACBrAPISchema; override;
+  public
+    function Add(aItem: TACBrCalcDFeClassificacao): Integer;
+    procedure Insert(Index: Integer; aItem: TACBrCalcDFeClassificacao);
+    function New: TACBrCalcDFeClassificacao;
+    property Items[Index: Integer]: TACBrCalcDFeClassificacao read GetItem write SetItem; default;
+  end;
+
   { TACBrCalcClassificacaoTributaria }
 
   TACBrCalcClassificacaoTributaria = class(TACBrAPISchema)
@@ -290,11 +354,14 @@ type
     fpercentualReducaoCbs: Double;
     fpercentualReducaoIbsUf: Double;
     fpercentualReducaoIbsMun: Double;
+    ftiposDfeClassificacao: TACBrCalcDFeClassificacaoLista;
+    function GettiposDfeClassificacao: TACBrCalcDFeClassificacaoLista;
   protected
     procedure AssignSchema(aSource: TACBrAPISchema); override;
     procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
     procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
   public
+    destructor Destroy; override;
     procedure Clear; override;
     function IsEmpty: Boolean; override;
     procedure Assign(Source: TACBrCalcClassificacaoTributaria);
@@ -315,6 +382,7 @@ type
     property percentualReducaoCbs: Double read fpercentualReducaoCbs write fpercentualReducaoCbs;
     property percentualReducaoIbsUf: Double read fpercentualReducaoIbsUf write fpercentualReducaoIbsUf;
     property percentualReducaoIbsMun: Double read fpercentualReducaoIbsMun write fpercentualReducaoIbsMun;
+    property tiposDfeClassificacao: TACBrCalcDFeClassificacaoLista read GettiposDfeClassificacao;
   end;
 
   { TACBrCalcClassifTributarias }
@@ -1363,12 +1431,138 @@ type
     property itens: TACBrCalcOperacaoItens read GetItens;
   end;
 
+  { TACBrCalcValidadeDFeClassificacao }
+
+  TACBrCalcValidadeDFeClassificacao = class(TACBrAPISchema)
+  private
+    fexigeGrupoTributacaoRegular: Boolean;
+    fnomenclatura: String;
+    fpermiteDiferimento: Boolean;
+    fsiglaDfeInformado: String;
+    fvalidoParaSiglaDfeInformado: Boolean;
+  protected
+    procedure AssignSchema(aSource: TACBrAPISchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrCalcValidadeDFeClassificacao);
+
+    property siglaDfeInformado: String read fsiglaDfeInformado write fsiglaDfeInformado;
+    property validoParaSiglaDfeInformado: Boolean read fvalidoParaSiglaDfeInformado write fvalidoParaSiglaDfeInformado;
+    property nomenclatura: String read fnomenclatura write fnomenclatura;
+    property exigeGrupoTributacaoRegular: Boolean read fexigeGrupoTributacaoRegular write fexigeGrupoTributacaoRegular;
+    property permiteDiferimento: Boolean read fpermiteDiferimento write fpermiteDiferimento;
+  end;
+
+  { TACBrCalcDFeTipo }
+
+  TACBrCalcDFeTipo = class(TACBrAPISchema)
+  private
+    fnome: String;
+    fmnemonico: String;
+    fversaoNotaTecnica: String;
+  protected
+    procedure AssignSchema(aSource: TACBrAPISchema); override;
+    procedure DoWriteToJSon(aJSon: TACBrJSONObject); override;
+    procedure DoReadFromJSon(aJSon: TACBrJSONObject); override;
+  public
+    procedure Clear; override;
+    function IsEmpty: Boolean; override;
+    procedure Assign(Source: TACBrCalcDFeTipo);
+
+    property nome: String read fnome write fnome;
+    property mnemonico: String read fmnemonico write fmnemonico;
+    property versaoNotaTecnica: String read fversaoNotaTecnica write fversaoNotaTecnica;
+  end;
+
+  { TACBrCalcDFeTipoLista }
+
+  TACBrCalcDFeTipoLista = class(TACBrAPISchemaArray)
+  private
+    function GetItem(Index: Integer): TACBrCalcDFeTipo;
+    procedure SetItem(Index: Integer; AValue: TACBrCalcDFeTipo);
+  protected
+    function NewSchema: TACBrAPISchema; override;
+  public
+    function Add(aItem: TACBrCalcDFeTipo): Integer;
+    procedure Insert(Index: Integer; aItem: TACBrCalcDFeTipo);
+    function New: TACBrCalcDFeTipo;
+    property Items[Index: Integer]: TACBrCalcDFeTipo read GetItem write SetItem; default;
+  end;
+
+  function CalcTipoDocumentoToString(const aValue: TACBrCalcTipoDocumento): String;
+  function StringToCalcTipoDocumento(const aValue: String): TACBrCalcTipoDocumento;
+  function CalcSubtipoDocumentoToString(const aValue: TACBrCalcSubtipoDocumento): String;
+  function StringToCalcSubtipoDocumento(const aValue: String): TACBrCalcSubtipoDocumento;
+
 implementation
 
 uses
   StrUtils, synautil,
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime;
+
+function CalcTipoDocumentoToString(const aValue: TACBrCalcTipoDocumento): String;
+begin
+  Result := EmptyStr;
+  case aValue of
+    ctdNFe: Result := 'nfe';
+    ctdNfce: Result := 'nfce';
+    ctdNfse: Result := 'nfse';
+    ctdCte: Result := 'cte';
+    ctdCteSimplificado: Result := 'cte-simplificado';
+    ctdBpe: Result := 'bpe';
+    ctdBpeTm: Result := 'bpe-tm';
+    ctdNf3e: Result := 'nf3e';
+  end;
+end;
+
+function StringToCalcTipoDocumento(const aValue: String): TACBrCalcTipoDocumento;
+var
+  s: String;
+begin
+  Result := ctdNenhum;
+  s := LowerCase(aValue);
+  if (s = 'nfe') then
+    Result := ctdNFe
+  else if (s = 'nfce') then
+    Result := ctdNfce
+  else if (s = 'nfse') then
+    Result := ctdNfse
+  else if (s = 'cte') then
+    Result := ctdCte
+  else if (s = 'cte-simplificado') then
+    Result := ctdCteSimplificado
+  else if (s = 'bpe') then
+    Result := ctdBpe
+  else if (s = 'bpe-tm') then
+    Result := ctdBpeTm
+  else if (s = 'nf3e') then
+    Result := ctdNf3e;
+end;
+
+function CalcSubtipoDocumentoToString(const aValue: TACBrCalcSubtipoDocumento): String;
+begin
+  Result := EmptyStr;
+  case aValue of
+    csbGrupo: Result := 'grupo';
+    csbNota: Result := 'nota';
+  end;
+end;
+
+function StringToCalcSubtipoDocumento(const aValue: String): TACBrCalcSubtipoDocumento;
+var
+  s: String;
+begin
+  Result := csbNenhum;
+  s := LowerCase(aValue);
+  if (s = 'grupo') then
+    Result := csbGrupo
+  else if (s = 'nota') then
+    Result := csbNota;
+end;
 
 { TACBrCalcErro }
 
@@ -1721,14 +1915,47 @@ begin
   fdescricao := Source.descricao;
 end;
 
-{ TACBrCalcSituacaoTributariaResponse }
+{ TACBrCalcSituacoesTributarias }
 
-function TACBrCalcSituacaoTributariaResponse.GetItem(Index: Integer): TACBrCalcSituacaoTributaria;
+function TACBrCalcSituacoesTributarias.GetItem(Index: Integer): TACBrCalcSituacaoTributaria;
 begin
   Result := TACBrCalcSituacaoTributaria(inherited Items[Index]);
 end;
 
+procedure TACBrCalcSituacoesTributarias.SetItem(Index: Integer; AValue: TACBrCalcSituacaoTributaria);
+begin
+  inherited Items[Index] := aValue;
+end;
+
+function TACBrCalcSituacoesTributarias.NewSchema: TACBrAPISchema;
+begin
+  Result := New;
+end;
+
+function TACBrCalcSituacoesTributarias.Add(aItem: TACBrCalcSituacaoTributaria): Integer;
+begin
+  Result := inherited Add(aItem);
+end;
+
+procedure TACBrCalcSituacoesTributarias.Insert(Index: Integer; aItem: TACBrCalcSituacaoTributaria);
+begin
+  inherited Insert(Index, aItem);
+end;
+
+function TACBrCalcSituacoesTributarias.New: TACBrCalcSituacaoTributaria;
+begin
+  Result := TACBrCalcSituacaoTributaria.Create;
+  Self.Add(Result);
+end;
+
 { TACBrCalcClassificacaoTributaria }
+
+function TACBrCalcClassificacaoTributaria.GettiposDfeClassificacao: TACBrCalcDFeClassificacaoLista;
+begin
+  if (not Assigned(ftiposDfeClassificacao)) then
+    ftiposDfeClassificacao := TACBrCalcDFeClassificacaoLista.Create('tiposDfeClassificacao');
+  Result := ftiposDfeClassificacao;
+end;
 
 procedure TACBrCalcClassificacaoTributaria.AssignSchema(aSource: TACBrAPISchema);
 begin
@@ -1758,6 +1985,8 @@ begin
     .AddPair('percentualReducaoCbs', fpercentualReducaoCbs)
     .AddPair('percentualReducaoIbsUf', fpercentualReducaoIbsUf)
     .AddPair('percentualReducaoIbsMun', fpercentualReducaoIbsMun);
+  if Assigned(ftiposDfeClassificacao) then
+    ftiposDfeClassificacao.WriteToJSon(aJSon);
 end;
 
 procedure TACBrCalcClassificacaoTributaria.DoReadFromJSon(aJSon: TACBrJSONObject);
@@ -1782,6 +2011,14 @@ begin
     .Value('percentualReducaoCbs', fpercentualReducaoCbs)
     .Value('percentualReducaoIbsUf', fpercentualReducaoIbsUf)
     .Value('percentualReducaoIbsMun', fpercentualReducaoIbsMun);
+  tiposDfeClassificacao.ReadFromJSon(aJSon);
+end;
+
+destructor TACBrCalcClassificacaoTributaria.Destroy;
+begin
+  if Assigned(ftiposDfeClassificacao) then
+    ftiposDfeClassificacao.Free;
+  inherited Destroy;
 end;
 
 procedure TACBrCalcClassificacaoTributaria.Clear;
@@ -1802,6 +2039,8 @@ begin
   fpercentualReducaoCbs := 0;
   fpercentualReducaoIbsUf := 0;
   fpercentualReducaoIbsMun := 0;
+  if Assigned(ftiposDfeClassificacao) then
+    ftiposDfeClassificacao.Clear;
 end;
 
 function TACBrCalcClassificacaoTributaria.IsEmpty: Boolean;
@@ -1822,7 +2061,8 @@ begin
     EstaVazio(fcreditoOperacaoAntecedente) and
     EstaZerado(fpercentualReducaoCbs) and
     EstaZerado(fpercentualReducaoIbsUf) and
-    EstaZerado(fpercentualReducaoIbsMun);
+    EstaZerado(fpercentualReducaoIbsMun) and
+    ((not Assigned(ftiposDfeClassificacao)) or ftiposDfeClassificacao.IsEmpty);
 end;
 
 procedure TACBrCalcClassificacaoTributaria.Assign(Source: TACBrCalcClassificacaoTributaria);
@@ -1846,6 +2086,7 @@ begin
   fpercentualReducaoCbs := Source.percentualReducaoCbs;
   fpercentualReducaoIbsUf := Source.percentualReducaoIbsUf;
   fpercentualReducaoIbsMun := Source.percentualReducaoIbsMun;
+  tiposDfeClassificacao.Assign(Source.tiposDfeClassificacao);
 end;
 
 { TACBrCalcClassifTributarias }
@@ -1878,32 +2119,6 @@ end;
 function TACBrCalcClassifTributarias.New: TACBrCalcClassificacaoTributaria;
 begin
   Result := TACBrCalcClassificacaoTributaria.Create;
-  Self.Add(Result);
-end;
-
-procedure TACBrCalcSituacaoTributariaResponse.SetItem(Index: Integer; AValue: TACBrCalcSituacaoTributaria);
-begin
-  inherited Items[Index] := aValue;
-end;
-
-function TACBrCalcSituacaoTributariaResponse.NewSchema: TACBrAPISchema;
-begin
-  Result := New;
-end;
-
-function TACBrCalcSituacaoTributariaResponse.Add(aItem: TACBrCalcSituacaoTributaria): Integer;
-begin
-  Result := inherited Add(aItem);
-end;
-
-procedure TACBrCalcSituacaoTributariaResponse.Insert(Index: Integer; aItem: TACBrCalcSituacaoTributaria);
-begin
-  inherited Insert(Index, aItem);
-end;
-
-function TACBrCalcSituacaoTributariaResponse.New: TACBrCalcSituacaoTributaria;
-begin
-  Result := TACBrCalcSituacaoTributaria.Create;
   Self.Add(Result);
 end;
 
@@ -2017,6 +2232,94 @@ end;
 function TACBrCalcFundamentacoesLegais.New: TACBrCalcFundamentacaoLegal;
 begin
   Result := TACBrCalcFundamentacaoLegal.Create;
+  Self.Add(Result);
+end;
+
+{ TACBrCalcDFeClassificacao }
+
+procedure TACBrCalcDFeClassificacao.AssignSchema(aSource: TACBrAPISchema);
+begin
+  if Assigned(aSource) and (aSource is TACBrCalcDFeClassificacao) then
+    Assign(TACBrCalcDFeClassificacao(aSource));
+end;
+
+procedure TACBrCalcDFeClassificacao.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  if not Assigned(aJSon) then
+    Exit;
+
+  aJSon
+    .AddPair('tipo', ftipo, False)
+    .AddPair('sigla', fsigla, False)
+    .AddPair('descricao', fdescricao, False);
+end;
+
+procedure TACBrCalcDFeClassificacao.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  if not Assigned(aJSon) then
+    Exit;
+
+  aJSon
+    .Value('tipo', ftipo)
+    .Value('sigla', fsigla)
+    .Value('descricao', fdescricao);
+end;
+
+procedure TACBrCalcDFeClassificacao.Clear;
+begin
+  ftipo := 0;
+  fsigla := EmptyStr;
+  fdescricao := EmptyStr;
+end;
+
+function TACBrCalcDFeClassificacao.IsEmpty: Boolean;
+begin
+  Result :=
+    EstaZerado(ftipo) and
+    EstaVazio(fsigla) and
+    EstaVazio(fdescricao);
+end;
+
+procedure TACBrCalcDFeClassificacao.Assign(Source: TACBrCalcDFeClassificacao);
+begin
+  if not Assigned(Source) then
+    Exit;
+
+  ftipo := Source.tipo;
+  fsigla := Source.sigla;
+  fdescricao := Source.descricao;
+end;
+
+{ TACBrCalcDFeClassificacaoLista }
+
+function TACBrCalcDFeClassificacaoLista.GetItem(Index: Integer): TACBrCalcDFeClassificacao;
+begin
+  Result := TACBrCalcDFeClassificacao(inherited Items[Index]);
+end;
+
+procedure TACBrCalcDFeClassificacaoLista.SetItem(Index: Integer; AValue: TACBrCalcDFeClassificacao);
+begin
+  inherited Items[Index] := aValue;
+end;
+
+function TACBrCalcDFeClassificacaoLista.NewSchema: TACBrAPISchema;
+begin
+  Result := New;
+end;
+
+function TACBrCalcDFeClassificacaoLista.Add(aItem: TACBrCalcDFeClassificacao): Integer;
+begin
+  Result := inherited Add(aItem);
+end;
+
+procedure TACBrCalcDFeClassificacaoLista.Insert(Index: Integer; aItem: TACBrCalcDFeClassificacao);
+begin
+  inherited Insert(Index, aItem);
+end;
+
+function TACBrCalcDFeClassificacaoLista.New: TACBrCalcDFeClassificacao;
+begin
+  Result := TACBrCalcDFeClassificacao.Create;
   Self.Add(Result);
 end;
 
@@ -4745,6 +5048,157 @@ begin
   if not Assigned(fitens) then
     fitens := TACBrCalcOperacaoItens.Create('itens');
   Result := fitens;
+end;
+
+{ TACBrCalcValidadeDFeClassificacao }
+
+procedure TACBrCalcValidadeDFeClassificacao.AssignSchema(aSource: TACBrAPISchema);
+begin
+  if Assigned(aSource) and (aSource is TACBrCalcValidadeDFeClassificacao) then
+    Assign(TACBrCalcValidadeDFeClassificacao(aSource));
+end;
+
+procedure TACBrCalcValidadeDFeClassificacao.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  if not Assigned(aJSon) then
+    Exit;
+
+  aJSon
+    .AddPair('siglaDfeInformado', fsiglaDfeInformado)
+    .AddPair('validoParaSiglaDfeInformado', fvalidoParaSiglaDfeInformado)
+    .AddPair('nomenclatura', fnomenclatura)
+    .AddPair('exigeGrupoTributacaoRegular', fexigeGrupoTributacaoRegular)
+    .AddPair('permiteDiferimento', fpermiteDiferimento);
+end;
+
+procedure TACBrCalcValidadeDFeClassificacao.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  if not Assigned(aJSon) then
+    Exit;
+
+  aJSon
+    .Value('siglaDfeInformado', fsiglaDfeInformado)
+    .Value('validoParaSiglaDfeInformado', fvalidoParaSiglaDfeInformado)
+    .Value('nomenclatura', fnomenclatura)
+    .Value('exigeGrupoTributacaoRegular', fexigeGrupoTributacaoRegular)
+    .Value('permiteDiferimento', fpermiteDiferimento);
+end;
+
+procedure TACBrCalcValidadeDFeClassificacao.Clear;
+begin
+  fexigeGrupoTributacaoRegular := False;
+  fnomenclatura := EmptyStr;
+  fpermiteDiferimento := False;
+  fsiglaDfeInformado := EmptyStr;
+  fvalidoParaSiglaDfeInformado := False;
+end;
+
+function TACBrCalcValidadeDFeClassificacao.IsEmpty: Boolean;
+begin
+  Result :=
+    (not fexigeGrupoTributacaoRegular) and
+    (not fvalidoParaSiglaDfeInformado) and
+    (not fexigeGrupoTributacaoRegular) and
+    (not fpermiteDiferimento) and
+    EstaVazio(fsiglaDfeInformado) and
+    EstaVazio(fnomenclatura);
+end;
+
+procedure TACBrCalcValidadeDFeClassificacao.Assign(Source: TACBrCalcValidadeDFeClassificacao);
+begin
+  if not Assigned(Source) then
+    Exit;
+
+  fexigeGrupoTributacaoRegular := Source.exigeGrupoTributacaoRegular;
+  fnomenclatura := Source.nomenclatura;
+  fpermiteDiferimento := Source.permiteDiferimento;
+  fsiglaDfeInformado := Source.siglaDfeInformado;
+  fvalidoParaSiglaDfeInformado := Source.validoParaSiglaDfeInformado;
+end;
+
+{ TACBrCalcDFeTipo }
+
+procedure TACBrCalcDFeTipo.AssignSchema(aSource: TACBrAPISchema);
+begin
+  if Assigned(aSource) and (aSource is TACBrCalcDFeTipo) then
+    Assign(TACBrCalcDFeTipo(aSource));
+end;
+
+procedure TACBrCalcDFeTipo.DoWriteToJSon(aJSon: TACBrJSONObject);
+begin
+  if not Assigned(aJSon) then
+    Exit;
+
+  aJSon
+    .AddPair('nome', fnome)
+    .AddPair('mnemonico', fmnemonico)
+    .AddPair('versaoNotaTecnica', fversaoNotaTecnica);
+end;
+
+procedure TACBrCalcDFeTipo.DoReadFromJSon(aJSon: TACBrJSONObject);
+begin
+  if not Assigned(aJSon) then
+    Exit;
+
+  aJSon
+    .Value('nome', fnome)
+    .Value('mnemonico', fmnemonico)
+    .Value('versaoNotaTecnica', fversaoNotaTecnica);
+end;
+
+procedure TACBrCalcDFeTipo.Clear;
+begin
+  fnome := EmptyStr;
+  fmnemonico := EmptyStr;
+  fversaoNotaTecnica := EmptyStr;
+end;
+
+function TACBrCalcDFeTipo.IsEmpty: Boolean;
+begin
+  Result := EstaVazio(fnome) and EstaVazio(fmnemonico) and EstaVazio(fversaoNotaTecnica);
+end;
+
+procedure TACBrCalcDFeTipo.Assign(Source: TACBrCalcDFeTipo);
+begin
+  if not Assigned(Source) then
+    Exit;
+
+  fnome := Source.nome;
+  fmnemonico := Source.mnemonico;
+  fversaoNotaTecnica := Source.versaoNotaTecnica;
+end;
+
+{ TACBrCalcDFeTipoLista }
+
+function TACBrCalcDFeTipoLista.GetItem(Index: Integer): TACBrCalcDFeTipo;
+begin
+  Result := TACBrCalcDFeTipo(inherited Items[Index]);
+end;
+
+procedure TACBrCalcDFeTipoLista.SetItem(Index: Integer; AValue: TACBrCalcDFeTipo);
+begin
+  inherited Items[Index] := AValue;
+end;
+
+function TACBrCalcDFeTipoLista.NewSchema: TACBrAPISchema;
+begin
+  Result := New;
+end;
+
+function TACBrCalcDFeTipoLista.Add(aItem: TACBrCalcDFeTipo): Integer;
+begin
+  Result := inherited Add(aItem);
+end;
+
+procedure TACBrCalcDFeTipoLista.Insert(Index: Integer; aItem: TACBrCalcDFeTipo);
+begin
+  inherited Insert(Index, aItem);
+end;
+
+function TACBrCalcDFeTipoLista.New: TACBrCalcDFeTipo;
+begin
+  Result := TACBrCalcDFeTipo.Create;
+  Self.Add(Result);
 end;
 
 end. 

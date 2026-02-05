@@ -125,6 +125,15 @@ type
     function classificacoes: TACBrCalcClassifTributarias;
   end;
 
+  { IACBrCalcSituacoesTributariasResponse }
+
+  IACBrCalcSituacoesTributariasResponse = interface
+  ['{E6D59FB6-0AC8-4D96-96D7-145D5AC0AFBC}']
+    procedure LoadJson(aJson: String);
+    function ToJson: String;
+    function situacoesTributarias: TACBrCalcSituacoesTributarias;
+  end;
+
   { IACBrCalcAliquotaResponse }
 
   IACBrCalcAliquotaResponse = interface
@@ -153,6 +162,29 @@ type
     function ToJson: String;
     function objetos: TACBrCalcObjetos;
     function total: TACBrCalcValoresTotais;
+  end;
+
+  { IACBrCalcClassifTribPorDFeResponse }
+
+  IACBrCalcClassifTribPorDFeResponse = interface
+  ['{E729FF82-4EEA-4643-BD2E-F9CF4CB12AD4}']
+    procedure LoadJson(aJson: String);
+    function ToJson: String;
+
+    function siglaDfeInformado: String;
+    function validoParaSiglaDfeInformado: Boolean;
+    function nomenclatura: String;
+    function exigeGrupoTributacaoRegular: Boolean;
+    function permiteDiferimento: Boolean;
+  end;
+
+  { IACBrCalcDFeTiposResponse }
+
+  IACBrCalcDFeTiposResponse = interface
+  ['{68BD1255-1CF4-436E-9EB0-E7E7621BF03F}']
+    procedure LoadJson(aJson: String);
+    function ToJson: String;
+    function dfeTipos: TACBrCalcDFeTipoLista;
   end;
 
   { TACBrCalcUFsResponse }
@@ -250,6 +282,19 @@ type
     function classificacoes: TACBrCalcClassifTributarias;
   end;
 
+  { TACBrCalcSituacoesTributariasResponse }
+
+  TACBrCalcSituacoesTributariasResponse = class(TInterfacedObject, IACBrCalcSituacoesTributariasResponse)
+  private
+    fsituacoesTributarias: TACBrCalcSituacoesTributarias;
+  public
+    destructor destroy; override;
+
+    procedure LoadJson(aJson: String);
+    function ToJson: String;
+    function situacoesTributarias: TACBrCalcSituacoesTributarias;
+  end;
+
   { TACBrCalcAliquotaResponse }
 
   TACBrCalcAliquotaResponse = class(TInterfacedObject, IACBrCalcAliquotaResponse)
@@ -317,6 +362,38 @@ type
     function total: TACBrCalcValoresTotais;
   end;
 
+  { TACBrCalcClassifTribPorDFeResponse }
+
+  TACBrCalcClassifTribPorDFeResponse = class(TInterfacedObject, IACBrCalcClassifTribPorDFeResponse)
+  private
+    fresponse: TACBrCalcValidadeDFeClassificacao;
+  protected
+    function response: TACBrCalcValidadeDFeClassificacao;
+  public
+    destructor destroy; override;
+    procedure LoadJson(aJson: String);
+    function ToJson: String;
+
+    function siglaDfeInformado: String;
+    function validoParaSiglaDfeInformado: Boolean;
+    function nomenclatura: String;
+    function exigeGrupoTributacaoRegular: Boolean;
+    function permiteDiferimento: Boolean;
+  end;
+
+  { TACBrCalcDFeTiposResponse }
+
+  TACBrCalcDFeTiposResponse = class(TInterfacedObject, IACBrCalcDFeTiposResponse)
+  private
+    fdfeTipos: TACBrCalcDFeTipoLista;
+  public
+    destructor destroy; override;
+    procedure LoadJson(aJson: String);
+    function ToJson: String;
+
+    function dfeTipos: TACBrCalcDFeTipoLista;
+  end;
+
   TACBrCalculadoraConsumo = class;
 
   { TACBrCalcBaseCalculo }
@@ -366,6 +443,9 @@ type
     function ConsultarClassTrib(aIdST: Integer; aData: TDateTime; out aResponse: IACBrCalcClassifTributariasResponse): Boolean;
     function ConsultarClassTribImpostoSeletivo(aData: TDateTime; out aResponse: IACBrCalcClassifTributariasResponse): Boolean;
     function ConsultarClassTribCbsIbs(aData: TDateTime; out aResponse: IACBrCalcClassifTributariasResponse): Boolean;
+    function ConsultarClassTribCbsIbsPorDFe(aData: TDateTime; const aSiglaDFe, cClassTrib: String; out aResponse: IACBrCalcClassifTribPorDFeResponse): Boolean;
+    function ConsultarSituacaoTribImpostoSeletivo(aData: TDateTime; out aResponse: IACBrCalcSituacoesTributariasResponse): Boolean;
+    function ConsultarSituacaoTribCbsIbs(aData: TDateTime; out aResponse: IACBrCalcSituacoesTributariasResponse): Boolean;
     function ConsultarAliquotaUniao(aData: TDateTime; out aResponse: IACBrCalcAliquotaResponse): Boolean;
     function ConsultarAliquotaUF(aCodUF: Integer; aData: TDateTime; out aResponse: IACBrCalcAliquotaResponse): Boolean;
     function ConsultarAliquotaMunicipio(aCodMunicipio: Integer; aData: TDateTime; out aResponse: IACBrCalcAliquotaResponse): Boolean;
@@ -399,9 +479,13 @@ type
 
     function DadosAbertos: TACBrCalcDadosAbertos;
     function BaseCalculo: TACBrCalcBaseCalculo;
-    function GerarXML(out aXMLResponse: AnsiString): Boolean;
-    function ValidarXML(const aTipo, aSubTipo: String; const aXML: AnsiString): Boolean;
+
+    function GerarXML(const aTipo: TACBrCalcTipoDocumento; out aXMLResponse: AnsiString): Boolean;
+    function ValidarXML(const aTipo: TACBrCalcTipoDocumento; const aSubTipo: TACBrCalcSubtipoDocumento; const aXML: AnsiString): Boolean;
     function RegimeGeral(out aResponse: IACBrCalcRegimeGeralResponse): Boolean;
+
+    function ConsultarDFesParaGeracao(out aResponse: IACBrCalcDFeTiposResponse): Boolean;
+    function ConsultarDFesParaValidacao(out aResponse: IACBrCalcDFeTiposResponse): Boolean;
 
     property GerarXMLRequest: TACBrCalcROC read GetGerarXMLRequest;
     property RegimeGeralRequest: TACBrCalcOperacao read GetRegimeGeralRequest;
@@ -650,6 +734,32 @@ begin
   Result := fclassificacoes;
 end;
 
+{ TACBrCalcSituacoesTributariasResponse }
+
+destructor TACBrCalcSituacoesTributariasResponse.destroy;
+begin
+  if Assigned(fsituacoesTributarias) then
+    fsituacoesTributarias.Free;
+  inherited destroy;
+end;
+
+procedure TACBrCalcSituacoesTributariasResponse.LoadJson(aJson: String);
+begin
+  situacoesTributarias.AsJSON := aJson;
+end;
+
+function TACBrCalcSituacoesTributariasResponse.ToJson: String;
+begin
+  Result := situacoesTributarias.AsJSON;
+end;
+
+function TACBrCalcSituacoesTributariasResponse.situacoesTributarias: TACBrCalcSituacoesTributarias;
+begin
+  if (not Assigned(fsituacoesTributarias)) then
+    fsituacoesTributarias := TACBrCalcSituacoesTributarias.Create;
+  Result := fsituacoesTributarias;
+end;
+
 { TACBrCalcAliquotaResponse }
 
 function TACBrCalcAliquotaResponse.aliquota: TACBrCalcAliquota;
@@ -807,6 +917,83 @@ end;
 function TACBrCalcRegimeGeralResponse.total: TACBrCalcValoresTotais;
 begin
   Result := response.total;
+end;
+
+{ TACBrCalcClassifTribPorDFeResponse }
+
+function TACBrCalcClassifTribPorDFeResponse.response: TACBrCalcValidadeDFeClassificacao;
+begin
+  if (not Assigned(fresponse)) then
+    fresponse := TACBrCalcValidadeDFeClassificacao.Create;
+  Result := fresponse;
+end;
+
+destructor TACBrCalcClassifTribPorDFeResponse.destroy;
+begin
+  if Assigned(fresponse) then
+    fresponse.Free;
+  inherited destroy;
+end;
+
+procedure TACBrCalcClassifTribPorDFeResponse.LoadJson(aJson: String);
+begin
+  response.AsJSON := aJson;
+end;
+
+function TACBrCalcClassifTribPorDFeResponse.ToJson: String;
+begin
+  Result := response.AsJSON;
+end;
+
+function TACBrCalcClassifTribPorDFeResponse.siglaDfeInformado: String;
+begin
+  Result := response.siglaDfeInformado;
+end;
+
+function TACBrCalcClassifTribPorDFeResponse.validoParaSiglaDfeInformado: Boolean;
+begin
+  Result := response.validoParaSiglaDfeInformado;
+end;
+
+function TACBrCalcClassifTribPorDFeResponse.nomenclatura: String;
+begin
+  Result := response.nomenclatura;
+end;
+
+function TACBrCalcClassifTribPorDFeResponse.exigeGrupoTributacaoRegular: Boolean;
+begin
+  Result := response.exigeGrupoTributacaoRegular;
+end;
+
+function TACBrCalcClassifTribPorDFeResponse.permiteDiferimento: Boolean;
+begin
+  Result := response.permiteDiferimento;
+end;
+
+{ TACBrCalcDFeTiposResponse }
+
+destructor TACBrCalcDFeTiposResponse.destroy;
+begin
+  if Assigned(fdfeTipos) then
+    fdfeTipos.Free;
+  inherited destroy;
+end;
+
+procedure TACBrCalcDFeTiposResponse.LoadJson(aJson: String);
+begin
+  dfeTipos.AsJSON := aJson;
+end;
+
+function TACBrCalcDFeTiposResponse.ToJson: String;
+begin
+  Result := dfeTipos.AsJSON;
+end;
+
+function TACBrCalcDFeTiposResponse.dfeTipos: TACBrCalcDFeTipoLista;
+begin
+  if (not Assigned(fdfeTipos)) then
+    fdfeTipos := TACBrCalcDFeTipoLista.Create;
+  Result := fdfeTipos;
 end;
 
 { TACBrCalcBaseCalculo }
@@ -1248,6 +1435,111 @@ begin
     SetRespostaErro(fOwner.RespostaTratada);
 end;
 
+function TACBrCalcDadosAbertos.ConsultarClassTribCbsIbsPorDFe(aData: TDateTime;
+  const aSiglaDFe, cClassTrib: String; out aResponse: IACBrCalcClassifTribPorDFeResponse): Boolean;
+begin
+  Result := False;
+  if EstaZerado(aData) then
+    raise EACBrAPIException.Create(Format(sErroParametroNaoPrenchido, ['Data']));
+  if EstaVazio(aSiglaDFe) then
+    raise EACBrAPIException.Create(Format(sErroParametroNaoPrenchido, ['SiglaDFe']));
+  if EstaVazio(cClassTrib) then
+    raise EACBrAPIException.Create(Format(sErroParametroNaoPrenchido, ['cClassTrib']));
+
+  if not Assigned(fOwner) then
+    Exit;
+
+  fOwner.PrepararHTTP;
+  fOwner.URLQueryParams.Values['data'] := FormatDateBr(aData, 'YYYY-MM-DD');
+  fOwner.URLPathParams.Add(cACBrCalcEndpointCalculadora);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointDadosAbertos);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointClassificTribs);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointCbsIbs);
+  fOwner.URLPathParams.Add(aSiglaDFe);
+  fOwner.URLPathParams.Add(cClassTrib);
+
+  try
+    fOwner.HTTPMethod(cHTTPMethodGET, fOwner.URL);
+  except
+    SetRespostaErro(fOwner.RespostaTratada);
+    if RespostaErro.IsEmpty then
+      raise;
+  end;
+
+  aResponse := TACBrCalcClassifTribPorDFeResponse.Create;
+  Result := (fOwner.HTTPResultCode = HTTP_OK);
+  if Result then
+    aResponse.LoadJson(fOwner.RespostaTratada)
+  else
+    SetRespostaErro(fOwner.RespostaTratada);
+end;
+
+function TACBrCalcDadosAbertos.ConsultarSituacaoTribImpostoSeletivo(aData: TDateTime;
+  out aResponse: IACBrCalcSituacoesTributariasResponse): Boolean;
+begin
+  Result := False;
+  if EstaZerado(aData) then
+    raise EACBrAPIException.Create(Format(sErroParametroNaoPrenchido, ['Data']));
+
+  if not Assigned(fOwner) then
+    Exit;
+
+  fOwner.PrepararHTTP;
+  fOwner.URLQueryParams.Values['data'] := FormatDateBr(aData, 'YYYY-MM-DD');
+  fOwner.URLPathParams.Add(cACBrCalcEndpointCalculadora);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointDadosAbertos);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointSituacoesTribs);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointImpostoSeletivo);
+
+  try
+    fOwner.HTTPMethod(cHTTPMethodGET, fOwner.URL);
+  except
+    SetRespostaErro(fOwner.RespostaTratada);
+    if RespostaErro.IsEmpty then
+      raise;
+  end;
+
+  aResponse := TACBrCalcSituacoesTributariasResponse.Create;
+  Result := (fOwner.HTTPResultCode = HTTP_OK);
+  if Result then
+    aResponse.LoadJson(fOwner.RespostaTratada)
+  else
+    SetRespostaErro(fOwner.RespostaTratada);
+end;
+
+function TACBrCalcDadosAbertos.ConsultarSituacaoTribCbsIbs(aData: TDateTime;
+  out aResponse: IACBrCalcSituacoesTributariasResponse): Boolean;
+begin
+  Result := False;
+  if EstaZerado(aData) then
+    raise EACBrAPIException.Create(Format(sErroParametroNaoPrenchido, ['Data']));
+
+  if not Assigned(fOwner) then
+    Exit;
+
+  fOwner.PrepararHTTP;
+  fOwner.URLQueryParams.Values['data'] := FormatDateBr(aData, 'YYYY-MM-DD');
+  fOwner.URLPathParams.Add(cACBrCalcEndpointCalculadora);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointDadosAbertos);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointSituacoesTribs);
+  fOwner.URLPathParams.Add(cACBrCalcEndpointCbsIbs);
+
+  try
+    fOwner.HTTPMethod(cHTTPMethodGET, fOwner.URL);
+  except
+    SetRespostaErro(fOwner.RespostaTratada);
+    if RespostaErro.IsEmpty then
+      raise;
+  end;
+
+  aResponse := TACBrCalcSituacoesTributariasResponse.Create;
+  Result := (fOwner.HTTPResultCode = HTTP_OK);
+  if Result then
+    aResponse.LoadJson(fOwner.RespostaTratada)
+  else
+    SetRespostaErro(fOwner.RespostaTratada);
+end;
+
 function TACBrCalcDadosAbertos.ConsultarAliquotaUniao(aData: TDateTime; out aResponse: IACBrCalcAliquotaResponse): Boolean;
 begin
   Result := False;
@@ -1435,9 +1727,11 @@ begin
   Result := fBaseCalculo;
 end;
 
-function TACBrCalculadoraConsumo.GerarXML(out aXMLResponse: AnsiString): Boolean;
+function TACBrCalculadoraConsumo.GerarXML(const aTipo: TACBrCalcTipoDocumento; out aXMLResponse: AnsiString): Boolean;
 begin
   Result := False;
+  if (aTipo = ctdNenhum) then
+    raise EACBrAPIException.Create(ACBrStr(Format(sErroParametroNaoPrenchido, ['TipoDocumento'])));
   if GerarXMLRequest.IsEmpty then
     raise EACBrAPIException.Create(ACBrStr(Format(sErroObjetoNaoPrenchido, ['GerarXMLRequest'])));
 
@@ -1445,7 +1739,9 @@ begin
   WriteStrToStream(HTTPSend.Document, GerarXMLRequest.AsJSON);
   HTTPSend.MimeType := CContentTypeApplicationJSon;
   URLPathParams.Add(cACBrCalcEndpointCalculadora);
-  URLPathParams.Add(cACBrCalcEndpointGerarXml);
+  URLPathParams.Add(cACBrCalcEndpointXML);
+  URLPathParams.Add(cACBrCalcEndpointGenerate);
+  URLQueryParams.Values[cACBrCalcQueryParamTipo] := CalcTipoDocumentoToString(aTipo);
 
   try
     HTTPMethod(cHTTPMethodPOST, URL);
@@ -1462,20 +1758,22 @@ begin
     RespostaErro.AsJSON := RespostaTratada;
 end;
 
-function TACBrCalculadoraConsumo.ValidarXML(const aTipo, aSubTipo: String; const aXML: AnsiString): Boolean;
+function TACBrCalculadoraConsumo.ValidarXML(const aTipo: TACBrCalcTipoDocumento;
+  const aSubTipo: TACBrCalcSubtipoDocumento; const aXML: AnsiString): Boolean;
 begin
   Result := False;
 
-  if EstaVazio(aTipo) or EstaVazio(aSubTipo) then
+  if (aTipo = ctdNenhum) or (aSubTipo = csbNenhum) then
     raise EACBrAPIException.Create(ACBrStr(Format(sErroParametroNaoPrenchido, ['tipo/subtipo'])));
 
   PrepararHTTP;
   WriteStrToStream(HTTPSend.Document, aXML);
   HTTPSend.MimeType := cContentTypeApplicationXml;
   URLPathParams.Add(cACBrCalcEndpointCalculadora);
-  URLPathParams.Add(cACBrCalcEndpointValidarXml);
-  URLQueryParams.Values[cACBrCalcQueryParamTipo] := aTipo;
-  URLQueryParams.Values[cACBrCalcQueryParamSubtipo] := aSubTipo;
+  URLPathParams.Add(cACBrCalcEndpointXML);
+  URLPathParams.Add(cACBrCalcEndpointValidate);
+  URLQueryParams.Values[cACBrCalcQueryParamTipo] := CalcTipoDocumentoToString(aTipo);
+  URLQueryParams.Values[cACBrCalcQueryParamSubtipo] := CalcSubtipoDocumentoToString(aSubTipo);
 
   try
     HTTPMethod(cHTTPMethodPOST, URL);
@@ -1499,12 +1797,61 @@ begin
   PrepararHTTP;
   aResponse := TACBrCalcRegimeGeralResponse.Create;
   WriteStrToStream(HTTPSend.Document, RegimeGeralRequest.AsJSON);
+  RegimeGeralRequest.Clear;
   HTTPSend.MimeType := CContentTypeApplicationJSon;
   URLPathParams.Add(cACBrCalcEndpointCalculadora);
   URLPathParams.Add(cACBrCalcEndpointRegimeGeral);
 
   try
     HTTPMethod(cHTTPMethodPOST, URL);
+  except
+    RespostaErro.AsJSON := RespostaTratada;
+    if RespostaErro.IsEmpty then
+      raise;
+  end;
+
+  Result := (HTTPResultCode = HTTP_OK);
+  if Result then
+    aResponse.LoadJson(RespostaTratada)
+  else
+    RespostaErro.AsJSON := RespostaTratada;
+end;
+
+function TACBrCalculadoraConsumo.ConsultarDFesParaGeracao(out aResponse: IACBrCalcDFeTiposResponse): Boolean;
+begin
+  Result := False;
+  PrepararHTTP;
+  aResponse := TACBrCalcDFeTiposResponse.Create;
+  URLPathParams.Add(cACBrCalcEndpointCalculadora);
+  URLPathParams.Add(cACBrCalcEndpointXML);
+  URLPathParams.Add(cACBrCalcEndpointGenerate);
+
+  try
+    HTTPMethod(cHTTPMethodGET, URL);
+  except
+    RespostaErro.AsJSON := RespostaTratada;
+    if RespostaErro.IsEmpty then
+      raise;
+  end;
+
+  Result := (HTTPResultCode = HTTP_OK);
+  if Result then
+    aResponse.LoadJson(RespostaTratada)
+  else
+    RespostaErro.AsJSON := RespostaTratada;
+end;
+
+function TACBrCalculadoraConsumo.ConsultarDFesParaValidacao(out aResponse: IACBrCalcDFeTiposResponse): Boolean;
+begin
+  Result := False;
+  PrepararHTTP;
+  aResponse := TACBrCalcDFeTiposResponse.Create;
+  URLPathParams.Add(cACBrCalcEndpointCalculadora);
+  URLPathParams.Add(cACBrCalcEndpointXML);
+  URLPathParams.Add(cACBrCalcEndpointValidate);
+
+  try
+    HTTPMethod(cHTTPMethodGET, URL);
   except
     RespostaErro.AsJSON := RespostaTratada;
     if RespostaErro.IsEmpty then
