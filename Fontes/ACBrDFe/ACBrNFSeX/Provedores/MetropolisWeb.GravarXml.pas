@@ -81,8 +81,6 @@ end;
 
 function TNFSeW_MetropolisWeb.GerarServico: TACBrXmlNode;
 var
-  nodeArray: TACBrXmlNodeArray;
-  i: Integer;
   item: string;
 begin
   Result := CreateElement('Servico');

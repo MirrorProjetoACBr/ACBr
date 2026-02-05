@@ -148,7 +148,6 @@ end;
 function TNFSeW_Publica.GerarDestinatario: TACBrXmlNode;
 var
   Tamanho: integer;
-  Ocorrencia: integer;
   CNPJCPF, TipoDestinatario: string;
 begin
   Result := nil;

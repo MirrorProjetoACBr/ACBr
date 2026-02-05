@@ -60,7 +60,7 @@ type
     function GerarValores: TACBrXmlNode; override;
     function GerarServico: TACBrXmlNode; override;
     function GerarDadosDPS: TACBrXmlNode;
-    function GerarDestinatario: TACBrXmlNode;
+    function GerarDestinatario: TACBrXmlNode;override;
     function GerarControleIBSCBS: TACBRXmlNode;
     function GerarIBSCBS: TACBrXmlNode;
 
@@ -253,9 +253,6 @@ begin
 end;
 
 function TNFSeW_SpeedGov.GerarIBSCBS: TACBrXmlNode;
-var
-  item: string;
-  Valores: TACBrXmlNode;
 begin
   Result := CreateElement('IBSCBS');
 
@@ -408,8 +405,6 @@ end;
 
 function TNFSeW_SpeedGov.GerarServico: TACBrXmlNode;
 var
-  nodeArray: TACBrXmlNodeArray;
-  i: Integer;
   item: string;
 begin
   Result := CreateElement('Servico');
@@ -444,9 +439,6 @@ begin
 end;
 
 function TNFSeW_SpeedGov.GerarTomador: TACBrXmlNode;
-var
-  tomadorIdentificado, tipoPessoa, item, cnpjCpfDestinatario,
-  xCidade, xUF: string;
 begin
   Result := inherited GerarTomador;
 end;

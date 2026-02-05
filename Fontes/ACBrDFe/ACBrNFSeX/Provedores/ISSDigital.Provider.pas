@@ -465,8 +465,6 @@ end;
 
 function TACBrNFSeXWebserviceISSDigitalAPIPropria.EnviarEvento(const ACabecalho,
   AMSG: string): string;
-var
-  Request: string;
 begin
   FPMsgOrig := AMSG;
 

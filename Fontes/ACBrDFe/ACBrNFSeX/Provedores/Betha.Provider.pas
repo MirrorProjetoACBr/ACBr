@@ -1285,7 +1285,6 @@ end;
 procedure TACBrNFSeProviderBethaAPIPropria.PrepararConsultaSituacao(
   Response: TNFSeConsultaSituacaoResponse);
 var
-  aXml: string;
   Emitente: TEmitenteConfNFSe;
   ACodMun, ATpAmbiente, ATpIntegracao: string;
 begin

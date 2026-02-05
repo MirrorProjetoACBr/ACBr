@@ -102,23 +102,8 @@ begin
 end;
 
 function TNFSeW_Tiplan203.GerarTomador: TACBrXmlNode;
-var
-  tomadorIdentificado, tipoPessoa, item, cnpjCpfDestinatario,
-  xCidade, xUF: string;
 begin
   Result := inherited GerarTomador;
-
-  {tomadorIdentificado := '0';
-  cnpjCpfDestinatario := NFSe.Tomador.IdentificacaoTomador.CpfCnpj;
-
-  if NFSe.Tomador.IdentificacaoTomador.Nif <> '' then
-  begin
-    tomadorIdentificado := '1';
-    cnpjCpfDestinatario := NFSe.Tomador.IdentificacaoTomador.Nif;
-  end;
-
-  Result.AppendChild(AddNode(tcStr, '#38', 'MotivoNifNaoInformado', 1, 1, 1,
-                             tomadorIdentificado, ''));}
 end;
 
 function TNFSeW_Tiplan203.GerarValores: TACBrXmlNode;

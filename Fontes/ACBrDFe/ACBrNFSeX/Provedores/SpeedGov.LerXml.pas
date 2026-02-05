@@ -68,8 +68,6 @@ implementation
 { TNFSeR_SpeedGov }
 
 procedure TNFSeR_SpeedGov.LerControleIBSCBS(const ANode: TACBRXmlNode);
-var
-  Ok: Boolean;
 begin
   if not Assigned(ANode) then
     exit;

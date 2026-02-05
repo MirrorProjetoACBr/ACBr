@@ -86,7 +86,6 @@ procedure TNFSeR_WebISS202.LerInfNfse(const ANode: TACBrXmlNode);
 var
   NodeIBS: TACBrXmlNode;
   NodeInfNfse: TACBrXmlNode;
-  i: Integer;
 begin
   NodeInfNfse := ANode.Childrens.FindAnyNs('InfNfse');
   inherited LerInfNfse(ANode);

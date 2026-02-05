@@ -925,6 +925,7 @@ var
   NumNFSe, NumDps: string;
   ANota: TNotaFiscal;
 begin
+  LQuantidadeNotas := 0;
   if Response.ArquivoRetorno = '' then
   begin
     AErro := Response.Erros.New;

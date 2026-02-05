@@ -1123,7 +1123,7 @@ var
   Document: TACBrXmlDocument;
   AErro: TNFSeEventoCollectionItem;
   AResumo: TNFSeResumoCollectionItem;
-  ANode, AuxNode, AuxNode2: TACBrXmlNode;
+  ANode, AuxNode: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
   ANota: TNotaFiscal;
   I: Integer;

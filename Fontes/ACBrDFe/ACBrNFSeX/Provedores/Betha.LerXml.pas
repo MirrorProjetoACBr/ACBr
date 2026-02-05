@@ -181,10 +181,6 @@ end;
 
 procedure TNFSeR_BethaAPIPropria.LerXMLIBSCBSDPS(const ANode: TACBrXmlNode;
   IBSCBS: TIBSCBSDPS);
-var
-  ANodeAux: TACBrXmlNode;
-  ANodes: TACBrXmlNodeArray;
-  i: Integer;
 begin
   if not Assigned(ANode) then Exit;
 
