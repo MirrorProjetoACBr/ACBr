@@ -41,6 +41,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+05/02/2026
+-- ACBrLibBoleto.lpi, ACBrLibBoletoDemo.lpi --
+[-] ACBR-8629 Ajuste de configuração de escala LPI
+  Por: doszapro
+  
 26/11/2025
 -- ACBrLibBoletoRespostas.pas --
 [+] TK-8484 - Mapeada no retorno da libboleto a propriedade dataarquivo
