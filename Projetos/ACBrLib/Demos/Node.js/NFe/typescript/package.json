@@ -1,0 +1,21 @@
+{
+  "name": "demo-nfe-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "start": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@projetoacbr/acbrlib-nfe-node": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.1",
+    "typescript": "^5.9.3"
+  }
+}
