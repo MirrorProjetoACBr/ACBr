@@ -934,10 +934,11 @@ begin
 
         ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                    ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
+      end;
 
+      if ValorTotalNotaFiscal = 0 then
         ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
                                 DescontoIncondicionado;
-      end;
     end;
 
     // Reforma Tributária
@@ -1632,10 +1633,11 @@ begin
 
       ValorLiquidoNfse := ValorServicos - RetencoesFederais - OutrasRetencoes -
                  ValorIssRetido - DescontoIncondicionado - DescontoCondicionado;
+    end;
 
+    if ValorTotalNotaFiscal = 0 then
       ValorTotalNotaFiscal := ValorServicos - DescontoCondicionado -
                               DescontoIncondicionado;
-    end;
   end;
 end;
 
