@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 // Em ESM devemos importar o arquivo completo incluindo a extensão .js, mesmo que o arquivo seja .ts
 import ACBrLibNFeMT from "@projetoacbr/acbrlib-nfe-node/dist/src/index.js"
+import { ACBrLibTimeOutError } from "@projetoacbr/acbrlib-base-node/dist/src/exception/index.js"
 // __dirname não está disponível em módulos ES, então precisamos defini-lo manualmente
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -178,7 +179,11 @@ try {
   //console.log(acbrNFe.openSslInfo())
 
 } catch (error) {
-  console.error(error)
+   if( error instanceof ACBrLibTimeOutError){
+    console.error("Tempo de espera esgotado ao tentar comunicar com o webservice. Verifique a configuração de timeout e a conexão de rede.")
+   } else {
+    console.error("Erro: ", error)
+   }
 } finally {
   // Finaliza a biblioteca
   //liberar os recursos alocados pela biblioteca
