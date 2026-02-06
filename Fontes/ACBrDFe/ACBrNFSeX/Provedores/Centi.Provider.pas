@@ -97,6 +97,7 @@ begin
     ModoEnvio := meUnitario;
     ConsultaNFSe := False;
     CancPreencherCodVerificacao := True;
+	Identificador := '';
 
     ServicosDisponibilizados.EnviarUnitario := True;
     ServicosDisponibilizados.ConsultarRps := True;
