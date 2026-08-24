@@ -789,6 +789,7 @@ begin
   Result := RemoverDeclaracaoXML(Result);
   Result := StringReplace(Result, 'EnviarLoteRpsSincronoResposta',
                 'EnviarLoteRpsSincronoComDadosResposta', [rfReplaceAll]);
+  Result := StringReplace(Result, ' xsi:nil="true"', '', [rfReplaceAll]);
 end;
 
 end.

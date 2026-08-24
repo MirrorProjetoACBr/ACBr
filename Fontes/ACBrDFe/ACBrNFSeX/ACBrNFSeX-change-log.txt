@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/08/2026
+-- Tecnos.Provider --
+[*] ACBR-9699 - O provedor esta gerando tag vazia com atributo desnecessário,
+    alteração visando remover esse atributo.
+   Por: Italo Giurizzato Junior
 -- Centi.GravarXml --
 [*] ACBR-9733 - Implementação dos novos campos conforme o novo Schema.
    Por: Italo Giurizzato Junior
