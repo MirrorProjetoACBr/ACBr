@@ -147,6 +147,7 @@ uses
   ModernizacaoPublica.Provider,
   NEAInformatica.Provider,
   NFEletronica.Provider,
+  NFOnline.Provider,
   NFSeBrasil.Provider,
   NotaInteligente.Provider,
   PadraoNacional.Provider,
@@ -599,7 +600,8 @@ begin
         Result := TACBrNFSeProviderNEAInformatica200.Create(ACBrNFSe);
 
       proNFEletronica: Result := TACBrNFSeProviderNFEletronica.Create(ACBrNFSe);
-      proNFSeBrasil:   Result := TACBrNFSeProviderNFSeBrasil.Create(ACBrNFSe);
+      proNFOnline: Result := TACBrNFSeProviderNFOnline203.Create(ACBrNFSe);
+      proNFSeBrasil: Result := TACBrNFSeProviderNFSeBrasil.Create(ACBrNFSe);
 
       proNotaInteligente:
         Result := TACBrNFSeProviderNotaInteligente200.Create(ACBrNFSe);

@@ -142,7 +142,7 @@ type
                    proISSSalvador, proISSSaoPaulo, proISSSJP, proISSVitoria,
                    proKalana, proLexsom, proLibre, proLink3, proMegaSoft,
                    proMetropolisWeb, proMitra, proModernizacaoPublica,
-                   proNEAInformatica, proNFEletronica, proNFSeBrasil,
+                   proNEAInformatica, proNFEletronica, proNFOnline, proNFSeBrasil,
                    proNotaInteligente, proPrescon, proPriMax, proProdata,
                    proPRODAUB, proPronim, proPublica, proPublicSoft, proRLZ,
                    proSam, proSaatri, proSafeWeb, proSH3, proSiam, proSiapNet,
