@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/08/2026
+-- Centi.GravarXml --
+[*] ACBR-9733 - Implementação dos novos campos conforme o novo Schema.
+   Por: Italo Giurizzato Junior
 -- IPM.GravarXml --
 [*] ACBR-9755 - Alteração visando gerar corretamente a tag cLocalidadeIncid tanto no 
     layout próprio do provedor quanto no layout da ABRASF usado pelo provedor.
