@@ -6673,7 +6673,7 @@ tipo de ato concessório:
 							<xs:simpleType>
 								<xs:restriction base="TString">
 									<xs:minLength value="21"/>
-									<xs:maxLength value="85"/>
+									<xs:maxLength value="100"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
