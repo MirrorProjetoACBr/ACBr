@@ -131,7 +131,8 @@ uses
   ACBrNFSeX.LerIni, ACBrNFSeX.GravarIni, BWSistemas.GravarXml, 
   BWSistemas.LerXml, BWSistemas.Provider, HM2.GravarXml, 
   HM2.LerXml, HM2.Provider, TaxTecnologia.GravarXml, TaxTecnologia.LerXml,
-  TaxTecnologia.Provider, Agape.GravarXml, Agape.LerXml, Agape.Provider, 
+  TaxTecnologia.Provider, Agape.GravarXml, Agape.LerXml, Agape.Provider,
+  NFOnline.GravarXml, NFOnline.LerXml, NFOnline.Provider,   
   LazarusPackageIntf;
 
 implementation

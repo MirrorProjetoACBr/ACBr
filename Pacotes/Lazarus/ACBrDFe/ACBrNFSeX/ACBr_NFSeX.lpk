@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNFSeX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="458">
+    <Files Count="461">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\ACBrNFSeXReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -1847,6 +1847,18 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\Agape.Provider.pas"/>
         <UnitName Value="Agape.Provider"/>
       </Item458>
+      <Item459>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFOnline.GravarXml.pas"/>
+        <UnitName Value="NFOnline.GravarXml"/>
+      </Item459>
+      <Item460>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFOnline.LerXml.pas"/>
+        <UnitName Value="NFOnline.LerXml"/>
+      </Item460>
+      <Item461>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSeX\Provedores\NFOnline.Provider.pas"/>
+        <UnitName Value="NFOnline.Provider"/>
+      </Item461>
    </Files>
     <RequiredPkgs Count="2">
       <Item1>
