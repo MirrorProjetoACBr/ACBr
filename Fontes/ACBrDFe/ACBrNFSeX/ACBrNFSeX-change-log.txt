@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/2026
+-- IPM.GravarXml --
+[*] ACBR-9755 - Alteração visando gerar corretamente a tag cLocalidadeIncid tanto no 
+    layout próprio do provedor quanto no layout da ABRASF usado pelo provedor.
+   Por: Bremen Sistemas/Italo Giurizzato Junior
+
 21/08/2026
 -- ACBrNFSeXServicos --
 [*] ACBR-9689 - Inclusão de URL de produção para Sorocaba/SP
