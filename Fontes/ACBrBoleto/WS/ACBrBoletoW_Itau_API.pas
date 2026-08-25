@@ -112,14 +112,13 @@ type
 
   const
 
-  //C_URL_PIX         = 'https://secure.api.itau/pix_recebimentos_conciliacoes/v2';
-  C_URL_PIX         = 'https://secure.gateway.api.itau/pix_recebimentos_conciliacoes/v2';  {https://devportal.itau.com.br/certificados-apis-expiracao-2026}
-
+  C_URL_PIX         = 'https://pix-pj.api.itau.com/recebimentos-pix/v1'; {novo endpoint pix versão: 1.0.7}
   C_URL_PIX_HOM     = C_URL_PIX;
-  C_URL_PIX_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-pix-recebimentos-conciliacoes-v2-ext/v2';
+  C_URL_PIX_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-api-recebimentos-v1-externo/v1';
 
-  //C_URL         = 'https://api.itau.com.br/cash_management/v2';
-  C_URL         = 'https://api.gateway.itau.com.br/cash_management/v2';  {https://devportal.itau.com.br/certificados-apis-expiracao-2026}
+
+  //C_URL = 'https://api.itau.com.br/cash_management/v2';
+  C_URL = 'https://api.gateway.itau.com.br/cash_management/v2';  {https://devportal.itau.com.br/certificados-apis-expiracao-2026}
 
   C_URL_HOM     = C_URL;
   C_URL_SANDBOX = 'https://sandbox.devportal.itau.com.br/itau-ep9-gtw-cash-management-ext-v2/v2';
@@ -171,7 +170,7 @@ begin
             tawsHomologacao : FPURL.URLHomologacao := C_URL_PIX_HOM;
             tawsSandBox     : FPURL.URLSandBox     := C_URL_PIX_SANDBOX;
           end;
-          FPURL.SetPathURI(  '/boletos_pix' );
+          FPURL.SetPathURI(  '/boletos-pix' );
         end         
         else
          FPURL.SetPathURI( '/boletos' );
@@ -316,7 +315,22 @@ end;
 
 function TBoletoW_Itau_API.PercToStrItau(const AValue: Real): String;
 begin
- result := StringReplace(FormatFloat('0.00000', AValue), ',', '.', [rfReplaceAll])
+
+{
+ Removido devido a documentação da nova API que esta devolvendo erro:
+ - O campo valor título aceita somente números: "valor" : "1.00
+ Então supondo que a formatacao do numero está como a api antiga.
+
+ if Boleto.Cedente.CedenteWS.IndicadorPix or (Boleto.Configuracoes.WebService.Operacao = tpAltera) then
+ }
+
+
+  if (Boleto.Configuracoes.WebService.Operacao = tpAltera) then
+   result := StringReplace(FormatFloat('0.00000', AValue), ',', '.', [rfReplaceAll])
+ else
+   result := IntToStrZero(round(AValue * 100000), 12);
+
+
 end;
 
 procedure TBoletoW_Itau_API.DefinirKeyUser;
@@ -332,9 +346,6 @@ var
   LConsulta: TStringList;
   LDataInicio, LTipoMovto : string;
 begin
-  LNossoNumero := '';
-  LCarteira :=  '';
-
   if Assigned(ATitulo) then
     LNossoNumero := ATitulo.NossoNumero;
 
@@ -507,7 +518,7 @@ begin
     LJsonArray    := TACBrJSONArray.Create;
     LJsonDados.AddPair('numero_nosso_numero', ATitulo.NossoNumero);
     LJsonDados.AddPair('data_vencimento', FormatDateBr(ATitulo.Vencimento, 'YYYY-MM-DD'));
-    LJsonDados.AddPair('valor_titulo', IntToStrZero(round(ATitulo.ValorDocumento * 100), 17));
+    LJsonDados.AddPair('valor_titulo', CurrToStrItau(ATitulo.ValorDocumento));
     LJsonDados.AddPair('texto_uso_beneficiario', '0');
     LJsonDados.AddPair('texto_seu_numero', IfThen(ATitulo.SeuNumero <> '',  ATitulo.SeuNumero, ATitulo.NossoNumero));
     if ATitulo.DataLimitePagto > 0 then
@@ -602,16 +613,16 @@ begin
         LJsonDados.AddPair('codigo_tipo_recebimento', 'P');
     end;
     if ATitulo.ValorMinPagamento > 0 then
-      LJsonDados.AddPair('valor_minimo', IntToStrZero(round(ATitulo.ValorMinPagamento * 100), 17))
+      LJsonDados.AddPair('valor_minimo', CurrToStrItau(ATitulo.ValorMinPagamento))
     else
       if ATitulo.PercentualMinPagamento > 0 then
-        LJsonDados.AddPair('percentual_minimo', IntToStrZero(round(ATitulo.PercentualMinPagamento * 100000), 12));
+        LJsonDados.AddPair('percentual_minimo', PercToStrItau(ATitulo.PercentualMinPagamento));
 
     if ATitulo.ValorMinPagamento > 0 then
-      LJsonDados.AddPair('valor_maximo', IntToStrZero(round(ATitulo.ValorMaxPagamento * 100), 17))
+      LJsonDados.AddPair('valor_maximo', CurrToStrItau(ATitulo.ValorMaxPagamento))
     else
       if ATitulo.PercentualMaxPagamento > 0 then
-        LJsonDados.AddPair('percentual_maximo', IntToStrZero(round(ATitulo.PercentualMaxPagamento * 100000), 12));
+        LJsonDados.AddPair('percentual_maximo', PercToStrItau(ATitulo.PercentualMaxPagamento));
 
     AJson.AddPair('recebimento_divergente', LJsonDados);
   end;
@@ -619,7 +630,7 @@ end;
 
 procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TACBrJSONObject);
 
-  procedure MontarInstrucaoCobranca(const ACodigoInstrucao : Cardinal; 
+  procedure MontarInstrucaoCobranca(const ACodigoInstrucao : Cardinal;
     const ADias : Cardinal; out AJson : TACBrJSONObject);
   var LDias : Cardinal;
   begin
@@ -629,7 +640,7 @@ procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TACBrJSONObject);
         LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataProtesto - ATitulo.Vencimento));
         if (LDias > 0) then
         begin
-          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+          AJson.AddPair('quantidade_dias_apos_vencimento', LDias);
           AJson.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
         end;
       end;
@@ -638,7 +649,7 @@ procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TACBrJSONObject);
         LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataNegativacao - ATitulo.Vencimento));
         if (LDias > 0) then
         begin
-          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+          AJson.AddPair('quantidade_dias_apos_vencimento', LDias);
           AJson.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasNegativacao = diUteis,'True','False')));
         end;
       end;
@@ -647,7 +658,7 @@ procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TACBrJSONObject);
         LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataLimitePagto - ATitulo.Vencimento));
         if (LDias > 0) then
         begin
-          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+          AJson.AddPair('quantidade_dias_apos_vencimento', LDias);
           AJson.AddPair('dia_util', StrToBool(IfThen(ATitulo.TipoDiasProtesto = diUteis,'True','False')));
         end;
       end;
@@ -656,7 +667,7 @@ procedure TBoletoW_Itau_API.GerarInstruCaoCobranca(AJson: TACBrJSONObject);
         LDias := IfThen(ADias > 0, ADias, trunc(ATitulo.DataBaixa - ATitulo.Vencimento));
         if (LDias > 0) then
         begin
-          AJson.AddPair('quantidade_dias_instrucao_cobranca', LDias);
+          AJson.AddPair('quantidade_dias_apos_vencimento', LDias);
         end;
       end;
      end;    
@@ -676,7 +687,7 @@ begin
     if NaoEstaVazio(ATitulo.Instrucao1) then
     begin
       LJsonDados := TACBrJSONObject.Create;
-      
+
       LInstrucao := StrToIntDef(Copy(trim(ATitulo.Instrucao1), 1, 2),0);
       LDias      := StrToIntDef(Copy(trim(ATitulo.Instrucao1), 3, 2),0);
       LJsonDados.AddPair('codigo_instrucao_cobranca',Copy(trim(ATitulo.Instrucao1), 1, 2));
@@ -691,7 +702,7 @@ begin
     if NaoEstaVazio(ATitulo.Instrucao2) then
     begin
       LJsonDados2 := TACBrJSONObject.Create;
-      
+
       LInstrucao := StrToIntDef(Copy(trim(ATitulo.Instrucao2), 1, 2),0);
       LDias      := StrToIntDef(Copy(trim(ATitulo.Instrucao2), 3, 2),0);
       LJsonDados2.AddPair('codigo_instrucao_cobranca',Copy(trim(ATitulo.Instrucao2), 1, 2));
@@ -729,11 +740,18 @@ begin
   if Assigned(ATitulo) and Assigned(AJson)then
   begin
     LJsonDados := TACBrJSONObject.Create;
+    if not Boleto.Cedente.CedenteWS.IndicadorPix then
+    begin
+      if (ATitulo.DiasDeProtesto > 0) then
+        LJsonDados.AddPair('codigo_tipo_protesto', 1)
+      else
+        LJsonDados.AddPair('codigo_tipo_protesto', 4);
+    end;
+
 
     LJsonDados.AddPair('protesto', 'True');
     LJsonDados.AddPair('quantidade_dias_protesto', ATitulo.DiasDeProtesto);
     AJson.AddPair('protesto', LJsonDados);
-
   end;
 end;
 
@@ -763,22 +781,26 @@ begin
   LJsonDados.AddPair('descricao_instrumento_cobranca', IfThen(Boleto.Cedente.CedenteWS.IndicadorPix,'boleto_pix','boleto'));
   LJsonDados.AddPair('tipo_boleto', 'a vista');
   LJsonDados.AddPair('codigo_carteira', StrToIntDef(ATitulo.carteira, 0));
-  LJsonDados.AddPair('valor_total_titulo', IntToStrZero(round(ATitulo.ValorDocumento * 100), 17));
+  LJsonDados.AddPair('valor_abatimento', CurrToStrItau(ATitulo.ValorAbatimento));
+  LJsonDados.AddPair('valor_total_titulo', CurrToStrItau(ATitulo.ValorDocumento));
   LJsonDados.AddPair('codigo_especie', CodigoEspeciaDoc);
-  LJsonDados.AddPair('valor_abatimento', IntToStrZero(round(ATitulo.ValorAbatimento * 100), 17));
   LJsonDados.AddPair('data_emissao', FormatDateBr(ATitulo.DataDocumento, 'yyyy-mm-dd'));
+  if not Boleto.Cedente.CedenteWS.IndicadorPix then
+  begin
+    {nao usado na nova api pix}
+    LAceitarPagamentoParcial := ((ATitulo.QtdePagamentoParcial > 0) or (ATitulo.TipoPagamento <> tpNao_Aceita_Valor_Divergente));
+    LJsonDados.AddPair('indicador_pagamento_parcial', LAceitarPagamentoParcial);
 
-  LAceitarPagamentoParcial := ((ATitulo.QtdePagamentoParcial > 0) or (ATitulo.TipoPagamento <> tpNao_Aceita_Valor_Divergente));
-  LJsonDados.AddPair('indicador_pagamento_parcial', LAceitarPagamentoParcial);
+    if ((LAceitarPagamentoParcial) and (ATitulo.QtdePagamentoParcial = 0)) then
+      raise EACBrBoletoWSException.Create
+        (ClassName + sLineBreak+'Quando TipoPagamento aceitar pagamento parcial,'+sLineBreak+
+         'informar QtdePagamentoParcial maior que zero !');
 
-  if ((LAceitarPagamentoParcial) and (ATitulo.QtdePagamentoParcial = 0)) then
-    raise EACBrBoletoWSException.Create
-      (ClassName + sLineBreak+'Quando TipoPagamento aceitar pagamento parcial,'+sLineBreak+
-       'informar QtdePagamentoParcial maior que zero !');
+    LJsonDados.AddPair('quantidade_maximo_parcial', ATitulo.QtdePagamentoParcial);
+    LJsonDados.AddPair('desconto_expresso', 'False');
 
-  LJsonDados.AddPair('quantidade_maximo_parcial', ATitulo.QtdePagamentoParcial);
+  end;
 
-  LJsonDados.AddPair('desconto_expresso', 'False');
 
   GerarPagador(LJsonDados);
   if (ATitulo.Sacado.SacadoAvalista.NomeAvalista<>'') and (Length(ATitulo.Sacado.SacadoAvalista.CNPJCPF)>= 11) then
@@ -790,8 +812,7 @@ begin
   GerarRecebimentoDivergente(LJsonDados);
   if ATitulo.Instrucao1 <> '' then
     GerarInstruCaoCobranca(LJsonDados);
-
-  if ATitulo.DiasDeProtesto > 0 then
+  if ( ATitulo.DiasDeProtesto > 0 ) and ( StrToIntDef(Copy(trim(ATitulo.Instrucao1), 1, 2),0) <> 1 ) then  // Não gera registro de protesto se está usando instrução 01 - Pois ela já gera protesto
     GerarProtesto(LJsonDados);
   if (ATitulo.DiasDeNegativacao > 0) then
     GerarNegativacao(LJsonDados);
@@ -975,15 +996,15 @@ begin
   begin
     LJsonDados := TACBrJSONObject.Create;
 
-    if Length(OnlyCPFCNPJAlphaNum(ATitulo.Sacado.CNPJCPF)) < 12 then
+    if Length(OnlyNumber(ATitulo.Sacado.CNPJCPF)) < 12 then
     begin
       LJsonDados.AddPair('codigo_tipo_pessoa', 'F');
-      LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyCPFCNPJAlphaNum(ATitulo.Sacado.CNPJCPF));
+      LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
     end
     else
     begin
       LJsonDados.AddPair('codigo_tipo_pessoa','J');
-      LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyCPFCNPJAlphaNum(ATitulo.Sacado.CNPJCPF));
+      LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyNumber(ATitulo.Sacado.CNPJCPF));
     end;
 
     AJson.AddPair('tipo_pessoa', LJsonDados);
@@ -1058,15 +1079,15 @@ begin
   begin
     LJsonDados := TACBrJSONObject.Create;
 
-    if Length(OnlyCPFCNPJAlphaNum(ATitulo.Sacado.SacadoAvalista.CNPJCPF)) < 12 then
+    if Length(OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF)) < 12 then
     begin
       LJsonDados.AddPair('codigo_tipo_pessoa', 'F');
-      LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyCPFCNPJAlphaNum(ATitulo.Sacado.SacadoAvalista.CNPJCPF));
+      LJsonDados.AddPair('numero_cadastro_pessoa_fisica', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF));
     end
     else
     begin
       LJsonDados.AddPair('codigo_tipo_pessoa','J');
-      LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyCPFCNPJAlphaNum(ATitulo.Sacado.SacadoAvalista.CNPJCPF));
+      LJsonDados.AddPair('numero_cadastro_nacional_pessoa_juridica', OnlyNumber(ATitulo.Sacado.SacadoAvalista.CNPJCPF));
     end;
 
     AJson.AddPair('tipo_pessoa', LJsonDados);
@@ -1102,32 +1123,36 @@ begin
 
       if ATitulo.CodigoMora = '' then
       begin
-        ATitulo.CodigoMora := '90';
+        ATitulo.CodigoMora := '90'; {Percentual mensal (utilizando parâmetros do cadastro de beneficiário para dias úteis ou corridos)}
         case ATitulo.CodigoMoraJuros of
           cjValorDia:
-            ATitulo.CodigoMora := '93';
+            ATitulo.CodigoMora := '93';  {Valor diário (utilizando parâmetros do cadastro de beneficiário para dias úteis ou corridos)}
           cjValorMensal:
             raise EACBrBoletoWSException.Create
               (ACBrStr('Não é permitido cjValorMensal na propriedade ValorMoraJuros para este Banco'));
           cjTaxaDiaria:
-            ATitulo.CodigoMora := '91';
+            ATitulo.CodigoMora := '91';  {Percentual diário (utilizando parâmetros do cadastro de beneficiário para dias úteis ou corridos)}
           cjTaxaMensal:
-            ATitulo.CodigoMora := '90';
+            ATitulo.CodigoMora := '90';  {Percentual mensal (utilizando parâmetros do cadastro de beneficiário para dias úteis ou corridos)}
           cjIsento:
-            ATitulo.CodigoMora := '05';
+            ATitulo.CodigoMora := '05';  {Quando não se deseja cobrar juros caso o pagamento seja feito após o vencimento (isento)}
         else
-          ATitulo.CodigoMora := '05';
-        end; //0 cjValorDia,1 cjTaxaMensal,2 cjIsento,3 cjValorMensal,4 cjTaxaDiaria
+          ATitulo.CodigoMora := '05'; {Quando não se deseja cobrar juros caso o pagamento seja feito após o vencimento (isento)}
+        end;
+        //0 cjValorDia,1 cjTaxaMensal,2 cjIsento,3 cjValorMensal,4 cjTaxaDiaria
       end;
 
       LJsonJuros.AddPair('codigo_tipo_juros', ATitulo.CodigoMora);
-      LJsonJuros.AddPair('quantidade_dias_juros', trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento));
+
+      if Boleto.Cedente.CedenteWS.IndicadorPix then {nova api bolecode}
+       LJsonJuros.AddPair('data_juros', FormatDateBr(ATitulo.DataMoraJuros, 'YYYY-MM-DD'))
+      else
+       LJsonJuros.AddPair('quantidade_dias_juros', trunc(ATitulo.DataMoraJuros - ATitulo.Vencimento));
+
       if ATitulo.CodigoMora = '93' then
-      begin
-        LJsonJuros.AddPair('valor_juros', IntToStrZero(round(ATitulo.ValorMoraJuros * 100), 17))
-      end
+          LJsonJuros.AddPair('valor_juros', CurrToStrItau(ATitulo.ValorMoraJuros))
       else if (ATitulo.CodigoMora = '91') or (ATitulo.CodigoMora = '90') or (ATitulo.CodigoMora = '92') then
-        LJsonJuros.AddPair('percentual_juros', IntToStrZero(round(ATitulo.ValorMoraJuros * 100000), 12));
+        LJsonJuros.AddPair('percentual_juros', PercToStrItau(ATitulo.ValorMoraJuros));
 
       AJson.AddPair('juros',LJsonJuros);
 
@@ -1155,10 +1180,14 @@ begin
     if (ATitulo.DataMulta > 0) then
     begin
       if LCodMulta = '01' then
-        LJsonMulta.AddPair('valor_multa', IntToStrZero(round(ATitulo.PercentualMulta * 100), 17))
+        LJsonMulta.AddPair('valor_multa', CurrToStrItau(ATitulo.PercentualMulta))
       else if LCodMulta = '02' then
-        LJsonMulta.AddPair('percentual_multa', IntToStrZero(round(ATitulo.PercentualMulta * 100000), 12));
-      LJsonMulta.AddPair('quantidade_dias_multa', trunc(ATitulo.DataMulta - ATitulo.Vencimento));
+          LJsonMulta.AddPair('percentual_multa', PercToStrItau(ATitulo.PercentualMulta));
+
+      if Boleto.Cedente.CedenteWS.IndicadorPix then {nova api bolecode}
+        LJsonMulta.AddPair('data_multa', FormatDateBr(ATitulo.DataMulta, 'YYYY-MM-DD'))
+      else
+        LJsonMulta.AddPair('quantidade_dias_multa', trunc(ATitulo.DataMulta - ATitulo.Vencimento));
     end;
 
     AJson.AddPair('multa',LJsonMulta);
@@ -1170,17 +1199,17 @@ begin
   Result := '00';
   case AValue of
     tdNaoConcederDesconto:
-      Result := '00';
+      Result := '00';  {Quando não houver condição de desconto (sem desconto).}
     tdValorFixoAteDataInformada:
-      Result := '01';
+      Result := '01';  { Quando o desconto for um valor fixo se o título for pago até a data informada (data_desconto)}
     tdPercentualAteDataInformada:
-      Result := '02';
+      Result := '02';  {Quando o desconto for um percentual (mensal) do valor do título e for pago até a data informada (data_desconto). }
     tdValorAntecipacaoDiaCorrido:
       Result := '03';
     tdValorAntecipacaoDiaUtil:
-      Result := '91';
+      Result := '91';   {Valor por antecipação (utilizando parâmetros do cadastro de beneficiário para dias úteis ou corridos).}
     tdPercentualSobreValorNominalDiaCorrido:
-      Result := '90';
+      Result := '90';   {Percentual por antecipação (utilizando parâmetros do cadastro de beneficiário para dias úteis ou corridos). }
     tdPercentualSobreValorNominalDiaUtil:
       Result := '90';
     tdCancelamentoDesconto:
@@ -1206,9 +1235,9 @@ begin
     // Array do desconto
     LJsonDesconto.AddPair('data_desconto', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto));
     if ((Integer(ATitulo.TipoDesconto)) in [1, 3, 4]) then
-      LJsonDesconto.AddPair('valor_desconto', IntToStrZero(round(ATitulo.ValorDesconto * 100), 17))
+      LJsonDesconto.AddPair('valor_desconto', CurrToStrItau(ATitulo.ValorDesconto))
     else
-      LJsonDesconto.AddPair('percentual_desconto', IntToStrZero(round(ATitulo.ValorDesconto * 100000), 12));
+      LJsonDesconto.AddPair('percentual_desconto', PercToStrItau(ATitulo.ValorDesconto));
     LJsonArray.AddElementJSON(LJsonDesconto);
 
     // Desconto2
@@ -1219,9 +1248,9 @@ begin
       begin
         LJsonDesconto2.AddPair('data_desconto', FormatDateTime('yyyy-mm-dd', ATitulo.DataDesconto2));
         if ((Integer(ATitulo.TipoDesconto2)) in [1, 3, 4]) then
-          LJsonDesconto2.AddPair('valor_desconto', IntToStrZero(round(ATitulo.ValorDesconto2 * 100), 17))
+          LJsonDesconto2.AddPair('valor_desconto', CurrToStrItau(ATitulo.ValorDesconto2))
         else
-          LJsonDesconto2.AddPair('percentual_desconto', IntToStrZero(round(ATitulo.ValorDesconto2 * 100000), 12));
+          LJsonDesconto2.AddPair('percentual_desconto', PercToStrItau(ATitulo.ValorDesconto2));
       end;
       LJsonArray.AddElementJSON(LJsonDesconto2);
     end;
@@ -1506,7 +1535,17 @@ end;
 
 function TBoletoW_Itau_API.CurrToStrItau(const AValue: Real): String;
 begin
- result := StringReplace(FormatFloat('0.00', AValue), ',', '.', [rfReplaceAll])
+ {
+ Removido devido a documentação da nova API que esta devolvendo erro:
+ - O campo valor título aceita somente números: "valor" : "1.00
+ Então supondo que a formatacao do numero está como a api antiga.
+
+ if Boleto.Cedente.CedenteWS.IndicadorPix or (Boleto.Configuracoes.WebService.Operacao = tpAltera) then
+ }
+ if (Boleto.Configuracoes.WebService.Operacao = tpAltera) then
+    result := StringReplace(FormatFloat('0.00', AValue), ',', '.', [rfReplaceAll])
+ else
+    result := IntToStrZero(round(AValue * 100), 17);
 end;
 
 function TBoletoW_Itau_API.GerarRemessa: string;
