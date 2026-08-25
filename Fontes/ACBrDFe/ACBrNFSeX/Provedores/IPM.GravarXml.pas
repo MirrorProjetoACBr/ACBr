@@ -866,7 +866,8 @@ begin
 
   // Reforma Tributária
   if (NFSe.infNFSe.IBSCBS.pRedutor > 0) or
-     (NFSe.infNFSe.IBSCBS.valores.vBC > 0) then
+     (NFSe.infNFSe.IBSCBS.valores.vBC > 0) or
+     (NFSe.infNFSe.IBSCBS.cLocalidadeIncid <> 0) then
     Result.AppendChild(GerarXMLIBSCBSServico);
 end;
 
