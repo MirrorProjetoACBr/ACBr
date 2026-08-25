@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/2026
+-- ISSNet.Provider --
+[*] ACBR-9763 - Ajustes na leitura do retorno.
+   Por: Intelelecto Programação
+
 24/08/2026
 -- ACBrNFSeXConversao/ACBrNFSeXProviderManager --
 -- NFOnline.GravarXml/NFOnline.LerXml/NFOnline.Provider --

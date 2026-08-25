@@ -1688,11 +1688,13 @@ var
   DataAut: TDateTime;
   ANota: TNotaFiscal;
   AResumo: TNFSeResumoCollectionItem;
+  NFSeNode: TACBrXmlNode;
 begin
   Result := False;
 
   if Node <> nil then
   begin
+    NFSeNode := Node;
     Node := Node.Childrens.FindAnyNs('infNFSe');
 
     if not Assigned(Node) then Exit;
@@ -1738,7 +1740,7 @@ begin
     Response.NumeroRps := NumRps;
     Response.SerieRps := SerieRps;
 
-    ANota := CarregarXmlNfse(ANota, Node.OuterXml);
+    ANota := CarregarXmlNfse(ANota, NFSeNode.OuterXml);
     SalvarXmlNfse(ANota);
 
     AResumo.NomeArq := ANota.NomeArq;
@@ -2667,7 +2669,8 @@ begin
         AResumo.NumeroRps := NumRps;
         AResumo.SerieRps := SerieRps;
 
-        ANota := CarregarXmlNfse(ANota, ANode.OuterXml);
+        AuxNode := ANode.Childrens.FindAnyNs('NFSe');
+        ANota := CarregarXmlNfse(ANota, AuxNode.OuterXml);
         SalvarXmlNfse(ANota);
 
         AResumo.NomeArq := ANota.NomeArq;
