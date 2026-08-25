@@ -39,6 +39,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+25/08/2026
+-- Diversos --
+[*] #TK-9370: Ajustes para campos alfanumericos;
+   Por: Larissa Santos
 
 24/01/2025
 -- pediConversao --

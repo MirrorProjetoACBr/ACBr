@@ -1708,7 +1708,7 @@ begin
       Conteudo.Add( IdRegistro +
                     IfThen( Versao = ve50, FTxt.RFill(Razao, 50), '' ) +
 
-                  FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
+                  FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJCPF), 14) +
                   FTxt.RFill(OnlyNumber(IE)     , 15) +
 
                   IfThen( Versao = ve50, FTxt.RFill(OnlyNumber(IEST), 15) +
@@ -1747,7 +1747,7 @@ begin
     with Registro do
     begin
       Conteudo.Add( IdRegistro + FTxt.RFill(Razao, 50) +
-                    FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJCPF), 14) +
                     FTxt.RFill(Endereco, 50) +
                     FTxt.RFill(Bairro, 35) +
                     FTxt.RFill(Cidade, 35) +
@@ -1776,7 +1776,7 @@ begin
     begin
       Conteudo.Add( idRegistro +
                     FTxt.RFill(Razao, IfThen( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJCPF), 14) +
                     FTxt.RFill(OnlyNumber(IE), 15) +
 
                     IfThen( Versao = ve50, FTxt.RFill(InsSuframa, 15), '') +
@@ -1813,7 +1813,7 @@ begin
     with Registro do
     begin
       Conteudo.Add( IdRegistro + FTxt.RFill(Razao , 50) +
-                    FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJCPF), 14) +
                     FTxt.RFill(IE                 , 15) +
                     FTxt.RFill(Endereco           , 50) +
                     FTxt.RFill(Bairro             , 35) +
@@ -2003,19 +2003,19 @@ begin
                     FTxt.RFill(LocDesembarque                  , 15) +
                     FTxt.RFill(SimNaoEdiToStr(FreteDifer)      ,  1) +
                     FTxt.RFill(TabelaFrete                     , 10) +
-                    FTxt.LFill(OnlyNumber(EmissorNF1)          , 15) +
+                    FTxt.LFill(OnlyCPFCNPJAlphaNum(EmissorNF1) , 15) +
                     FTxt.RFill(SerieNF1                        ,  3) +
                     FTxt.LFill(NumeroNF1                       ,  8) +
-                    FTxt.LFill(OnlyNumber(EmissorNF2)          , 15) +
+                    FTxt.LFill(OnlyCPFCNPJAlphaNum(EmissorNF2) , 15) +
                     FTxt.RFill(SerieNF2                        ,  3) +
                     FTxt.LFill(NumeroNF2                       ,  8) +
-                    FTxt.LFill(OnlyNumber(EmissorNF3)          , 15) +
+                    FTxt.LFill(OnlyCPFCNPJAlphaNum(EmissorNF3) , 15) +
                     FTxt.RFill(SerieNF3                        ,  3) +
                     FTxt.LFill(NumeroNF3                       ,  8) +
-                    FTxt.LFill(OnlyNumber(EmissorNF4)          , 15) +
+                    FTxt.LFill(OnlyCPFCNPJAlphaNum(EmissorNF4) , 15) +
                     FTxt.RFill(SerieNF4                        ,  3) +
                     FTxt.LFill(NumeroNF4                       ,  8) +
-                    FTxt.LFill(OnlyNumber(EmissorNF5)          , 15) +
+                    FTxt.LFill(OnlyCPFCNPJAlphaNum(EmissorNF5) , 15) +
                     FTxt.RFill(SerieNF5                        ,  3) +
                     FTxt.LFill(NumeroNF5                       ,  8) +
                     FTxt.VLFill(vDespesas                      , 15, 2, '0') +
@@ -2100,22 +2100,22 @@ begin
     with Registro.Items[i] do
     begin
       Conteudo.Add( IdRegistro +
-                    FTxt.LFill(OnlyNumber(CNPJEmissorNF1) , 14) +
+                    FTxt.LFill(OnlyCPFCNPJAlphaNum(CNPJEmissorNF1) , 14) +
                     FTxt.RFill(NomeEmissorNF1             , 50) +
                     FTxt.RFill(SerieNF1                   ,  3) +
                     FTxt.LFill(NumeroNF1                  ,  9) +
-                    FTxt.LFill(OnlyNumber(CNPJEmissorNF2) , 14) +
+                    FTxt.LFill(OnlyCPFCNPJAlphaNum(CNPJEmissorNF2) , 14) +
                     FTxt.RFill(NomeEmissorNF2             , 50) +
                     FTxt.RFill(SerieNF2                   ,  3) +
                     FTxt.LFill(NumeroNF2                  ,  9) +
-                    FTxt.RFill(OnlyNumber(CNPJEmissorNF3) , 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJEmissorNF3) , 14) +
                     FTxt.RFill(NomeEmissorNF3             , 50) +
                     FTxt.RFill(SerieNF3                   ,  3) +
                     FTxt.LFill(NumeroNF3                  ,  9) +
                     FTxt.RFill(FilEmissorCT               , 10) +
                     FTxt.RFill(SerieConhecto              ,  5) +
                     FTxt.RFill(NumeroConhecto             , 12) +
-                    FTxt.RFill(OnlyNumber(CNPJContratante), 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJContratante), 14) +
                     FTxt.RFill(Filler                     , 48) ) ;
     end;
   end;
@@ -2167,7 +2167,7 @@ begin
     begin
       Conteudo.Add( IdRegistro +
                     FTxt.RFill(Razao              , IfThen( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJCPF), 14) +
                     FTxt.RFill(IE                 , 15) +
                     FTxt.RFill(Endereco           , IfThen( Versao = ve50, 50, 40)) +
                     FTxt.RFill(Bairro             , IfThen( Versao = ve50, 35, 20)) +
@@ -2190,7 +2190,7 @@ begin
     begin
       Conteudo.Add( IdRegistro +
                     FTxt.RFill(Razao              , IfThen( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJCPF), 14) +
                     FTxt.RFill(IE                 , 15) +
                     FTxt.RFill(Endereco           , IfThen( Versao = ve50, 50, 40)) +
                     FTxt.RFill(Bairro             , IfThen( Versao = ve50, 35, 20)) +
@@ -2218,7 +2218,7 @@ begin
     begin
       Conteudo.Add( IdRegistro +
                     FTxt.RFill(Razao              , IfThen( Versao = ve50, 50, 40)) +
-                    FTxt.RFill(OnlyNumber(CNPJCPF), 14) +
+                    FTxt.RFill(OnlyCPFCNPJAlphaNum(CNPJCPF), 14) +
                     FTxt.RFill(IE                 , 15) +
                     FTxt.RFill(Endereco           , IfThen( Versao = ve50, 50, 40)) +
                     FTxt.RFill(Bairro             , IfThen( Versao = ve50, 35, 20)) +

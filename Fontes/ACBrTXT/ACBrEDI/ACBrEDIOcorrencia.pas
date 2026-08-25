@@ -388,7 +388,7 @@ end;
 procedure TACBrEDIOcorrencia.GerarTransportadora( Registro: TTransportadora ) ;
 begin
   Conteudo.Add( Registro.IdRegistro +
-                FTxt.RFill( OnlyNumber( Registro.CNPJ ), 14) +
+                FTxt.RFill( OnlyCPFCNPJAlphaNum( Registro.CNPJ ), 14) +
                 FTxt.RFill( Registro.Razao, IfThen( Versao = ve50, 50, 40)) +
                 FTxt.RFill( Registro.Filler, IfThen( Versao = ve50, 183, 63) ) ) ;
 
@@ -399,7 +399,7 @@ procedure TACBrEDIOcorrencia.GerarMercadorias( Registro: TMercadorias );
 var
   xTexto: String ;
 begin
-  xTexto := Registro.IdRegistro + OnlyNumber(Registro.CNPJEmissorNF)        +
+  xTexto := Registro.IdRegistro + OnlyCPFCNPJAlphaNum(Registro.CNPJEmissorNF)        +
                    FTxt.RFill(Registro.SerieNF,3)                           +
                    FTxt.LFill(Registro.nNF, IfThen( Versao = ve50, 9, 8) )     +
                    FTxt.LFill(Registro.cOcorrencia, IfThen(Versao = ve50, 3, 2))+
@@ -427,7 +427,7 @@ begin
                    FTxt.LFill(Registro.hrTerminoDescarga, 'hhmm', false)    +
                    FTxt.LFill(Registro.dtSaidaDestino, 'ddmmyyyy', false)   +
                    FTxt.LFill(Registro.hrSaidaDestino, 'hhmm', false)       +
-                   FTxt.RFill(OnlyNumber(Registro.CNPJDevolucao), 14)       +
+                   FTxt.RFill(OnlyCPFCNPJAlphaNum(Registro.CNPJDevolucao), 14)       +
                    FTxt.RFill(Registro.SerieNFDevolucao, 3)                 +
                    FTxt.RFill(Registro.nNFDevolucao, 9)                     +
                    FTxt.RFill(Registro.Filler, 12) ;
@@ -462,8 +462,8 @@ var
 begin
   if Registro.CNPJContratante <> '' then
   begin
-    xTexto := Registro.IdRegistro + FTxt.RFill(OnlyNumber(Registro.CNPJContratante), 14) +
-                IfThen(Versao = ve50, FTxt.RFill(OnlyNumber(Registro.CNPJEmissor),14), '') +
+    xTexto := Registro.IdRegistro + FTxt.RFill(OnlyCPFCNPJAlphaNum(Registro.CNPJContratante), 14) +
+                IfThen(Versao = ve50, FTxt.RFill(OnlyCPFCNPJAlphaNum(Registro.CNPJEmissor),14), '') +
                                    FTxt.LFill(Registro.FilialEmissor, 10)+
                                    FTxt.RFill(Registro.Serie, 5)         +
                                    FTxt.RFill(Registro.nCTe, 12)         +

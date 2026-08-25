@@ -436,7 +436,7 @@ begin
                            'É Obrigatório o preenchimento deste registro.' );
 
   Conteudo.Add( Registro.IdRegistro +
-                FTxt.LFill(OnlyNumber(Registro.CNPJ), 14)                +
+                FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.CNPJ), 14)                +
                 FTxt.RFill(Registro.Razao, IfThen( Versao = ve50, 50, 40) ) +
                 FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 213, 113)) ) ;
 
@@ -521,9 +521,9 @@ begin
               FTxt.RFill(Registro.Items[i].FnCTe, 12)                        +
               FTxt.VLFill(Registro.Items[i].vFrete  , 15, 2, '0')            +
               FTxt.LFill(Registro.Items[i].dtEmissao, 'ddmmyyyy', false)     +
-              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJRemetente)   , 14)+
-              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJDestinatario), 14)+
-              FTxt.LFill(OnlyNumber(Registro.Items[i].FCNPJEmissorCTe)  , 14);
+              FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].FCNPJRemetente)   , 14)+
+              FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].FCNPJDestinatario), 14)+
+              FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].FCNPJEmissorCTe)  , 14);
    if Versao = ve50 then
      xTexto := xTexto +
               FTxt.RFill(Registro.Items[i].UFEmbarcador  ,  2) +
@@ -555,7 +555,7 @@ begin
               FTxt.LFill(Registro.Items[i].dtEmissao, 'ddmmyyyy', false)   +
               FTxt.VLFill(Registro.Items[i].qPesoNF ,  7, 2, '0')          +
               FTxt.VLFill(Registro.Items[i].vNF     , 15, 2, '0')          +
-              FTxt.LFill(OnlyNumber(Registro.Items[i].CNPJEmissor), 14) ;
+              FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].CNPJEmissor), 14) ;
     if Versao = ve50 then
       xTexto := xTexto +
               FTxt.RFill(Registro.Items[i].Romaneio  , 20) +

@@ -543,7 +543,7 @@ procedure TACBrEDIConhectos.GerarTransportadora( Registro: TTransportadora ) ;
 begin
   // Registro 521 ou 321 Identificação da Transportadora
   Conteudo.Add( Registro.IdRegistro +
-                FTxt.LFill(OnlyNumber(Registro.CNPJ), 14, false, '0') +
+                FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.CNPJ), 14, false, '0') +
                 FTxt.RFill(Registro.Razao, IfThen( Versao = ve50, 50, 40)) +
                 FTxt.RFill(Registro.Filler, IfThen( Versao = ve50, 283, 623)) ) ;
 
@@ -575,8 +575,8 @@ begin
             FTxt.VLFill(Registro.ValoresConhecto.vAdemeGris   , 15, 2, '0') +
             SimNaoSTToStr(Registro.ValoresConhecto.ST)                      +
             FTxt.RFill( IfThen( Versao=ve31,Registro.Filler,Registro.CFOP), 3) +
-            FTxt.RFill(OnlyNumber(Registro.CNPJEmissor), 14, '0')           +
-            FTxt.RFill(OnlyNumber(Registro.CNPJEmbarq) , 14, '0') ;
+            FTxt.RFill(OnlyCPFCNPJAlphaNum(Registro.CNPJEmissor), 14, '0')           +
+            FTxt.RFill(OnlyCPFCNPJAlphaNum(Registro.CNPJEmbarq) , 14, '0') ;
 
   if Registro.NotasConEmb.Count > 39 then
     Registro.Continua := 'C'  // informa que existem mais de 40 notas
@@ -608,11 +608,11 @@ begin
                 FTxt.LFill(Registro.nCTe, 12)                               +
                 FTxt.LFill(Registro.dtEmissao, 'ddmmyyyy', false)           +
                 CondicaoFreteToStr(Registro.tpFrete)                        +
-                FTxt.LFill(OnlyNumber(Registro.CNPJEmissor)      , 14)      +
-                FTxt.LFill(OnlyNumber(Registro.CNPJEmbarq)       , 14)      +
-                FTxt.LFill(OnlyNumber(Registro.CNPJDevolucao)    , 14)      +
-                FTxt.LFill(OnlyNumber(Registro.CNPJDestinatario) , 14)      +
-                FTxt.LFill(OnlyNumber(Registro.CNPJConsignatario), 14)      +
+                FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.CNPJEmissor)      , 14)      +
+                FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.CNPJEmbarq)       , 14)      +
+                FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.CNPJDevolucao)    , 14)      +
+                FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.CNPJDestinatario) , 14)      +
+                FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.CNPJConsignatario), 14)      +
                 FTxt.RFill(Registro.CFOP, 5)                                +
                 FTxt.RFill(Registro.PlacaVeiculo, 9)                        +
                 FTxt.RFill(Registro.Romaneio, 20)                           +
@@ -711,7 +711,7 @@ begin
   for i := 0 to Registro.Count - 1 do
   begin
     Conteudo.Add( Registro.Items[i].IdRegistro +
-                  FTxt.RFill(OnlyNumber(Registro.Items[i].CNPJEmissor), 14, '0')+
+                  FTxt.RFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].CNPJEmissor), 14, '0')+
                   FTxt.LFill(Registro.Items[i].xNumero, 9, false, '0')          +
                   FTxt.RFill(Registro.Items[i].xSerie, 3)                       +
                   FTxt.LFill(Registro.Items[i].dtEmissao, 'ddmmyyyy', false)    +
@@ -742,22 +742,22 @@ begin
   for i := 0 to Registro.Count - 1 do
   begin
     Conteudo.Add( Registro.Items[i].IdRegistro +
-                  FTxt.LFill(OnlyNumber(Registro.Items[i].CNPJEmissorNF1),14)  +
+                  FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].CNPJEmissorNF1),14)  +
                   FTxt.RFill(Registro.Items[i].NomeEmissorNF1, 50)             +
                   FTxt.RFill(Registro.Items[i].SerieNF1, 3)                    +
                   FTxt.LFill(Registro.Items[i].NumeroNF1, 9 )                  +
-                  FTxt.LFill(OnlyNumber(Registro.Items[i].CNPJEmissorNF2), 14) +
+                  FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].CNPJEmissorNF2), 14) +
                   FTxt.RFill(Registro.Items[i].NomeEmissorNF2, 50)             +
                   FTxt.RFill(Registro.Items[i].SerieNF2, 3)                    +
                   FTxt.LFill(Registro.Items[i].NumeroNF2, 9)                   +
-                  FTxt.LFill(OnlyNumber(Registro.Items[i].CNPJEmissorNF3),14)  +
+                  FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].CNPJEmissorNF3),14)  +
                   FTxt.RFill(Registro.Items[i].NomeEmissorNF3, 50)             +
                   FTxt.RFill(Registro.Items[i].SerieNF3, 3)                    +
                   FTxt.LFill(Registro.Items[i].NumeroNF3, 9)                   +
                   FTxt.RFill(Registro.Items[i].FilContratante,10)              +
                   FTxt.RFill(Registro.Items[i].SerieConhecto, 5)               +
                   FTxt.RFill(Registro.Items[i].NumeroConhecto, 12)             +
-                  FTxt.LFill(OnlyNumber(Registro.Items[i].CNPJContratante),14) +
+                  FTxt.LFill(OnlyCPFCNPJAlphaNum(Registro.Items[i].CNPJContratante),14) +
                   FTxt.RFill(Registro.Items[i].Filler, 78) ) ;
   end;
 end;
@@ -768,7 +768,7 @@ begin
   begin
     Conteudo.Add( Registro.IdRegistro               +
                   FTxt.RFill(Registro.Razao,60)     +
-                  FTxt.RFill(OnlyNumber(Registro.CNPJ),14)+
+                  FTxt.RFill(OnlyCPFCNPJAlphaNum(Registro.CNPJ),14)+
                   FTxt.RFill(Registro.IE,15)        +
                   FTxt.RFill(Registro.Endereco,60)  +
                   FTxt.RFill(Registro.Bairro,35)    +

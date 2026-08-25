@@ -729,7 +729,7 @@ begin
     with Registro.Items[p] do
     begin
       Conteudo.Add( IdRegistro +
-                    FTxt.RFill( OnlyNumber( CNPJ ), 15) +
+                    FTxt.RFill( OnlyCPFCNPJAlphaNum( CNPJ ), 15) +
                     FTxt.RFill( OnlyNumber( IE )  , 15) +
                     FTxt.RFill( Razao             , 40) +
                     FTxt.RFill( Filler            , 127 ) ) ;
@@ -770,15 +770,15 @@ begin
     with Registro.Items[d] do
     begin
       Conteudo.Add( IdRegistro +
-                    FTxt.RFill ( OnlyNumber(CnpjEmissor), 15) +
+                    FTxt.RFill ( OnlyCPFCNPJAlphaNum(CnpjEmissor), 15) +
                     FTxt.RFill ( SerieDocto             ,  5) +
                     FTxt.RFill ( IdDocto                , 20) +
                     FTxt.LFill ( dtEmissao              , 'ddmmyyyy', false)+
                     FTxt.RFill ( SerieCTe               ,  5) +
                     FTxt.RFill ( nroCTe                 , 12) +
                     FTxt.LFill ( dtEmissaoCTe           , 'ddmmyyyy', false)+
-                    FTxt.RFill ( OnlyNumber(CnpjOrigem) , 15) +
-                    FTxt.RFill ( OnlyNumber(CnpjDestino), 15) +
+                    FTxt.RFill ( OnlyCPFCNPJAlphaNum(CnpjOrigem) , 15) +
+                    FTxt.RFill ( OnlyCPFCNPJAlphaNum(CnpjDestino), 15) +
                     FTxt.LFill ( tpCNPJDestino          ,  1) +
                     FTxt.VLFill( vFreteEmbarcador       , 15, 2, '0') +
                     FTxt.VLFill( vFreteTransporte       , 15, 2, '0') +
