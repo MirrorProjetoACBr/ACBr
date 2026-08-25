@@ -43,6 +43,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/08/2026
+-- ACBrNFSeXServicos --
+[*] Adicionado parametro para cidade de Araras
+https://www.projetoacbr.com.br/forum/topic/94421-acbrnfsex-ararassp-3503307-sigissweb-%E2%80%94-incluir-paramsformataritemservicosemzeroesquerda/
+	Por: Alexandre de Paula e cezar.sakugawa
+
+25/08/2026
 -- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
 [*] Ajustes para o CNPJ Alfa.
    Por: Italo Giurizzato Junior
