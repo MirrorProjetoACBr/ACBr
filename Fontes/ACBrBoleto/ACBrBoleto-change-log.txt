@@ -48,6 +48,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+25/08/2026
+-- ACBrBoletoWS.pas, ACBrBoletoRet_C6_V2.pas, ACBrBoletoW_C6_V2.pas --
+[+] Implementado C6 V2 Hibrido
+   ACBr-ACBR-8924: https://www.projetoacbr.com.br/forum/topic/92854-acbr-8924-implementa%C3%A7%C3%A3o-para-api-v2-do-c6-bank/?&_rid=1706#findComment-610989
+				   https://www.projetoacbr.com.br/forum/topic/93272-acbr-8924-implementa%C3%A7%C3%A3o-do-bolepix-c6bank-boleto-hibrido-pix/?_rid=1706		
+   Por: marcosvillatore, Jhonlenon Ribeiro, Valter Patrick, Daniel de Morais InfoCotidano
+
 20/08/2026
 -- ACBrBoletoW_Itau_API --
 [+] Ajustado URL atualização de segurança: https://www.projetoacbr.com.br/forum/topic/94331-aten%C3%A7%C3%A3o-atualiza%C3%A7%C3%A3o-dos-endpoints-e-da-cadeia-de-certificados-das-apis-do-ita%C3%BA-15092026/
