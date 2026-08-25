@@ -507,7 +507,7 @@ begin
       Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                              '<' + Prefixo + 'LoteRps' + NameSpace2 + IdAttr  + Versao + '>' +
                                '<' + Prefixo2 + 'NumeroLote>' + Response.NumeroLote + '</' + Prefixo2 + 'NumeroLote>' +
-                               '<' + Prefixo2 + 'Cnpj>' + OnlyNumber(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
+                               '<' + Prefixo2 + 'Cnpj>' + OnlyCPFCNPJAlphaNum(Emitente.CNPJ) + '</' + Prefixo2 + 'Cnpj>' +
                                GetInscMunic(Emitente.InscMun, Prefixo2) +
                                '<' + Prefixo2 + 'QuantidadeRps>' +
                                   IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
@@ -643,7 +643,7 @@ begin
     Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarSituacaoLoteRpsEnvio' + NameSpace + '>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
-                               OnlyNumber(Emitente.CNPJ) +
+                               OnlyCPFCNPJAlphaNum(Emitente.CNPJ) +
                              '</' + Prefixo2 + 'Cnpj>' +
                              GetInscMunic(Emitente.InscMun, Prefixo2) +
                            '</' + Prefixo + 'Prestador>' +
@@ -781,7 +781,7 @@ begin
     Response.ArquivoEnvio := '<' + Prefixo + 'ConsultarLoteRpsEnvio' + NameSpace + '>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
-                               OnlyNumber(Emitente.CNPJ) +
+                               OnlyCPFCNPJAlphaNum(Emitente.CNPJ) +
                              '</' + Prefixo2 + 'Cnpj>' +
                              GetInscMunic(Emitente.InscMun, Prefixo2) +
                            '</' + Prefixo + 'Prestador>' +
@@ -1003,7 +1003,7 @@ begin
                            '</' + Prefixo + 'IdentificacaoRps>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
-                               OnlyNumber(Emitente.CNPJ) +
+                               OnlyCPFCNPJAlphaNum(Emitente.CNPJ) +
                              '</' + Prefixo2 + 'Cnpj>' +
                              GetInscMunic(Emitente.InscMun, Prefixo2) +
                            '</' + Prefixo + 'Prestador>' +
@@ -1248,7 +1248,7 @@ begin
     Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
                            '<' + Prefixo + 'Prestador>' +
                              '<' + Prefixo2 + 'Cnpj>' +
-                               OnlyNumber(Emitente.CNPJ) +
+                               OnlyCPFCNPJAlphaNum(Emitente.CNPJ) +
                              '</' + Prefixo2 + 'Cnpj>' +
                              GetInscMunic(Emitente.InscMun, Prefixo2) +
                            '</' + Prefixo + 'Prestador>' +
@@ -1397,7 +1397,7 @@ begin
 
   InfoCanc := Response.InfCancelamento;
 
-  IdAttr := DefinirIDCancelamento(OnlyNumber(Emitente.CNPJ),
+  IdAttr := DefinirIDCancelamento(OnlyCPFCNPJAlphaNum(Emitente.CNPJ),
                                   OnlyNumber(Emitente.InscMun),
                                   InfoCanc.NumeroNFSe);
 
@@ -1492,7 +1492,7 @@ begin
                                    InfoCanc.NumeroNFSe +
                                  '</' + Prefixo2 + 'Numero>' +
                                  '<' + Prefixo2 + 'Cnpj>' +
-                                   OnlyNumber(Emitente.CNPJ) +
+                                   OnlyCPFCNPJAlphaNum(Emitente.CNPJ) +
                                  '</' + Prefixo2 + 'Cnpj>' +
                                  GetInscMunic(Emitente.InscMun, Prefixo2) +
                                  '<' + Prefixo2 + 'CodigoMunicipio>' +

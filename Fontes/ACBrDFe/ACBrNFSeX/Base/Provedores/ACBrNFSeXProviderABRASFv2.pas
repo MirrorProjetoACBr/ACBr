@@ -2161,7 +2161,7 @@ begin
     end;
   end;
 
-  IdAttr := DefinirIDCancelamento(OnlyNumber(Emitente.CNPJ),
+  IdAttr := DefinirIDCancelamento(OnlyCPFCNPJAlphaNum(Emitente.CNPJ),
                                   OnlyNumber(Emitente.InscMun),
                                   InfoCanc.NumeroNFSe);
 

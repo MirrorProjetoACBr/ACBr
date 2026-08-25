@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/08/2026
+-- ACBrNFSeXProviderABRASFv1/ACBrNFSeXProviderABRASFv2 --
+[*] Ajustes para o CNPJ Alfa.
+   Por: Italo Giurizzato Junior
 -- IPM.GravarXml --
 [*] Alteração visando gerar a tag cLocalidadeIncid para a versão 2.04
    Por: Italo Giurizzato Junior
