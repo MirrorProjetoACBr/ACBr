@@ -7,6 +7,7 @@
 {                                                                              }
 { Colaboradores nesse arquivo: Arimatéia Jr.                                   }
 {                              Elton Barbosa                                   }
+{                              Victor H Gonzales - Pandaaa                     }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -80,6 +81,8 @@ type
     FInitialized: boolean;
     FPage: TFPDFPage;
   private
+    function InternalTrim(const Value: string): string;
+    function InternalLineBreak(const Value: string): string;
     function GetTextoDiscriminacaoServicos: string;
     function GetTextoOutrasInformacoes: string;
     property NFSe: TNFSe read FNFSe;
@@ -351,7 +354,7 @@ end;
 
 function TACBrDANFSeFPDFA4Retrato.GetTextoDiscriminacaoServicos: string;
 begin
-  Result := Trim( NativeStringToAnsi( NFSe.Servico.Discriminacao));
+  Result := InternalTrim( NFSe.Servico.Discriminacao);
   if Result = '' then
     Exit;
 
@@ -363,9 +366,9 @@ begin
     [rfReplaceAll, rfIgnoreCase]);
 end;
 
-function TACBrDANFSeFPDFA4Retrato.GetTextoOutrasInformacoes: string;
+function TACBrDANFSeFPDFA4Retrato.InternalLineBreak(const Value: string): string;
 begin
-  Result := Trim(NativeStringToAnsi(NFSe.OutrasInformacoes));
+  Result := InternalTrim(Value);
   if Result = '' then
     Exit;
 
@@ -375,6 +378,17 @@ begin
 
   Result := StringReplace(Result, FQuebradeLinha, sLineBreak,
     [rfReplaceAll, rfIgnoreCase]);
+end;
+
+function TACBrDANFSeFPDFA4Retrato.InternalTrim(const Value: string): string;
+begin
+  Result := Trim(NativeStringToAnsi(Value));
+  Result := StringReplace(Result, #$2013, '-', [rfReplaceAll]);
+end;
+
+function TACBrDANFSeFPDFA4Retrato.GetTextoOutrasInformacoes: string;
+begin
+  Result := InternalTrim(NFSe.OutrasInformacoes);
 end;
 
 procedure TACBrDANFSeFPDFA4Retrato.OnStartReport(Args: TFPDFReportEventArgs);
@@ -389,7 +403,7 @@ begin
     AddBand(btPageHeader, 26, BlocoCabecalho);
     AddBand(btPageHeader, 25, BlocoPrestador);
     AddBand(btPageHeader, 25, BlocoTomador);
-    if NFSe.Servico.ItemServico.Count = 0 then
+    if (NFSe.Servico.ItemServico.Count = 0) or (NFSe.Servico.Discriminacao <> '')  then
       AddBand(btData, 10, BlocoDiscriminacaoServico)
     else
       AddBand(btData, 10, BlocoItens);
@@ -442,6 +456,7 @@ var
   Item: TItemServicoCollectionItem;
   PDF: IFPDF;
   x, y: double;
+  DescricaoServico : String;
 begin
   PDF := Args.PDF;
   x := 0;
@@ -496,8 +511,10 @@ begin
   for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
   begin
     Item := NFSe.Servico.ItemServico[I];
+    DescricaoServico := InternalLineBreak(Item.Descricao);
+    h := PDF.GetStringHeight(DescricaoServico, w1);
 
-    IncY := PDF.TextBox(x1, y1, w1, h + 2, NativeStringToAnsi( Item.Descricao ), 'T', 'L', False);
+    IncY := PDF.TextBox(x1, y1, w1, h + 2, NativeStringToAnsi( DescricaoServico ), 'T', 'L', False);
 
     x1 := x1 + w1;
 

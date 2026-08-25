@@ -674,7 +674,7 @@ begin
 
   FWebService.ConsultaNFSeporRps.Clear;
   FWebService.ConsultaNFSeporRps.NumeroRps := aNumero;
-  FWebService.ConsultaNFSeporRps.SerieRps := aSerie;
+  FWebService.ConsultaNFSeporRps.SerieRps  := aSerie;
 
   FProvider.ConsultaNFSeporRps;
 end;
