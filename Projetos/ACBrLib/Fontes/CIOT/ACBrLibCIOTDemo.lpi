@@ -18,7 +18,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="1"/>
-      <BuildNr Value="7"/>
+      <BuildNr Value="8"/>
       <Language Value="0416"/>
       <StringTable Comments="Projeto ACBr" CompanyName="Projeto ACBr" FileDescription="ACBrCIOT - Biblioteca para uso do CIOT" InternalName="ACBrLibCIOT" LegalCopyright="Projeto ACBr" LegalTrademarks="ProjetoACBr" ProductName="CIOT" ProductVersion="0.0.0.0"/>
       <AutoIncrementBuild Value="False"/>
