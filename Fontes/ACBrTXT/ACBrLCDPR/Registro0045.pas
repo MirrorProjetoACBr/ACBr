@@ -81,8 +81,8 @@ procedure TRegistro0045.SetID_CONTRAPARTE(const Value: String);
 var
   TempDoc: string;
 begin
-  TempDoc := OnlyNumber(Value);
-  if (Length(TempDoc) < 11) and
+  TempDoc := OnlyCPFCNPJAlphaNum(Value);
+  if (Length(TempDoc) < 11) or
     (Length(TempDoc) > 14) then
     raise Exception.Create('ID_CONTRAPARTE - Tamanho difere permitido entre 11 e 14 caracteres!');
 

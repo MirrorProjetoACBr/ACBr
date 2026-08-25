@@ -57,6 +57,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+25/08/2026
+-- Ajustes diversos --
+[*] ACBr-9370 Ajustado campos para CNPJ alfanuméricos
+    Por: Larissa Santos
 
 21/05/2025
 -- UACBrLCDPR --

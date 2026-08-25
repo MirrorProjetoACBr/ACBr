@@ -124,7 +124,7 @@ procedure TRegistroQ100.SetID_PARTIC(const Value: String);
 var
   TempIdPart: string;
 begin
-  TempIdPart := OnlyNumber(Value);
+  TempIdPart := OnlyCPFCNPJAlphaNum(Value);
   if Length(TempIdPart) > 14 then
     raise Exception.Create('ID_PARTIC - Tamanho máximo permitido é 14 caracteres!');
 
