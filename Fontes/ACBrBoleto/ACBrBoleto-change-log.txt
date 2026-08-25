@@ -50,6 +50,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 25/08/2026
 -- ACBrBoletoW_Itau_API --
+[*] Ajustes AlfaNumericos pois ACBr-9241, pois estava aguardando validação e não estava com alfas CNPJ
+	Por: Daniel de Morais InfoCotidiano
+
+25/08/2026
+-- ACBrBoletoW_Itau_API --
 [*] ACBR-9241: https://www.projetoacbr.com.br/forum/topic/92306-aten%C3%A7%C3%A3o-descontinua%C3%A7%C3%A3o-do-endpoint-atual-da-api-bolecode-bolecode-pix-do-ita%C3%BA-nova-api-de-boleto-hibrido-dispon%C3%ADvel-para-testes/
 	Por: Daniel de Morais InfoCotidiano
 
