@@ -198,7 +198,7 @@ type
 
     procedure ConsultarParametros(ATipoParamMunic: TParamMunic;
       const ACodigoServico: string = ''; ACompetencia: TDateTime = 0;
-      const ANumeroBeneficio: string = '');
+      const ANumeroBeneficio: string = ''; const ACodigoMunicipio: integer = 0);
     // Usado pelo provedor Pronim (API Propria)
     procedure ConsultarDPSPorNumero(const aNumero, aSerie: string);
 
@@ -383,7 +383,7 @@ var
     if Configuracoes.Arquivos.NomeLongoNFSe then
       Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
                               ANFSe.DataEmissao,
-                              OnlyNumber(xCNPJ),
+                              OnlyCPFCNPJAlphaNum(xCNPJ),
                               StrToInt64Def(xNumDoc, 0))
     else
       Result := xNumDoc + xSerie;
@@ -1043,14 +1043,19 @@ end;
 
 procedure TACBrNFSeX.ConsultarParametros(ATipoParamMunic: TParamMunic;
   const ACodigoServico: string = ''; ACompetencia: TDateTime = 0;
-  const ANumeroBeneficio: string = '');
+  const ANumeroBeneficio: string = ''; const ACodigoMunicipio: integer = 0);
 begin
   if not Assigned(FProvider) then
     raise EACBrNFSeException.Create(ERR_SEM_PROVEDOR);
 
   FWebService.ConsultarParam.Clear;
   FWebService.ConsultarParam.tpParamMunic := ATipoParamMunic;
-  FWebService.ConsultarParam.CodigoMunicipio := Configuracoes.Geral.CodigoMunicipio;
+
+  if ACodigoMunicipio = 0 then
+    FWebService.ConsultarParam.CodigoMunicipio := Configuracoes.Geral.CodigoMunicipio
+  else
+    FWebService.ConsultarParam.CodigoMunicipio := ACodigoMunicipio;
+
   FWebService.ConsultarParam.CodigoServico := ACodigoServico;
   FWebService.ConsultarParam.Competencia := ACompetencia;
   FWebService.ConsultarParam.NumeroBeneficio := ANumeroBeneficio;

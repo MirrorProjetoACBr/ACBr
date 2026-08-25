@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/08/2026
+-- ACBrNFSeX --
+[*] ACBR-9752 - Incluído o parâmetro ACodigoMunicipio no ConsultarParametros.
+   Por: Armando Boza
 -- ACBrNFSeXServicos --
 [*] ACBR-9763 - Incluído o Link para gerar o QR-Code - Provedor ISSNet (Padrão Nacional)
    Por: Intelelecto Programação
