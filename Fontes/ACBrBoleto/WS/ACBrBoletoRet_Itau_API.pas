@@ -659,7 +659,8 @@ begin
                     begin
                       if (LStatusBoleto = 'L') or (LStatusBoleto = 'BA') or (LStatusBoleto = 'BC') or
                          (LStatusBoleto = 'BL') or (LStatusBoleto = 'BC') or (LStatusBoleto = 'TS') or
-                         (LStatusBoleto = 'TM') or (LStatusBoleto = 'LC') or (LStatusBoleto = 'B') then  // Novo código de Status - LC - Liquidado em Cartório
+                         (LStatusBoleto = 'TM') or (LStatusBoleto = 'LC') or (LStatusBoleto = 'B') 
+                         or (LStatusBoleto = 'LZ') then
                         LTrataBoleto := true
                     end;
                   isbCancelado:
