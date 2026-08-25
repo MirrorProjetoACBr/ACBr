@@ -18,7 +18,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="False"/>
-      <BuildNr Value="45"/>
+      <BuildNr Value="46"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrExtratoAPI - Biblioteca para consulta de Extratos via API" InternalName="ACBrLibExtratoAPI" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="1.0.0.0"/>
       <MajorVersionNr Value="0"/>
