@@ -694,6 +694,7 @@ begin
                   ListaRetorno.DadosRet.TituloRet.DataRegistro   := DateToDateTimeItau(LJsonBoletoObject.AsString['data_emissao']);
                   ListaRetorno.DadosRet.TituloRet.EstadoTituloCobranca := RetornaDescricaoStatusTitulo(LStatusBoleto);
 
+                  ListaRetorno.DadosRet.TituloRet.Sacado.NomeSacado   := LJsonBoletoObject.AsString['pagador'];
 
                   ListaRetorno.DadosRet.TituloRet.CodigoEstadoTituloCobranca := RetornaCodigoOcorrencia(UpperCase(LJsonBoletoObject.AsString['codigo_status']));
 
