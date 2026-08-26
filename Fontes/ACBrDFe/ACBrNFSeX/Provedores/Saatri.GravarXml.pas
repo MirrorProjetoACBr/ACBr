@@ -206,6 +206,13 @@ begin
 end;
 
 function TNFSeW_Saatri203.GerarIBSCBS(IBSCBS: TIBSCBSDPS): TACBrXmlNode;
+  const TindFinalArrayStrings: array[TindFinal] of string = ('1', '2');
+  //1-sim
+  //2-não
+  function indFinalToStr(const t: TindFinal): string;
+  begin
+    Result := TindFinalArrayStrings[t];
+  end;
 begin
   Result := CreateElement('IbsCbs');
 
@@ -213,7 +220,7 @@ begin
                                      NFSe.infNFSe.IBSCBS.cLocalidadeIncid, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'IndicadorFinalidade', 1, 1, 1,
-                                           indFinalToStr(IBSCBS.indFinal), ''));
+                                            indFinalToStr(IBSCBS.indFinal), ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'IndicadorOperacao', 6, 6, 1,
                                                             IBSCBS.cIndOp, ''));
