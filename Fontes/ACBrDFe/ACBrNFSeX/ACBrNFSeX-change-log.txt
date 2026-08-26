@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/08/2026
+-- ISSSaoPaulo.GravarXml --
+[*] Removida geração do PagamentoParceladoAntecipado conforme o Alerta: 648-O campo PagamentoParceladoAntecipado nao sera mais utilizado e os valores enviados serao desconsiderados
+   Por: Renato Rubinho
+
 25/08/2026
 -- ACBrNFSeXServicos --
 [*] Adicionado parametro para cidade de Araras
