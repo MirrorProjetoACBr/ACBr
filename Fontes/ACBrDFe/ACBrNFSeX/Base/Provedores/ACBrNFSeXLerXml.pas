@@ -281,12 +281,7 @@ end;
 
 function TNFSeRClass.NormatizarXml(const aXml: string): string;
 begin
-{$IfDef FPC}
   Result := aXml;
-{$Else}
-  Result := ParseText(aXml);
-  Result := FastStringReplace(Result, '&', '&amp;', [rfReplaceAll]);
-{$EndIf}
 end;
 
 function TNFSeRClass.ObterNomeMunicipioUF(ACodigoMunicipio: Integer; var xUF: string): string;
