@@ -1925,24 +1925,13 @@ begin
         Result.AppendChild(GerarDetImpostoICMS(i));
 
       Result.AppendChild(GerarDetImpostoIPI(i));
-
-      if nfe.Ide.tpNFDebito <> tdPagamentoAntecipado then
-        Result.AppendChild(GerarDetImpostoII(i));
+      Result.AppendChild(GerarDetImpostoII(i));
     end;
 
-    {
-     Regra B25-80 NT 2025/002 versão 1.51 - A exceção abaixo ativada em
-              homologação: 01/09/2026 - produção: 05/10/2026
-     Exceção 2: tpNFDebito=”06-Pagamento Antecipado” permite a informação do PIS,
-                PISST, COFINS e COFINSST em NF-e com data de emissão em 2026.
-    }
-    if (nfe.Ide.tpNFDebito = tdPagamentoAntecipado) and (YearOf(NFe.Ide.dEmi) = 2026) then
-    begin
-      Result.AppendChild(GerarDetImpostoPIS(i));
-      Result.AppendChild(GerarDetImpostoPISST(i));
-      Result.AppendChild(GerarDetImpostoCOFINS(i));
-      Result.AppendChild(GerarDetImpostoCOFINSST(i));
-    end;
+    Result.AppendChild(GerarDetImpostoPIS(i));
+    Result.AppendChild(GerarDetImpostoPISST(i));
+    Result.AppendChild(GerarDetImpostoCOFINS(i));
+    Result.AppendChild(GerarDetImpostoCOFINSST(i));
 
     if NFe.Det[i].Imposto.ICMSUFDest.pICMSInterPart > 0 then
       Result.AppendChild(GerarDetImpostoICMSUFDest(i));
