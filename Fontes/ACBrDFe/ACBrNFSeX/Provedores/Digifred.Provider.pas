@@ -136,9 +136,14 @@ uses
   ACBrUtil.XMLHTML,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
+  ACBrDFeUtil,
   ACBrNFSeXConsts,
-  ACBrDFeException, ACBrNFSeX, ACBrNFSeXConfiguracoes,
-  ACBrNFSeXNotasFiscais, Digifred.GravarXml, Digifred.LerXml;
+  ACBrDFeException,
+  ACBrNFSeX,
+  ACBrNFSeXConfiguracoes,
+  ACBrNFSeXNotasFiscais,
+  Digifred.GravarXml,
+  Digifred.LerXml;
 
 { TACBrNFSeProviderDigifred200 }
 
@@ -1094,7 +1099,7 @@ begin
 
             ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
 
-            IDEvento := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+            IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
 
             Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
             Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);

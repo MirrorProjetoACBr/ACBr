@@ -13828,8 +13828,12 @@ begin
 end;
 
 function StrTotpEvento(out ok: Boolean; const s: string): TtpEvento;
+var
+  Laux: string;
 begin
-  result := StrToEnumerado(ok, s,
+  Laux := 'e' + OnlyNumber(s);
+
+  result := StrToEnumerado(ok, Laux,
                          ['e101101', 'e105102', 'e101103', 'e105104', 'e105105',
                           'e202201', 'e203202', 'e204203', 'e205204', 'e202205',
                           'e203206', 'e204207', 'e205208', 'e305101', 'e305102',

@@ -2079,12 +2079,12 @@ begin
   sSecao := 'IBSCBSDPS';
   if AINIRec.SectionExists(sSecao) then
   begin
-    IBSCBS.finNFSe := StrTofinNFSe(AINIRec.ReadString(sSecao, 'finNFSe', ''));
-    IBSCBS.indFinal := StrToindFinal(AINIRec.ReadString(sSecao, 'indFinal', ''));
+    IBSCBS.finNFSe := StrTofinNFSe(AINIRec.ReadString(sSecao, 'finNFSe', '0'));
+    IBSCBS.indFinal := StrToindFinal(AINIRec.ReadString(sSecao, 'indFinal', '1'));
     IBSCBS.cIndOp := AINIRec.ReadString(sSecao, 'cIndOp', '');
     IBSCBS.tpOper := StrTotpOperGovNFSe(AINIRec.ReadString(sSecao, 'tpOper', ''));
     IBSCBS.tpEnteGov := StrTotpEnteGov(AINIRec.ReadString(sSecao, 'tpEnteGov', ''));
-    IBSCBS.indDest := StrToindDest(AINIRec.ReadString(sSecao, 'indDest', ''));
+    IBSCBS.indDest := StrToindDest(AINIRec.ReadString(sSecao, 'indDest', '0'));
 
     // Incluido para atender o provedor SigISSWeb
     IBSCBS.OperExterior := StrToTIndicador(AINIRec.ReadString(sSecao, 'OperExterior', '0'));

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/08/2026
+-- ACBrNFSeXConversao/ACBrNFSeXLerXml/Digifred.Provider/PadraoNacional.Provider/Pronim.Provider --
+[*] ACBR-9771 - Melhorias na leitura de retorno de eventos.
+   Por: Paulo Hildebrand Neto/Italo Giurizzato Junior
+
 26/08/2026
 -- ISSNet.Provider --
 [*] ACBR-9763/ACBR-9770 - Troca do ParseText pela função DecodeHTMLEntities.

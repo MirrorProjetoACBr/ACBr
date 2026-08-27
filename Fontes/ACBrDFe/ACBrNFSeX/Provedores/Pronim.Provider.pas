@@ -158,6 +158,7 @@ uses
   ACBrUtil.Base,
   ACBrUtil.DateTime,
   ACBrDFeException,
+  ACBrDFeUtil,
   ACBrNFSeX,
   ACBrNFSeXConfiguracoes,
   ACBrNFSeXNotasFiscais,
@@ -1192,7 +1193,7 @@ begin
         JSon := JSonLoteEventos.ItemAsJSONObject[i];
         Response.Data := Json.AsISODateTime['dataInclusao'];
         AResumo := Response.Resumos.New;
-        AResumo.TipoEvento := 'e' + JSon.AsString['tipo'];
+        AResumo.TipoEvento := JSon.AsString['tipo'];
         AResumo.TipoDoc := 'Evento de ' +
                            tpEventoToDesc(StrTotpEvento(Ok, AResumo.TipoEvento));
 
@@ -1210,7 +1211,7 @@ begin
           try
             DocumentXml.LoadFromXml(ArquivoXml);
             ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
-            IDEvento := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+            IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
             Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
             Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
             Response.idEvento := IDEvento;
@@ -1377,10 +1378,19 @@ var
 
         ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
 
-        IDEvento := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+        IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
 
         Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
         Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
+
+        ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
+        ANode := ANode.Childrens.FindAnyNs('infPedReg');
+
+        if IDEvento = '' then
+          IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
+
+        Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
+
         Response.idEvento := IDEvento;
         Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
         Response.XmlRetorno := EventoXml;
@@ -1397,11 +1407,6 @@ var
             Response.DescSituacao := '';
           end;
         end;
-
-        ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
-        ANode := ANode.Childrens.FindAnyNs('infPedReg');
-
-        Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
 
         nomeArq := '';
         SalvarXmlEvento(IDEvento + '-procEveNFSe', EventoXml, nomeArq, Response.Data);
