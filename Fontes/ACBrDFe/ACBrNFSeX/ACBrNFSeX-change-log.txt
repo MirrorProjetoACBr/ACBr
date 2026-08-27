@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/08/2026
+-- ACBrNFSeXServicos --
+[*] Adicionado HomLinkURL na seção ISSNet.
+    Alteração na cidade Getulina/SP para usar o novo webservice do provedor Fiorilli.
+   Por: Italo Giurizzato Junior
 -- ACBrNFSeXConversao/ACBrNFSeXLerXml/Digifred.Provider/PadraoNacional.Provider/Pronim.Provider --
 [*] ACBR-9771 - Melhorias na leitura de retorno de eventos.
    Por: Paulo Hildebrand Neto/Italo Giurizzato Junior
