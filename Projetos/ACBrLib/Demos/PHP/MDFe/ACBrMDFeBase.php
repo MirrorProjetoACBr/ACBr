@@ -993,45 +993,57 @@
         });
 
         $('#ImprimirEventoPDF').on('click', function() {
-            selecionarArquivo(".xml", function(AeArquivoXmlMDFe) {
-                selecionarArquivo(".xml", function(AeArquivoXmlEvento) {
-                    chamaAjaxEnviar({
-                        metodo: "ImprimirEventoPDF",
-                        AeArquivoXmlMDFe: AeArquivoXmlMDFe,
-                        AeArquivoXmlEvento: AeArquivoXmlEvento
-                    });
+            selecionarArquivosSequencial([
+                { extensao: ".xml", titulo: "Selecione o XML do MDFe" },
+                { extensao: ".xml", titulo: "Selecione o XML do Evento" }
+            ], function(conteudos) {
+                var AeArquivoXmlMDFe   = conteudos[0];
+                var AeArquivoXmlEvento = conteudos[1];
+
+                chamaAjaxEnviar({
+                    metodo: "ImprimirEventoPDF",
+                    AeArquivoXmlMDFe: AeArquivoXmlMDFe,
+                    AeArquivoXmlEvento: AeArquivoXmlEvento
                 });
             });
         });
 
         $('#SalvarEventoPDF').on('click', function() {
-            selecionarArquivo(".xml", function(AeArquivoXmlMDFe) {
-                selecionarArquivo(".xml", function(AeArquivoXmlEvento) {
-                    chamaAjaxEnviar({
-                        metodo: "SalvarEventoPDF",
-                        AeArquivoXmlMDFe: AeArquivoXmlMDFe,
-                        AeArquivoXmlEvento: AeArquivoXmlEvento
-                    });
+            selecionarArquivosSequencial([
+                { extensao: ".xml", titulo: "Selecione o XML do MDFe" },
+                { extensao: ".xml", titulo: "Selecione o XML do Evento" }
+            ], function(conteudos) {
+                var AeArquivoXmlMDFe   = conteudos[0];
+                var AeArquivoXmlEvento = conteudos[1];
+
+                chamaAjaxEnviar({
+                    metodo: "SalvarEventoPDF",
+                    AeArquivoXmlMDFe: AeArquivoXmlMDFe,
+                    AeArquivoXmlEvento: AeArquivoXmlEvento
                 });
             });
         });
 
         $('#EnviarEmailEvento').on('click', function() {
-            selecionarArquivo(".xml", function(eArquivoXmlMDFe) {
-                selecionarArquivo(".xml", function(eArquivoXmlEvento) {
-                    inputBox("Digite o endereço do destinatário:", function(AePara) {
-                        inputBox("Enviar PDF? (0)Não (1) Sim", function(AEnviaPDF) {
-                            chamaAjaxEnviar({
-                                metodo: "EnviarEmailEvento",
-                                eArquivoXmlMDFe: eArquivoXmlMDFe,
-                                eArquivoXmlEvento: eArquivoXmlEvento,
-                                AePara: AePara,
-                                AEnviaPDF: AEnviaPDF,
-                                AeAssunto: $('#emailAssunto').val(),
-                                AeCC: "",
-                                AeAnexos: "",
-                                AeMensagem: $('#emailMensagem').val()
-                            });
+            selecionarArquivosSequencial([
+                { extensao: ".xml", titulo: "Selecione o XML do MDFe" },
+                { extensao: ".xml", titulo: "Selecione o XML do Evento" }
+            ], function(conteudos) {
+                var eArquivoXmlMDFe    = conteudos[0];
+                var eArquivoXmlEvento = conteudos[1];
+
+                inputBox("Digite o endereço do destinatário:", function(AePara) {
+                    inputBox("Enviar PDF? (0)Não (1) Sim", function(AEnviaPDF) {
+                        chamaAjaxEnviar({
+                            metodo: "EnviarEmailEvento",
+                            eArquivoXmlMDFe: eArquivoXmlMDFe,
+                            eArquivoXmlEvento: eArquivoXmlEvento,
+                            AePara: AePara,
+                            AEnviaPDF: AEnviaPDF,
+                            AeAssunto: $('#emailAssunto').val(),
+                            AeCC: "",
+                            AeAnexos: "",
+                            AeMensagem: $('#emailMensagem').val()
                         });
                     });
                 });
@@ -1129,6 +1141,69 @@
             };
 
             arquivoSelecionado.click();
+        }
+
+        function selecionarArquivosSequencial(especificacoes, retorno) {
+            // especificacoes: array de { extensao: ".xml", titulo: "Selecione o arquivo" }
+            var resultados = new Array(especificacoes.length);
+            var indiceAtual = 0;
+
+            var overlay = document.createElement("div");
+            overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:99999;";
+
+            var caixa = document.createElement("div");
+            caixa.style.cssText = "background:#fff;padding:20px;border-radius:6px;min-width:300px;text-align:center;font-family:sans-serif;";
+
+            var titulo = document.createElement("p");
+            var botao = document.createElement("button");
+            botao.style.cssText = "padding:8px 16px;cursor:pointer;";
+
+            caixa.appendChild(titulo);
+            caixa.appendChild(botao);
+            overlay.appendChild(caixa);
+            document.body.appendChild(overlay);
+
+            function atualizarPasso() {
+                var espec = especificacoes[indiceAtual];
+                titulo.textContent = (espec.titulo || ("Selecione o arquivo " + (indiceAtual + 1)))
+                                    + " (" + (indiceAtual + 1) + "/" + especificacoes.length + ")";
+                botao.textContent = "Selecionar arquivo";
+            }
+
+            function finalizar() {
+                document.body.removeChild(overlay);
+                retorno(resultados);
+            }
+
+            botao.onclick = function() {
+                var espec = especificacoes[indiceAtual];
+
+                var input = document.createElement("input");
+                input.type = "file";
+                input.accept = espec.extensao || "";
+
+                input.onchange = function(event) {
+                    var file = event.target.files[0];
+                    if (!file) { return; }
+
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        resultados[indiceAtual] = e.target.result;
+                        indiceAtual++;
+
+                        if (indiceAtual >= especificacoes.length) {
+                            finalizar();
+                        } else {
+                            atualizarPasso();
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+
+                input.click();
+            };
+
+            atualizarPasso();
         }
 
         function processaResponseGeral(retorno) {
