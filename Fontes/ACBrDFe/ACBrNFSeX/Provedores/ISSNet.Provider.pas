@@ -1265,12 +1265,12 @@ begin
   begin
     Result := inherited TratarXmlRetornado(Result);
 
-//    Result := RemoverCaracteresDesnecessarios(Result);
-    Result := DecodeHTMLEntities(Result);
+    Result := RemoverCaracteresDesnecessarios(Result);
+    //Result := DecodeHTMLEntities(Result); // Removido por erro de parser de respostas do WS : Panda
     Result := RemoverDeclaracaoXML(Result);
     Result := RemoverIdentacao(Result);
     Result := RemoverPrefixosDesnecessarios(Result);
-//    Result := StringReplace(Result, '<br>', ' ', [rfReplaceAll, rfIgnoreCase]);
+    Result := StringReplace(Result, '<br>', ' ', [rfReplaceAll, rfIgnoreCase]);
   end;
 end;
 
