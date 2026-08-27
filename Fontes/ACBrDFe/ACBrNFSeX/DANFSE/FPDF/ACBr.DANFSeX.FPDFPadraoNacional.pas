@@ -635,18 +635,20 @@ var
   vFed, vEst, vMun: Double;
   Sufixo: string;
 begin
-  vFed := FNFSe.ValorCargaTributaria;            // tributos federais aproximados
-  vEst := FNFSe.ValorCargaTributariaEstadual;
-  vMun := FNFSe.ValorCargaTributariaMunicipal;
+  vFed := FNFSe.Servico.Valores.totTrib.vTotTribFed;            // tributos federais aproximados
+  vEst := FNFSe.Servico.Valores.totTrib.vTotTribEst;
+  vMun := FNFSe.Servico.Valores.totTrib.vTotTribMun;
 
   if (vFed > 0) or (vEst > 0) or (vMun > 0) then
     Sufixo := Format('Federais: R$ %s; Estaduais: R$ %s; Municipais: R$ %s',
-      [FormatVlr(vFed), FormatVlr(vEst), FormatVlr(vMun)])
+      [FormatVlr(vFed),
+       FormatVlr(vEst),
+       FormatVlr(vMun)])
   else
     Sufixo := Format('Federais: %s; Estaduais: %s; Municipais: %s',
-      [FormatPerc(FNFSe.PercentualCargaTributaria),
-       FormatPerc(FNFSe.PercentualCargaTributariaEstadual),
-       FormatPerc(FNFSe.PercentualCargaTributariaMunicipal)]);
+      [FormatPerc(FNFSe.Servico.Valores.totTrib.pTotTribFed),
+       FormatPerc(FNFSe.Servico.Valores.totTrib.pTotTribEst),
+       FormatPerc(FNFSe.Servico.Valores.totTrib.pTotTribMun)]);
 
   Result := 'Totais Aproximados dos Tributos cfe. Lei no. 12.741/2012: ' + Sufixo;
 end;
