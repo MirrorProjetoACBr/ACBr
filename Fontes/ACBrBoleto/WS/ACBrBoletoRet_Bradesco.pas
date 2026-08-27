@@ -128,11 +128,19 @@ var
   LJsonViolacoes, LJsonDetalhes: TACBrJSONArray;
   LTipoOperacao : TOperacao;
   i :Integer;
+  LcodStatus: Integer;
+  LdtPagto, LdtBaixa: Integer;
+  LvalorPago : Double;
 begin
   Result := True;
   LTipoOperacao := ACBrBoleto.Configuracoes.WebService.Operacao;
   ARetornoWs.JSONEnvio      := EnvWs;
   ARetornoWS.HTTPResultCode := HTTPResultCode;
+  LCodStatus := 0;
+  LdtPagto := 0;
+  LdtBaixa := 0;
+  LvalorPago := 0;
+
   // Quando na consulta nao devolver o nosso numero, pegar do titulo.
   If Assigned(ACBrTitulo) then
      ARetornoWS.DadosRet.TituloRet.NossoNumero := ACBrTitulo.NossoNumero;
@@ -218,12 +226,22 @@ begin
               ARetornoWS.DadosRet.TituloRet.DataBaixa                   := DateBradescoToDateTime(LJsonObject.AsString['dtPagto']);
               ARetornoWS.DadosRet.TituloRet.DataCredito	                := DateBradescoToDateTime(LJsonObject.AsString['dtPagto']);
 
-              // 'valorMoedaBol' retorna zerado apos a liquidacao do titulo; nesse caso usa 'valMoeda'
-              if LJsonObject.AsInteger['valorMoedaBol'] > 0 then
-                ARetornoWS.DadosRet.TituloRet.ValorDocumento            := ValorInteiroParaDouble(LJsonObject.AsInteger['valorMoedaBol'])
+              ARetornoWS.DadosRet.TituloRet.ValorDocumento              := ValorInteiroParaDouble(LJsonObject.AsInteger['valorMoedaBol']);
+
+              LcodStatus := LJsonObject.AsInteger['codStatus'];
+              LdtPagto   := LJsonObject.AsInteger['dtPagto'];
+              LdtBaixa   := LJsonObject.AsInteger['dtBaixa'];
+
+              if LcodStatus = 61 then
+                LvalorPago := StrToFloatDef(StringReplace(LJsonObject.AsString['vlrPagto'], ',', '.', [rfReplaceAll]), 0)
+              else if LDtPagto > 0 then
+                LValorPago := ValorInteiroParaDouble(LJsonObject.AsInteger['valMoeda'])
+              else if (LCodStatus = 51) and (LDtBaixa > 0) then
+                LvalorPago := ValorInteiroParaDouble(LJsonObject.AsInteger['valMoeda'])
               else
-                ARetornoWS.DadosRet.TituloRet.ValorDocumento            := ValorInteiroParaDouble(LJsonObject.AsInteger['valMoeda']);
-              ARetornoWS.DadosRet.TituloRet.ValorPago                   := LJsonObject.AsFloat['vlrPagto'];
+                LValorPago := 0;
+
+              ARetornoWS.DadosRet.TituloRet.ValorPago                   := LValorPago;
               ARetornoWS.DadosRet.TituloRet.ValorAbatimento             := ValorInteiroParaDouble(LJsonObject.AsInteger['valAbat']);
               ARetornoWS.DadosRet.TituloRet.DataMulta                   := DateBradescoToDateTime(LJsonObject.AsString['dataMulta']);
               // 'codValMul' = 2 indica que 'valMulta' e taxa percentual, nao valor em reais
