@@ -1211,16 +1211,36 @@ begin
           try
             DocumentXml.LoadFromXml(ArquivoXml);
             ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
+
             IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
+
             Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
             Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
+
+            ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
+            ANode := ANode.Childrens.FindAnyNs('infPedReg');
+
+            if IDEvento = '' then
+              IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
+
+            Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
             Response.idEvento := IDEvento;
             Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
             Response.XmlRetorno := ArquivoXml;
-            Response.SucessoCanc := (Response.tpEvento = teCancelamento);
-            ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
-            ANode := ANode.Childrens.FindAnyNs('infPedReg');
-            Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
+
+            case Response.tpEvento of
+              teCancelamento:
+                begin
+                  Response.SucessoCanc := True;
+                  Response.DescSituacao := 'Nota Cancelada';
+                end
+            else
+              begin
+                Response.SucessoCanc := False;
+                Response.DescSituacao := '';
+              end;
+            end;
+
             nomeArq := '';
             SalvarXmlEvento(IDEvento + '-procEveNFSe', ArquivoXml, nomeArq, Response.Data);
             Response.PathNome := nomeArq;

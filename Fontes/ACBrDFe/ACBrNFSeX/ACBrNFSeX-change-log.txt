@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2026
+-- DBSeller.Provider/Digifred.Provider/PadraoNacional.Provider/Pronim.Provider --
+[*] ACBR-9771 - Ajustes que ficaram faltando na leitura de retorno de eventos.
+   Por: Paulo Hildebrand Neto/Italo Giurizzato Junior
+
 27/08/2026
 -- ACBrNFSeXServicos --
 [*] Adicionado HomLinkURL na seção ISSNet.

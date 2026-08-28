@@ -1608,10 +1608,18 @@ begin
 
             ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
 
-            IDEvento := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+            IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
 
             Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
             Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
+
+            ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
+            ANode := ANode.Childrens.FindAnyNs('infPedReg');
+
+            if IDEvento = '' then
+              IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
+
+            Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
             Response.idEvento := IDEvento;
             Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
             Response.XmlRetorno := respostaADN;
@@ -1628,11 +1636,6 @@ begin
                 Response.DescSituacao := '';
               end;
             end;
-
-            ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
-            ANode := ANode.Childrens.FindAnyNs('infPedReg');
-
-            Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
 
             nomeArq := '';
             SalvarXmlEvento(IDEvento + '-procEveNFSe', respostaADN, nomeArq);
