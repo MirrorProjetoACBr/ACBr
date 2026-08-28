@@ -142,6 +142,7 @@ begin
       Valores.ValorIss := 0;
       Valores.ValorInss := 0;
       Valores.Aliquota := 0;
+      Valores.DescontoIncondicionado := 0;
 
       ANodes := AuxNode.Childrens.FindAllAnyNs('lista');
 
@@ -176,7 +177,7 @@ begin
         ItemServico[i].ValorDeducoes := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_deducao'), tcDe2);
         ItemServico[i].BaseCalculo := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_tributavel'), tcDe2);
         ItemServico[i].ValorIssRetido := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_issrf'), tcDe2);
-        ItemServico[i].DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('ValorDescontoIncondicional'), tcDe2);
+        ItemServico[i].DescontoIncondicionado := ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_desconto_incondicional'), tcDe2);
 
         if ItemServico[i].Quantidade = 0 then
           ItemServico[i].Quantidade := 1;
@@ -196,6 +197,7 @@ begin
 
         Valores.BaseCalculo := Valores.BaseCalculo + ItemServico[i].BaseCalculo;
         Valores.ValorIss := Valores.ValorIss + ItemServico[i].ValorISS;
+        Valores.DescontoIncondicionado := Valores.DescontoIncondicionado + ItemServico[i].DescontoIncondicionado;
 
         Valores.ValorInss := Valores.ValorInss +
             ObterConteudo(ANodes[i].Childrens.FindAnyNs('valor_inss'), tcDe2);
@@ -307,7 +309,8 @@ begin
       Servico.Valores.ValorPis      := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor_pis'), tcDe2);
       Servico.Valores.ValorCofins   := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor_cofins'), tcDe2);
 
-      Servico.Valores.DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor_desconto'), tcDe2);
+      if Servico.Valores.DescontoIncondicionado = 0 then
+        Servico.Valores.DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('valor_desconto'), tcDe2);
 
       Servico.Valores.RetencoesFederais := Servico.Valores.ValorPis +
         Servico.Valores.ValorCofins + Servico.Valores.ValorInss +

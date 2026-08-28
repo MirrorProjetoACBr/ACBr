@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 28/08/2026
+-- IPM.LerXml --
+[*] ACBR-9780 - Ajustes para a leitura correta do valor de desconto incondicionado.
+   Por: Italo Giurizzato Junior
 -- DBSeller.Provider/Digifred.Provider/PadraoNacional.Provider/Pronim.Provider --
 [*] ACBR-9771 - Ajustes que ficaram faltando na leitura de retorno de eventos.
    Por: Paulo Hildebrand Neto/Italo Giurizzato Junior
