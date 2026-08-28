@@ -98,6 +98,7 @@ const
   HTTP_NOT_MODIFIED                 = 304;
   HTTP_USE_PROXY                    = 305;
   HTTP_TEMPORARY_REDIRECT           = 307;
+  HTTP_PERMANENT_REDIRECT           = 308;
   HTTP_BAD_REQUEST                  = 400;
   HTTP_UNAUTHORIZED                 = 401;
   HTTP_PAYMENT_REQUIRED             = 402;
@@ -325,7 +326,7 @@ end;
     procedure SetSenhaPFX(aValue: AnsiString);
     procedure ConfigurarAutenticacao_mTLS(const aMethod, aURL: String);
   protected
-    function GetHeaderValue(aHeader: String): String;
+    function GetHeaderValue(const aHeader: String): String;
     function VerificarSeIncluiPFX(const Method, AURL: String): Boolean; virtual;
     function VerificarSeIncluiCertificado(const Method, AURL: String): Boolean; virtual;
     function VerificarSeIncluiChavePrivada(const Method, AURL: String): Boolean; virtual;
@@ -395,10 +396,10 @@ function LocationIsRelativeURLRelativePath(const ALocation: String): Boolean;
 function URLWithDelim(aURL: String): String;
 function URLWithoutDelim(aURL: String): String;
 
-function GetHeaderValue(const aValue: String; aStringList: TStringList): String;
+function GetHeaderValue(const aHeader: String; aStringList: TStringList): String;
 procedure SetHeaderValue(const aKey, aValue: String; aStringList: TStringList);
 
-function ContentIsCompressed(aHeader: TStringList): Boolean;
+function ContentIsCompressed(aHeaders: TStringList): Boolean;
 function StreamToAnsiString(aStream: TStream): AnsiString;
 function DecompressStream(aStream: TStream): AnsiString;
 function ContentEncodingCompressToString(aValue: THttpContentEncodingCompress): String;
@@ -505,22 +506,24 @@ begin
     Delete(Result, Length(Result), 1);
 end;
 
-function GetHeaderValue(const aValue: String; aStringList: TStringList): String;
+function GetHeaderValue(const aHeader: String; aStringList: TStringList): String;
 var
   i: Integer;
-  u, LinhaHeader: String;
+  uHeader, LinhaHeader: String;
 begin
   Result := '';
-  u := UpperCase(Trim(AValue));
-  if EstaVazio(u) then
+  uHeader := UpperCase(Trim(aHeader));
+  if EstaVazio(uHeader) then
     Exit;
+  if (RightStr(uHeader, 1) <> ':') then
+    uHeader := uHeader + ':';
 
   i := 0;
   while EstaVazio(Result) and (i < aStringList.Count) do
   begin
     LinhaHeader := aStringList[i];
-    if (Pos(u, UpperCase(LinhaHeader)) = 1) then
-      Result := Trim(Copy(LinhaHeader, Length(u)+1, Length(LinhaHeader)));
+    if (Pos(uHeader, UpperCase(LinhaHeader)) = 1) then
+      Result := Trim(Copy(LinhaHeader, Length(uHeader)+1, Length(LinhaHeader)));
     Inc(i);
   end;
 end;
@@ -531,13 +534,13 @@ begin
     aStringList.Add(aKey + ': ' + aValue);
 end;
 
-function ContentIsCompressed(aHeader: TStringList): Boolean;
+function ContentIsCompressed(aHeaders: TStringList): Boolean;
 var
   i: Integer;
   ce: String;
 begin
   Result := False;
-  ce := GetHeaderValue(cHTTPHeaderContentEncoding, aHeader);
+  ce := ACBrSocket.GetHeaderValue(cHTTPHeaderContentEncoding, aHeaders);
 
   for i := Ord(Low(THttpContentEncodingCompress)) to Ord(High(THTTPContentEncodingCompress)) do
   begin
@@ -1532,21 +1535,9 @@ begin
   end;
 end;
 
-function TACBrHTTP.GetHeaderValue(aHeader: String): String;
-var
-  wLinhaHeader: String;
-  I: Integer;
+function TACBrHTTP.GetHeaderValue(const aHeader: String): String;
 begin
-  Result := EmptyStr;
-  for I := 0 to HTTPSend.Headers.Count-1 do
-  begin
-    wLinhaHeader := HTTPSend.Headers[I];
-    if (Pos(aHeader, wLinhaHeader) > 0) then
-    begin
-      Result := Trim(Copy(wLinhaHeader, Length(aHeader)+1, Length(wLinhaHeader)));
-      Break;
-    end;
-  end;
+  Result := ACBrSocket.GetHeaderValue(aHeader, fHTTPSend.Headers);
 end;
 
 function TACBrHTTP.VerificarSeIncluiPFX(const Method, AURL: String): Boolean;

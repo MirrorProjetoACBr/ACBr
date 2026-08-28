@@ -36,6 +36,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2026
+-- ACBrSocket --
+[-] Ajuste para que TACBrHTTP.GetHeaderValue não considere Maiúsculas e minusculas
+    (por: DSA)
+
 20/07/2026
 -- ACBrIMendes --
 [+] Ajustes para inclusão dos métodos Inativar e RemoveDevolvidos;
