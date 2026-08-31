@@ -1527,11 +1527,17 @@ var
       if TipoDesconto = 1 then
       begin
         AJsonObject.AddPair(LPercentual + Sufixo, 0);
-        AJsonObject.AddPair(LValor + Sufixo, ATitulo.ValorDesconto);
+        if Boleto.Cedente.CedenteWS.IndicadorPix then
+          AJsonObject.AddPair(LValor + Sufixo, ATitulo.ValorDesconto)
+        else
+          AJsonObject.AddPair(LValor + Sufixo, ATitulo.ValorDesconto * 100);
       end
       else
       begin
-        AJsonObject.AddPair(LPercentual + Sufixo, ATitulo.ValorDesconto);
+      	if Boleto.Cedente.CedenteWS.IndicadorPix then
+      	  AJsonObject.AddPair(LPercentual + Sufixo, ATitulo.ValorDesconto)
+      	else
+          AJsonObject.AddPair(LPercentual + Sufixo, ATitulo.ValorDesconto * 100);
         AJsonObject.AddPair(LValor + Sufixo, 0);
       end;
       AJsonObject.AddPair(LData + Sufixo, DateTimeToDateBradesco(ATitulo.Vencimento));
