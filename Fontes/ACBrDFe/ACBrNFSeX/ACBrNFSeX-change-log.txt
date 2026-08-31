@@ -43,6 +43,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/08/2026
+-- ACBrNFSeXServicos --
+[*] ACBR-9769 - O município de Primeiro de Maio/PR aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94423-primeiro-de-maio-pr-transi%C3%A7%C3%A3o-para-o-emissor-nacional-da-nfs-e/
+	Por: Valmor Moreira/Larissa Santos
+[*] ACBR-9567 - O município de Limeira/SP aderiu ao Padrão Nacional
+	Por: Rodrigo.Pinto/nwsoftware/Larissa Santos
+[*] ACBR-9488 - O município de Novo Hamburgo/RS aderiu ao Padrão Nacional
+	Veja: https://discord.com/channels/798697718800318484/800042186783588364/1515046522520342558
+	Por: Helius_ERP/Larissa Santos
 -- ACBrNFSeXLerXml --
 [*] Não estava lendo corretamente o código do município onde o serviço foi prestado.
    Por: Italo Giurizzato Junior
