@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/08/2026
+-- ACBrNFSeXLerXml --
+[*] Não estava lendo corretamente o código do município onde o serviço foi prestado.
+   Por: Italo Giurizzato Junior
 -- Conam.LerXml/Conam.Provider --
 [*] ACBR-9766 - Ajustes para gerar o Reg90 corretamente.
    Por: Italo Giurizzato Junior

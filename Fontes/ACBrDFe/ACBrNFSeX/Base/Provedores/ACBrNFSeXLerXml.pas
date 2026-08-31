@@ -1165,6 +1165,7 @@ begin
       Servico.Endereco.Numero := AINIRec.ReadString(sSecao, 'Numero', '');
       Servico.Endereco.xPais := AINIRec.ReadString(sSecao, 'xPais', '');
       Servico.Endereco.UF := AINIRec.ReadString(sSecao, 'UF', '');
+      Servico.Endereco.CodigoMunicipio := Servico.CodigoMunicipio;
 
       // Provedor ISSBarueri
       Servico.LocalPrestacao := StrToLocalPrestacao(Ok, AINIRec.ReadString(sSecao, 'LocalPrestacao', '1'));
