@@ -1128,16 +1128,16 @@ begin
     AuxNode := Result.Childrens.FindAnyNs('guiaTransito');
 
     AuxNode.AppendChild(AddNode(tcStr, 'ZF06', 'tpGuia', 00, 01, 1,
-                                TtpGuiaToStr(NFe.agropecuario.guiaTransito.tpGuia)));
+                           TtpGuiaToStr(NFe.agropecuario.guiaTransito.tpGuia)));
 
     AuxNode.AppendChild(AddNode(tcStr, 'ZF05', 'UFGuia', 00, 02, 1,
-                                NFe.agropecuario.guiaTransito.UFGuia));
+                                         NFe.agropecuario.guiaTransito.UFGuia));
 
     AuxNode.AppendChild(AddNode(tcStr, 'ZF07', 'serieGuia', 01, 09, 0,
-                                NFe.agropecuario.guiaTransito.serieGuia));
+                                      NFe.agropecuario.guiaTransito.serieGuia));
 
-    AuxNode.AppendChild(AddNode(tcInt, 'ZF08', 'nGuia', 01, 09, 1,
-                                NFe.agropecuario.guiaTransito.nGuia));
+    AuxNode.AppendChild(AddNode(tcStr, 'ZF08', 'nGuia', 01, 09, 1,
+                                          NFe.agropecuario.guiaTransito.nGuia));
   end;
 end;
 

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2026
+-- ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
+[*] Alterado o tipo de conversão de tcInt por tcStr, pois o campo nGuia é do tipo string.
+   Por Italo Giurizzato Junior
+
 27/08/2026
 -- ACBrNFe.XmlWriter --
 [*] Removido as condições nas chamadas para gerar II, PIS, PISST, COFINS e COFINSST.

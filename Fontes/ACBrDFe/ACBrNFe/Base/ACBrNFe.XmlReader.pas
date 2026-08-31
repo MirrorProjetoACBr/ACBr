@@ -467,7 +467,7 @@ begin
     NFe.agropecuario.guiaTransito.UFGuia := ObterConteudo(AuxNode.Childrens.FindAnyNs('UFGuia'), tcStr);
     NFe.agropecuario.guiaTransito.tpGuia := StrToTtpGuia(ObterConteudo(AuxNode.Childrens.FindAnyNs('tpGuia'), tcStr));
     NFe.agropecuario.guiaTransito.serieGuia := ObterConteudo(AuxNode.Childrens.FindAnyNs('serieGuia'), tcStr);
-    NFe.agropecuario.guiaTransito.nGuia := ObterConteudo(AuxNode.Childrens.FindAnyNs('nGuia'), tcInt);
+    NFe.agropecuario.guiaTransito.nGuia := ObterConteudo(AuxNode.Childrens.FindAnyNs('nGuia'), tcStr);
   end;
 end;
 
