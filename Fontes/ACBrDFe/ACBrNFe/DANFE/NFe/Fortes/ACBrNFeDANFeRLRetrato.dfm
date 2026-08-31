@@ -806,21 +806,21 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object rliTipoEntrada: TRLDraw
-        Left = 329
-        Top = 55
-        Width = 25
-        Height = 25
+        Left = 322
+        Top = 53
+        Width = 20
+        Height = 19
       end
       object rllEntradaSaida: TRLLabel
-        Left = 332
-        Top = 58
-        Width = 20
-        Height = 20
+        Left = 324
+        Top = 55
+        Width = 16
+        Height = 14
         Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
@@ -1200,7 +1200,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Text = 'fl. '
       end
       object rllLastPage: TRLSystemInfo
-        Left = 309
+        Left = 301
         Top = 97
         Width = 24
         Height = 13
