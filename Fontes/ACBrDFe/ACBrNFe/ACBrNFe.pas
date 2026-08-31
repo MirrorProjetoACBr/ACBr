@@ -542,7 +542,10 @@ begin
   VersaoDFe := DblToVersaoDF(ok, Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
-  Result := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaNFCe', VersaoQrCodeToDbl(VersaoQrCode));
+  if Configuracoes.Geral.ModeloDF = moNFe then
+    Result := LerURLDeParams('NFe', CodigoUFparaUF(CUF), TipoAmbiente, 'URL-ConsultaNFe', VersaoQrCodeToDbl(VersaoQrCode))
+  else
+    Result := LerURLDeParams('NFCe', CodigoUFparaUF(CUF), TipoAmbiente, 'URL-ConsultaNFCe', VersaoQrCodeToDbl(VersaoQrCode));
 end;
 
 function TACBrNFe.GetURLQRCode(const CUF: integer;

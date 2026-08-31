@@ -46,6 +46,10 @@ Símbolo : Significado
 
 
 31/08/2026
+-- ACBrNFe --
+[*] Incluído uma condição para pesquisar a seção da NFe ou NFCe ao procurar as URLs do QR-Code
+    dependendo do modelo de documento.
+   Por Italo Giurizzato Junior
 -- ACBrNFeServicos --
 [+] Incluído as URLs de QR-Code e de Consulta (Homologação e Produção) a serem utilizadas
     em uma NF-e com DANFSE Simplificado Tipo 2.
