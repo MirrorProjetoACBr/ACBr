@@ -114,6 +114,7 @@ type
     function GetPreparedReport: TfrxReport;
     function PrepareReport(BPe: TBPe = nil): Boolean;
     procedure CriarDataSetsFrx;
+    procedure DestruirDataSetsFrx;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   public
     frxReport: TfrxReport;
@@ -778,7 +779,6 @@ begin
         CreateDataSet;
     end;
 
-    //By Sandro
     cdsInfBPeSupl := TClientDataSet.Create(Self);
     with cdsInfBPeSupl, FieldDefs do
     begin
@@ -789,9 +789,7 @@ begin
       CreateDataSet;
     end;
 
-
-
-    // FRX
+    // frxDB
     frxEmitente := TfrxDBDataset.Create(Self);
     with frxEmitente do
     begin
@@ -888,7 +886,6 @@ begin
         DataSet        := cdsImp;
     end;
 
-    //By Sandro
     frxInfBPeSupl := TfrxDBDataset.Create(Self);
     with frxInfBPeSupl do
     begin
@@ -900,8 +897,12 @@ begin
 
 end;
 
-destructor TACBrBPeDABPEFR.Destroy;
+procedure TACBrBPeDABPEFR.DestruirDataSetsFrx;
 begin
+  frxReport.Free;
+  frxPDFExport.Free;
+
+  // CDS
   cdsEmitente.Free;
   cdsParametros.Free;
   cdsInfPassagem.Free;
@@ -915,6 +916,27 @@ begin
   cdsInfAdic.Free;
   cdsImp.Free;
   cdsInfBPeSupl.Free;
+
+  // frxDB
+  frxEmitente.Free;
+  frxParametros.Free;
+  frxInfPassagem.Free;
+  frxInfViagem.Free;
+  frxAgencia.Free;
+  frxInfValorBPe.Free;
+  frxInfBPe.Free;
+  frxIde.Free;
+  frxPag.Free;
+  frxProcBPe.Free;
+  frxInfAdic.Free;
+  frxImp.Free;
+  frxInfBPeSupl.Free;
+  frxBarCodeObject.Free;  
+end;
+
+destructor TACBrBPeDABPEFR.Destroy;
+begin
+  DestruirDataSetsFrx;
 
   inherited Destroy;
 end;
