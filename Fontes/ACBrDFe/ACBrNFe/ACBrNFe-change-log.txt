@@ -44,7 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
 31/08/2026
+-- ACBrNFeServicos --
+[+] Incluído as URLs de QR-Code e de Consulta (Homologação e Produção) a serem utilizadas
+    em uma NF-e com DANFSE Simplificado Tipo 2.
+   Por Italo Giurizzato Junior
 -- ACBrNFe.XmlReader/ACBrNFe.XmlWriter --
 [*] Alterado o tipo de conversão de tcInt por tcStr, pois o campo nGuia é do tipo string.
    Por Italo Giurizzato Junior
