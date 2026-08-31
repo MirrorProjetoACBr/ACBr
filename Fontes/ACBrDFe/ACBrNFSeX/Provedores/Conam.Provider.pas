@@ -328,7 +328,7 @@ begin
       DataInicial := Nota.NFSe.DataEmissao;
       DataFinal := DataInicial;
       vAliquota := Nota.NFSe.Servico.Valores.Aliquota;
-      Aliquota := FormatFloat('#.00', vAliquota);
+      Aliquota := FormatFloat('0.00', vAliquota);
       Aliquota := StringReplace(Aliquota, '.', ',', [rfReplaceAll]);
     end;
 
@@ -440,22 +440,22 @@ begin
                  IntToStr(TACBrNFSeX(FAOwner).NotasFiscais.Count) +
               '</QtdRegNormal>' +
               '<ValorNFS>' +
-                 StringReplace(FormatFloat('#.00', vTotServicos), '.', ',', [rfReplaceAll]) +
+                 StringReplace(FormatFloat('0.00', vTotServicos), '.', ',', [rfReplaceAll]) +
               '</ValorNFS>' +
               '<ValorISS>' +
-                 StringReplace(FormatFloat('#.00', vTotISS), '.', ',', [rfReplaceAll]) +
+                 StringReplace(FormatFloat('0.00', vTotISS), '.', ',', [rfReplaceAll]) +
               '</ValorISS>' +
               '<ValorDed>' +
-                 StringReplace(FormatFloat('#.00', vTotDeducoes), '.', ',', [rfReplaceAll]) +
+                 StringReplace(FormatFloat('0.00', vTotDeducoes), '.', ',', [rfReplaceAll]) +
               '</ValorDed>' +
               '<ValorIssRetTom>' +
-                 StringReplace(FormatFloat('#.00', vTotISSRetido), '.', ',', [rfReplaceAll]) +
+                 StringReplace(FormatFloat('0.00', vTotISSRetido), '.', ',', [rfReplaceAll]) +
               '</ValorIssRetTom>' +
               '<QtdReg30>' +
                  IntToStr(QtdTributos) +
               '</QtdReg30>' +
               '<ValorTributos>' +
-                 StringReplace(FormatFloat('#.00', vTotTributos), '.', ',', [rfReplaceAll]) +
+                 StringReplace(FormatFloat('0.00', vTotTributos), '.', ',', [rfReplaceAll]) +
               '</ValorTributos>' +
               '<QtdReg40>' +
                  IntToStr(QtdReg40) +
