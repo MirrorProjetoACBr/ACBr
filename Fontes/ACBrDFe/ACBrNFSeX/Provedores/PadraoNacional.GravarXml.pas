@@ -96,8 +96,8 @@ type
     function GerarXMLEnderecoObra: TACBrXmlNode;
     function GerarXMLEnderecoExteriorObra: TACBrXmlNode; virtual;
     function GerarXMLAtividadeEvento: TACBrXmlNode; virtual;
-    function GerarXMLEnderecoEvento: TACBrXmlNode;
-    function GerarXMLEnderecoExteriorEvento: TACBrXmlNode;
+    function GerarXMLEnderecoEvento: TACBrXmlNode; virtual;
+    function GerarXMLEnderecoExteriorEvento: TACBrXmlNode; virtual;
     function GerarXMLExploracaoRodoviaria: TACBrXmlNode;
     function GerarXMLInformacoesComplementares: TACBrXmlNode;
     function GerarXMLgItemPed: TACBrXMLNode;

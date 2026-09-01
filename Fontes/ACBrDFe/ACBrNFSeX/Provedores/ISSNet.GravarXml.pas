@@ -79,6 +79,9 @@ type
     function GerarXMLEnderecoExteriorObra: TACBrXmlNode; override;
 
     function GerarXMLAtividadeEvento: TACBrXmlNode; override;
+    function GerarXMLEnderecoEvento: TACBrXmlNode; override;
+    function GerarXMLEnderecoNacionalEvento: TACBrXmlNode;
+    function GerarXMLEnderecoExteriorEvento: TACBrXmlNode; override;
 
     function GerarXMLImovel(Imovel: TDadosimovel): TACBrXmlNode; override;
     function GerarXMLEnderecoImovel(ender: TenderImovel): TACBrXmlNode;
@@ -265,6 +268,56 @@ begin
 
     Result.AppendChild(GerarXMLEnderecoEvento);
   end;
+end;
+
+function TNFSeW_ISSNetAPIPropria.GerarXMLEnderecoEvento: TACBrXmlNode;
+begin
+  Result := CreateElement('end');
+
+  if (NFSe.Servico.Evento.Endereco.UF = '') then
+    Result.AppendChild(GerarXMLEnderecoNacionalEvento)
+  else
+    Result.AppendChild(GerarXMLEnderecoExteriorEvento);
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'xLgr', 1, 255, 1,
+                                    NFSe.Servico.Evento.Endereco.Endereco, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'nro', 1, 60, 1,
+                                      NFSe.Servico.Evento.Endereco.Numero, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'xCpl', 1, 156, 0,
+                                 NFSe.Servico.Evento.Endereco.Complemento, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'xBairro', 1, 60, 1,
+                                      NFSe.Servico.Evento.Endereco.Bairro, ''));
+end;
+
+function TNFSeW_ISSNetAPIPropria.GerarXMLEnderecoNacionalEvento: TACBrXmlNode;
+begin
+  Result := CreateElement('endNac');
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'cMun', 7, 7, 1,
+                                NFSe.Servico.Evento.Endereco.CodigoMunicipio, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'CEP', 8, 8, 1,
+                                            NFSe.Servico.Evento.Endereco.CEP, ''));
+end;
+
+function TNFSeW_ISSNetAPIPropria.GerarXMLEnderecoExteriorEvento: TACBrXmlNode;
+begin
+  Result := CreateElement('endExt');
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'cPais', 2, 2, 1,
+               CodIBGEPaisToSiglaISO2(NFSe.Servico.Evento.Endereco.CodigoPais), ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'cEndPost', 1, 11, 1,
+                                              NFSe.Servico.Evento.Endereco.CEP, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'xCidade', 1, 60, 1,
+                                       NFSe.Servico.Evento.Endereco.xMunicipio, ''));
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'xEstProvReg', 1, 60, 1,
+                                               NFSe.Servico.Evento.Endereco.UF, ''));
 end;
 
 function TNFSeW_ISSNetAPIPropria.GerarXMLCodigoServico: TACBrXmlNode;

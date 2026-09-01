@@ -42,6 +42,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 01/09/2026
+[-] ACBR-9790 - Ajuste visando a correta geração do grupo de endereço das atividades de evento.
+    Por: Milton Campanhã / Victor Gonzales
+    Veja: https://www.projetoacbr.com.br/forum/topic/94385-acbr-9790nfse-padr%C3%A3o-nacional-endere%C3%A7o-da-atividadeevento/
 [*] ACBR-9788 - O município de Concordia/SC aderiu ao Padrão Nacional
 	Veja: https://www.projetoacbr.com.br/forum/topic/94526-conc%C3%B3rdiasc-passa-a-usar-provedor-nacional/
 	Por: C4Dev
