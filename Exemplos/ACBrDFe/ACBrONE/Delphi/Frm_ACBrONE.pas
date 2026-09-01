@@ -258,7 +258,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrONE.Conversao,
   ACBrUtil.DateTime, ACBrUtil.FilesIO, ACBrUtil.XMLHTML, ACBrUtil.Base,
   ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
@@ -489,7 +489,7 @@ begin
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Manutenção de Equipamento');
-  MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrONE1.WebServices.EnvManutencao.TpAmb));
+  MemoDados.Lines.Add('tpAmb: ' + TipoAmbienteToStr(ACBrONE1.WebServices.EnvManutencao.TpAmb));
   MemoDados.Lines.Add('verAplic: ' + ACBrONE1.WebServices.EnvManutencao.verAplic);
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrONE1.WebServices.EnvManutencao.cStat));
   MemoDados.Lines.Add('cUF: ' + IntToStr(ACBrONE1.WebServices.EnvManutencao.cUF));
@@ -538,7 +538,7 @@ begin
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Recepção de Leitura');
-  MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrONE1.WebServices.EnvLeitura.TpAmb));
+  MemoDados.Lines.Add('tpAmb: ' + TipoAmbienteToStr(ACBrONE1.WebServices.EnvLeitura.TpAmb));
   MemoDados.Lines.Add('verAplic: ' + ACBrONE1.WebServices.EnvLeitura.verAplic);
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrONE1.WebServices.EnvLeitura.cStat));
   MemoDados.Lines.Add('cUF: ' + IntToStr(ACBrONE1.WebServices.EnvLeitura.cUF));
@@ -614,7 +614,7 @@ end;
 procedure TfrmACBrONE.FormCreate(Sender: TObject);
 var
   T: TSSLLib;
-  I: TpcnTipoEmissao;
+  I: TACBrTipoEmissao;
   K: TVersaoONE;
   U: TSSLCryptLib;
   V: TSSLHttpLib;
@@ -647,8 +647,8 @@ begin
   cbSSLType.ItemIndex := 0;
 
   cbFormaEmissao.Items.Clear;
-  for I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) );
+  for I := Low(TACBrTipoEmissao) to High(TACBrTipoEmissao) do
+     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TACBrTipoEmissao), integer(I) ) );
   cbFormaEmissao.ItemIndex := 0;
 
   cbVersaoDF.Items.Clear;
@@ -871,7 +871,6 @@ end;
 
 procedure TfrmACBrONE.ConfigurarComponente;
 var
-  Ok: Boolean;
   PathMensal: string;
 begin
   ACBrONE1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
@@ -893,7 +892,7 @@ begin
     ExibirErroSchema := cbxExibirErroSchema.Checked;
     RetirarAcentos   := cbxRetirarAcentos.Checked;
     FormatoAlerta    := edtFormatoAlerta.Text;
-    FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
+    FormaEmissao     := TACBrTipoEmissao(cbFormaEmissao.ItemIndex);
     VersaoDF         := TVersaoONE(cbVersaoDF.ItemIndex);
     verAplic         := edtVerAplic.Text;
     CNPJOper         := edtCNPJOper.Text;
@@ -902,7 +901,7 @@ begin
   with ACBrONE1.Configuracoes.WebServices do
   begin
     UF         := cbUF.Text;
-    Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+    Ambiente   := StrToTipoAmbiente(IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
     Salvar     := cbxSalvarSOAP.Checked;
 
