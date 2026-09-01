@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="1"/>
       <RevisionNr Value="2"/>
-      <BuildNr Value="352"/>
+      <BuildNr Value="353"/>
       <Language Value="0416"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCEP - Biblioteca para consulta Endereços e CEPs" InternalName="ACBrLibCEP" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CEP" ProductVersion="0.0.1.30"/>
       <AutoIncrementBuild Value="False"/>
