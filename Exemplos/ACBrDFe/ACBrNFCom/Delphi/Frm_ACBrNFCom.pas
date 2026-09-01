@@ -302,7 +302,6 @@ uses
   ACBrDFe.Conversao,
   ACBrDFeUtil, ACBrDFeSSL, ACBrDFeOpenSSL,
   ACBrXmlBase,
-  pcnConversao,
   ACBrNFComConversao,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
 
@@ -321,7 +320,7 @@ begin
   begin
     // Dados de Identificação do NFCom
     //
-    Ide.cUF := UFtoCUF(edtEmitUF.Text);
+    Ide.cUF := UFparaCodigoUF(edtEmitUF.Text);
 
     // TACBrTipoAmbiente = (taProducao, taHomologacao);
     case rgTipoAmb.ItemIndex of
@@ -1874,7 +1873,6 @@ end;
 
 procedure TfrmACBrNFCom.ConfigurarComponente;
 var
-  Ok: Boolean;
   PathMensal: string;
 begin
   ACBrNFCom1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
@@ -1951,7 +1949,7 @@ begin
 
   if ACBrNFCom1.DANFCom <> nil then
   begin
-    ACBrNFCom1.DANFCom.TipoDANFCom := StrToTpImp(OK, IntToStr(rgTipoDaNFCom.ItemIndex + 1));
+    ACBrNFCom1.DANFCom.TipoDANFCom := StrToTpImp(IntToStr(rgTipoDaNFCom.ItemIndex + 1));
     ACBrNFCom1.DANFCom.Logo := edtLogoMarca.Text;
   end;
 end;
