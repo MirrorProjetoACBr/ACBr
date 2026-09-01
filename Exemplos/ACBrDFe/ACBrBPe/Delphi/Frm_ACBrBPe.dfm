@@ -1879,7 +1879,7 @@ object frmACBrBPe: TfrmACBrBPe
       Align = alTop
       Caption = 
         'Gera os campos da ReformaTributaria (em conformidade com a NT 20' +
-        '26/001 vers'#227'o 1.01)'
+        '26/002 vers'#227'o 1.01)'
       Columns = 2
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
