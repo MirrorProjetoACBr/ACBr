@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2026
+-- ACBrCTeWebServices --
+[-] Ajuste para que o nome do arquivo seja gerado corretamente na DistribuicaoDFe quando definido caminho em DownloadDFe.PathDownload
+   Por: Ewerton Lauredo
+
 06/08/2026
 -- ACBrCTe.XmlReader --
 [-] Ajuste visando a correta leitura do campo procEmi quando GTVe.

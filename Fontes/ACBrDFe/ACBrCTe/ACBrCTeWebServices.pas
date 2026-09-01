@@ -3776,7 +3776,7 @@ begin
         FlistaArqs.Add( FNomeArq );
 
       aPath := GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]);
-      FretDistDFeInt.docZip.Items[I].NomeArq := aPath + FNomeArq;
+      FretDistDFeInt.docZip.Items[I].NomeArq := PathWithDelim(aPath) + FNomeArq;
 
       if (FPConfiguracoesCTe.Arquivos.Salvar) and NaoEstaVazio(FNomeArq) then
       begin
