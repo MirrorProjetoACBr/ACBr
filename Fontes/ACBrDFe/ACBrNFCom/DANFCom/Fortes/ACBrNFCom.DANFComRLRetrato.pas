@@ -251,7 +251,6 @@ uses
   ACBrUtil.Strings, 
   ACBrUtil.DateTime,
   ACBrValidador,
-  pcnConversao, 
   ACBrNFCom, 
   ACBrNFComClass, 
   ACBrNFComConversao,

@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
   TStatusNFCom = (stNFComIdle, stNFComStatusServico, stNFComRecepcao,
@@ -187,7 +187,7 @@ const
 {
   Declaração das funções de conversão
 }
-function StrToTpEventoNFCom(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoNFCom(out ok: boolean; const s: string): TACBrTipoEvento;
 
 function VersaoNFComToStr(const t: TVersaoNFCom): string;
 function StrToVersaoNFCom(const s: string): TVersaoNFCom;
@@ -260,7 +260,7 @@ uses
   typinfo,
   ACBrBase;
 
-function StrToTpEventoNFCom(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoNFCom(out ok: boolean; const s: string): TACBrTipoEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110111', '240140', '240150', '240170'],

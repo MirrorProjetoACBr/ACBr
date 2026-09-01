@@ -42,7 +42,7 @@ uses
   SysUtils, 
   Classes, 
   ACBrBase,
-  pcnConversao, 
+  ACBrDFe.Conversao,
   ACBrNFComClass,
   ACBrNFComDANFComClass,
   RLTypes;

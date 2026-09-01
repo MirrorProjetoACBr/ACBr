@@ -39,7 +39,7 @@ interface
 uses
   SysUtils, Classes, ACBrBase,
   ACBrNFComClass,
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrDFeReport;
 
 type
@@ -58,7 +58,7 @@ type
 
   protected
     FACBrNFCom: TComponent;
-    FTipoDANFCom: TpcnTipoImpressao;
+    FTipoDANFCom: TACBrTipoImpressao;
     FProtocolo: string;
     FCancelada: Boolean;
     FViaConsumidor: Boolean;
@@ -83,7 +83,7 @@ type
     function CaractereQuebraDeLinha: String;
   published
     property ACBrNFCom: TComponent read FACBrNFCom write SetNFCom;
-    property TipoDANFCom: TpcnTipoImpressao read FTipoDANFCom write FTipoDANFCom;
+    property TipoDANFCom: TACBrTipoImpressao read FTipoDANFCom write FTipoDANFCom;
     property Protocolo: string read FProtocolo write FProtocolo;
     property Cancelada: Boolean read FCancelada write FCancelada;
     property ViaConsumidor: Boolean read FViaConsumidor write FViaConsumidor;

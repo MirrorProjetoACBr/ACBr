@@ -43,7 +43,6 @@ uses
   ACBrDFe.Conversao,
   ACBrNFComConfiguracoes, ACBrNFComWebServices, ACBrNFComNotasFiscais,
   ACBrNFComDANFComClass,
-  pcnConversao,
   ACBrNFComClass, ACBrNFComConversao, ACBrNFComEnvEvento;
 
 const
@@ -374,7 +373,7 @@ begin
   VersaoDFe := DblToVersaoNFCom(Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
-  Result := LerURLDeParams('NFCom', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente),
+  Result := LerURLDeParams('NFCom', CodigoUFparaUF(CUF), TipoAmbiente,
     'URL-ConsultaNFCom', VersaoQrCodeToDbl(VersaoQrCode));
 end;
 
@@ -387,7 +386,7 @@ begin
   VersaoDFe := DblToVersaoNFCom(FNFCom.infNFCom.Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
-  urlUF := LerURLDeParams('NFCom', CUFtoUF(FNFCom.Ide.cUF), TpcnTipoAmbiente(FNFCom.Ide.tpAmb),
+  urlUF := LerURLDeParams('NFCom', CodigoUFparaUF(FNFCom.Ide.cUF), FNFCom.Ide.tpAmb,
     'URL-QRCode', VersaoQrCodeToDbl(VersaoQrCode));
 
   if Pos('?', urlUF) <= 0 then

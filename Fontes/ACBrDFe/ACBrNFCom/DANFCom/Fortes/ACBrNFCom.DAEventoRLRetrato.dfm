@@ -20,9 +20,9 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
     Title = 'DACTe CC'
     BeforePrint = RLNFComEventoBeforePrint
     object RLb_09_Itens: TRLBand
-      Left = 26
-      Top = 702
-      Width = 742
+      Left = 33
+      Top = 709
+      Width = 926
       Height = 13
       BandType = btColumnFooter
       Color = clWhite
@@ -136,9 +136,9 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
       end
     end
     object rlb_01_Titulo: TRLBand
-      Left = 26
-      Top = 26
-      Width = 742
+      Left = 33
+      Top = 33
+      Width = 926
       Height = 73
       BandType = btHeader
       Color = clWhite
@@ -208,18 +208,18 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
       end
     end
     object rlb_08_HeaderItens: TRLBand
-      Left = 26
-      Top = 686
-      Width = 742
+      Left = 33
+      Top = 693
+      Width = 926
       Height = 16
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
     end
     object rlb_10_Sistema: TRLBand
-      Left = 26
-      Top = 715
-      Width = 742
+      Left = 33
+      Top = 722
+      Width = 926
       Height = 19
       AlignToBottom = True
       BandType = btSummary
@@ -260,9 +260,9 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
       end
     end
     object rlb_05_Evento: TRLBand
-      Left = 26
-      Top = 429
-      Width = 742
+      Left = 33
+      Top = 436
+      Width = 926
       Height = 120
       BandType = btColumnHeader
       Color = clWhite
@@ -598,9 +598,9 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
       end
     end
     object rlb_03_Emitente: TRLBand
-      Left = 26
-      Top = 189
-      Width = 742
+      Left = 33
+      Top = 196
+      Width = 926
       Height = 120
       BandType = btColumnHeader
       Color = clWhite
@@ -929,9 +929,9 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
       end
     end
     object rlb_04_Destinatario: TRLBand
-      Left = 26
-      Top = 309
-      Width = 742
+      Left = 33
+      Top = 316
+      Width = 926
       Height = 120
       BandType = btColumnHeader
       Color = clWhite
@@ -1260,9 +1260,9 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
       end
     end
     object rlb_06_Condicoes: TRLBand
-      Left = 26
-      Top = 549
-      Width = 742
+      Left = 33
+      Top = 556
+      Width = 926
       Height = 137
       BandType = btColumnHeader
       Color = clWhite
@@ -1335,9 +1335,9 @@ inherited frmNFComDAEventoRLRetrato: TfrmNFComDAEventoRLRetrato
       end
     end
     object rlb_02_Documento: TRLBand
-      Left = 26
-      Top = 99
-      Width = 742
+      Left = 33
+      Top = 106
+      Width = 926
       Height = 90
       BandType = btTitle
       Color = clWhite

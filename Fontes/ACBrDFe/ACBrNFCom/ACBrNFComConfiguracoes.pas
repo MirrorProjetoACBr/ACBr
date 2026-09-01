@@ -39,8 +39,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrDFeConfiguracoes,
-//  ACBrDFeConversao,
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrNFComConversao;
 
 type
@@ -88,7 +87,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathNFCom(Data: TDateTime = 0; const CNPJ: string = ''; const IE: string = ''): string;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: string = ''; const IE: string = ''; Data: TDateTime = 0): string;
+    function GetPathEvento(tipoEvento: TACBrTipoEvento; const CNPJ: string = ''; const IE: string = ''; Data: TDateTime = 0): string;
   published
     property EmissaoPathNFCom: boolean read FEmissaoPathNFCom
       write FEmissaoPathNFCom default False;
@@ -287,7 +286,7 @@ begin
   PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
 end;
 
-function TArquivosConfNFCom.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: string;
+function TArquivosConfNFCom.GetPathEvento(tipoEvento: TACBrTipoEvento; const CNPJ: string;
   const IE: string; Data: TDateTime): string;
 var
   Dir: string;

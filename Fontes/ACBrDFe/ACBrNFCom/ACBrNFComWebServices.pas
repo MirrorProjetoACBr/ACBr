@@ -47,8 +47,7 @@ uses
   ACBrNFComNotasFiscais, ACBrNFComConfiguracoes,
   ACBrNFComClass, ACBrNFComConversao,
   ACBrNFComRetConsSit,
-  ACBrNFComEnvEvento, ACBrNFComRetEnvEvento,
-  pcnConversao;
+  ACBrNFComEnvEvento, ACBrNFComRetEnvEvento;
 
 type
 
@@ -371,7 +370,7 @@ uses
   StrUtils, Math,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
-  ACBrCompress, ACBrIntegrador,
+  ACBrCompress,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
   ACBrNFCom,
@@ -534,7 +533,7 @@ begin
       acontece o erro. }
     if (pos('svrs.rs.gov.br', FPURL) > 0) and
        (MinutesBetween(NFComRetorno.dhRecbto, Now) > 50) and
-       (not IsHorarioDeVerao(CUFtoUF(FcUF), NFComRetorno.dhRecbto)) then
+       (not IsHorarioDeVerao(CodigoUFparaUF(FcUF), NFComRetorno.dhRecbto)) then
       FdhRecbto:= IncHour(NFComRetorno.dhRecbto,-1)
     else
       FdhRecbto := NFComRetorno.dhRecbto;
@@ -542,7 +541,7 @@ begin
     FTMed := NFComRetorno.TMed;
     FdhRetorno := NFComRetorno.dhRetorno;
     FxObs := NFComRetorno.xObs;
-    FPMsg := FxMotivo + LineBreak + FxObs;
+    FPMsg := FxMotivo + sLineBreak + FxObs;
 
     if Assigned(FPConfiguracoesNFCom) and
        Assigned(FPConfiguracoesNFCom.WebServices) and
@@ -559,16 +558,16 @@ end;
 function TNFComStatusServico.GerarMsgLog: string;
 begin
   {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s' + LineBreak +
-                           'Status Descrição: %s' + LineBreak +
-                           'UF: %s' + LineBreak +
-                           'Recebimento: %s' + LineBreak +
-                           'Tempo Médio: %s' + LineBreak +
-                           'Retorno: %s' + LineBreak +
-                           'Observação: %s' + LineBreak),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Ambiente: %s' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Status Código: %s' + sLineBreak +
+                           'Status Descrição: %s' + sLineBreak +
+                           'UF: %s' + sLineBreak +
+                           'Recebimento: %s' + sLineBreak +
+                           'Tempo Médio: %s' + sLineBreak +
+                           'Retorno: %s' + sLineBreak +
+                           'Observação: %s' + sLineBreak),
                    [Fversao, TipoAmbienteToStr(FtpAmb), FverAplic, IntToStr(FcStat),
                     FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
@@ -580,7 +579,7 @@ end;
 
 function TNFComStatusServico.GerarMsgErro(E: Exception): string;
 begin
-  Result := ACBrStr('WebService Consulta Status serviço:' + LineBreak +
+  Result := ACBrStr('WebService Consulta Status serviço:' + sLineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 
@@ -683,13 +682,13 @@ begin
     teSVCAN: xUF := 'SVC-AN';
     teSVCRS: xUF := 'SVC-RS';
   else
-    xUF := CUFtoUF(FcUF);
+    xUF := CodigoUFparaUF(FcUF);
   end;
 
   TACBrNFCom(FPDFeOwner).LerServicoDeParams(
     'NFCom',
     xUF,
-    TpcnTipoAmbiente(FTpAmb),
+    FTpAmb,
     LayOutNFComToServico(FPLayout),
     VerServ,
     FPURL,
@@ -847,14 +846,14 @@ end;
 
 function TNFComRecepcao.GerarMsgLog: string;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                         'Ambiente: %s ' + LineBreak +
-                         'Versão Aplicativo: %s ' + LineBreak +
-                         'Status Código: %s ' + LineBreak +
-                         'Status Descrição: %s ' + LineBreak +
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                         'Ambiente: %s ' + sLineBreak +
+                         'Versão Aplicativo: %s ' + sLineBreak +
+                         'Status Código: %s ' + sLineBreak +
+                         'Status Descrição: %s ' + sLineBreak +
                          'UF: %s ' + sLineBreak +
                          'dhRecbto: %s ' + sLineBreak +
-                         'chNFCom: %s ' + LineBreak),
+                         'chNFCom: %s ' + sLineBreak),
                    [FNFComRetornoSincrono.versao,
                     TipoAmbienteToStr(FNFComRetornoSincrono.TpAmb),
                     FNFComRetornoSincrono.verAplic,
@@ -1032,7 +1031,7 @@ begin
   TACBrNFCom(FPDFeOwner).LerServicoDeParams(
     'NFCom',
     xUF,
-    TpcnTipoAmbiente(FTpAmb),
+    FTpAmb,
     LayOutNFComToServico(FPLayout),
     VerServ,
     FPURL,
@@ -1064,7 +1063,7 @@ var
 begin
   ConsReciNFCom := TConsReciDFe.Create(FPVersaoServico, NAME_SPACE_NFCom, 'NFCom');
   try
-    ConsReciNFCom.tpAmb := TpcnTipoAmbiente(FTpAmb);
+    ConsReciNFCom.tpAmb := FTpAmb;
     ConsReciNFCom.nRec := FRecibo;
 
     AjustarOpcoes( ConsReciNFCom.Gerador.Opcoes );
@@ -1347,13 +1346,13 @@ begin
     teSVCAN: xUF := 'SVC-AN';
     teSVCRS: xUF := 'SVC-RS';
   else
-    xUF := CUFtoUF(FcUF);
+    xUF := CodigoUFparaUF(FcUF);
   end;
 
   TACBrNFCom(FPDFeOwner).LerServicoDeParams(
     'NFCom',
     xUF,
-    TpcnTipoAmbiente(FTpAmb),
+    FTpAmb,
     LayOutNFComToServico(FPLayout),
     VerServ,
     FPURL,
@@ -1400,7 +1399,7 @@ var
   aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJCPF: string;
   DhEvt: TDateTime;
   Inicio, Fim: Integer;
-  TipoEvento: TpcnTpEvento;
+  TipoEvento: TACBrTipoEvento;
   Ok: Boolean;
 begin
   while Retorno <> '' do
@@ -1490,9 +1489,9 @@ begin
     if Assigned(NFComRetorno.procEventoNFCom) and (NFComRetorno.procEventoNFCom.Count > 0) then
     begin
       aEventos := '=====================================================' +
-        LineBreak + '================= Eventos da NFCom-e =================' +
-        LineBreak + '=====================================================' +
-        LineBreak + '' + LineBreak + 'Quantidade total de eventos: ' +
+        sLineBreak + '================= Eventos da NFCom-e =================' +
+        sLineBreak + '=====================================================' +
+        sLineBreak + '' + sLineBreak + 'Quantidade total de eventos: ' +
         IntToStr(NFComRetorno.procEventoNFCom.Count);
 
       FprocEventoNFCom.Clear;
@@ -1772,17 +1771,17 @@ end;
 function TNFComConsulta.GerarMsgLog: string;
 begin
   {(*}
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Identificador: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak +
-                           'Chave Acesso: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak +
-                           'Protocolo: %s ' + LineBreak +
-                           'Digest Value: %s ' + LineBreak),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Identificador: %s ' + sLineBreak +
+                           'Ambiente: %s ' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Status Código: %s ' + sLineBreak +
+                           'Status Descrição: %s ' + sLineBreak +
+                           'UF: %s ' + sLineBreak +
+                           'Chave Acesso: %s ' + sLineBreak +
+                           'Recebimento: %s ' + sLineBreak +
+                           'Protocolo: %s ' + sLineBreak +
+                           'Digest Value: %s ' + sLineBreak),
                    [Fversao, FNFComChave, TipoAmbienteToStr(FtpAmb), FverAplic,
                     IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FNFComChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotNFCom.digVal]);
@@ -1860,7 +1859,7 @@ begin
     teSVCAN: UF := 'SVC-AN';
     teSVCRS: UF := 'SVC-RS';
   else
-    UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFCom));
+    UF := CodigoUFparaUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFCom));
   end;
 
   FPURL := '';
@@ -1868,7 +1867,7 @@ begin
   TACBrNFCom(FPDFeOwner).LerServicoDeParams(
     'NFCom',
     UF,
-    TpcnTipoAmbiente(FTpAmb),
+    FTpAmb,
     LayOutNFComToServico(FPLayout),
     VerServ,
     FPURL,
@@ -2094,11 +2093,11 @@ function TNFComEnvEvento.GerarMsgLog: string;
 var
   aMsg: string;
 begin
-  aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                         'Ambiente: %s ' + LineBreak +
-                         'Versão Aplicativo: %s ' + LineBreak +
-                         'Status Código: %s ' + LineBreak +
-                         'Status Descrição: %s ' + LineBreak),
+  aMsg := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                         'Ambiente: %s ' + sLineBreak +
+                         'Versão Aplicativo: %s ' + sLineBreak +
+                         'Status Código: %s ' + sLineBreak +
+                         'Status Descrição: %s ' + sLineBreak),
                  [FEventoRetorno.versao, TipoAmbienteToStr(FEventoRetorno.tpAmb),
                   FEventoRetorno.verAplic, IntToStr(FEventoRetorno.cStat),
                   FEventoRetorno.xMotivo]);
@@ -2184,7 +2183,7 @@ end;
 
 function TNFComEnvioWebService.GerarMsgErro(E: Exception): string;
 begin
-  Result := ACBrStr('WebService: '+FPServico + LineBreak +
+  Result := ACBrStr('WebService: '+FPServico + sLineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 
