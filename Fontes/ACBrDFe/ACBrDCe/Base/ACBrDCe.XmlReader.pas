@@ -83,7 +83,6 @@ uses
   ACBrUtil.Base,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrDCe.Conversao;
 
 { TDCeXmlReader }
@@ -218,8 +217,6 @@ begin
 end;
 
 procedure TDCeXmlReader.Ler_Ide(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -360,7 +357,6 @@ end;
 procedure TDCeXmlReader.Ler_ProtDCe(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 

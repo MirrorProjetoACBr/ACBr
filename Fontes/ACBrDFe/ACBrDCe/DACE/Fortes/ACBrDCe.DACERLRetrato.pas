@@ -194,7 +194,7 @@ uses
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrDFeReportFortes, ACBrImage, ACBrDelphiZXingQRCode,
   ACBrXmlBase,
-  ACBrDCe.Classes, ACBrDCe.Conversao, pcnConversao, ACBrDCe;
+  ACBrDCe.Classes, ACBrDCe.Conversao, ACBrDFe.Conversao, ACBrDCe;
 
 {$IfNDef FPC}
  {$R *.dfm}
@@ -282,7 +282,7 @@ begin
   rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') + FormatDateTimeBr(Now) +
     ' - ' + fpDADCe.Usuario;
 
-  rllHomologacao.Visible := (TpcnTipoAmbiente(fpDCe.Ide.tpAmb) = taHomologacao);
+  rllHomologacao.Visible := (fpDCe.Ide.tpAmb = taHomologacao);
   rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - DC-E SEM VALOR FISCAL');
 
   rllDadosVariaveis3_Descricao.Visible := True;
@@ -335,7 +335,7 @@ begin
     end
     else
     begin
-      if (TpcnTipoEmissao(fpDCe.Ide.tpEmis) = teNormal) then
+      if (fpDCe.Ide.tpEmis = teNormal) then
       begin
         rllXmotivo.Caption := ACBrStr('DC-E NÃO ENVIADA PARA SEFAZ');
         rllDadosVariaveis3_Descricao.Visible := False;

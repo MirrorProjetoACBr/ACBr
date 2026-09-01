@@ -46,7 +46,6 @@ uses
   ACBrBase,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrDFeComum.Proc,
   ACBrDCe.RetEnvEvento;
 
@@ -173,7 +172,6 @@ var
   Document: TACBrXmlDocument;
   ANode, ANodeAux: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  ok: Boolean;
   i: Integer;
 begin
   Document := TACBrXmlDocument.Create;

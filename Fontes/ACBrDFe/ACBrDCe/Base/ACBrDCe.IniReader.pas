@@ -41,8 +41,7 @@ uses
   IniFiles,
   ACBrDCe.Classes,
   ACBrDCe.Conversao,
-  ACBrDFe.Conversao,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
   { TDCeIniReader }
@@ -139,7 +138,6 @@ end;
 procedure TDCeIniReader.Ler_Identificacao(AINIRec: TMemIniFile; Ide: TIde);
 var
   sSecao: string;
-  OK: Boolean;
 begin
   sSecao := 'ide';
   Ide.tpAmb := StrToTipoAmbiente(AINIRec.ReadString(sSecao, 'tpAmb', IntToStr(Ambiente)));
@@ -148,7 +146,7 @@ begin
   Ide.nDC := AINIRec.ReadInteger(sSecao, 'nDC', 0);
   Ide.cDC := AINIRec.ReadInteger(sSecao, 'cDC', 0);
   Ide.dhEmi := StringToDateTime(AINIRec.ReadString(sSecao, 'dhEmi', '0'));
-  Ide.tpEmis := StrToTpEmis(OK, AINIRec.ReadString(sSecao, 'tpEmis', IntToStr(tpEmis)));
+  Ide.tpEmis := StrToTipoEmissao(AINIRec.ReadString(sSecao, 'tpEmis', IntToStr(tpEmis)));
   Ide.tpEmit  := StrToEmitenteDCe(AINIRec.ReadString(sSecao, 'tpEmit', '1'));
   Ide.nSiteAutoriz := StrToSiteAutorizator(AINIRec.ReadString(sSecao, 'nSiteAutoriz', '0'));
   Ide.verProc := AINIRec.ReadString(sSecao, 'verProc', 'ACBrNFCom');

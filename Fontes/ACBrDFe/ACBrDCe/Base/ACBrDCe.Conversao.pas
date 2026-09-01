@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
   TStatusDCe = (stDCeIdle, stDCeStatusServico, stDCeAutorizacao, stDCeConsulta,
@@ -92,7 +92,7 @@ const
 {
   Declaração das funções de conversão
 }
-function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
+function StrTotpEventoDCe(out ok: boolean; const s: string): TACBrTipoEvento;
 
 function StrToVersaoDCe(const s: String): TVersaoDCe;
 function VersaoDCeToStr(const t: TVersaoDCe): String;
@@ -124,7 +124,7 @@ uses
   typinfo,
   ACBrBase;
 
-function StrTotpEventoDCe(out ok: boolean; const s: string): TpcnTpEvento;
+function StrTotpEventoDCe(out ok: boolean; const s: string): TACBrTipoEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110111', '110112', '110114', '110115', '110116',

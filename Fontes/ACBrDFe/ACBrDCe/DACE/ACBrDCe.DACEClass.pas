@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrBase, ACBrDFeReport, ACBrDCe.Classes, pcnConversao;
+  ACBrBase, ACBrDFeReport, ACBrDCe.Classes, ACBrDFe.Conversao;
 
 type
   TDadosExtrasDCe = (deValorTotal, deRelacaoDFe);
@@ -56,8 +56,7 @@ type
     FACBrDCe: TComponent;
     FImprimirHoraSaida: Boolean;
     FImprimirHoraSaida_Hora: String;
-    FTipoDACE: TpcnTipoImpressao;
-//    FTamanhoPapel: TpcnTamanhoPapel;
+    FTipoDACE: TACBrTipoImpressao;
     FProtocoloDCe: String;
     FDCeCancelada: Boolean;
     FDCeEncerrado: Boolean;
@@ -79,8 +78,7 @@ type
     property ACBrDCe: TComponent            read FACBrDCe                write SetACBrDCe;
     property ImprimeHoraSaida: Boolean      read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimeHoraSaida_Hora: String  read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
-    property TipoDACE: TpcnTipoImpressao    read FTipoDACE               write FTipoDACE;
-//    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel           write FTamanhoPapel;
+    property TipoDACE: TACBrTipoImpressao   read FTipoDACE               write FTipoDACE;
     property Protocolo: String              read FProtocoloDCe           write FProtocoloDCe;
     property Cancelada: Boolean             read FDCeCancelada           write FDCeCancelada;
     property Encerrado: Boolean             read FDCeEncerrado           write FDCeEncerrado;

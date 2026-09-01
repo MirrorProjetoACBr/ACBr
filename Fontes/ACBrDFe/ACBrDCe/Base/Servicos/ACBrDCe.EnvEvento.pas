@@ -43,7 +43,6 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  pcnConversao,
   ACBrXmlBase,
   ACBrDFe.Conversao,
   ACBrDFeConsts,
@@ -107,7 +106,7 @@ type
 
     function LerXML(const CaminhoArquivo: string): Boolean;
     function LerXMLFromString(const AXML: string): Boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+    function ObterNomeArquivo(tpEvento: TACBrTipoEvento): string;
     function LerFromIni(const AIniString: string): Boolean;
 
     property idLote: Int64 read FidLote write FidLote;
@@ -150,7 +149,7 @@ begin
   inherited;
 end;
 
-function TEventoDCe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+function TEventoDCe.ObterNomeArquivo(tpEvento: TACBrTipoEvento): string;
 begin
   case tpEvento of
     teCancelamento: Result := IntToStr(Self.idLote) + '-can-eve.xml';
@@ -233,7 +232,7 @@ begin
                     EmitenteDCeToStr(Evento[Idx].InfEvento.tpEmit), DSC_TPEMIT));
 
   { Segundo o Manual }
-  sDoc := OnlyAlphaNum(Evento[Idx].InfEvento.CNPJCPF);
+  sDoc := OnlyCPFCNPJAlphaNum(Evento[Idx].InfEvento.CNPJCPF);
 
   if EstaVazio(sDoc) then
     sDoc := ExtrairCNPJCPFChaveAcesso(Evento[Idx].InfEvento.chDCe);
@@ -248,7 +247,7 @@ begin
 
   if EstaVazio(sDoc) then
   begin
-    sDoc := OnlyAlphaNum(Evento[Idx].InfEvento.CNPJCPFEmit);
+    sDoc := OnlyCPFCNPJAlphaNum(Evento[Idx].InfEvento.CNPJCPFEmit);
 
     if Length(sDoc) = 14 then
     begin

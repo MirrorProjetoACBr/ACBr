@@ -47,7 +47,7 @@ uses
 	ACBrDCe.XmlWriter,
   ACBrDCe.IniReader,
   ACBrDCe.IniWriter,
-	pcnConversao;
+	ACBrDFe.Conversao;
 
 type
 
@@ -191,7 +191,6 @@ uses
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
 	ACBrXmlBase,
-  ACBrDFe.Conversao,
   ACBrXmlDocument,
   ACBrDCe,
 	ACBrDFeUtil,
@@ -635,7 +634,7 @@ begin
     ((Copy(DCe.infDCe.ID, 5, 2) <> IntToStrZero(DCe.Ide.cUF, 2)) or
     (Copy(DCe.infDCe.ID, 7, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
     (Copy(DCe.infDCe.ID, 9, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(DCe.infDCe.ID, 11, 14)<> PadLeft(OnlyAlphaNum(DCe.Emit.CNPJCPF), 14, '0')) or
+    (Copy(DCe.infDCe.ID, 11, 14)<> PadLeft(OnlyCPFCNPJAlphaNum(DCe.Emit.CNPJCPF), 14, '0')) or
     (Copy(DCe.infDCe.ID, 25, 2) <> IntToStr(DCe.Ide.modelo)) or
     (Copy(DCe.infDCe.ID, 27, 3) <> IntToStrZero(DCe.Ide.serie, 3)) or
     (Copy(DCe.infDCe.ID, 30, 9) <> IntToStrZero(DCe.Ide.nDC, 9)) or

@@ -46,7 +46,6 @@ uses
   ACBrBase,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrDCe.Conversao;
 
 type
@@ -81,7 +80,7 @@ type
     FcOrgao: Integer;
     FChave: string;
     FDataEvento: TDateTime;
-    FTpEvento: TpcnTpEvento;
+    FTpEvento: TACBrTipoEvento;
     FnSeqEvento: Integer;
     FDetEvento: TDetEvento;
 
@@ -92,7 +91,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): string;
+    function DescricaoTipoEvento(TipoEvento:TACBrTipoEvento): string;
 
     property id: string               read FID             write FID;
     property cOrgao: Integer          read getcOrgao       write FcOrgao;
@@ -104,7 +103,7 @@ type
 
     property chDCe: string            read FChave          write FChave;
     property dhEvento: TDateTime      read FDataEvento     write FDataEvento;
-    property tpEvento: TpcnTpEvento   read FTpEvento       write FTpEvento;
+    property tpEvento: TACBrTipoEvento read FTpEvento       write FTpEvento;
     property nSeqEvento: Integer      read FnSeqEvento     write FnSeqEvento;
     property detEvento: TDetEvento    read FDetEvento      write FDetEvento;
     property DescEvento: string       read getDescEvento;
@@ -123,7 +122,7 @@ type
     FcStat: Integer;
     FxMotivo: string;
     FchDCe: string;
-    FtpEvento: TpcnTpEvento;
+    FtpEvento: TACBrTipoEvento;
     FxEvento: string;
     FnSeqEvento: Integer;
     FdhRegEvento: TDateTime;
@@ -137,7 +136,7 @@ type
     property cStat: Integer           read FcStat       write FcStat;
     property xMotivo: string          read FxMotivo     write FxMotivo;
     property chDCe: string            read FchDCe       write FchDCe;
-    property tpEvento: TpcnTpEvento   read FtpEvento    write FtpEvento;
+    property tpEvento: TACBrTipoEvento read FtpEvento    write FtpEvento;
     property xEvento: string          read FxEvento     write FxEvento;
     property nSeqEvento: Integer      read FnSeqEvento  write FnSeqEvento;
     property dhRegEvento: TDateTime   read FdhRegEvento write FdhRegEvento;
@@ -192,7 +191,7 @@ begin
   end;
 end;
 
-function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): string;
+function TInfEvento.DescricaoTipoEvento(TipoEvento: TACBrTipoEvento): string;
 begin
   case TipoEvento of
     teCancelamento: Result := 'CANCELAMENTO DE DC-e';

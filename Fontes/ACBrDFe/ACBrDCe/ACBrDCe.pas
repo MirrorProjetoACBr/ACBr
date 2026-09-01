@@ -42,7 +42,7 @@ uses
   ACBrXmlBase,
   ACBrDFe.Conversao,
   ACBrDCeConfiguracoes, ACBrDCeWebServices, ACBrDCeDeclaracoes,
-  ACBrDCe.DACEClass, ACBrDCe.Classes, pcnConversao, ACBrDCe.Conversao,
+  ACBrDCe.DACEClass, ACBrDCe.Classes, ACBrDCe.Conversao,
   ACBrDCe.EventoClass,
   ACBrDCe.EnvEvento, ACBrDFeUtil;
 
@@ -260,7 +260,7 @@ begin
   // devemos descomentar as linhas e trocar o zero da função abaixo pela variável
   // VersaoDFe
 //  VersaoDFe := DblToVersaoDCe(ok, Versao);
-  Result := LerURLDeParams('DCe', CUFtoUF(CUF), TpcnTipoAmbiente(TipoAmbiente), 'URL-Consulta', 0);
+  Result := LerURLDeParams('DCe', CodigoUFparaUF(CUF), TipoAmbiente, 'URL-Consulta', 0);
 end;
 
 function TACBrDCe.GetURLQRCode(FDCe: TDCe): String;
@@ -272,8 +272,8 @@ var
 begin
 //  VersaoDFe := DblToVersaoDCe(ok, Versao);
 
-  urlUF := LerURLDeParams('DCe', CUFtoUF(FDCe.Ide.cUF),
-                             TpcnTipoAmbiente(FDCe.Ide.tpAmb), 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('DCe', CodigoUFparaUF(FDCe.Ide.cUF),
+                             FDCe.Ide.tpAmb, 'URL-QRCode', 0);
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
@@ -284,7 +284,7 @@ begin
   sEntrada := 'chDCe=' + idDCe + '&tpAmb=' + TipoAmbienteToStr(FDCe.Ide.tpAmb);
 
   // Passo 2 calcular o SHA-1 da string idDCe se emissão em contingência
-  if TpcnTipoEmissao(FDCe.ide.tpEmis) = teContingencia then
+  if FDCe.ide.tpEmis = teContingencia then
   begin
     if trim(FDCe.emit.idOutros) <> '' then
       Passo3 := '&idOutros=' + FDCe.emit.idOutros
@@ -351,7 +351,7 @@ end;
 
 function TACBrDCe.IdentificaSchema(const AXML: String): TSchemaDCe;
 var
- lTipoEvento: TpcnTpEvento;
+ lTipoEvento: TACBrTipoEvento;
  I: Integer;
  Ok: Boolean;
 begin

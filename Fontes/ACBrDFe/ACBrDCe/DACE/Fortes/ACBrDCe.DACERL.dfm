@@ -16,8 +16,8 @@ object frmDADCeRL: TfrmDADCeRL
   object RLDCe: TRLReport
     Left = 2
     Top = 2
-    Width = 794
-    Height = 1123
+    Width = 992
+    Height = 1403
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000

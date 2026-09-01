@@ -49,7 +49,7 @@ uses
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts, RLBarcode,
   ACBrDCe, ACBrDCe.DACERLClass,
-  ACBrDCe.Classes, pcnConversao;
+  ACBrDCe.Classes, ACBrDFe.Conversao;
 
 type
 

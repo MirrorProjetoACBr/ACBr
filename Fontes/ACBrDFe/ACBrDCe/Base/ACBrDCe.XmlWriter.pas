@@ -57,7 +57,7 @@ type
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
 
-  published
+  public
     property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
     property GerarTagIPIparaNaoTributado: boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
     property NormatizarMunicipios: boolean read FNormatizarMunicipios write FNormatizarMunicipios;
@@ -225,7 +225,7 @@ begin
 
   vUF          := Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
-  vCNPJ        := PadLeft(OnlyAlphaNum(ACNPJ), 14, '0');
+  vCNPJ        := PadLeft(OnlyCPFCNPJAlphaNum(ACNPJ), 14, '0');
   vModelo      := Poem_Zeros(AModelo, 2);
   vSerie       := Poem_Zeros(ASerie, 3);
   vNumero      := Poem_Zeros(ANumero, 9);

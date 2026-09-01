@@ -199,7 +199,7 @@ uses
   ACBrValidador,
   ACBrXmlBase,
   ACBrDCe.Conversao,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -274,7 +274,7 @@ begin
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
 
-    case TpcnTipoAmbiente(InfEvento.tpAmb) of
+    case InfEvento.tpAmb of
       taProducao:
         rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
       taHomologacao:
@@ -348,12 +348,12 @@ begin
 
   Exibir := (fpEventoDCe.InfEvento.tpEvento = teCancelamento);
 
-  PrintIt := Exibir or (TpcnTipoAmbiente(fpEventoDCe.InfEvento.tpAmb) = taHomologacao);
+  PrintIt := Exibir or (fpEventoDCe.InfEvento.tpAmb = taHomologacao);
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
 
-  if TpcnTipoAmbiente(fpEventoDCe.InfEvento.tpAmb) = taHomologacao then
+  if fpEventoDCe.InfEvento.tpAmb = taHomologacao then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
