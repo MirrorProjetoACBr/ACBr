@@ -65,7 +65,6 @@ type
 
     procedure Gerar_Det(AINIRec: TMemIniFile; Det: TDetCollection);
     procedure Gerar_gMedicao(AINIRec: TMemIniFile; gMedicao: TgMedicao; DetIndex: Integer);
-    procedure Gerar_gPagAntecipado(AINIRec: TMemIniFile; gPagAntecipado: TgPagAntecipadoNFGas; DetIndex: Integer);
     procedure Gerar_gTarif(AINIRec: TMemIniFile; gTarif: TgTarifCollection; DetIndex: Integer);
     procedure Gerar_gAgregadora(AINIRec: TMemIniFile; gAgregadora: TgAgregadora; DetIndex: Integer);
 
@@ -202,6 +201,9 @@ begin
   AINIRec.WriteString(Secao, 'verProc', Ide.verProc);
   AINIRec.WriteString(Secao, 'dhCont', DateTimeToIni(Ide.dhCont));
   AINIRec.WriteString(Secao, 'xJust', Ide.xJust);
+
+  if Ide.tpPagAnt <> tpaNenhum then
+    AINIRec.WriteString(Secao, 'tpPagAnt', tpPagAntToStr(Ide.tpPagAnt));
 
   Gerar_gCompraGovReduzido(AINIRec, Ide.gCompraGov);
 end;
@@ -364,8 +366,8 @@ begin
     AINIRec.WriteString(Secao, 'indDevolucao', TIndicadorToStr(Det[Index].gNormal.Prod.indDevolucao));
     AINIRec.WriteString(Secao, 'infAdProd', Det[Index].gNormal.infAdProd);
 
+    Gerar_gPagAntecipadoProd(AINIRec, Det[Index].gNormal.Prod.gPagAntecipado, Index + 1, -1);
     Gerar_gMedicao(AINIRec, Det[Index].gNormal.Prod.gMedicao, Index + 1);
-    Gerar_gPagAntecipado(AINIRec, Det[Index].gNormal.Prod.gPagAntecipado, Index + 1);
 
     Gerar_gTarif(AINIRec, Det[Index].gNormal.gTarif, Index + 1);
     Gerar_gAgregadora(AINIRec, Det[Index].gAgregadora, Index + 1);
@@ -396,20 +398,6 @@ begin
   AINIRec.WriteFloat(Secao, 'vMed', gMedicao.gMedida.vMed);
   AINIRec.WriteString(Secao, 'tpMotNaoLeitura', tpMotNaoLeituraToStr(gMedicao.tpMotNaoLeitura));
   AINIRec.WriteString(Secao, 'xMotNaoLeitura', gMedicao.xMotNaoLeitura);
-end;
-
-procedure TNFGasIniWriter.Gerar_gPagAntecipado(AINIRec: TMemIniFile;
-  gPagAntecipado: TgPagAntecipadoNFGas; DetIndex: Integer);
-var
-  Secao: string;
-begin
-  if Trim(gPagAntecipado.chDFePagAnt) = '' then
-    Exit;
-
-  Secao := 'gPagAntecipado' + IntToStrZero(DetIndex, 3);
-
-  AINIRec.WriteString(Secao, 'chDFePagAnt', gPagAntecipado.chDFePagAnt);
-  AINIRec.WriteInteger(Secao, 'nItemPagAnt', gPagAntecipado.nItemPagAnt);
 end;
 
 procedure TNFGasIniWriter.Gerar_gTarif(AINIRec: TMemIniFile; gTarif: TgTarifCollection; DetIndex: Integer);

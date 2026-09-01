@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2026
+-- ACBrNFGas.Classes/ACBrNFGas.IniReader/ACBrNFGas.IniWriter/ACBrNFGas.XmlReader/ACBrNFGas.XmlWriter --
+[+] Inclusão do Pagamento Antecipado
+   Por: Italo Giurizzato Junior
+
 16/07/2026
 -- Diversos --
 [*] Ajustes por conta das alterações nas untis especificas da RTC.

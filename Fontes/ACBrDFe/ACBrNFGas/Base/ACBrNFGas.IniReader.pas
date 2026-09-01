@@ -71,7 +71,6 @@ type
     procedure Ler_gTarif(AINIRec: TMemIniFile; gTarif: TgTarifCollection; DetIndex: Integer);
     procedure Ler_gAgregadora(AINIRec: TMemIniFile; gAgregadora: TgAgregadora; DetIndex: Integer);
     procedure Ler_gMedicao(AINIRec: TMemIniFile; gMedicao: TgMedicao; DetIndex: Integer);
-    procedure Ler_gPagAntecipado(AINIRec: TMemIniFile; gPagAntecipado: TgPagAntecipadoNFGas; DetIndex: Integer);
 
     procedure Ler_gProcRef(AINIRec: TMemIniFile; gProcRef: TgProcRef; DetIndex: Integer);
     procedure Ler_gProc(AINIRec: TMemIniFile; gProc: TgProcCollection; DetIndex: Integer);
@@ -187,6 +186,7 @@ begin
   Ide.tpFat := StrTotpFat(AINIRec.ReadString(Secao, 'tpFat', '1'));
   Ide.dhCont := StringToDateTime(AINIRec.ReadString(Secao, 'dhCont', '0'));
   Ide.xJust := AINIRec.ReadString(Secao, 'xJust', '');
+  Ide.tpPagAnt := StrTotpPagAnt(AINIRec.ReadString(Secao, 'tpPagAnt', ''));
 
   Ler_gCompraGovReduzido(AINIRec, Ide.gCompraGov);
 end;
@@ -389,7 +389,7 @@ begin
     Item.gNormal.infAdProd := AINIRec.ReadString(Secao, 'infAdProd', '');
 
     Ler_gMedicao(AINIRec, Item.gNormal.Prod.gMedicao, Index);
-    Ler_gPagAntecipado(AINIRec, Item.gNormal.Prod.gPagAntecipado, Index);
+    Ler_gPagAntecipadoProd(AINIRec, Item.gNormal.Prod.gPagAntecipado, Index, -1);
 
     Ler_gTarif(AINIRec, Item.gNormal.gTarif, Index);
     Ler_gAgregadora(AINIRec, Item.gAgregadora, Index);
@@ -422,20 +422,6 @@ begin
   gMedicao.gMedida.vMed := StringToFloatDef(AINIRec.ReadString(Secao, 'vMed', ''), 0);
   gMedicao.tpMotNaoLeitura := StrTotpMotNaoLeitura(AINIRec.ReadString(Secao, 'tpMotNaoLeitura', ''));
   gMedicao.xMotNaoLeitura := AINIRec.ReadString(Secao, 'xMotNaoLeitura', '');
-end;
-
-procedure TNFGasIniReader.Ler_gPagAntecipado(AINIRec: TMemIniFile;
-  gPagAntecipado: TgPagAntecipadoNFGas; DetIndex: Integer);
-var
-  Secao: string;
-begin
-  Secao := 'gPagAntecipado' + IntToStrZero(DetIndex, 3);
-
-  if not AINIRec.SectionExists(Secao) then
-    Exit;
-
-  gPagAntecipado.chDFePagAnt := AINIRec.ReadString(Secao, 'nMed', '');
-  gPagAntecipado.nItemPagAnt := AINIRec.ReadInteger(Secao, 'nContrat', 0);
 end;
 
 procedure TNFGasIniReader.Ler_gTarif(AINIRec: TMemIniFile; gTarif: TgTarifCollection; DetIndex: Integer);
