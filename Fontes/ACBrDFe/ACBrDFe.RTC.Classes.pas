@@ -98,28 +98,6 @@ type
     property refNFe: TrefDFePagAntCollection read FrefNFe write FrefNFe;
   end;
 
-  { TrefDFeCollectionItem }
-
-  TrefDFeCollectionItem = class(TObject)
-  private
-    FrefDFeAnt: string;
-  public
-    procedure Assign(Source: TrefDFeCollectionItem);
-
-    property refDFeAnt: string read FrefDFeAnt write FrefDFeAnt;
-  end;
-
-  { TrefDFeCollection }
-
-  TrefDFeCollection = class(TACBrObjectList)
-  private
-    function GetItem(Index: Integer): TrefDFeCollectionItem;
-    procedure SetItem(Index: Integer; Value: TrefDFeCollectionItem);
-  public
-    function New: TrefDFeCollectionItem;
-    property Items[Index: Integer]: TrefDFeCollectionItem read GetItem write SetItem; default;
-  end;
-
   { TDFeReferenciado }
 
   TDFeReferenciado = class(TObject)
@@ -132,6 +110,28 @@ type
     property nItem: Integer read FnItem write FnItem;
   end;
 
+  { TrefDFeAntCollectionItem }
+
+  TrefDFeAntCollectionItem = class(TObject)
+  private
+    FrefDFeAnt: string;
+  public
+    procedure Assign(Source: TrefDFeAntCollectionItem);
+
+    property refDFeAnt: string read FrefDFeAnt write FrefDFeAnt;
+  end;
+
+  { TrefDFeAntCollection }
+
+  TrefDFeAntCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TrefDFeAntCollectionItem;
+    procedure SetItem(Index: Integer; Value: TrefDFeAntCollectionItem);
+  public
+    function New: TrefDFeAntCollectionItem;
+    property Items[Index: Integer]: TrefDFeAntCollectionItem read GetItem write SetItem; default;
+  end;
+
   { TgCompraGovReduzido }
   {Usado por: BPe, CTe, NF3e, NFAg, NFCom, NFGas}
 
@@ -140,9 +140,9 @@ type
     FtpEnteGov: TtpEnteGov;
     FpRedutor: Double;
     FtpOperGov: TtpOperGov;
-    FrefDFe: TrefDFeCollection;
+    FrefDFe: TrefDFeAntCollection;
 
-    procedure SetrefDFe(const Value: TrefDFeCollection);
+    procedure SetrefDFe(const Value: TrefDFeAntCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -152,7 +152,29 @@ type
     property tpEnteGov: TtpEnteGov read FtpEnteGov write FtpEnteGov;
     property pRedutor: Double read FpRedutor write FpRedutor;
     property tpOperGov: TtpOperGov read FtpOperGov write FtpOperGov;
-    property refDFe: TrefDFeCollection read FrefDFe write SetrefDFe;
+    property refDFe: TrefDFeAntCollection read FrefDFe write SetrefDFe;
+  end;
+
+  { TDFErefCollectionItem }
+
+  TDFErefCollectionItem = class(TObject)
+  private
+    FrefDFeChave: string;
+  public
+    procedure Assign(Source: TDFErefCollectionItem);
+
+    property refDFeChave: string read FrefDFeChave write FrefDFeChave;
+  end;
+
+  { TDFErefCollection }
+
+  TDFErefCollection = class(TACBrObjectList)
+  private
+    function GetItem(Index: Integer): TDFErefCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDFErefCollectionItem);
+  public
+    function New: TDFErefCollectionItem;
+    property Items[Index: Integer]: TDFErefCollectionItem read GetItem write SetItem; default;
   end;
 
   { TgCompraGov }
@@ -163,12 +185,19 @@ type
     FtpEnteGov: TtpEnteGov;
     FpRedutor: Double;
     FtpOperGov: TtpOperGov;
+    FrefDFeAnt: TDFerefCollection;
+
+    procedure SetrefDFeAnt(const Value: TDFerefCollection);
   public
+    constructor Create;
+    destructor Destroy; override;
+
     procedure Assign(Source: TgCompraGov);
 
     property tpEnteGov: TtpEnteGov read FtpEnteGov write FtpEnteGov;
     property pRedutor: Double read FpRedutor write FpRedutor;
     property tpOperGov: TtpOperGov read FtpOperGov write FtpOperGov;
+    property refDFeAnt: TDFerefCollection read FrefDFeAnt write SetrefDFeAnt;
   end;
 
   { TgALCZFMCBS }
@@ -223,40 +252,40 @@ type
 
   TgIBSUFValores = class(TObject)
   private
-    FpIBS: Double;
+    FpIBSUF: Double;
     FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FvIBS: Double;
+    FvIBSUF: Double;
   public
     constructor Create;
     destructor Destroy; override;
 
-    property pIBS: Double read FpIBS write FpIBS;
+    property pIBSUF: Double read FpIBSUF write FpIBSUF;
     property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property vIBS: Double read FvIBS write FvIBS;
+    property vIBSUF: Double read FvIBSUF write FvIBSUF;
   end;
 
   { TgIBSMunValores }
 
   TgIBSMunValores = class(TObject)
   private
-    FpIBS: Double;
+    FpIBSMun: Double;
     FgDif: TgDif;
     FgDevTrib: TgDevTrib;
     FgRed: TgRed;
-    FvIBS: Double;
+    FvIBSMun: Double;
   public
     constructor Create;
     destructor Destroy; override;
 
-    property pIBS: Double read FpIBS write FpIBS;
+    property pIBSMun: Double read FpIBSMun write FpIBSMun;
     property gDif: TgDif read FgDif write FgDif;
     property gDevTrib: TgDevTrib read FgDevTrib write FgDevTrib;
     property gRed: TgRed read FgRed write FgRed;
-    property vIBS: Double read FvIBS write FvIBS;
+    property vIBSMun: Double read FvIBSMun write FvIBSMun;
   end;
 
   { TgCBSValores }
@@ -395,15 +424,10 @@ type
   TgMonoRetIBS = class(TObject)
   private
     FvIBSMonoRet: Double;
-    FgpBioDiferenca: TgpBioDiferencaIBS;
   public
-    constructor Create;
-    destructor Destroy; override;
-
     procedure Assign(Source: TgMonoRetIBS);
 
     property vIBSMonoRet: Double read FvIBSMonoRet write FvIBSMonoRet;
-    property gpBioDiferenca: TgpBioDiferencaIBS read FgpBioDiferenca write FgpBioDiferenca;
   end;
 
   { TgIBSMonoAdRem }
@@ -413,6 +437,7 @@ type
     FgMonoPadrao: TgMonoPadraoIBSQtde;
     FgMonoReten: TgMonoRetenIBSQtde;
     FgMonoRet: TgMonoRetIBS;
+    FgpBioDiferenca: TgpBioDiferencaIBS;
   public
     constructor Create;
     destructor Destroy; override;
@@ -422,6 +447,7 @@ type
     property gMonoPadrao: TgMonoPadraoIBSQtde read FgMonoPadrao write FgMonoPadrao;
     property gMonoReten: TgMonoRetenIBSQtde read FgMonoReten write FgMonoReten;
     property gMonoRet: TgMonoRetIBS read FgMonoRet write FgMonoRet;
+    property gpBioDiferenca: TgpBioDiferencaIBS read FgpBioDiferenca write FgpBioDiferenca;
   end;
 
   { TgMonoPadraoIBSAliq }
@@ -467,6 +493,7 @@ type
     FgMonoPadrao: TgMonoPadraoIBSAliq;
     FgMonoReten: TgMonoRetenIBSAliq;
     FgMonoRet: TgMonoRetIBS;
+    FgpBioDiferenca: TgpBioDiferencaIBS;
   public
     constructor Create;
     destructor Destroy; override;
@@ -476,6 +503,7 @@ type
     property gMonoPadrao: TgMonoPadraoIBSAliq read FgMonoPadrao write FgMonoPadrao;
     property gMonoReten: TgMonoRetenIBSAliq read FgMonoReten write FgMonoReten;
     property gMonoRet: TgMonoRetIBS read FgMonoRet write FgMonoRet;
+    property gpBioDiferenca: TgpBioDiferencaIBS read FgpBioDiferenca write FgpBioDiferenca;
   end;
 
   { TgMonoPadraoCBSQtde }
@@ -526,15 +554,10 @@ type
   TgMonoRetCBS = class(TObject)
   private
     FvCBSMonoRet: Double;
-    FgpBioDiferenca: TgpBioDiferencaCBS;
   public
-    constructor Create;
-    destructor Destroy; override;
-
     procedure Assign(Source: TgMonoRetCBS);
 
     property vCBSMonoRet: Double read FvCBSMonoRet write FvCBSMonoRet;
-    property gpBioDiferenca: TgpBioDiferencaCBS read FgpBioDiferenca write FgpBioDiferenca;
   end;
 
   { TgCBSMonoAdRem }
@@ -544,6 +567,7 @@ type
     FgMonoPadrao: TgMonoPadraoCBSQtde;
     FgMonoReten: TgMonoRetenCBSQtde;
     FgMonoRet: TgMonoRetCBS;
+    FgpBioDiferenca: TgpBioDiferencaCBS;
   public
     constructor Create;
     destructor Destroy; override;
@@ -553,6 +577,7 @@ type
     property gMonoPadrao: TgMonoPadraoCBSQtde read FgMonoPadrao write FgMonoPadrao;
     property gMonoReten: TgMonoRetenCBSQtde read FgMonoReten write FgMonoReten;
     property gMonoRet: TgMonoRetCBS read FgMonoRet write FgMonoRet;
+    property gpBioDiferenca: TgpBioDiferencaCBS read FgpBioDiferenca write FgpBioDiferenca;
   end;
 
   { TgMonoPadraoCBSAliq }
@@ -592,6 +617,7 @@ type
     FgMonoPadrao: TgMonoPadraoCBSAliq;
     FgMonoReten: TgMonoRetenCBSAliq;
     FgMonoRet: TgMonoRetCBS;
+    FgpBioDiferenca: TgpBioDiferencaCBS;
   public
     constructor Create;
     destructor Destroy; override;
@@ -601,6 +627,7 @@ type
     property gMonoPadrao: TgMonoPadraoCBSAliq read FgMonoPadrao write FgMonoPadrao;
     property gMonoReten: TgMonoRetenCBSAliq read FgMonoReten write FgMonoReten;
     property gMonoRet: TgMonoRetCBS read FgMonoRet write FgMonoRet;
+    property gpBioDiferenca: TgpBioDiferencaCBS read FgpBioDiferenca write FgpBioDiferenca;
   end;
 
   { TgIBSCBSMono }
@@ -952,7 +979,7 @@ constructor TgCompraGovReduzido.Create;
 begin
   inherited Create;
 
-  FrefDFe := TrefDFeCollection.Create;
+  FrefDFe := TrefDFeAntCollection.Create;
 end;
 
 destructor TgCompraGovReduzido.Destroy;
@@ -962,33 +989,33 @@ begin
   inherited;
 end;
 
-procedure TgCompraGovReduzido.SetrefDFe(const Value: TrefDFeCollection);
+procedure TgCompraGovReduzido.SetrefDFe(const Value: TrefDFeAntCollection);
 begin
   FrefDFe := Value;
 end;
 
-{ TrefDFeCollection }
+{ TrefDFeAntCollection }
 
-function TrefDFeCollection.GetItem(Index: Integer): TrefDFeCollectionItem;
+function TrefDFeAntCollection.GetItem(Index: Integer): TrefDFeAntCollectionItem;
 begin
-  Result := TrefDFeCollectionItem(inherited Items[Index]);
+  Result := TrefDFeAntCollectionItem(inherited Items[Index]);
 end;
 
-function TrefDFeCollection.New: TrefDFeCollectionItem;
+function TrefDFeAntCollection.New: TrefDFeAntCollectionItem;
 begin
-  Result := TrefDFeCollectionItem.Create;
+  Result := TrefDFeAntCollectionItem.Create;
   Self.Add(Result);
 end;
 
-procedure TrefDFeCollection.SetItem(Index: Integer;
-  Value: TrefDFeCollectionItem);
+procedure TrefDFeAntCollection.SetItem(Index: Integer;
+  Value: TrefDFeAntCollectionItem);
 begin
   inherited Items[Index] := Value;
 end;
 
-{ TrefDFeCollectionItem }
+{ TrefDFeAntCollectionItem }
 
-procedure TrefDFeCollectionItem.Assign(Source: TrefDFeCollectionItem);
+procedure TrefDFeAntCollectionItem.Assign(Source: TrefDFeAntCollectionItem);
 begin
   refDFeAnt := Source.refDFeAnt;
 end;
@@ -1000,6 +1027,9 @@ begin
   inherited Create;
 
   FgIBSCBS := TgIBSCBS.Create;
+  FgIBSCBSMono := TgIBSCBSMono.Create;
+  FgTransfCred := TgTransfCred.Create;
+  FgAjusteCompet := TgAjusteCompet.Create;
   FgEstornoCred := TgEstornoCred.Create;
   FgCredPresOper := TgCredPresOper.Create;
   FgCredPresIBSZFM := TCredPresIBSZFM.Create;
@@ -1008,6 +1038,9 @@ end;
 destructor TIBSCBS.Destroy;
 begin
   FgIBSCBS.Free;
+  FgIBSCBSMono.Free;
+  FgTransfCred.Free;
+  FgAjusteCompet.Free;
   FgEstornoCred.Free;
   FgCredPresOper.Free;
   FgCredPresIBSZFM.Free;
@@ -1208,6 +1241,26 @@ begin
   tpEnteGov := Source.tpEnteGov;
   pRedutor := Source.pRedutor;
   tpOperGov := Source.tpOperGov;
+  refDFeAnt.Assign(Source.refDFeAnt);
+end;
+
+constructor TgCompraGov.Create;
+begin
+  inherited Create;
+
+  FrefDFeAnt := TDFerefCollection.Create;
+end;
+
+destructor TgCompraGov.Destroy;
+begin
+  FrefDFeAnt.Free;
+
+  inherited;
+end;
+
+procedure TgCompraGov.SetrefDFeAnt(const Value: TDFerefCollection);
+begin
+  FrefDFeAnt := Value;
 end;
 
 { TgIS }
@@ -1247,21 +1300,6 @@ end;
 procedure TgMonoRetIBS.Assign(Source: TgMonoRetIBS);
 begin
   vIBSMonoRet := Source.vIBSMonoRet;
-  gpBioDiferenca.Assign(Source.gpBioDiferenca);
-end;
-
-constructor TgMonoRetIBS.Create;
-begin
-  inherited Create;
-
-  FgpBioDiferenca := TgpBioDiferencaIBS.Create;
-end;
-
-destructor TgMonoRetIBS.Destroy;
-begin
-  FgpBioDiferenca.Free;
-
-  inherited;
 end;
 
 { TgpBioDiferenca }
@@ -1400,6 +1438,7 @@ begin
   gMonoPadrao.Assign(Source.gMonoPadrao);
   gMonoReten.Assign(Source.gMonoReten);
   gMonoRet.Assign(Source.gMonoRet);
+  gpBioDiferenca.Assign(Source.gpBioDiferenca);
 end;
 
 constructor TgIBSMonoAdRem.Create;
@@ -1409,6 +1448,7 @@ begin
   FgMonoPadrao := TgMonoPadraoIBSQtde.Create;
   FgMonoReten := TgMonoRetenIBSQtde.Create;
   FgMonoRet := TgMonoRetIBS.Create;
+  FgpBioDiferenca := TgpBioDiferencaIBS.Create;
 end;
 
 destructor TgIBSMonoAdRem.Destroy;
@@ -1416,6 +1456,7 @@ begin
   FgMonoPadrao.Free;
   FgMonoReten.Free;
   FgMonoRet.Free;
+  FgpBioDiferenca.Free;
 
   inherited;
 end;
@@ -1427,6 +1468,7 @@ begin
   gMonoPadrao.Assign(Source.gMonoPadrao);
   gMonoReten.Assign(Source.gMonoReten);
   gMonoRet.Assign(Source.gMonoRet);
+  gpBioDiferenca.Assign(Source.gpBioDiferenca);
 end;
 
 constructor TgIBSMonoAdValorem.Create;
@@ -1436,6 +1478,7 @@ begin
   FgMonoPadrao := TgMonoPadraoIBSAliq.Create;
   FgMonoReten := TgMonoRetenIBSAliq.Create;
   FgMonoRet := TgMonoRetIBS.Create;
+  FgpBioDiferenca := TgpBioDiferencaIBS.Create;
 end;
 
 destructor TgIBSMonoAdValorem.Destroy;
@@ -1443,6 +1486,7 @@ begin
   FgMonoPadrao.Free;
   FgMonoReten.Free;
   FgMonoRet.Free;
+  FgpBioDiferenca.Free;
 
   inherited;
 end;
@@ -1454,6 +1498,7 @@ begin
   gMonoPadrao.Assign(Source.gMonoPadrao);
   gMonoReten.Assign(Source.gMonoReten);
   gMonoRet.Assign(Source.gMonoRet);
+  gpBioDiferenca.Assign(Source.gpBioDiferenca);
 end;
 
 constructor TgCBSMonoAdRem.Create;
@@ -1463,6 +1508,7 @@ begin
   FgMonoPadrao := TgMonoPadraoCBSQtde.Create;
   FgMonoReten := TgMonoRetenCBSQtde.Create;
   FgMonoRet := TgMonoRetCBS.Create;
+  FgpBioDiferenca := TgpBioDiferencaCBS.Create;
 end;
 
 destructor TgCBSMonoAdRem.Destroy;
@@ -1470,6 +1516,7 @@ begin
   FgMonoPadrao.Free;
   FgMonoReten.Free;
   FgMonoRet.Free;
+  FgpBioDiferenca.Free;
 
   inherited;
 end;
@@ -1481,6 +1528,7 @@ begin
   gMonoPadrao.Assign(Source.gMonoPadrao);
   gMonoReten.Assign(Source.gMonoReten);
   gMonoRet.Assign(Source.gMonoRet);
+  gpBioDiferenca.Assign(Source.gpBioDiferenca);
 end;
 
 constructor TgCBSMonoAdValorem.Create;
@@ -1490,6 +1538,7 @@ begin
   FgMonoPadrao := TgMonoPadraoCBSAliq.Create;
   FgMonoReten := TgMonoRetenCBSAliq.Create;
   FgMonoRet := TgMonoRetCBS.Create;
+  FgpBioDiferenca := TgpBioDiferencaCBS.Create;
 end;
 
 destructor TgCBSMonoAdValorem.Destroy;
@@ -1497,6 +1546,7 @@ begin
   FgMonoPadrao.Free;
   FgMonoReten.Free;
   FgMonoRet.Free;
+  FgpBioDiferenca.Free;
 
   inherited;
 end;
@@ -1524,21 +1574,6 @@ end;
 procedure TgMonoRetCBS.Assign(Source: TgMonoRetCBS);
 begin
   vCBSMonoRet := Source.vCBSMonoRet;
-  gpBioDiferenca.Assign(Source.gpBioDiferenca);
-end;
-
-constructor TgMonoRetCBS.Create;
-begin
-  inherited Create;
-
-  FgpBioDiferenca := TgpBioDiferencaCBS.Create;
-end;
-
-destructor TgMonoRetCBS.Destroy;
-begin
-  FgpBioDiferenca.Free;
-
-  inherited;
 end;
 
 { TgpBioDiferencaCBS }
@@ -1643,6 +1678,32 @@ procedure TgPagAntecipadoProd.Assign(Source: TgPagAntecipadoProd);
 begin
   chDFePagAnt := Source.chDFePagAnt;
   nItemPagAnt := Source.nItemPagAnt;
+end;
+
+{ TDFErefAntCollectionItem }
+
+procedure TDFErefCollectionItem.Assign(Source: TDFErefCollectionItem);
+begin
+  refDFeChave := Source.refDFeChave;
+end;
+
+{ TDFErefAntCollection }
+
+function TDFErefCollection.GetItem(Index: Integer): TDFErefCollectionItem;
+begin
+  Result := TDFErefCollectionItem(inherited Items[Index]);
+end;
+
+function TDFErefCollection.New: TDFErefCollectionItem;
+begin
+  Result := TDFErefCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TDFErefCollection.SetItem(Index: Integer;
+  Value: TDFErefCollectionItem);
+begin
+  inherited Items[Index] := Value;
 end;
 
 end.

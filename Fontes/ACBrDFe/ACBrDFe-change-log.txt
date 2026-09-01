@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+01/09/2026
+-- ACBrDFe.RTC.Classes/ACBrDFe.RTC.IniReader/ACBrDFe.RTC.IniWriter --
+-- ACBrDFe.RTC.XmlReader/ACBrDFe.RTC.XmlWriter --
+[*] Ajustes referente ao novo layout da Tributação Monofásica e ajuste
+    na nomenclatura do percentual e valor do IBS Estadual e Municipal.
+   Por: Italo Giurizzato Junior
+
 05/08/2026
 -- ACBrDFe.RTC.Classes/ACBrDFe.RTC.IniReader/ACBrDFe.RTC.IniWriter --
 -- ACBrDFe.RTC.XmlReader/ACBrDFe.RTC.XmlWriter/ACBrDFeConsts --
