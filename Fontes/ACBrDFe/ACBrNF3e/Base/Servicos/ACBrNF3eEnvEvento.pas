@@ -43,7 +43,6 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IFEND}
-  pcnConversao,
   ACBrXmlBase,
   ACBrDFe.Conversao,
   ACBrDFeConsts,
@@ -112,7 +111,7 @@ type
 
     function LerXML(const ACaminhoArquivo: string): Boolean;
     function LerXMLFromString(const AXML: string): Boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+    function ObterNomeArquivo(tpEvento: TACBrTipoEvento): string;
     function LerFromIni(const AIniString: string): Boolean;
 
     property idLote: Int64 read FidLote write FidLote;
@@ -155,7 +154,7 @@ begin
   Result := TACBrXmlWriterOptions.Create();
 end;
 
-function TEventoNF3e.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+function TEventoNF3e.ObterNomeArquivo(tpEvento: TACBrTipoEvento): string;
 begin
   case tpEvento of
     teCancelamento: Result := IntToStr(Self.idLote) + '-can-eve.xml';

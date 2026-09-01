@@ -198,7 +198,7 @@ uses
   ACBrValidador,
   ACBrXmlBase,
   ACBrNF3eConversao,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 {$IFnDEF FPC}
   {$R *.dfm}

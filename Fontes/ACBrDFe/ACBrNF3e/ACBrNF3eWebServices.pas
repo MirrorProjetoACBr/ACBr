@@ -68,7 +68,7 @@ type
     procedure InicializarServico; override;
     procedure DefinirURL; override;
     function GerarVersaoDadosSoap: String; override;
-    procedure EnviarDados; override;
+//    procedure EnviarDados; override;
     procedure FinalizarServico; override;
     procedure RemoverNameSpace;
 
@@ -469,7 +469,7 @@ uses
   StrUtils, Math,
   ACBrUtil.Base, ACBrUtil.XMLHTML, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrUtil.FilesIO,
-  ACBrCompress, ACBrIntegrador,
+  ACBrCompress, //ACBrIntegrador,
   ACBrDFeConsts,
   ACBrDFeUtil,
   ACBrDFeComum.ConsStatServ, ACBrDFeComum.RetConsStatServ,
@@ -546,7 +546,7 @@ begin
 
   Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
 end;
-
+{
 procedure TNF3eWebService.EnviarDados;
 var
 //  UsaIntegrador: Boolean;
@@ -563,7 +563,7 @@ begin
       FPDFeOwner.Integrador := Integrador;
   end;
 end;
-
+}
 procedure TNF3eWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }

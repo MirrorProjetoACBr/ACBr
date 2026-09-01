@@ -244,7 +244,7 @@ uses
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime,
   ACBrDFeReportFortes, ACBrImage, ACBrDelphiZXingQRCode,
   ACBrXmlBase,
-  ACBrNF3eClass, ACBrNF3eConversao, pcnConversao, ACBrNF3e;
+  ACBrNF3eClass, ACBrNF3eConversao, ACBrDFe.Conversao, ACBrNF3e;
 
 {$IfNDef FPC}
  {$R *.dfm}

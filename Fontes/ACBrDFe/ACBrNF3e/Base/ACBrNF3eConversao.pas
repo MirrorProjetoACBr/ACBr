@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
   TStatusNF3e = (stIdle, stNF3eStatusServico, stNF3eRecepcao,
@@ -374,7 +374,7 @@ const
 {
   Declaração das funções de conversão
 }
-function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoNF3e(out ok: boolean; const s: string): TACBrTipoEvento;
 
 function LayOutToServico(const t: TLayOut): string;
 function ServicoToLayOut(const s: string): TLayOut;
@@ -510,7 +510,7 @@ uses
   typinfo,
   ACBrBase;
 
-function StrToTpEventoNF3e(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoNF3e(out ok: boolean; const s: string): TACBrTipoEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110111', '240140', '240150', '240170'],

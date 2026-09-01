@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2026
+-- Diversos --
+[*] Alterações visando o uso das units especificas para a Reforma Tributária.
+   Por: Italo Giurizzato Junior
+
 02/07/2026
 -- Diversos --
 [*] ACBr-9485 - Ajustes para atender a NT 2026/002 - versão 1.00 da Reforma Tributária.

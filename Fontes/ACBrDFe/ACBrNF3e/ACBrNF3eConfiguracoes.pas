@@ -38,7 +38,9 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, ACBrNF3eConversao;
+  ACBrDFeConfiguracoes,
+  ACBrDFe.Conversao,
+  ACBrNF3eConversao;
 
 type
 
@@ -85,7 +87,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathNF3e(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
+    function GetPathEvento(tipoEvento: TACBrTipoEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNF3e: boolean read FEmissaoPathNF3e
       write FEmissaoPathNF3e default False;
@@ -284,7 +286,7 @@ begin
   PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
 end;
 
-function TArquivosConfNF3e.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String;
+function TArquivosConfNF3e.GetPathEvento(tipoEvento: TACBrTipoEvento; const CNPJ: String;
   const IE: String; Data: TDateTime): String;
 var
   Dir: String;
