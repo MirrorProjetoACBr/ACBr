@@ -178,15 +178,7 @@ begin
   Ide.dhCont  := StringToDateTime(AINIRec.ReadString('ide', 'dhCont', '0'));
   Ide.xJust   := AINIRec.ReadString('ide', 'xJust', '');
 
-  Ide.gCompraGov.pRedutor := StringToFloatDef(AINIRec.ReadString('ide', 'pRedutor', ''), 0);
-
-  if Ide.gCompraGov.pRedutor > 0 then
-  begin
-    Ide.gCompraGov.tpEnteGov := StrTotpEnteGov(AINIRec.ReadString('ide', 'tpEnteGov', ''));
-    Ide.gCompraGov.tpOperGov := StrTotpOperGov(AINIRec.ReadString('ide', 'tpOperGov', ''));
-
-    Ler_refDFe(AINIRec, Ide.gCompraGov.refDFe);
-  end;
+  Ler_gCompraGovReduzido(AINIRec, Ide.gCompraGov);
 end;
 
 procedure TBPeIniReader.Ler_Emitente(AINIRec: TMemIniFile; Emit: TEmit);

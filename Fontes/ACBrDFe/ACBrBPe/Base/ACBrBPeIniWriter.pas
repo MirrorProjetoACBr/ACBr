@@ -199,14 +199,7 @@ begin
   AINIRec.WriteString('ide', 'xJust', Ide.xJust);
 
   // Reforma Tritutária
-  if Ide.gCompraGov.pRedutor > 0 then
-  begin
-    AINIRec.WriteString('ide', 'tpEnteGov', tpEnteGovToStr(Ide.gCompraGov.tpEnteGov));
-    AINIRec.WriteFloat('ide', 'pRedutor', Ide.gCompraGov.pRedutor);
-    AINIRec.WriteString('ide', 'tpOperGov', tpOperGovToStr(Ide.gCompraGov.tpOperGov));
-
-    Gerar_refDFe(AINIRec, Ide.gCompraGov.refDFe);
-  end;
+  Gerar_gCompraGovReduzido(AINIRec, Ide.gCompraGov);
 end;
 
 procedure TBPeIniWriter.Gerar_Emitente(AINIRec: TMemIniFile; Emit: TEmit);

@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2026
+-- ACBrBPeIniReader/ACBrBPeIniWriter/ACBrBPeEnvEvento --
+[*] Simplificação na chamada ao grupo de compra governamental e ajuste nos campos
+    de percentual e valor do IBS Estadual e Municipal.
+   Por: Italo Giurizzato Junior
+
 20/07/2026
 -- ACBrBPeConsSit/ACBrBPeDABPeESCPOS --
 [-] Troca da função OnlyCPFCNPJAlphaNum por RemoverLiteralChave ao ler campos
