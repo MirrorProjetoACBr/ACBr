@@ -646,21 +646,21 @@ begin
 
       Imp.IBSCBS.gIBSCBS.vBC := 100;
 
-      Imp.IBSCBS.gIBSCBS.gIBSUF.pIBS := 5;
+      Imp.IBSCBS.gIBSCBS.gIBSUF.pIBSUF := 5;
       Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.pDif := 5;
       Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 50;
       Imp.IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
       Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
       Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
-      Imp.IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
+      Imp.IBSCBS.gIBSCBS.gIBSUF.vIBSUF := 50;
 
-      Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
+      Imp.IBSCBS.gIBSCBS.gIBSMun.pIBSMun := 5;
       Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
       Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
       Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
       Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
       Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
-      Imp.IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
+      Imp.IBSCBS.gIBSCBS.gIBSMun.vIBSMun := 50;
 
       // vIBS = vIBS do IBSUF + vIBS do IBSMun
       Imp.IBSCBS.gIBSCBS.vIBS := 100;
@@ -845,21 +845,21 @@ begin
 
           Imp.IBSCBS.gIBSCBS.vBC := 100;
 
-          Imp.IBSCBS.gIBSCBS.gIBSUF.pIBS := 5;
+          Imp.IBSCBS.gIBSCBS.gIBSUF.pIBSUF := 5;
           Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.pDif := 5;
           Imp.IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 50;
           Imp.IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
           Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
           Imp.IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
-          Imp.IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
+          Imp.IBSCBS.gIBSCBS.gIBSUF.vIBSUF := 50;
 
-          Imp.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
+          Imp.IBSCBS.gIBSCBS.gIBSMun.pIBSMun := 5;
           Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
           Imp.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
           Imp.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
           Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
           Imp.IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
-          Imp.IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
+          Imp.IBSCBS.gIBSCBS.gIBSMun.vIBSMun := 50;
 
           // vIBS = vIBS do IBSUF + vIBS do IBSMun
           Imp.IBSCBS.gIBSCBS.vIBS := 100;
@@ -2200,7 +2200,7 @@ begin
   with ACBrBPe1.Configuracoes.WebServices do
   begin
     UF         := cbUF.Text;
-    Ambiente   := StrToTipoAmbiente(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+    Ambiente   := StrToTipoAmbiente(IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
     Salvar     := cbxSalvarSOAP.Checked;
 
@@ -2247,7 +2247,7 @@ begin
 
   if ACBrBPe1.DABPe <> nil then
   begin
-    ACBrBPe1.DABPe.TipoDABPe := StrToTpImp(OK, IntToStr(rgTipoDaBPe.ItemIndex + 1));
+    ACBrBPe1.DABPe.TipoDABPe := StrToTpImp(IntToStr(rgTipoDaBPe.ItemIndex + 1));
     ACBrBPe1.DABPe.Logo      := edtLogoMarca.Text;
   end;
 end;
