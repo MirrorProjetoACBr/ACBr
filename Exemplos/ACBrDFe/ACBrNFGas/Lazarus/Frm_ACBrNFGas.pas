@@ -611,21 +611,21 @@ begin
 
       gNormal.Imposto.IBSCBS.gIBSCBS.vBC := 100;
 
-      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.pIBS := 5;
+      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.pIBSUF := 5;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.gDif.pDif := 5;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 50;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
-      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
+      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSUF.vIBSUF := 50;
 
-      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
+      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.pIBSMun := 5;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
       gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
-      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
+      gNormal.Imposto.IBSCBS.gIBSCBS.gIBSMun.vIBSMun := 50;
 
       // vIBS = vIBS do IBSUF + vIBS do IBSMun
       gNormal.Imposto.IBSCBS.gIBSCBS.vIBS := 100;
