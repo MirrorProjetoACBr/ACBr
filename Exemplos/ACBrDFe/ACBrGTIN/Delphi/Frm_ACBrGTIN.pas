@@ -169,7 +169,7 @@ uses
   IniFiles, Printers,
   ACBrUtil.Base, ACBrUtil.DateTime, ACBrUtil.FilesIO,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
-  ACBrXmlBase, ACBrGTINConversao, pcnConversao,
+  ACBrXmlBase, ACBrGTINConversao, ACBrDFe.Conversao,
   Frm_Status, Frm_SelecionarCertificado;
 
 const
@@ -480,7 +480,6 @@ end;
 procedure TfrmACBrGTIN.ConfigurarComponente;
 var
   PathMensal: string;
-  Ok: Boolean;
 begin
   ACBrGTIN1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrGTIN1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -506,7 +505,7 @@ begin
   with ACBrGTIN1.Configuracoes.WebServices do
   begin
     UF         := cbUF.Text;
-    Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex+1));
+    Ambiente   := StrToTipoAmbiente(IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
     Salvar     := cbxSalvarSOAP.Checked;
 
