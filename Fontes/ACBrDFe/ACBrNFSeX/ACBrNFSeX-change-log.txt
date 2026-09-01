@@ -41,6 +41,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+01/09/2026
+[*] ACBR-9788 - O município de Concordia/SC aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94526-conc%C3%B3rdiasc-passa-a-usar-provedor-nacional/
+	Por: C4Dev
 
 31/08/2026
 -- ACBrNFSeXServicos --
