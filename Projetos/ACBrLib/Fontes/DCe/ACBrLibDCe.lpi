@@ -19,7 +19,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="False"/>
-      <BuildNr Value="20"/>
+      <BuildNr Value="21"/>
       <Language Value="0416"/>
       <StringTable Comments="Projeto ACBr" CompanyName="Projeto ACBr" FileDescription="ACBrDCe - Biblioteca para uso do DCe" InternalName="ACBrLibDCe" LegalCopyright="Projeto ACBr" LegalTrademarks="ProjetoACBr" ProductName="DCe" ProductVersion="0.0.0.0"/>
       <MajorVersionNr Value="1"/>
