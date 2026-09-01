@@ -529,21 +529,21 @@ begin
 
           IBSCBS.gIBSCBS.vBC := 100;
 
-          IBSCBS.gIBSCBS.gIBSUF.pIBS := 5;
+          IBSCBS.gIBSCBS.gIBSUF.pIBSUF := 5;
           IBSCBS.gIBSCBS.gIBSUF.gDif.pDif := 5;
           IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 50;
           IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 50;
           IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
           IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
-          IBSCBS.gIBSCBS.gIBSUF.vIBS := 50;
+          IBSCBS.gIBSCBS.gIBSUF.vIBSUF := 50;
 
-          IBSCBS.gIBSCBS.gIBSMun.pIBS := 5;
+          IBSCBS.gIBSCBS.gIBSMun.pIBSMun := 5;
           IBSCBS.gIBSCBS.gIBSMun.gDif.pDif := 5;
           IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 50;
           IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 50;
           IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
           IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
-          IBSCBS.gIBSCBS.gIBSMun.vIBS := 50;
+          IBSCBS.gIBSCBS.gIBSMun.vIBSMun := 50;
 
           // vIBS = vIBS do IBSUF + vIBS do IBSMun
           IBSCBS.gIBSCBS.vIBS := 100;
@@ -1743,7 +1743,7 @@ begin
 
   if ACBrNFCom1.DANFCom <> nil then
   begin
-    ACBrNFCom1.DANFCom.TipoDANFCom := StrToTpImp(OK, IntToStr(rgTipoDaNFCom.ItemIndex + 1));
+    ACBrNFCom1.DANFCom.TipoDANFCom := StrToTpImp(IntToStr(rgTipoDaNFCom.ItemIndex + 1));
     ACBrNFCom1.DANFCom.Logo := edtLogoMarca.Text;
   end;
 end;
