@@ -1975,7 +1975,6 @@ end;
 
 procedure TfrmACBrNF3e.ConfigurarComponente;
 var
-  Ok: Boolean;
   PathMensal: string;
 begin
   ACBrNF3e1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
