@@ -268,10 +268,10 @@ begin
   NFAg.Ide.verProc := ObterConteudo(ANode.Childrens.Find('verProc'), tcStr);
   NFAg.Ide.dhCont := ObterConteudo(ANode.Childrens.Find('dhCont'), tcDatHor);
   NFAg.Ide.xJust := ObterConteudo(ANode.Childrens.Find('xJust'), tcStr);
+  NFAg.Ide.tpPagAnt := StrTotpPagAnt(ObterConteudo(ANode.Childrens.Find('tpPagAnt'), tcStr));
 
   // Reforma Tritutária
   Ler_gCompraGovReduzido(ANode.Childrens.Find('gCompraGov'), NFAg.Ide.gCompraGov);
-  NFAg.Ide.tpPagAnt := StrTotpPagAnt(ObterConteudo(ANode.Childrens.Find('tpPagAnt'), tcStr));
 end;
 
 procedure TNFAgXmlReader.Ler_Emit(const ANode: TACBrXmlNode);
@@ -450,6 +450,8 @@ begin
 
   if Lvalor <> '' then
     Prod.indDevolucao := StrToTIndicador(Lvalor);
+
+  Ler_gPagAntecipadoProd(ANode.Childrens.FindAnyNs('gPagAntecipado'), Prod.gPagAntecipado);
 end;
 
 procedure TNFAgXmlReader.Ler_gMedicao(const ANode: TACBrXmlNode;

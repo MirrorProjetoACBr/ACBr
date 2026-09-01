@@ -361,6 +361,7 @@ type
     FfatorPoluicao: Double;
     FvProd: Double;
     FindDevolucao: TIndicador;
+    FgPagAntecipado: TgPagAntecipadoProd;
   public
     constructor Create;
     destructor Destroy; override;
@@ -381,6 +382,7 @@ type
     property fatorPoluicao: Double       read FfatorPoluicao write FfatorPoluicao;
     property vProd: Double               read FvProd        write FvProd;
     property indDevolucao: TIndicador    read FindDevolucao write FindDevolucao;
+    property gPagAntecipado: TgPagAntecipadoProd read FgPagAntecipado write FgPagAntecipado;
   end;
 
   { TPIS }
@@ -1490,6 +1492,7 @@ begin
   indDevolucao := Source.indDevolucao;
 
   gMedicao.Assign(Source.gMedicao);
+  gPagAntecipado.Assign(Source.gPagAntecipado);
 end;
 
 constructor TProd.Create;
@@ -1497,11 +1500,13 @@ begin
   inherited Create;
 
   FgMedicao := TgMedicao.Create;
+  FgPagAntecipado := TgPagAntecipadoProd.Create;
 end;
 
 destructor TProd.Destroy;
 begin
   FgMedicao.Free;
+  FgPagAntecipado.Free;
 
   inherited Destroy;
 end;

@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2026
+-- ACBrNFAg.Classes/ACBrNFAg.IniReader/ACBrNFAg.IniWriter/ACBrNFAg.XmlReader/ACBrNFAg.XmlWriter --
+[+] Inclusão do Pagamento Antecipado.
+   Por: Italo Giurizzato Junior
+
 07/07/2026
 -- Diversos --
 [*] Ajustes visando o CNPJ Alfa.

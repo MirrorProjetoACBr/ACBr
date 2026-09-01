@@ -189,6 +189,7 @@ begin
   Ide.tpFat := StrTotpFat(AINIRec.ReadString(Secao, 'tpFat', '1'));
   Ide.dhCont := StringToDateTime(AINIRec.ReadString(Secao, 'dhCont', '0'));
   Ide.xJust := AINIRec.ReadString(Secao, 'xJust', '');
+  Ide.tpPagAnt := StrTotpPagAnt(AINIRec.ReadString(Secao, 'tpPagAnt', ''));
 
   Ler_gCompraGovReduzido(AINIRec, Ide.gCompraGov);
 end;
@@ -353,6 +354,7 @@ begin
     Item.Prod.indDevolucao := StrToTIndicador(AINIRec.ReadString(Secao, 'indDevolucao', ''));
     Item.infAdProd := AINIRec.ReadString(Secao, 'infAdProd', '');
 
+    Ler_gPagAntecipadoProd(AINIRec, Item.Prod.gPagAntecipado, Index, -1);
     Ler_gMedicao(AINIRec, Item.Prod.gMedicao, Index);
     Ler_gTarif(AINIRec, Item.gTarif, Index);
     Ler_gProcRef(AINIRec, Item.gProcRef, Index);

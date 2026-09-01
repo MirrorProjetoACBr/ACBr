@@ -825,6 +825,9 @@ begin
 
   if Prod.indDevolucao = tiSim then
     Result.AppendChild(AddNode(tcStr, '#170', 'indDevolucao', 1, 1, 1, '1', ''));
+
+  if Prod.gPagAntecipado.chDFePagAnt <> '' then
+    Result.AppendChild(Gerar_gPagAntecipadoProd(Prod.gPagAntecipado));
 end;
 
 function TNFAgXmlWriter.GerargMedicao(gMedicao: TgMedicao): TACBrXmlNode;

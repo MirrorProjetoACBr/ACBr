@@ -343,6 +343,7 @@ begin
     AINIRec.WriteString(Secao, 'indDevolucao', TIndicadorToStr(Det[Index].Prod.indDevolucao));
     AINIRec.WriteString(Secao, 'infAdProd', Det[Index].infAdProd);
 
+    Gerar_gPagAntecipadoProd(AINIRec, Det[Index].Prod.gPagAntecipado, Index, -1);
     Gerar_gMedicao(AINIRec, Det[Index].Prod.gMedicao, Index + 1);
     Gerar_gTarif(AINIRec, Det[Index].gTarif, Index + 1);
     Gerar_gProcRef(AINIRec, Det[Index].gProcRef, Index + 1);
