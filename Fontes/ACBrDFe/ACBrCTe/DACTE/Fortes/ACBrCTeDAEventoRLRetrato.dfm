@@ -1567,7 +1567,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
       BeforePrint = rlb_02_DocumentoBeforePrint
       object RLDraw10: TRLDraw
         Left = 0
-        Top = 0
+        Top = 1
         Width = 741
         Height = 81
         Brush.Style = bsClear
@@ -1591,7 +1591,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
       object RLDraw81: TRLDraw
         Left = 1
         Top = 44
-        Width = 368
+        Width = 345
         Height = 1
         HelpContext = 1
         Brush.Style = bsClear
@@ -1753,7 +1753,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Transparent = False
       end
       object rlsLinhaV07: TRLDraw
-        Left = 368
+        Left = 345
         Top = 15
         Width = 1
         Height = 66
@@ -1778,7 +1778,7 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
       object rllChave: TRLLabel
         Left = 6
         Top = 60
-        Width = 356
+        Width = 335
         Height = 14
         Alignment = taCenter
         AutoSize = False
@@ -1801,15 +1801,15 @@ inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
         Brush.Style = bsClear
       end
       object rliBarCode: TRLBarcode
-        Left = 376
-        Top = 24
-        Width = 357
+        Left = 348
+        Top = 22
+        Width = 388
         Height = 48
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
-        BarcodeType = bcCode128C
+        BarcodeType = bcCode128
       end
     end
   end

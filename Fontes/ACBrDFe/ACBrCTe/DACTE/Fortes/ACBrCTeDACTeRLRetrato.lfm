@@ -1,7 +1,9 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 242
-  Top = 126
+  Left = 256
+  Height = 580
+  Top = 88
   Caption = 'DACTe - Retrato'
+  ClientHeight = 580
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -543,7 +545,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllMsgTeste: TRLLabel
         Left = 50
         Height = 26
-        Top = 29
+        Top = 8
         Width = 640
         Alignment = taCenter
         Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
@@ -571,59 +573,60 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       ParentColor = False
       BeforePrint = rlb_02_CabecalhoBeforePrint
       object RLBarcode1: TRLBarcode
-        Left = 318
-        Height = 28
-        Top = 122
-        Width = 298
+        Left = 240
+        Height = 26
+        Top = 123
+        Width = 392
+        Alignment = taCenter
         AutoSize = False
-        BarcodeType = bcCode128C
+        BarcodeType = bcCode128
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
       end
       object rlsQuadro01: TRLDraw
-        Left = 0
+        Left = -56
         Height = 183
-        Top = 2
+        Top = 3
         Width = 741
         Brush.Style = bsClear
         Visible = False
       end
       object rlsLinhaH02: TRLDraw
-        Left = 313
+        Left = 258
         Height = 1
         Top = 57
-        Width = 428
+        Width = 483
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rlsLinhaH03: TRLDraw
-        Left = 313
+        Left = 257
         Height = 8
         Top = 88
-        Width = 304
+        Width = 380
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rlsLinhaV01: TRLDraw
         Left = 176
-        Height = 60
-        Top = 120
+        Height = 25
+        Top = 155
         Width = 1
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rlsLinhaV04: TRLDraw
-        Left = 313
-        Height = 182
-        Top = 2
+        Left = 312
+        Height = 25
+        Top = 155
         Width = 1
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rlsLinhaV05: TRLDraw
-        Left = 350
+        Left = 309
         Height = 26
         Top = 32
         Width = 1
@@ -632,7 +635,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         DrawKind = dkLine
       end
       object rlsLinhaV06: TRLDraw
-        Left = 374
+        Left = 350
         Height = 26
         Top = 32
         Width = 1
@@ -641,9 +644,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         DrawKind = dkLine
       end
       object rlsLinhaV08: TRLDraw
-        Left = 464
+        Left = 451
         Height = 26
-        Top = 32
+        Top = 30
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -669,9 +672,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rliLogo: TRLImage
         Left = 7
-        Height = 62
+        Height = 63
         Top = 34
-        Width = 94
+        Width = 67
         Center = True
         Scaled = True
       end
@@ -686,14 +689,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rlmEmitente: TRLMemo
         Left = 7
         Height = 18
-        Top = 3
-        Width = 305
+        Top = 4
+        Width = 246
         Alignment = taCenter
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -11
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]
         ParentColor = False
@@ -701,10 +704,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rlmDadosEmitente: TRLMemo
-        Left = 106
+        Left = 79
         Height = 71
-        Top = 34
-        Width = 206
+        Top = 27
+        Width = 175
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
@@ -723,10 +726,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel17: TRLLabel
-        Left = 317
+        Left = 258
         Height = 14
         Top = 4
-        Width = 298
+        Width = 357
         Alignment = taCenter
         AutoSize = False
         Caption = 'DACTE'
@@ -739,10 +742,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
       end
       object RLLabel18: TRLLabel
-        Left = 317
+        Left = 260
         Height = 13
-        Top = 19
-        Width = 298
+        Top = 18
+        Width = 355
         Alignment = taCenter
         AutoSize = False
         Caption = 'Documento Auxiliar do Conhecimento de Transporte Eletrônico'
@@ -789,7 +792,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel8: TRLLabel
-        Left = 314
+        Left = 266
         Height = 8
         Top = 34
         Width = 32
@@ -805,7 +808,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllModelo: TRLLabel
-        Left = 315
+        Left = 267
         Height = 15
         Top = 42
         Width = 30
@@ -821,7 +824,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel21: TRLLabel
-        Left = 351
+        Left = 319
         Height = 8
         Top = 34
         Width = 21
@@ -836,7 +839,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllSerie: TRLLabel
-        Left = 352
+        Left = 320
         Height = 15
         Top = 42
         Width = 20
@@ -852,7 +855,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel23: TRLLabel
-        Left = 378
+        Left = 360
         Height = 9
         Top = 34
         Width = 83
@@ -868,9 +871,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllNumCte: TRLLabel
-        Left = 378
+        Left = 361
         Height = 15
-        Top = 42
+        Top = 41
         Width = 83
         AutoSize = False
         Caption = '999.999.999'
@@ -884,7 +887,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel25: TRLLabel
-        Left = 474
+        Left = 465
         Height = 8
         Top = 34
         Width = 26
@@ -928,9 +931,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel74: TRLLabel
-        Left = 315
+        Left = 264
         Height = 11
-        Top = 92
+        Top = 93
         Width = 58
         Caption = 'Chave de acesso'
         Color = clWhite
@@ -943,11 +946,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllChave: TRLLabel
-        Left = 315
-        Height = 14
-        Top = 104
-        Width = 300
-        AutoSize = False
+        Left = 264
+        Height = 13
+        Top = 105
+        Width = 49
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -961,7 +963,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 4
         Height = 15
         Top = 137
-        Width = 76
+        Width = 113
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
@@ -971,10 +973,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
       end
       object rllTipoServico: TRLLabel
-        Left = 178
+        Left = 125
         Height = 15
         Top = 137
-        Width = 91
+        Width = 106
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
@@ -1120,10 +1122,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rlsLinhaH01: TRLDraw
-        Left = 314
+        Left = 258
         Height = 1
         Top = 32
-        Width = 426
+        Width = 483
         Brush.Style = bsClear
         DrawKind = dkLine
       end
@@ -1131,18 +1133,18 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 314
         Height = 1
         Top = 120
-        Width = 304
+        Width = 324
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rlbCodigoBarras: TRLBarcode
-        Left = 316
+        Left = 266
         Height = 26
         Top = 62
-        Width = 298
+        Width = 365
         Alignment = taCenter
         AutoSize = False
-        BarcodeType = bcCode128C
+        BarcodeType = bcCode128
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
         Transparent = False
@@ -1165,7 +1167,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel199: TRLLabel
-        Left = 178
+        Left = 125
         Height = 8
         Top = 127
         Width = 61
@@ -1193,7 +1195,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLSystemInfo1: TRLSystemInfo
-        Left = 468
+        Left = 459
         Height = 13
         Top = 42
         Width = 38
@@ -1210,7 +1212,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlsLinhaV07: TRLDraw
         Left = 616
-        Height = 122
+        Height = 25
         Top = 32
         Width = 1
         Angle = 90
@@ -1218,12 +1220,48 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         DrawKind = dkLine
       end
       object imgQRCode: TRLImage
-        Left = 618
-        Height = 94
-        Top = 59
-        Width = 122
+        Left = 639
+        Height = 75
+        Top = 69
+        Width = 98
         Center = True
         Scaled = True
+      end
+      object rlsLinhaV7BarCode: TRLDraw
+        Left = 636
+        Height = 96
+        Top = 58
+        Width = 2
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object rlsLinhaVertical11: TRLDraw
+        Left = 256
+        Height = 116
+        Top = 4
+        Width = 4
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw47: TRLDraw
+        Left = 120
+        Height = 34
+        Top = 120
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw71: TRLDraw
+        Left = 235
+        Height = 34
+        Top = 120
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
       end
     end
     object rlb_10_ModRodFracionado: TRLBand[4]
@@ -7867,7 +7905,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     Top = 16
   end
   inherited Datasource1: TDataSource
-    Left = 320
+    Left = 328
     Top = 16
   end
 end

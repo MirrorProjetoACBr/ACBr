@@ -652,6 +652,10 @@ type
     rlb_DivisaoRecibo: TRLBand;
     rliDivisao: TRLDraw;
     rliMarcadAgua: TRLImage;
+    rlsLinhaV7BarCode: TRLDraw;
+    rlsLinhaVertical11: TRLDraw;
+    RLDraw47: TRLDraw;
+    RLDraw71: TRLDraw;
 
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -1208,8 +1212,8 @@ begin
     rlmDadosEmitente.Visible := False;
     rliLogo.top := 3;
     rliLogo.Left := 2;
-    rliLogo.Height := 121;
-    rliLogo.Width := 311;
+    rliLogo.Height := 100;
+    rliLogo.Width := 257;
 
     TDFeReportFortes.AjustarLogo(rliLogo, fpDACTe.ExpandeLogoMarcaConfig);
   end

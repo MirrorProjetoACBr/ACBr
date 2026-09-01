@@ -892,14 +892,15 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       ParentColor = False
       BeforePrint = rlb_02_CabecalhoBeforePrint
       object RLBarcode1: TRLBarcode
-        Left = 354
+        Left = 338
         Top = 117
-        Width = 381
+        Width = 397
         Height = 28
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
         AutoSize = False
-        BarcodeType = bcCode128C
+        BarcodeType = bcCode128
       end
       object rlsQuadro01: TRLDraw
         Left = 0
@@ -1498,8 +1499,9 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 28
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
         AutoSize = False
-        BarcodeType = bcCode128C
+        BarcodeType = bcCode128
         Caption = '1234569789'
       end
       object RLDraw12: TRLDraw

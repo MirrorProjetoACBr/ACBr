@@ -44,6 +44,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+01/09/2026
+-- Diversos --
+[*] ACBr-9471 - Ajustado Codigo de Barras para chaves alfanumericas Code128; 
+  Por: Daniel Morais InfoCotidiano.
+
 18/06/2026
 -- ACBrCTeDACTeRLClass, ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5, ACBrCTeDAEventoRLRetrato --
 [*] Ajustado campos cnpj alfanumericos/ removendo literal chaves; 

@@ -1,7 +1,9 @@
 inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
   Left = 312
+  Height = 520
   Top = 167
   Caption = 'DACTe -  Retrato A5'
+  ClientHeight = 520
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -812,12 +814,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       ParentColor = False
       BeforePrint = rlb_02_CabecalhoBeforePrint
       object RLBarcode1: TRLBarcode
-        Left = 354
+        Left = 338
         Height = 28
         Top = 117
-        Width = 381
+        Width = 398
+        Alignment = taCenter
         AutoSize = False
-        BarcodeType = bcCode128C
+        BarcodeType = bcCode128
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
       end
@@ -1376,8 +1379,9 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 28
         Top = 58
         Width = 398
+        Alignment = taCenter
         AutoSize = False
-        BarcodeType = bcCode128C
+        BarcodeType = bcCode128
         Caption = '1234569789'
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
