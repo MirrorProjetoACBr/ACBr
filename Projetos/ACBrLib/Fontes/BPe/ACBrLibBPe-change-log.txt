@@ -41,6 +41,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+02/09/2026
+-- Diversos --
+[+] ACBR-1589 - Refatorada biblioteca, implementada MT, ConsoleMT e testes unitários
+   Por: Renato Rubinho
+
 22/06/2026
 -- ACBrLibBPeClass.pas --
 [*] Ajuste das chaves chaves e cnpj alfanumérico.

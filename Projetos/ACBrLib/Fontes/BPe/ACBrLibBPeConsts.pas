@@ -1,11 +1,11 @@
-﻿{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
+{ Direitos Autorais Reservados (c) 2026 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
+{ Colaboradores nesse arquivo: Rafael Teno Dias, Renato Rubinho                }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -37,41 +37,20 @@ unit ACBrLibBPeConsts;
 interface
 
 uses
-  Classes, SysUtils, ACBrLibComum;
+  Classes, SysUtils;
 
 const
   CLibBPeNome = 'ACBrLibBPe';
-  CLibBPeVersao = '0.0.1';
-
-  CSessaoDABPe = 'DABPe';
-
-  CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';
-  CChaveTipoDABPe = 'TipoDABPe';
-  CChaveExibeResumoCanhoto = 'ExibeResumoCanhoto';
-  CChavePosCanhoto = 'PosCanhoto';
-  CChaveAlturaLinhaComun = 'AlturaLinhaComun';
-  CChaveBPeCancelada = 'BPeCancelada';
-  CChaveEPECEnviado = 'EPECEnviado';
-  CChaveImprimirHoraSaida = 'ImprimirHoraSaida';
-  CChavePrintDialog = 'PrintDialog';
-  CChaveUsarSeparadorPathPDF = 'UsarSeparadorPathPDF';
-  CChaveFax = 'Fax';
-  CChaveImprimirHoraSaida_Hora = 'ImprimirHoraSaida_Hora';
-  CChaveProtocoloBPe = 'ProtocoloBPe';
-  CChaveSistema = 'Sistema';
-  CChaveSite = 'Site';
-  CChaveTamanhoPapel = 'TamanhoPapel';
-  CChaveImprimeNomeFantasia = 'ImprimeNomeFantasia';
-  CChaveImprimirTotalLiquido = 'ImprimirTotalLiquido';
+  CLibBPeVersao = '0.0.0.0';
 
   CSessaoRespStatus = 'Status';
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespEnvio = 'Envio';
-  CSessaoRespRetorno = 'Retorno';
   CSessaoRespCancelamento = 'Cancelamento';
-  CSessaoRespConsultaCadastro = 'ConsultaCadastro';
   CSessaoRespEvento = 'Evento';
   CSessaoRespDistribuicaoDFe = 'DistribuicaoDFe';
+
+  CSessaoDABPe = 'DABPe';
 
   ErrValidacaoBPe = -11;
   ErrChaveBPe = -12;
@@ -83,21 +62,13 @@ const
   ErrEnvioEvento = -18;
 
 Resourcestring
-  SInfBPeCarregados = '%d BPe(s) Carregado(s)';
+  SInfBPeCarregadas = '%d BPe(s) Carregada(s)';
   SInfEventosCarregados = '%d Evento(s) Carregado(s)';
 
   SErrChaveInvalida = 'Chave % inválida.';
-  SErrCNPJInvalido = 'CNPJ % inválido.';
   SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
-function SetRetornoBPesCarregados(const libHandle: PLibHandle; const NumBPe: Integer): Integer;
-
 implementation
-
-function SetRetornoBPesCarregados(const libHandle: PLibHandle; const NumBPe: Integer): Integer;
-begin
-  Result := libHandle^.Lib.SetRetorno(0, {NumBPe,} Format(SInfBPeCarregados, [NumBPe]));
-end;
 
 end.
 
