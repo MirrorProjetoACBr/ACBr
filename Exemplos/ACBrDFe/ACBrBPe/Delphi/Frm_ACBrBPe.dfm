@@ -1776,6 +1776,15 @@ object frmACBrBPe: TfrmACBrBPe
           TabOrder = 1
           OnClick = btnGerarArqINIClick
         end
+        object btnLerArqEventoINI: TButton
+          Left = 7
+          Top = 36
+          Width = 177
+          Height = 25
+          Caption = 'Ler Arquivo INI Evento'
+          TabOrder = 2
+          OnClick = btnLerArqEventoINIClick
+        end
       end
     end
     object pgRespostas: TPageControl
