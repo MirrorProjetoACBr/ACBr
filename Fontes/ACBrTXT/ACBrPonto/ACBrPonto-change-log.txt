@@ -49,6 +49,10 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+02/09/2026
+-- ACBrPonto.AEJ.pas --
+[*] Ajustado herança da classe para gerar AEJ
+	Por Victor H. Gonzales Pandaaaa
 
 21/03/2016
 [*] Ajustado para Trunk2, e adicionado do repositório principal

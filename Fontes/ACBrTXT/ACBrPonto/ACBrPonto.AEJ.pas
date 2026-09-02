@@ -430,6 +430,7 @@ end;
 
 constructor TCabecalhoList.Create(AOwner: TObject);
 begin
+  inherited Create(True);
   FOwner := AOwner;
 end;
 
@@ -617,6 +618,7 @@ end;
 
 constructor TRegistro05List.Create(AOwner: TObject);
 begin
+  inherited Create(True);
   FOwner := AOwner;
 end;
 
