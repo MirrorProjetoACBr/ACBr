@@ -41,6 +41,21 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+03/09/2026
+[*] ACBR-9800 - Alteração de URL de homologação para Campo Grande/MS
+	Veja: https://www.projetoacbr.com.br/forum/topic/94558-acbr-9800-corre%C3%A7%C3%A3o-homrecepcionar-campo-grandems-5002704-%E2%80%94-path-notafiscal-adn-ws-retorna-302/
+	Por: cezar.sakugawa
+[*] ACBR-9798 - O município de Avare/SP aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94567-acbr-9798-cidade-de-avar%C3%A9sp-mudou-de-fiorilli-para-padr%C3%A3o-nacional/
+	Por: Destak/Larissa Santos
+[*] ACBR-9797 - O município de Capivari/SP mudou de Ginfes para GissOnline
+	Veja: https://www.projetoacbr.com.br/forum/topic/94568-acbr-9797atualiza%C3%A7%C3%A3o-provedor-capivari-sp/
+	Por: NW Software
+[*] ACBR-9795 - O município de Morro Reuter/RS aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94548-acbr-9795-morro-reuter-rs-passou-para-o-padr%C3%A3o-nacional/
+	Por: dna.automacao/Larissa Santos
+
 01/09/2026
 [-] ACBR-9790 - Ajuste visando a correta geração do grupo de endereço das atividades de evento.
     Por: Milton Campanhã / Victor Gonzales
