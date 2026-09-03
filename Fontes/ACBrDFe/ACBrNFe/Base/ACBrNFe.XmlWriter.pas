@@ -1910,22 +1910,26 @@ begin
   if ((not (nfe.Ide.finNFe in [fnCredito, fnDebito]) and
        (nfe.Ide.gCompraGov.tpOperGov <> togRecebimentoPag))
       or (nfe.Ide.tpNFCredito in [tcRetorno, tcReducaoValores, tcRetornoRecusaParcial])
-      or (nfe.Ide.tpNFDebito in [tdPagamentoAntecipado, tdPerdaEmEstoque])) then
+      or (nfe.Ide.tpNFDebito in [{tdPagamentoAntecipado, }tdPerdaEmEstoque])) then
   begin
-    if ((NFe.Det[i].Imposto.ISSQN.cSitTrib <> ISSQNcSitTribVazio) or
-      ((NFe.infNFe.Versao > 3) and (NFe.Det[i].Imposto.ISSQN.cListServ <> ''))) then
+    if ((not (nfe.Ide.finNFe in [fnCredito, fnDebito]) and
+         (nfe.Ide.gCompraGov.tpOperGov <> togRecebimentoPag)) or
+         (nfe.Ide.tpNFDebito <> tdPagamentoAntecipado)) then
     begin
-      if NFe.infNFe.Versao >= 3 then
-        Result.AppendChild(GerarDetImpostoIPI(i));
-      Result.AppendChild(GerarDetImpostoISSQN(i));
-    end
-    else
-    begin
-      if nfe.Ide.tpNFDebito <> tdPagamentoAntecipado then
-        Result.AppendChild(GerarDetImpostoICMS(i));
+      if ((NFe.Det[i].Imposto.ISSQN.cSitTrib <> ISSQNcSitTribVazio) or
+        ((NFe.infNFe.Versao > 3) and (NFe.Det[i].Imposto.ISSQN.cListServ <> ''))) then
+      begin
+        if NFe.infNFe.Versao >= 3 then
+          Result.AppendChild(GerarDetImpostoIPI(i));
 
-      Result.AppendChild(GerarDetImpostoIPI(i));
-      Result.AppendChild(GerarDetImpostoII(i));
+        Result.AppendChild(GerarDetImpostoISSQN(i));
+      end
+      else
+      begin
+        Result.AppendChild(GerarDetImpostoICMS(i));
+        Result.AppendChild(GerarDetImpostoIPI(i));
+        Result.AppendChild(GerarDetImpostoII(i));
+      end;
     end;
 
     Result.AppendChild(GerarDetImpostoPIS(i));

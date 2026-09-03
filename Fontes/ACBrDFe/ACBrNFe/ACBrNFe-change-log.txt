@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+03/09/2026
+-- ACBrNFe.XmlWriter --
+[*] Alterado as condições para gerar o XML corretamente quando o tipo de débito for
+    Pagamento Antecipado.
+   Por Italo Giurizzato Junior
+
 02/09/2026
 -- ACBrNFeServicos --
 [+] Incluído as URLs deo QR-Code e de consulta para a NF-e quando emitida com o tipo de impressão
