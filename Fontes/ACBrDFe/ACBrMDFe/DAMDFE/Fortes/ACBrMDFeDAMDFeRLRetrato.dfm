@@ -1253,14 +1253,15 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawRight = False
         Borders.DrawBottom = False
         object RLBarcode1: TRLBarcode
-          Left = 1
-          Top = 18
-          Width = 286
+          Left = 3
+          Top = 17
+          Width = 399
           Height = 54
           Margins.LeftMargin = 1.000000000000000000
           Margins.RightMargin = 1.000000000000000000
-          Alignment = taJustify
-          BarcodeType = bcCode128C
+          Alignment = taCenter
+          AutoSize = False
+          BarcodeType = bcCode128
           Caption = '12345678901234567890123456789012345678901324'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText

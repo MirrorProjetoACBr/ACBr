@@ -1596,7 +1596,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       object rlShape81: TRLDraw
         Left = 1
         Top = 44
-        Width = 368
+        Width = 345
         Height = 1
         HelpContext = 1
         Brush.Style = bsClear
@@ -1758,7 +1758,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Transparent = False
       end
       object rlsLinhaV07: TRLDraw
-        Left = 368
+        Left = 345
         Top = 15
         Width = 1
         Height = 66
@@ -1783,7 +1783,7 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
       object rllChave: TRLLabel
         Left = 6
         Top = 60
-        Width = 356
+        Width = 323
         Height = 14
         Alignment = taCenter
         AutoSize = False
@@ -1806,12 +1806,15 @@ inherited frmMDFeDAEventoRLRetrato: TfrmMDFeDAEventoRLRetrato
         Brush.Style = bsClear
       end
       object RLBarcode1: TRLBarcode
-        Left = 375
-        Top = 25
-        Width = 87
+        Left = 347
+        Top = 22
+        Width = 386
         Height = 49
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
+        AutoSize = False
+        BarcodeType = bcCode128
       end
     end
   end

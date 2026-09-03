@@ -41,7 +41,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+03/09/2026
+-- Ajustes diversos --
+[*] ACBr-9471 - Ajustes barras 128 para permitir Chave Hibridas
+	Por: Daniel de Morais InfoCotidiano
+	
 20/10/2025
 -- ACBrMDFeDAEventoRLRetrato --
 [*] Alterado texto de identificação de evento

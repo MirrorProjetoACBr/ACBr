@@ -1,15 +1,14 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 485
-  Height = 817
-  Top = 149
+  Left = 279
+  Top = 68
   Caption = 'Manifesto - Retrato'
-  ClientHeight = 817
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLMDFe: TRLReport
     Tag = 1
-    Top = 0
+    Left = 26
+    Top = 2
     Background.Align = faBottom
     Borders.Sides = sdCustom
     Font.Height = -8
@@ -1178,12 +1177,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawRight = False
         Borders.DrawBottom = False
         object RLBarcode1: TRLBarcode
-          Left = 1
+          Left = 3
           Height = 54
-          Top = 18
-          Width = 286
-          Alignment = taJustify
-          BarcodeType = bcCode128C
+          Top = 17
+          Width = 399
+          Alignment = taCenter
+          AutoSize = False
+          BarcodeType = bcCode128
           Caption = '12345678901234567890123456789012345678901324'
           Font.Color = clWindowText
           Font.Height = -13
@@ -1348,9 +1348,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         BeforePrint = rlbItensBeforePrint
         object rlmChave1: TRLMemo
           Left = 0
-          Height = 14
+          Height = 16
           Top = 14
-          Width = 369
+          Width = 361
           Align = faLeftTop
           AutoSize = False
           Behavior = [beSiteExpander]
@@ -1365,10 +1365,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           ParentFont = False
         end
         object rlmChave2: TRLMemo
-          Left = 379
-          Height = 14
+          Left = 377
+          Height = 16
           Top = 14
-          Width = 363
+          Width = 365
           Align = faRightTop
           AutoSize = False
           Behavior = [beSiteExpander]
