@@ -54,7 +54,7 @@ uses
   RLHTMLFilter, 
   RLFilters, 
   RLPDFFilter,
-  pcnConversao, 
+  ACBrDFe.Conversao,
   ACBrDFeUtil;
 
 type
@@ -696,7 +696,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel37BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := FormatarChaveAcesso(OnlyAlphaNum(self.FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID));
+  Text := FormatarChaveAcesso(RemoverLiteralChave(self.FACBrNFeDANFCeFortesA4.FpNFe.infNFe.ID));
 
   if (FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpEmis = teNormal) and (FACBrNFeDANFCeFortesA4.FpNFe.procNFe.cStat = 0) then
   begin

@@ -50,7 +50,7 @@ uses
   ACBrNFe.Classes,
   ACBrNFe.EventoClass,
   ACBrNFe.EnvEvento,
-  pcnConversao,
+  ACBrDFe.Conversao,
   pcnConversaoNFe,
   ACBrValidador,
   ACBrUtil.Compatibilidade,
@@ -2759,7 +2759,7 @@ begin
   PrintColuna('AMBIENTE', IfThen(FProcEvento.InfEvento.tpAmb = taProducao, '1 - PRODUÇÃO', '2 - HOMOLOGAÇÃO'), False, True);
   PrintColuna('AUTOR', FormatarCNPJ(FProcEvento.InfEvento.CNPJ));
   PrintColuna('SEQUENCIAL NO ANO', Format('%.*d', [10, FProcEvento.InfEvento.nSeqEvento]));
-  PrintColuna('ÓRGÃO', CUFtoUF(FProcEvento.InfEvento.cOrgao), False, True);
+  PrintColuna('ÓRGÃO', CodigoUFparaUF(FProcEvento.InfEvento.cOrgao), False, True);
 
   if FProcEvento.InfEvento.tpEvento in [teCancelamento, teCancSubst] then
   begin
@@ -2801,7 +2801,7 @@ begin
   yMax := y;
   PrintColuna('SITUAÇÃO DO EVENTO', Format('%d - %s', [FProcEvento.RetInfEvento.cStat, FProcEvento.RetInfEvento.xMotivo]), False, True);
   PrintColuna('DATA/HORA DO REGISTRO', FormatDateTimeBr(FProcEvento.RetInfEvento.dhRegEvento));
-  PrintColuna('ÓRGÃO RECEPÇÃO', Format('%s (%s)', [CUFtoUF(FProcEvento.RetInfEvento.cOrgao), FProcEvento.RetInfEvento.verAplic]));
+  PrintColuna('ÓRGÃO RECEPÇÃO', Format('%s (%s)', [CodigoUFparaUF(FProcEvento.RetInfEvento.cOrgao), FProcEvento.RetInfEvento.verAplic]));
   PrintColuna('AUTOR', FormatarCNPJ(FProcEvento.InfEvento.CNPJ), True);
   PrintColuna('SEQUENCIAL NO ANO', Format('%.*d', [10, FProcEvento.InfEvento.nSeqEvento]));
 end;
@@ -2869,7 +2869,7 @@ begin
   else
     Texto := IntToStr(FNFe.Ide.NNF);
   PrintColuna('NÚMERO', Texto);
-  PrintColuna('UF', CUFtoUF(FNFe.ide.cUF));
+  PrintColuna('UF', CodigoUFparaUF(FNFe.ide.cUF));
   Texto := FormatDateBr(FNFe.Ide.dEmi);
   Ano := Copy(Texto, 9, 2);
   Mes := Copy(Texto, 4, 2);
@@ -2881,13 +2881,13 @@ begin
   h := PDF.GetStringHeight(Texto, Args.Band.Width);
   y := y + PDF.TextBox(0, y, Args.Band.Width, h, Texto, 'T', 'C', False);
   y := y + 0.5;
-  Texto := FormatarChaveAcesso(OnlyAlphaNum(FNFe.infNFe.ID));
+  Texto := FormatarChaveAcesso(RemoverLiteralChave(FNFe.infNFe.ID));
   PDF.SetFont(FontSize2, '');
   h := PDF.GetStringHeight(Texto, Args.Band.Width);
   y := y + PDF.TextBox(0, y, Args.Band.Width, h, Texto, 'T', 'C', False);
 
   y := y + 1;
-  //PDF.Code128(OnlyNumber(FNFe.infNFe.ID), 2, y, BarHeight, Args.Band.Width - 4);
+  //PDF.Code128(RemoverLiteralChave(FNFe.infNFe.ID), 2, y, BarHeight, Args.Band.Width - 4);
   PDF.DashedLine(0, y, Args.Band.Width, y, FDashWidth);
   Texto := 'CONSULTAR VIA LEITOR DE QR CODE';
   PDF.SetFont(FontSize2, 'B');

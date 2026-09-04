@@ -45,9 +45,9 @@ uses
   {$IfEnd}
   ACBrDFeConsts,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrNFe.Consts,
   ACBrNFe.EventoClass,
+  ACBrDFe.RTC.Classes,
   ACBrNFe.Classes,
   ACBrBase,
   ACBrJSON,
@@ -166,7 +166,7 @@ type
 
     function LerXML(const CaminhoArquivo: string): Boolean;
     function LerXMLFromString(const AXML: string): Boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string; overload;
+    function ObterNomeArquivo(tpEvento: TACBrTipoEvento): string; overload;
     function LerFromIni(const AIniString: string; CCe: Boolean = True): Boolean;
     function LerFromJSON(const AJSONString: string): Boolean;
 
@@ -210,7 +210,7 @@ begin
   inherited;
 end;
 
-function TEventoNFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+function TEventoNFe.ObterNomeArquivo(tpEvento: TACBrTipoEvento): string;
 begin
   case tpEvento of
     teCCe: Result := IntToStr(Self.idLote) + '-cce.xml';
@@ -962,7 +962,7 @@ begin
                                                 Evento[Idx].FInfEvento.cOrgao));
 
   Result.AppendChild(AddNode(tcStr, 'HP09', 'tpAmb', 1, 1, 1,
-                           TpAmbToStr(Evento[Idx].InfEvento.tpAmb), DSC_TPAMB));
+                    TipoAmbienteToStr(Evento[Idx].InfEvento.tpAmb), DSC_TPAMB));
 
   sDoc := OnlyCPFCNPJAlphaNum(Evento[Idx].InfEvento.CNPJ);
 
@@ -1470,7 +1470,7 @@ begin
         begin
           infEvento.detEvento.tpAutor := StrToTipoAutor(ok, INIRec.ReadString(sSecao, 'tpAutor', '1'));
           infEvento.detEvento.dhEmi := StringToDateTime(INIRec.ReadString(sSecao, 'dhEmi', ''));
-          infEvento.detEvento.tpNF := StrToTpNF(ok, INIRec.ReadString(sSecao, 'tpNF', '1'));
+          infEvento.detEvento.tpNF := StrToTpNF(INIRec.ReadString(sSecao, 'tpNF', '1'));
           infEvento.detEvento.IE := INIRec.ReadString(sSecao, 'IE', '');
 
           infEvento.detEvento.dest.UF := INIRec.ReadString('DEST', 'DestUF', '');
@@ -1968,7 +1968,7 @@ begin
             Evento[i].InfEvento.detEvento.tpAutor := StrToTipoAutor(Ok, lDetEventoJSONObj.AsString['tpAutor']);
             Evento[i].InfEvento.detEvento.verAplic := lDetEventoJSONObj.AsString['verAplic'];
             Evento[i].InfEvento.detEvento.dhEmi := lDetEventoJSONObj.AsISODateTime['dhEmi'];
-            Evento[i].InfEvento.detEvento.tpNF := StrToTpNF(Ok, lDetEventoJSONObj.AsString['tpNF']);
+            Evento[i].InfEvento.detEvento.tpNF := StrToTpNF(lDetEventoJSONObj.AsString['tpNF']);
             Evento[i].InfEvento.detEvento.IE := lDetEventoJSONObj.AsString['IE'];
             Evento[i].InfEvento.detEvento.vNF := lDetEventoJSONObj.AsFloat['vNF'];
             Evento[i].InfEvento.detEvento.vICMS := lDetEventoJSONObj.AsFloat['vICMS'];
@@ -2856,9 +2856,6 @@ begin
 end;
 
 function TEventoNFe.Gerar_Evento_AceiteDebitoApuracaoNotaCredito(Idx: Integer): TACBrXmlNode; //211128
-var
-  nodeArray: TACBrXmlNodeArray;
-  i: Integer;
 begin
   Result := CreateElement('detEvento');
   Result.SetAttribute('versao', Versao);

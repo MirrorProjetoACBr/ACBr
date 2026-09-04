@@ -55,7 +55,7 @@ uses
   {$ENDIF}
   ACBrNFeDANFeRL,
   ACBrDFe.Conversao,
-  pcnConversao, RLBarcode, RLFilters, RLPDFFilter;
+  RLBarcode, RLFilters, RLPDFFilter;
 
 type
 

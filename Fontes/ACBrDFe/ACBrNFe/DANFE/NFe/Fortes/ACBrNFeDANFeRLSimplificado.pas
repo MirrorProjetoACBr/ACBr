@@ -219,7 +219,7 @@ uses
   ACBrDFeUtil,
   ACBrDFeReportFortes,
   ACBrNFe.Classes,
-  pcnConversao,
+  ACBrDFe.Conversao,
   pcnConversaoNFe;
 
 {$IfNDef FPC}

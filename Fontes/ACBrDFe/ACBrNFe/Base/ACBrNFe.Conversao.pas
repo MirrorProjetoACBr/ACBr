@@ -43,7 +43,7 @@ interface
 uses
   SysUtils, StrUtils, Classes,
   ACBrBase,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
 
@@ -101,7 +101,7 @@ type
 
 function CRTToStr(const t: TpcnCRT): string;
 function StrToCRT(out ok: boolean; const s: string): TpcnCRT;
-function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
+function CRTTocRegTrib(const t: TpcnCRT): TRegTrib;
 
 type
   TpcnIndicadorTotal = (itSomaTotalNFe, itNaoSomaTotalNFe );
@@ -430,18 +430,10 @@ const
   TCSTISArrayStrings: array[TCSTIS] of string = ('',
     '000', '100', '200', '300', '400','500', '600');
 
-type
-  TTpCredPresIBSZFM = (tcpNenhum, tcpSemCredito, tcpBensConsumoFinal, tcpBensCapital,
-                       tcpBensIntermediarios, tcpBensInformaticaOutros);
-
-const
-  TTpCredPresIBSZFMArrayStrings: array[TTpCredPresIBSZFM] of string = ('', '0',
-    '1', '2', '3', '4');
-
 {
   Declaração das funções de conversão
 }
-function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoNFe(out ok: boolean; const s: string): TACBrTipoEvento;
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -529,9 +521,6 @@ function StrTotpNFCredito(const s: string): TtpNFCredito;
 function CSTISToStr(const t: TCSTIS): string;
 function TryStrToCSTIS(const s: string; out Value: TCSTIS): Boolean;
 function StrToCSTIS(const s: string): TCSTIS;
-
-function TpCredPresIBSZFMToStr(const t: TTpCredPresIBSZFM): string;
-function StrToTpCredPresIBSZFM(const s: string): TTpCredPresIBSZFM;
 
 implementation
 
@@ -783,7 +772,7 @@ begin
      crtRegimeNormal, crtMEI]);
 end;
 
-function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
+function CRTTocRegTrib(const t: TpcnCRT): TRegTrib;
 begin
   if T = crtSimplesNacional then
     Result := RTSimplesNacional
@@ -1136,7 +1125,7 @@ begin
                           [iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe]);
 end;
 
-function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoNFe(out ok: boolean; const s: string): TACBrTipoEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110110', '110111', '110112', '110140', '111500',
@@ -1799,26 +1788,6 @@ function StrToCSTIS(const s: string): TCSTIS;
 begin
   if not TryStrToCSTIS(s, Result) then
     raise EACBrException.CreateFmt('Valor string inválido para TCSTIS: %s', [s]);
-end;
-
-function TpCredPresIBSZFMToStr(const t: TTpCredPresIBSZFM): string;
-begin
-  Result := TTpCredPresIBSZFMArrayStrings[t];
-end;
-
-function StrToTpCredPresIBSZFM(const s: string): TTpCredPresIBSZFM;
-var
-  idx: TTpCredPresIBSZFM;
-begin
-  for idx:= Low(TTpCredPresIBSZFMArrayStrings) to High(TTpCredPresIBSZFMArrayStrings) do
-  begin
-    if(TTpCredPresIBSZFMArrayStrings[idx] = s)then
-    begin
-      Result := idx;
-      exit;
-    end;
-  end;
-  raise EACBrException.CreateFmt('Valor string inválido para TTpCredPresIBSZFM: %s', [s]);
 end;
 
 initialization

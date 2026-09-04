@@ -38,8 +38,15 @@ interface
 
 uses Classes, SysUtils,
 {$IFDEF FPC}LResources, {$ENDIF}
-  ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrNFe, ACBrECF, ACBrDevice, ACBrBase,
-  ACBrNFe.Classes, pcnConversao, pcnConversaoNFe, ACBrDFeUtil;
+  ACBrECFVirtual,
+  ACBrECFVirtualPrinter,
+  ACBrNFe, ACBrECF,
+  ACBrDevice,
+  ACBrBase,
+  ACBrNFe.Classes,
+  ACBrDFe.Conversao,
+  pcnConversaoNFe,
+  ACBrDFeUtil;
 
 const
   ACBrECFVirtualNFCe_VERSAO = '0.1.0a';

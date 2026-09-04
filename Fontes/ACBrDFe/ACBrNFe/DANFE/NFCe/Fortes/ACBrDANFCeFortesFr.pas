@@ -45,7 +45,7 @@ uses
    Forms, Graphics,
   {$EndIf}
   ACBrNFeDANFEClass, ACBrBase,
-  ACBrNFe.Classes, pcnConversao, ACBrDFeUtil,
+  ACBrNFe.Classes, ACBrDFe.Conversao, ACBrDFeUtil,
   RLConsts, RLUtils, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
   RLFilters, RLPrinters, RLTypes, Controls;
 
@@ -446,7 +446,7 @@ begin
 
     TDFeReportFortes.DiminuirFonteSeNecessario(lURLConsulta, 5);
 
-    lChaveDeAcesso.Lines.Text := FormatarChaveAcesso(OnlyAlphaNum(infNFe.ID));
+    lChaveDeAcesso.Lines.Text := FormatarChaveAcesso(RemoverLiteralChave(infNFe.ID));
 
     if (Ide.tpEmis = teNormal ) and (procNFe.cStat = 0) then
     begin
@@ -621,7 +621,7 @@ begin
 
     TDFeReportFortes.DiminuirFonteSeNecessario(lTitConsulteChaveCanc, 5);
 
-    lChaveDeAcessoCanc.Caption := FormatarChaveAcesso(OnlyAlphaNum(infNFe.ID));
+    lChaveDeAcessoCanc.Caption := FormatarChaveAcesso(RemoverLiteralChave(infNFe.ID));
 
     if procNFe.cStat = 0 then
     begin

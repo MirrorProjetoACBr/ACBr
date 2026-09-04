@@ -194,7 +194,7 @@ type
 implementation
 
 uses
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrDFeUtil, ACBrNFeDANFeRLClass, ACBrValidador,
   ACBrDFeReportFortes,
   ACBrUtil.Base, ACBrUtil.Strings, ACBrUtil.DateTime;

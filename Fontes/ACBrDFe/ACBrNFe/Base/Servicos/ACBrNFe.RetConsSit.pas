@@ -43,7 +43,6 @@ uses
   {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
    System.Contnrs,
   {$IfEnd}
-  pcnConversao,
   ACBrBase,
   ACBrXmlBase,
   ACBrDFe.Conversao,
@@ -56,7 +55,7 @@ type
   TRetCancNFe = class(TObject)
   private
     Fversao: string;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FdhRecbto: TDateTime;
     FcStat: Integer;
     FcUF: Integer;
@@ -66,7 +65,7 @@ type
     FxMotivo: string;
   public
     property versao: string          read Fversao   write Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb    write FtpAmb;
     property verAplic: string        read FverAplic write FverAplic;
     property cStat: Integer          read FcStat    write FcStat;
     property xMotivo: string         read FxMotivo  write FxMotivo;
@@ -98,7 +97,7 @@ type
   TRetConsSitNFe = class(TObject)
   private
     Fversao: string;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: string;
     FcStat: Integer;
     FxMotivo: string;
@@ -120,7 +119,7 @@ type
     function LerXml: Boolean;
 
     property versao: string          read Fversao     write Fversao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb      write FtpAmb;
     property verAplic: string        read FverAplic   write FverAplic;
     property cStat: Integer          read FcStat      write FcStat;
     property xMotivo: string         read FxMotivo    write FxMotivo;
@@ -168,7 +167,6 @@ var
   Document: TACBrXmlDocument;
   ANode, ANodeAux: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  ok: Boolean;
   i: Integer;
   Item : TRetEventoNFeCollectionItem;
 begin
@@ -187,7 +185,7 @@ begin
       begin
         versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
         verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
-        tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        tpAmb := StrToTipoAmbiente(ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
         cUF := ObterConteudoTag(ANode.Childrens.FindAnyNs('cUF'), tcInt);
         nRec := ObterConteudoTag(ANode.Childrens.FindAnyNs('nRec'), tcStr);
         cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
@@ -209,7 +207,7 @@ begin
 
             if ANodeAux <> nil then
             begin
-              protNFe.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+              protNFe.tpAmb := StrToTipoAmbiente(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
               protNFe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
               protNFe.chDFe := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('chNFe'), tcStr);
               protNFe.dhRecbto := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('dhRecbto'), tcDatHor);
@@ -235,7 +233,7 @@ begin
 
             if ANodeAux <> nil then
             begin
-              retCancNFe.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
+              retCancNFe.tpAmb := StrToTipoAmbiente(ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('tpAmb'), tcStr));
               retCancNFe.verAplic := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('verAplic'), tcStr);
               retCancNFe.cStat := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('cStat'), tcInt);
               retCancNFe.xMotivo := ObterConteudoTag(ANodeAux.Childrens.FindAnyNs('xMotivo'), tcStr);

@@ -54,8 +54,8 @@ uses
   Dialogs,
   LResources,
   ACBrNFe.Classes,
-  pcnConversao, 
-  pcnConversaoNFe, 
+  ACBrDFe.Conversao,
+  pcnConversaoNFe,
   ACBrNFe.EnvEvento,
   ACBrNFe.RetInut,
   ACBrNFe, 
@@ -1900,9 +1900,9 @@ begin
     FieldByName('TpNF').AsString := tpNFToStr(FNFe.Ide.TpNF);
     FieldByName('CMunFG').AsString := IntToStr(FNFe.Ide.CMunFG);
     FieldByName('TpImp').AsString := TpImpToStr(FNFe.Ide.TpImp);
-    FieldByName('TpEmis').AsString := TpEmisToStr(FNFe.Ide.TpEmis);
+    FieldByName('TpEmis').AsString := TipoEmissaoToStr(FNFe.Ide.TpEmis);
     FieldByName('CDV').AsString := IntToStr(FNFe.Ide.CDV);
-    FieldByName('TpAmb').AsString := TpAmbToStr(FNFe.Ide.TpAmb);
+    FieldByName('TpAmb').AsString := TipoAmbienteToStr(FNFe.Ide.TpAmb);
     FieldByName('FinNFe').AsString := FinNFeToStr(FNFe.Ide.FinNFe);
     FieldByName('ProcEmi').AsString := procEmiToStr(FNFe.Ide.ProcEmi);
     FieldByName('VerProc').AsString := FNFe.Ide.VerProc;
@@ -1922,7 +1922,7 @@ begin
       begin
         if FNFe.Ide.tpEmis <> teNormal then
           FieldByName('MensagemFiscal').AsString :=
-            'EMITIDA EM CONTINGÊNCIA' + LineBreak + 'Pendente de autorização';
+            'EMITIDA EM CONTINGÊNCIA' + sLineBreak + 'Pendente de autorização';
         //else
         //  FieldByName('MensagemFiscal').AsString := 'ÁREA DE MENSAGEM FISCAL';
       end;
@@ -2510,7 +2510,7 @@ begin
       FieldByName('cStat').AsInteger := cStat;
       FieldByName('xMotivo').AsString := xMotivo;
       FieldByName('dhRecbto').AsDateTime := dhRecbto;
-      FieldByName('cUF').AsString := CUFtoUF(cUF);
+      FieldByName('cUF').AsString := CodigoUFparaUF(cUF);
 
       case tpAmb of
         taProducao: FieldByName('tpAmb').AsString := 'PRODUÇÃO';

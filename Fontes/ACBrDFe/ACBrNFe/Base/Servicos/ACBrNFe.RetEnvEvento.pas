@@ -45,7 +45,6 @@ uses
   {$IfEnd}
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrNFe.EventoClass,
   ACBrBase,
   ACBrXmlDocument;
@@ -74,7 +73,7 @@ type
   private
     FidLote: Int64;
     Fversao: string;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: string;
     FcStat: Integer;
     FcOrgao: Integer;
@@ -112,7 +111,7 @@ type
 
     property idLote: Int64                      read FidLote    write FidLote;
     property versao: string                     read Fversao    write Fversao;
-    property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente           read FtpAmb     write FtpAmb;
     property verAplic: string                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
     property cStat: Integer                     read FcStat     write FcStat;
@@ -465,7 +464,7 @@ begin
 
   aValor := ObterConteudoTag(ANode.Childrens.FindAnyNs('tpNF'), tcStr);
   if aValor <> '' then
-    infEvento.detEvento.tpNF := StrToTpNF(ok, aValor);
+    infEvento.detEvento.tpNF := StrToTpNF(aValor);
 
   infEvento.detEvento.IE := ObterConteudoTag(ANode.Childrens.FindAnyNs('IE'), tcStr);
 
@@ -607,7 +606,7 @@ begin
 
   infEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
   infEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
-  infEvento.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+  infEvento.tpAmb := StrToTipoAmbiente(ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
   infEvento.CNPJ := ObterConteudoTagCNPJCPF(ANode);
   infEvento.chNFe := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFe'), tcStr);
   infEvento.dhEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhEvento'), tcDatHor);
@@ -643,7 +642,7 @@ begin
   Item.RetInfEvento.XML := ANode.OuterXml;
 
   Item.RetInfEvento.Id := ObterConteudoTag(ANode.Attributes.Items['Id']);
-  Item.RetInfEvento.tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+  Item.RetInfEvento.tpAmb := StrToTipoAmbiente(ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
   Item.RetInfEvento.verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
   Item.RetInfEvento.cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);
   Item.RetInfEvento.cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
@@ -683,7 +682,6 @@ end;
 
 procedure TRetEventoNFe.Ler_RetEvento(const ANode: TACBrXmlNode);
 var
-  ok: Boolean;
   i: Integer;
   ANodes: TACBrXmlNodeArray;
   aValor: string;
@@ -695,7 +693,7 @@ begin
 
   aValor := ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr);
   if aValor <> '' then
-    tpAmb := StrToTpAmb(ok, aValor);
+    tpAmb := StrToTipoAmbiente(aValor);
 
   verAplic := ObterConteudoTag(ANode.Childrens.FindAnyNs('verAplic'), tcStr);
   cOrgao := ObterConteudoTag(ANode.Childrens.FindAnyNs('cOrgao'), tcInt);

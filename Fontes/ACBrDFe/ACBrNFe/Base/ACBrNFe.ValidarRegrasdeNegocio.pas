@@ -41,7 +41,6 @@ uses
   ACBrNFe.Classes,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   pcnConversaoNFe;
 //  ACBrNFe.Conversao;
 
@@ -55,7 +54,7 @@ type
 
     FNFe: TNFe;
     FVersaoDF: TpcnVersaoDF;
-    FAmbiente: TpcnTipoAmbiente;
+    FAmbiente: TACBrTipoAmbiente;
     FtpEmis: Integer;
     FCodigoUF: Integer;
     FUF: string;
@@ -90,7 +89,7 @@ type
 
     property NFe: TNFe read FNFe write FNFe;
     property VersaoDF: TpcnVersaoDF read FVersaoDF write FVersaoDF;
-    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
+    property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente;
     property tpEmis: Integer read FtpEmis write FtpEmis;
     property CodigoUF: Integer read FCodigoUF write FCodigoUF;
     property UF: string read FUF write FUF;
@@ -1235,7 +1234,6 @@ var
   i: Integer;
   DFeRef: Boolean;
 begin
-  DFeRef := False;
   i := 0;
   repeat
     DFeRef := NaoEstaVazio(NFe.Det[i].DFeReferenciado.chaveAcesso);

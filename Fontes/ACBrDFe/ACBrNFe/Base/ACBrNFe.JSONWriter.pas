@@ -39,9 +39,9 @@ interface
 uses
   Classes, SysUtils,
   ACBrJSON,
+  ACBrDFe.RTC.Classes,
   ACBrNFe.Classes,
   ACBrDFe.Conversao,
-  pcnConversao,
   pcnConversaoNFe;
 
 type
@@ -130,17 +130,19 @@ type
     procedure Gerar_IBSCBS(const AIBSCBS: TIBSCBS; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBS(const AGIBSCBS: TgIBSCBS; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBSMono(const AIBSCBSMono: TgIBSCBSMono; AJSONObject: TACBrJSONObject);
+{
     procedure Gerar_IBSCBS_gIBSCBSMono_gMonoPadrao(const AGMonoPadrao: TgMonoPadrao; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBSMono_gMonoReten(const AGMonoReten: TgMonoReten; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBSMono_gMonoRet(const AGMonoRet: TgMonoRet; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBSMono_gMonoDif(const AGMonoDif: TgMonoDif; AJSONObject: TACBrJSONObject);
+}
     procedure Gerar_IBSCBS_gTransfCred(const AGTransfCred: TgTransfCred; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gCredPresIBSZFM(const AGCredPresIBSZFM: TCredPresIBSZFM; AJSONObject: TACBrJSONObject);
-    procedure Gerar_IBSCBS_gIBSCBS_gIBSUF(const AIBSUF: TgIBSUF; AJSONObject: TACBrJSONObject);
+    procedure Gerar_IBSCBS_gIBSCBS_gIBSUF(const AIBSUF: TgIBSUFValores; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBS_gIBSCBSUFMun_gDevTrib(const AGDevTrib: TgDevTrib; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBS_gIBSCBSUFMun_gRed(const AGRed: TgRed; AJSONObject: TACBrJSONObject);
-    procedure Gerar_IBSCBS_gIBSCBS_gIBSMun(const AIBSMun: TgIBSMun; AJSONObject: TACBrJSONObject);
-    procedure Gerar_IBSCBS_gIBSCBS_gCBS(const AGCBS: TgCBS; AJSONObject: TACBrJSONObject);
+    procedure Gerar_IBSCBS_gIBSCBS_gIBSMun(const AIBSMun: TgIBSMunValores; AJSONObject: TACBrJSONObject);
+    procedure Gerar_IBSCBS_gIBSCBS_gCBS(const AGCBS: TgCBSValores; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBS__gDif(const AGDif: TgDif; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBS_gTribRegular(const AGTribRegular: TgTribRegular; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBS_gIBSCBS_gIBSCBSCredPres(const AGIBSCredPres: TgIBSCBSCredPres; const AKeyName: String; AJSONObject: TACBrJSONObject);
@@ -149,10 +151,10 @@ type
     procedure Gerar_Det_DFeReferenciado(const ADFeReferenciado: TDFeReferenciado; AJSONObject: TACBrJSONObject);
     procedure Gerar_ISTot(const AISTot: TISTot; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBSTot(const AIBSCBSTot: TIBSCBSTot; AJSONObject: TACBrJSONObject);
-    procedure Gerar_IBSCBSTot_gIBS(const AGIBS: TgIBSTot; AJSONObject: TACBrJSONObject);
+    procedure Gerar_IBSCBSTot_gIBS(const AGIBS: TgIBS; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBSTot_gIBS_gIBSUFTot(const AGIBSUFTot: TgIBSUFTot; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBSTot_gIBS_gIBSMunTot(const AGIBSMunTot: TgIBSMunTot; AJSONObject: TACBrJSONObject);
-    procedure Gerar_IBSCBSTot_gCBS(const AGCBS: TgCBSTot; AJSONObject: TACBrJSONObject);
+    procedure Gerar_IBSCBSTot_gCBS(const AGCBS: TgCBS; AJSONObject: TACBrJSONObject);
     procedure Gerar_IBSCBSTot_gMono(const AGMono: TgMono; AJSONObject: TACBrJSONObject);
   public
     constructor Create(AOwner: TNFe); reintroduce;
@@ -251,9 +253,9 @@ begin
   lIdeJSONObj.AddPair('cMunFG', AIde.cMunFG);
   lIdeJSONObj.AddPair('cMunFGIBS', AIde.cMunFGIBS);
   lIdeJSONObj.AddPair('tpImp', TpImpToStr(AIde.tpImp));
-  lIdeJSONObj.AddPair('tpEmis', TpEmisToStr(AIde.tpEmis));
+  lIdeJSONObj.AddPair('tpEmis', TipoEmissaoToStr(AIde.tpEmis));
   lIdeJSONObj.AddPair('cDV', AIde.cDV);
-  lIdeJSONObj.AddPair('tpAmb', TpAmbToStr(AIde.tpAmb));
+  lIdeJSONObj.AddPair('tpAmb', TipoAmbienteToStr(AIde.tpAmb));
   lIdeJSONObj.AddPair('finNFe', FinNFeToStr(AIde.finNFe));
   lIdeJSONObj.AddPair('tpNFDebito', tpNFDebitoToStr(AIde.tpNFDebito));
   lIdeJSONObj.AddPair('tpNFCredito', tpNFCreditoToStr(AIde.tpNFCredito));
@@ -2542,7 +2544,7 @@ begin
     for i:= 0 to AgCompraGov.refDFeAnt.Count -1 do
     begin
       lrefDFeAntItem := TACBrJSONObject.Create;
-      lrefDFeAntItem.AddPair('refDFeAnt', AgCompraGov.refDFeAnt[i].refDFEChave);
+      lrefDFeAntItem.AddPair('refDFeAnt', AgCompraGov.refDFeAnt[i].refDFeChave);
       lrefDFeAntArray.AddElementJSON(lrefDFeAntItem);
     end;
     lGCompraGovJSONObj.AddPair('refDFeAnt', lrefDFeAntArray);
@@ -2556,7 +2558,7 @@ procedure TNFeJSONWriter.Gerar_gPagAntecipado(const AGPagAntecipado: TgPagAnteci
 var
   i: integer;
   lrefNFeArray: TACBrJSONArray;
-  lGPagAtecipadoJSONObject, lrefNFeItem: TACBrJSONObject;
+  lrefNFeItem: TACBrJSONObject;
 begin
   if AGPagAntecipado.refNFe.Count = 0 then
     exit;
@@ -2652,7 +2654,7 @@ end;
 procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBSMono(const AIBSCBSMono: TgIBSCBSMono; AJSONObject: TACBrJSONObject);
 var
   lIBSCBSMonoJSONObj: TACBrJSONObject;
-
+{
   function PossuigMonoPadrao: Boolean;
   begin
     Result := (AIBSCBSMono.gMonoPadrao.adRemIBS > 0) or (AIBSCBSMono.gMonoPadrao.adRemCBS > 0) or
@@ -2684,8 +2686,9 @@ var
               PossuigMonoRet or
               PossuigMonoDif;
   end;
-
+}
 begin
+{
   if not PossuiIBSCBSMono then
     exit;
 
@@ -2701,13 +2704,13 @@ begin
 
   if PossuigMonoDif then
     Gerar_IBSCBS_gIBSCBSMono_gMonoDif(AIBSCBSMono.gMonoDif, lIBSCBSMonoJSONObj);
-
+}
   lIBSCBSMonoJSONObj.AddPair('vTotIBSMonoItem', AIBSCBSMono.vTotIBSMonoItem);
   lIBSCBSMonoJSONObj.AddPair('vTotCBSMonoItem', AIBSCBSMono.vTotCBSMonoItem);
 
   AJSONObject.AddPair('gIBSCBSMono', lIBSCBSMonoJSONObj);
 end;
-
+{
 procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBSMono_gMonoDif(const AGMonoDif: TgMonoDif; AJSONObject: TACBrJSONObject);
 var
   lGMonoDifJSONObj: TACBrJSONObject;
@@ -2761,7 +2764,7 @@ begin
   
   AJSONObject.AddPair('gMonoReten', lGMonoRetenJSONObj);
 end;
-
+}
 procedure TNFeJSONWriter.Gerar_IBSCBS_gTransfCred(const AGTransfCred: TgTransfCred; AJSONObject: TACBrJSONObject);
 var
   lGTransfCredJSONObj: TACBrJSONObject;
@@ -2784,13 +2787,13 @@ begin
     exit;
 
   lGCredPresIBSZFMJSONObj := TACBrJSONObject.Create;
-//  lGCredPresIBSZFMJSONObj.AddPair('tpCredPresIBSZFM', tpCredPresIBSZFMToStr(AGCredPresIBSZFM.tpCredPresIBSZFM));
+  lGCredPresIBSZFMJSONObj.AddPair('tpCredPresIBSZFM', tpCredPresIBSZFMToStr(AGCredPresIBSZFM.tpCredPresIBSZFM));
 //  lGCredPresIBSZFMJSONObj.AddPair('vCredPresIBSZFM', AGCredPresIBSZFM.vCredPresIBSZFM);
 
   AJSONObject.AddPair('gCredPresIBSZFM', lGCredPresIBSZFMJSONObj);
 end;
 
-procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBS_gIBSUF(const AIBSUF: TgIBSUF; AJSONObject: TACBrJSONObject);
+procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBS_gIBSUF(const AIBSUF: TgIBSUFValores; AJSONObject: TACBrJSONObject);
 var
   lGIBSUFJSONObj: TACBrJSONObject;
 begin
@@ -2835,7 +2838,7 @@ begin
   AJSONObject.AddPair('gRed', lGRedJSONObject);
 end;
 
-procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBS_gIBSMun(const AIBSMun: TgIBSMun; AJSONObject: TACBrJSONObject);
+procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBS_gIBSMun(const AIBSMun: TgIBSMunValores; AJSONObject: TACBrJSONObject);
 var
   lGIBSMunJSONObject: TACBrJSONObject;
 begin
@@ -2852,7 +2855,7 @@ begin
   AJSONObject.AddPair('gIBSMun', lGIBSMunJSONObject);
 end;
 
-procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBS_gCBS(const AGCBS: TgCBS; AJSONObject: TACBrJSONObject);
+procedure TNFeJSONWriter.Gerar_IBSCBS_gIBSCBS_gCBS(const AGCBS: TgCBSValores; AJSONObject: TACBrJSONObject);
 var
   lGCBSJSONObj: TACBrJSONObject;
 begin
@@ -3001,7 +3004,7 @@ begin
   AJSONObject.AddPair('IBSCBSTot', lIBSCBSTotJSONObj);
 end;
 
-procedure TNFeJSONWriter.Gerar_IBSCBSTot_gIBS(const AGIBS: TgIBSTot; AJSONObject: TACBrJSONObject);
+procedure TNFeJSONWriter.Gerar_IBSCBSTot_gIBS(const AGIBS: TgIBS; AJSONObject: TACBrJSONObject);
 var
   lGIBSJSONObj: TACBrJSONObject;
 begin
@@ -3050,7 +3053,7 @@ begin
   AJSONObject.AddPair('gIBSMunTot', lGIBSMunTotJSONObj);
 end;
 
-procedure TNFeJSONWriter.Gerar_IBSCBSTot_gCBS(const AGCBS: TgCBSTot; AJSONObject: TACBrJSONObject);
+procedure TNFeJSONWriter.Gerar_IBSCBSTot_gCBS(const AGCBS: TgCBS; AJSONObject: TACBrJSONObject);
 var
   lGCBSJSONObj: TACBrJSONObject;
 begin

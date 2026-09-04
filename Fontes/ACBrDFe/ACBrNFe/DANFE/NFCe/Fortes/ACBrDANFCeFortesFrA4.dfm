@@ -15,8 +15,8 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   object rlReportA4: TRLReport
     Left = 8
     Top = 0
-    Width = 794
-    Height = 1123
+    Width = 992
+    Height = 1403
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
@@ -24,9 +24,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     Font.Style = []
     OnDataRecord = rlReportA4DataRecord
     object RLBand1: TRLBand
-      Left = 38
-      Top = 112
-      Width = 718
+      Left = 47
+      Top = 121
+      Width = 898
       Height = 80
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -137,9 +137,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLBand2: TRLBand
-      Left = 38
-      Top = 192
-      Width = 718
+      Left = 47
+      Top = 201
+      Width = 898
       Height = 36
       BandType = btTitle
       Borders.Sides = sdCustom
@@ -179,9 +179,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLBand3: TRLBand
-      Left = 38
-      Top = 228
-      Width = 718
+      Left = 47
+      Top = 237
+      Width = 898
       Height = 18
       BandType = btColumnHeader
       Borders.Sides = sdCustom
@@ -292,9 +292,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object subItens: TRLSubDetail
-      Left = 38
-      Top = 246
-      Width = 718
+      Left = 47
+      Top = 255
+      Width = 898
       Height = 58
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -305,7 +305,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand4: TRLBand
         Left = 1
         Top = 0
-        Width = 716
+        Width = 896
         Height = 16
         GreenBarPrint = True
         object RLLabel13: TRLLabel
@@ -426,9 +426,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLBand5: TRLBand
-      Left = 38
-      Top = 304
-      Width = 718
+      Left = 47
+      Top = 313
+      Width = 898
       Height = 18
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -500,9 +500,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLSubDetail1: TRLSubDetail
-      Left = 38
-      Top = 394
-      Width = 718
+      Left = 47
+      Top = 403
+      Width = 898
       Height = 59
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -514,7 +514,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand6: TRLBand
         Left = 0
         Top = 0
-        Width = 718
+        Width = 898
         Height = 19
         BandType = btTitle
         Borders.Sides = sdCustom
@@ -567,7 +567,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand7: TRLBand
         Left = 0
         Top = 19
-        Width = 718
+        Width = 898
         Height = 18
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -611,7 +611,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand8: TRLBand
         Left = 0
         Top = 37
-        Width = 718
+        Width = 898
         Height = 18
         BandType = btSummary
         Borders.Sides = sdCustom
@@ -655,9 +655,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLSubDetail2: TRLSubDetail
-      Left = 38
-      Top = 453
-      Width = 718
+      Left = 47
+      Top = 462
+      Width = 898
       Height = 446
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -669,7 +669,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand9: TRLBand
         Left = 0
         Top = 0
-        Width = 718
+        Width = 898
         Height = 17
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -699,7 +699,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand10: TRLBand
         Left = 0
         Top = 107
-        Width = 718
+        Width = 898
         Height = 35
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -718,7 +718,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel34: TRLLabel
           Left = 1
           Top = 0
-          Width = 716
+          Width = 896
           Height = 12
           Align = faTop
           Alignment = taCenter
@@ -735,7 +735,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand11: TRLBand
         Left = 0
         Top = 142
-        Width = 718
+        Width = 898
         Height = 105
         AutoSize = True
         Borders.Sides = sdCustom
@@ -747,7 +747,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel32: TRLLabel
           Left = 1
           Top = 0
-          Width = 716
+          Width = 896
           Height = 12
           Align = faTop
           Alignment = taCenter
@@ -764,7 +764,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel33: TRLLabel
           Left = 1
           Top = 12
-          Width = 716
+          Width = 896
           Height = 16
           Align = faTop
           Alignment = taCenter
@@ -781,7 +781,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel35: TRLLabel
           Left = 1
           Top = 28
-          Width = 716
+          Width = 896
           Height = 16
           Align = faTop
           Alignment = taCenter
@@ -798,7 +798,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel36: TRLLabel
           Left = 1
           Top = 44
-          Width = 716
+          Width = 896
           Height = 12
           Align = faTop
           Alignment = taCenter
@@ -814,7 +814,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object RLLabel37: TRLLabel
           Left = 1
           Top = 56
-          Width = 716
+          Width = 896
           Height = 16
           Align = faTop
           Alignment = taCenter
@@ -831,7 +831,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object lCancelada: TRLLabel
           Left = 1
           Top = 72
-          Width = 716
+          Width = 896
           Height = 16
           Align = faTop
           Alignment = taCenter
@@ -846,7 +846,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object rllFisco: TRLLabel
           Left = 1
           Top = 88
-          Width = 716
+          Width = 896
           Height = 16
           Align = faTop
           Alignment = taCenter
@@ -863,7 +863,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object rlbConsumidor: TRLBand
         Left = 0
         Top = 247
-        Width = 718
+        Width = 898
         Height = 44
         AutoSize = True
         Borders.Sides = sdCustom
@@ -875,7 +875,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object lTitConsumidor: TRLLabel
           Left = 1
           Top = 0
-          Width = 716
+          Width = 896
           Height = 11
           Align = faTop
           Alignment = taCenter
@@ -890,7 +890,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object lEnderecoConsumidor: TRLMemo
           Left = 1
           Top = 27
-          Width = 716
+          Width = 896
           Height = 16
           Align = faTop
           Alignment = taCenter
@@ -907,7 +907,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object lCPF_CNPJ_ID: TRLMemo
           Left = 1
           Top = 11
-          Width = 716
+          Width = 896
           Height = 16
           Align = faTop
           Alignment = taCenter
@@ -927,7 +927,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object rlbRodape: TRLBand
         Left = 0
         Top = 291
-        Width = 718
+        Width = 898
         Height = 173
         AutoSize = True
         BandType = btSummary
@@ -946,7 +946,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object lConsultaQRCode: TRLLabel
           Left = 1
           Top = 0
-          Width = 716
+          Width = 896
           Height = 12
           Align = faTop
           Alignment = taCenter
@@ -962,7 +962,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object imgQRCode: TRLImage
           Left = 1
           Top = 12
-          Width = 716
+          Width = 896
           Height = 133
           Align = faTop
           Center = True
@@ -971,7 +971,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object pGap05: TRLPanel
           Left = 1
           Top = 155
-          Width = 716
+          Width = 896
           Height = 17
           Align = faTop
           Font.Charset = DEFAULT_CHARSET
@@ -983,7 +983,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           object lSistema: TRLLabel
             Left = 0
             Top = 0
-            Width = 716
+            Width = 896
             Height = 10
             Align = faTop
             Alignment = taRightJustify
@@ -1001,7 +1001,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         object lProtocolo: TRLLabel
           Left = 1
           Top = 145
-          Width = 716
+          Width = 896
           Height = 10
           Align = faTop
           Alignment = taCenter
@@ -1018,7 +1018,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand15: TRLBand
         Left = 0
         Top = 17
-        Width = 718
+        Width = 898
         Height = 73
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -1163,7 +1163,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       object RLBand16: TRLBand
         Left = 0
         Top = 90
-        Width = 718
+        Width = 898
         Height = 17
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -1189,9 +1189,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLBand12: TRLBand
-      Left = 38
-      Top = 322
-      Width = 718
+      Left = 47
+      Top = 331
+      Width = 898
       Height = 18
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1235,9 +1235,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLBand13: TRLBand
-      Left = 38
-      Top = 340
-      Width = 718
+      Left = 47
+      Top = 349
+      Width = 898
       Height = 18
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1281,9 +1281,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLBand14: TRLBand
-      Left = 38
-      Top = 376
-      Width = 718
+      Left = 47
+      Top = 385
+      Width = 898
       Height = 18
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1326,9 +1326,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object RLBand17: TRLBand
-      Left = 38
-      Top = 358
-      Width = 718
+      Left = 47
+      Top = 367
+      Width = 898
       Height = 18
       BandType = btSummary
       Transparent = False
@@ -1368,9 +1368,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object rlbDivisaoRecibo: TRLBand
-      Left = 38
-      Top = 96
-      Width = 718
+      Left = 47
+      Top = 105
+      Width = 898
       Height = 16
       BandType = btHeader
       BeforePrint = rlbDivisaoReciboBeforePrint
@@ -1385,9 +1385,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
     end
     object rlbReciboHeader: TRLBand
-      Left = 38
-      Top = 38
-      Width = 718
+      Left = 47
+      Top = 47
+      Width = 898
       Height = 58
       AutoSize = True
       BandType = btHeader

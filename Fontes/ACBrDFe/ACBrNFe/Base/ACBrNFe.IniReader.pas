@@ -38,16 +38,16 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
+  ACBrDFe.RTC.IniReader,
   ACBrNFe.Classes,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   pcnConversaoNFe;
 
 type
   { TNFeIniReader }
 
-  TNFeIniReader = class
+  TNFeIniReader = class(TDFeRTCIniReader)
   private
     FNFe: TNFe;
     FVersaoDF: TpcnVersaoDF;
@@ -116,52 +116,6 @@ type
     procedure Ler_InfRespTec(AINIRec: TMemIniFile; infRespTec: TinfRespTec);
     procedure Ler_Defensivo(AINIRec: TMemIniFile; defensivo: TdefensivoCollection);
     procedure Ler_GuiaTransito(AINIRec: TMemIniFile; guiaTransito: TguiaTransito);
-
-    // Reforma Tributária
-    procedure Ler_gPagAntecipado(AINIRec: TMemIniFile; ASecao: String; AgPagAntecipado: TgPagAntecipado);
-    procedure Ler_gCompraGovRefDFe(AINIRec: TMemIniFile; ASecao: String; AgCompraGov: TgCompraGov);
-
-    procedure Ler_ISel(AINIRec: TMemIniFile; ISel: TgIS; Idx: Integer);
-    procedure Ler_IBSCBS(AINIRec: TMemIniFile; IBSCBS: TIBSCBS; Idx: Integer);
-    procedure Ler_IBSCBS_gIBSCBS(AINIRec: TMemIniFile; IBSCBS: TgIBSCBS; Idx: Integer);
-    procedure Ler_IBSCBS_gIBSCBSMono(AINIRec: TMemIniFile; IBSCBSMono: TgIBSCBSMono; Idx: Integer);
-
-    procedure Ler_IBSCBS_gMonoPadrao(AINIRec: TMemIniFile; gMonoPadrao: TgMonoPadrao; Idx: Integer);
-    procedure Ler_IBSCBS_gMonoReten(AINIRec: TMemIniFile; gMonoReten: TgMonoReten; Idx: Integer);
-    procedure Ler_IBSCBS_gMonoRet(AINIRec: TMemIniFile; gMonoRet: TgMonoRet; Idx: Integer);
-    procedure Ler_IBSCBS_gMonoDif(AINIRec: TMemIniFile; gMonoDif: TgMonoDif; Idx: Integer);
-
-    procedure Ler_IBSCBS_gTransfCred(AINIRec: TMemIniFile; gTransfCred: TgTransfCred; Idx: Integer);
-    procedure Ler_IBSCBS_gCredPresIBSZFM(AINIRec: TMemIniFile; gCredPresIBSZFM: TCredPresIBSZFM; Idx: Integer);
-
-    procedure Ler_IBSCBS_gAjusteCompet(AINIRec: TMemIniFile; gAjusteCompet: TgAjusteCompet; Idx: Integer);
-    procedure Ler_IBSCBS_gEstornoCred(AINIRec: TMemIniFile; gEstornoCred: TgEstornoCred; Idx: Integer);
-    procedure Ler_IBSCBS_gCredPresOper(AINIRec: TMemIniFile; gCredPresOper: TgCredPresOper; Idx: Integer);
-    procedure Ler_IBSCBS_gIBSCBSCredPres(AINIRec: TMemIniFile; IBSCredPres: TgIBSCBSCredPres;
-      const Grupo: string; Idx: Integer);
-
-    procedure Ler_IBSCBS_gIBSCBS_gIBSUF(AINIRec: TMemIniFile; gIBSUF: TgIBSUF; Idx: Integer);
-    procedure Ler_IBSCBS_gIBSCBS_gIBSMun(AINIRec: TMemIniFile; gIBSMun: TgIBSMun; Idx: Integer);
-    procedure Ler_IBSCBS_gIBSCBS_gCBS(AINIRec: TMemIniFile; gCBS: TgCBS; Idx: Integer);
-
-    procedure Ler_IBSCBS_gIBSCBS_gTribRegular(AINIRec: TMemIniFile;
-      gTribRegular: TgTribRegular; Idx: Integer);
-    procedure Ler_IBSCBS_gIBSCBS_gTribCompraGov(AINIRec: TMemIniFile;
-      gTribCompraGov: TgTribCompraGov; Idx: Integer);
-    procedure Ler_IBSCBS_gIBSCBS_gALCZFMCBS(AINIRec: TMemIniFile;
-      gALCZFMCBS: TgALCZFMCBS; Idx: Integer);
-
-    procedure Ler_Det_DFeReferenciado(AINIRec: TMemIniFile;
-      DFeReferenciado: TDFeReferenciado; Idx: Integer);
-
-    procedure Ler_ISTot(AINIRec: TMemIniFile; ISTot: TISTot);
-    procedure Ler_IBSCBSTot(AINIRec: TMemIniFile; IBSCBSTot: TIBSCBSTot);
-    procedure Ler_IBSCBSTot_gIBS(AINIRec: TMemIniFile; IBS: TgIBSTot);
-    procedure Ler_IBSCBSTot_gIBS_gIBSUFTot(AINIRec: TMemIniFile; gIBSUFTot: TgIBSUFTot);
-    procedure Ler_IBSCBSTot_gIBS_gIBSMunTot(AINIRec: TMemIniFile; gIBSMunTot: TgIBSMunTot);
-    procedure Ler_IBSCBSTot_gCBS(AINIRec: TMemIniFile; gCBS: TgCBSTot);
-    procedure Ler_IBSCBSTot_gMono(AINIRec: TMemIniFile; gMono: TgMono);
-    procedure Ler_IBSCBSTot_gEstornoCred(AINIRec: TMemIniFile; gEstornoCred: TgEstornoCred);
   public
     constructor Create(AOwner: TNFe); reintroduce;
 
@@ -255,16 +209,16 @@ begin
   Ide.dSaiEnt := StringToDateTime(AINIRec.ReadString( sSecao,'dhSaiEnt'  ,AINIRec.ReadString( sSecao,'dSaiEnt'  ,AINIRec.ReadString( sSecao,'Saida'  ,'0'))));
   Ide.hSaiEnt := StringToDateTime(AINIRec.ReadString( sSecao,'hSaiEnt','0'));
   Ide.dPrevEntrega := StringToDateTime(AINIRec.ReadString( sSecao,'dPrevEntrega','0'));
-  Ide.tpNF    := StrToTpNF(OK,AINIRec.ReadString( sSecao,'tpNF',AINIRec.ReadString( sSecao,'Tipo','1')));
+  Ide.tpNF    := StrToTpNF(AINIRec.ReadString( sSecao,'tpNF',AINIRec.ReadString( sSecao,'Tipo','1')));
   Ide.idDest  := StrToDestinoOperacao(OK,AINIRec.ReadString( sSecao,'idDest','1'));
-  Ide.tpImp   := StrToTpImp(  OK, AINIRec.ReadString( sSecao,'tpImp','1'));
-  Ide.tpEmis  := StrToTpEmis(OK, AINIRec.ReadString(sSecao, 'tpEmis', IntToStr(tpEmis)));
-  Ide.tpAmb   := StrToTpAmb(OK, AINIRec.ReadString(sSecao, 'tpAmb', IntToStr(Ambiente)));
+  Ide.tpImp   := StrToTpImp(AINIRec.ReadString( sSecao,'tpImp','1'));
+  Ide.tpEmis  := StrToTipoEmissao(AINIRec.ReadString(sSecao, 'tpEmis', IntToStr(tpEmis)));
+  Ide.tpAmb   := StrToTipoAmbiente(AINIRec.ReadString(sSecao, 'tpAmb', IntToStr(Ambiente)));
   Ide.finNFe   := StrToFinNFe( OK,AINIRec.ReadString( sSecao,'finNFe',AINIRec.ReadString( sSecao,'Finalidade','0')));
   Ide.indFinal := StrToConsumidorFinal(OK,AINIRec.ReadString( sSecao,'indFinal','0'));
   Ide.indPres  := StrToPresencaComprador(OK,AINIRec.ReadString( sSecao,'indPres','0'));
   Ide.indIntermed := StrToIndIntermed(OK, AINIRec.ReadString( sSecao,'indIntermed', ''));
-  Ide.procEmi  := StrToProcEmi(OK,AINIRec.ReadString( sSecao,'procEmi','0'));
+  Ide.procEmi  := StrToProcEmi(AINIRec.ReadString( sSecao,'procEmi','0'));
   Ide.verProc  := AINIRec.ReadString(  sSecao, 'verProc' ,'ACBrNFe');
   Ide.dhCont   := StringToDateTime(AINIRec.ReadString( sSecao,'dhCont'  ,'0'));
   Ide.xJust    := AINIRec.ReadString(  sSecao,'xJust' ,'' );
@@ -276,11 +230,8 @@ begin
   Ide.tpNFDebito := StrTotpNFDebito(AINIRec.ReadString(sSecao, 'tpNFDebito', ''));
   Ide.tpNFCredito := StrTotpNFCredito(AINIRec.ReadString(sSecao, 'tpNFCredito', ''));
 
-  Ide.gCompraGov.pRedutor := StringToFloatDef(AINIRec.ReadString(sSecao, 'pRedutor', ''), 0);
-  Ide.gCompraGov.tpEnteGov := StrTotpEnteGov(AINIRec.ReadString(sSecao, 'tpEnteGov', ''));
-  Ide.gCompraGov.tpOperGov := StrTotpOperGov(AINIRec.ReadString(sSecao, 'tpOperGov', ''));
-  Ler_gCompraGovRefDFe(AINIRec, sSecao, Ide.gCompraGov);
-  Ler_gPagAntecipado(AINIRec, sSecao, Ide.gPagAntecipado);
+  Ler_gCompraGov(AINIRec, Ide.gCompraGov);
+  Ler_gPagAntecipado(AINIRec, Ide.gPagAntecipado);
 end;
 
 procedure TNFeIniReader.Ler_NFReferencia(AINIRec: TMemIniFile;
@@ -418,14 +369,13 @@ end;
 procedure TNFeIniReader.Ler_Destinatario(AINIRec: TMemIniFile; Dest: TDest);
 var
   sSecao: string;
-  ok: Boolean;
 begin
   sSecao := IfThen( AINIRec.SectionExists('Destinatario'),'Destinatario','dest');
 
   Dest.idEstrangeiro     := AINIRec.ReadString(  sSecao,'idEstrangeiro','');
   Dest.CNPJCPF           := AINIRec.ReadString(  sSecao,'CNPJ'       ,AINIRec.ReadString(  sSecao,'CNPJCPF',AINIRec.ReadString(  sSecao,'CPF','')));
   Dest.xNome             := AINIRec.ReadString(  sSecao,'xNome'  ,AINIRec.ReadString(  sSecao,'NomeRazao'  ,''));
-  Dest.indIEDest         := StrToindIEDest(OK,AINIRec.ReadString( sSecao,'indIEDest','1'));
+  Dest.indIEDest         := StrToindIEDest(AINIRec.ReadString( sSecao,'indIEDest','1'));
   Dest.IE                := AINIRec.ReadString(  sSecao,'IE'         ,'');
   Dest.IM                := AINIRec.ReadString(  sSecao,'IM'         ,'');
   Dest.ISUF              := AINIRec.ReadString(  sSecao,'ISUF'       ,'');
@@ -589,7 +539,7 @@ begin
       Imposto.vTotTrib := StringToFloatDef( AINIRec.ReadString(sSecao,'vTotTrib','') ,0);
 
       // Reforma Tributária
-      Prod.indBemMovelUsado := StrToTIndicadorEx(OK, AINIRec.ReadString(sSecao, 'indBemMovelUsado', ''));
+      Prod.indBemMovelUsado := StrToTIndicadorEx(AINIRec.ReadString(sSecao, 'indBemMovelUsado', ''));
 
       vItem := StringToFloatDef( AINIRec.ReadString(sSecao,'vItem','') ,0);
 
@@ -616,7 +566,7 @@ begin
       Ler_ProdutoObsFiscoItem(AINIRec, obsFisco, I);
 
       // Reforma Tributária
-      Ler_Det_DFeReferenciado(AINIRec, DFeReferenciado, I);
+      Ler_DFeReferenciado(AINIRec, DFeReferenciado, I);
     end;
 
     Inc( I );
@@ -1032,7 +982,7 @@ begin
 
   // Reforma Tributária
   Ler_ISel(AINIRec, Imposto.ISel, Idx);
-  Ler_IBSCBS(AINIRec, Imposto.IBSCBS, Idx);
+  Ler_IBSCBS(AINIRec, Imposto.IBSCBS, Idx, -1);
 end;
 
 procedure TNFeIniReader.Ler_ImpostoICMS(AINIRec: TMemIniFile; ICMS: TICMS;
@@ -1048,9 +998,9 @@ begin
 
   if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
   begin
-    ICMS.orig       := StrToOrig(     OK, AINIRec.ReadString(sSecao,'orig'    ,AINIRec.ReadString(sSecao,'Origem'    ,'0' ) ));
-    ICMS.CST        := StrToCSTICMS(  OK, AINIRec.ReadString(sSecao,'CST'     ,'00'));
-    ICMS.CSOSN      := StrToCSOSNIcms(OK, AINIRec.ReadString(sSecao,'CSOSN'   ,''  ));
+    ICMS.orig       := StrToOrig(AINIRec.ReadString(sSecao,'orig'    ,AINIRec.ReadString(sSecao,'Origem'    ,'0' ) ));
+    ICMS.CST        := StrToCSTICMS(AINIRec.ReadString(sSecao,'CST'     ,'00'));
+    ICMS.CSOSN      := StrToCSOSNIcms(AINIRec.ReadString(sSecao,'CSOSN'   ,''  ));
     ICMS.modBC      := StrTomodBC(    OK, AINIRec.ReadString(sSecao,'modBC'   ,AINIRec.ReadString(sSecao,'Modalidade','0' ) ));
     ICMS.pRedBC     := StringToFloatDef( AINIRec.ReadString(sSecao,'pRedBC'   ,AINIRec.ReadString(sSecao,'PercentualReducao','')) ,0);
     ICMS.cBenefRBC  := AINIRec.ReadString(sSecao, 'cBenefRBC', '');
@@ -1114,7 +1064,7 @@ begin
     ICMS.motRedAdRem := StrTomotRedAdRem(OK, AINIRec.ReadString(sSecao,'motRedAdRem','0'));
     ICMS.qBCMonoRet := StringToFloatDef( AINIRec.ReadString(sSecao,'qBCMonoRet','') ,0);
     ICMS.vICMSMonoOp := StringToFloatDef( AINIRec.ReadString(sSecao,'vICMSMonoOp','') ,0);
-    ICMS.indDeduzDeson := StrToTIndicadorEx(OK, AINIRec.ReadString(sSecao,'indDeduzDeson', ''));
+    ICMS.indDeduzDeson := StrToTIndicadorEx(AINIRec.ReadString(sSecao,'indDeduzDeson', ''));
   end;
 end;
 
@@ -1192,21 +1142,17 @@ procedure TNFeIniReader.Ler_ImpostoPIS(AINIRec: TMemIniFile; PIS: TPIS;
   Idx: Integer);
 var
   sSecao, sFim: string;
-  Ok: Boolean;
 begin
   sSecao := 'PIS'+IntToStrZero(Idx,3);
   sFim := AINIRec.ReadString( sSecao,'CST','FIM');
   if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
   begin
-    PIS.CST :=  StrToCSTPIS(OK, AINIRec.ReadString( sSecao,'CST',''));
-    if OK then
-    begin
-      PIS.vBC       := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC'      ,AINIRec.ReadString(sSecao,'ValorBase'    ,'')) ,0);
-      PIS.pPIS      := StringToFloatDef( AINIRec.ReadString(sSecao,'pPIS'     ,AINIRec.ReadString(sSecao,'Aliquota'     ,'')) ,0);
-      PIS.qBCProd   := StringToFloatDef( AINIRec.ReadString(sSecao,'qBCProd'  ,AINIRec.ReadString(sSecao,'Quantidade'   ,'')) ,0);
-      PIS.vAliqProd := StringToFloatDef( AINIRec.ReadString(sSecao,'vAliqProd',AINIRec.ReadString(sSecao,'ValorAliquota','')) ,0);
-      PIS.vPIS      := StringToFloatDef( AINIRec.ReadString(sSecao,'vPIS'     ,AINIRec.ReadString(sSecao,'Valor'        ,'')) ,0);
-    end;
+    PIS.CST :=  StrToCSTPIS(AINIRec.ReadString( sSecao,'CST',''));
+    PIS.vBC       := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC'      ,AINIRec.ReadString(sSecao,'ValorBase'    ,'')) ,0);
+    PIS.pPIS      := StringToFloatDef( AINIRec.ReadString(sSecao,'pPIS'     ,AINIRec.ReadString(sSecao,'Aliquota'     ,'')) ,0);
+    PIS.qBCProd   := StringToFloatDef( AINIRec.ReadString(sSecao,'qBCProd'  ,AINIRec.ReadString(sSecao,'Quantidade'   ,'')) ,0);
+    PIS.vAliqProd := StringToFloatDef( AINIRec.ReadString(sSecao,'vAliqProd',AINIRec.ReadString(sSecao,'ValorAliquota','')) ,0);
+    PIS.vPIS      := StringToFloatDef( AINIRec.ReadString(sSecao,'vPIS'     ,AINIRec.ReadString(sSecao,'Valor'        ,'')) ,0);
   end;
 end;
 
@@ -1236,21 +1182,17 @@ procedure TNFeIniReader.Ler_ImpostoCOFINS(AINIRec: TMemIniFile; COFINS: TCOFINS;
   Idx: Integer);
 var
   sSecao, sFim: string;
-  Ok: Boolean;
 begin
   sSecao := 'COFINS'+IntToStrZero(Idx,3);
   sFim     := AINIRec.ReadString( sSecao,'CST','FIM');
   if ((sFim <> 'FIM') and ( Length(sFim) > 0 )) then
   begin
-    COFINS.CST := StrToCSTCOFINS(OK, AINIRec.ReadString( sSecao,'CST',''));
-    if OK then
-    begin
-      COFINS.vBC       := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC'     ,AINIRec.ReadString(sSecao,'ValorBase'      ,'')) ,0);
-      COFINS.pCOFINS   := StringToFloatDef( AINIRec.ReadString(sSecao,'pCOFINS' ,AINIRec.ReadString(sSecao,'Aliquota'  ,'')) ,0);
-      COFINS.qBCProd   := StringToFloatDef( AINIRec.ReadString(sSecao,'qBCProd' ,AINIRec.ReadString(sSecao,'Quantidade'  ,'')) ,0);
-      COFINS.vAliqProd := StringToFloatDef( AINIRec.ReadString(sSecao,'vAliqProd',AINIRec.ReadString(sSecao,'ValorAliquota','')) ,0);
-      COFINS.vCOFINS   := StringToFloatDef( AINIRec.ReadString(sSecao,'vCOFINS'  ,AINIRec.ReadString(sSecao,'Valor'  ,'')) ,0);
-    end;
+    COFINS.CST := StrToCSTCOFINS(AINIRec.ReadString( sSecao,'CST',''));
+    COFINS.vBC       := StringToFloatDef( AINIRec.ReadString(sSecao,'vBC'     ,AINIRec.ReadString(sSecao,'ValorBase'      ,'')) ,0);
+    COFINS.pCOFINS   := StringToFloatDef( AINIRec.ReadString(sSecao,'pCOFINS' ,AINIRec.ReadString(sSecao,'Aliquota'  ,'')) ,0);
+    COFINS.qBCProd   := StringToFloatDef( AINIRec.ReadString(sSecao,'qBCProd' ,AINIRec.ReadString(sSecao,'Quantidade'  ,'')) ,0);
+    COFINS.vAliqProd := StringToFloatDef( AINIRec.ReadString(sSecao,'vAliqProd',AINIRec.ReadString(sSecao,'ValorAliquota','')) ,0);
+    COFINS.vCOFINS   := StringToFloatDef( AINIRec.ReadString(sSecao,'vCOFINS'  ,AINIRec.ReadString(sSecao,'Valor'  ,'')) ,0);
   end;
 end;
 
@@ -1307,7 +1249,7 @@ begin
       ISSQN.cMun        := AINIRec.ReadInteger(sSecao,'cMun',0);
       ISSQN.cPais       := AINIRec.ReadInteger(sSecao,'cPais',1058);
       ISSQN.nProcesso   := AINIRec.ReadString(sSecao,'nProcesso','');
-      ISSQN.indIncentivo := StrToindIncentivo( OK,AINIRec.ReadString(sSecao,'indIncentivo',''));
+      ISSQN.indIncentivo := StrToindIncentivo(AINIRec.ReadString(sSecao,'indIncentivo',''));
     end;
   end;
 end;
@@ -1375,7 +1317,6 @@ end;
 procedure TNFeIniReader.Ler_TotalISSQNTot(AINIRec: TMemIniFile;
   ISSQNtot: TISSQNtot);
 var
-  Ok: Boolean;
   aValor: string;
 begin
   ISSQNtot.vServ  := StringToFloatDef(  AINIRec.ReadString('ISSQNtot','vServ',AINIRec.ReadString('ISSQNtot','ValorServicos','')) ,0) ;
@@ -1393,7 +1334,7 @@ begin
   aValor := AINIRec.ReadString('ISSQNtot', 'cRegTrib', '0');
   if aValor = '' then
     aValor := '0';
-  ISSQNtot.cRegTrib := StrToRegTribISSQN(OK, aValor);
+  ISSQNtot.cRegTrib := StrToRegTribISSQN(aValor);
 end;
 
 procedure TNFeIniReader.Ler_TotalRetTributavel(AINIRec: TMemIniFile;
@@ -1512,48 +1453,6 @@ begin
   Fat.vLiq  := StringToFloatDef( AINIRec.ReadString(sSecao,'vLiq' ,AINIRec.ReadString(sSecao,'ValorLiquido' ,'')) ,0);
 end;
 
-procedure TNFeIniReader.Ler_gPagAntecipado(AINIRec: TMemIniFile; ASecao: String;
-  AgPagAntecipado: TgPagAntecipado);
-var
-  I: Integer;
-  sSecao, sFim: string;
-begin
-  I := 1;
-  with AgPagAntecipado do
-    while true do
-    begin
-      sSecao   := 'refNFe' + IntToStrZero(I,2);
-      sFim := AINIRec.ReadString(ASecao, sSecao, 'FIM');
-      if (sFim = 'FIM') or (Length(sFim) <= 0) then
-        break;
-
-      with refNFe.New do
-        refDFEChave := sFim;
-
-      Inc(I);
-    end;
-end;
-
-procedure TNFeIniReader.Ler_gCompraGovRefDFe(AINIRec: TMemIniFile; ASecao: String; AgCompraGov: TgCompraGov);
-var
-  I: Integer;
-  sSecao, sFim: string;
-begin
-  I := 1;
-  with AgCompraGov do
-    while true do
-    begin
-      sFim := AINIRec.ReadString(ASecao, Format('refDFeAnt%s', [IntToStrZero(I, 2)]), 'FIM');
-      if ( sFim = 'FIM') then
-        break;
-
-      with refDFeAnt.New do
-        refDFEChave := sFim;
-
-      Inc(I);
-    end;
-end;
-
 procedure TNFeIniReader.Ler_Duplicata(AINIRec: TMemIniFile;
   Dup: TDupCollection);
 var
@@ -1610,7 +1509,7 @@ begin
       // a tag <indPag> não deve ser gerada.
       indPag:= StrToIndpagEX(AINIRec.ReadString(sSecao, 'indPag', ''));
 
-      tpIntegra  := StrTotpIntegra(OK,AINIRec.ReadString(sSecao,'tpIntegra',''));
+      tpIntegra  := StrTotpIntegra(AINIRec.ReadString(sSecao,'tpIntegra',''));
       CNPJ  := AINIRec.ReadString(sSecao,'CNPJ','');
       tBand := StrToBandeiraCartao(OK,AINIRec.ReadString(sSecao,'tBand',''));
       cAut  := AINIRec.ReadString(sSecao,'cAut','');
@@ -1877,517 +1776,6 @@ begin
     guiaTransito.tpGuia := StrToTtpGuia(AINIRec.ReadString(sSecao, 'tpGuia', ''));
     guiaTransito.serieGuia := AINIRec.ReadString(sSecao, 'serieGuia', '');
     guiaTransito.nGuia := AINIRec.ReadString(sSecao, 'nGuia', '0');
-  end;
-end;
-
-// Reforma Tributária
-procedure TNFeIniReader.Ler_ISel(AINIRec: TMemIniFile; ISel: TgIS;
-  Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'IS' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    //Usar string até a publicação de uma tabela de CSTs oficial para o IS
-    //ISel.CSTIS := StrToCSTIS(AINIRec.ReadString(sSecao, 'CSTIS', ''));
-    ISel.CSTIS := AINIRec.ReadString(sSecao, 'CSTIS', '');
-    ISel.cClassTribIS := AINIRec.ReadString(sSecao, 'cClassTribIS', '');
-    ISel.vBCIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vBCIS', ''), 0);
-    ISel.pIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pIS', ''), 0);
-    ISel.adRemIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemIS', ''), 0);
-    ISel.uTrib := AINIRec.ReadString(sSecao, 'uTrib', '');
-    ISel.qTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'qTrib', ''), 0);
-    ISel.vIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIS', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS(AINIRec: TMemIniFile; IBSCBS: TIBSCBS;
-  Idx: Integer);
-var
-  sSecao: string;
-  Ok: Boolean;
-begin
-  sSecao := 'IBSCBS' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    IBSCBS.CST := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'CST', ''));
-    IBSCBS.cClassTrib := AINIRec.Readstring(sSecao, 'cClassTrib', '');
-    IBSCBS.indDoacao := pcnConversao.StrToTIndicadorEx(ok, AINIRec.ReadString(sSecao, 'indDoacao', ''));
-
-    Ler_IBSCBS_gIBSCBS(AINIRec, IBSCBS.gIBSCBS, Idx);
-    Ler_IBSCBS_gIBSCBSMono(AINIRec, IBSCBS.gIBSCBSMono, Idx);
-    Ler_IBSCBS_gTransfCred(AINIRec, IBSCBS.gTransfCred, Idx);
-    Ler_IBSCBS_gAjusteCompet(AINIRec, IBSCBS.gAjusteCompet, Idx);
-    Ler_IBSCBS_gEstornoCred(AINIRec, IBSCBS.gEstornoCred, Idx);
-    Ler_IBSCBS_gCredPresOper(AINIRec, IBSCBS.gCredPresOper, Idx);
-    Ler_IBSCBS_gCredPresIBSZFM(AINIRec, IBSCBS.gCredPresIBSZFM, Idx);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS(AINIRec: TMemIniFile;
-  IBSCBS: TgIBSCBS; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gIBSCBS' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    IBSCBS.vBC := StringToFloatDef(AINIRec.ReadString(sSecao, 'vBC', ''), 0);
-    IBSCBS.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBS', ''), 0);
-
-    Ler_IBSCBS_gIBSCBS_gIBSUF(AINIRec, IBSCBS.gIBSUF, Idx);
-    Ler_IBSCBS_gIBSCBS_gIBSMun(AINIRec, IBSCBS.gIBSMun, Idx);
-    Ler_IBSCBS_gIBSCBS_gCBS(AINIRec, IBSCBS.gCBS, Idx);
-    Ler_IBSCBS_gIBSCBS_gALCZFMCBS(AINIRec, IBSCBS.gCBS.gALCZFMCBS, Idx);
-    Ler_IBSCBS_gIBSCBS_gTribRegular(AINIRec, IBSCBS.gTribRegular, Idx);
-    Ler_IBSCBS_gIBSCBS_gTribCompraGov(AINIRec, IBSCBS.gTribCompraGov, Idx);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gIBSUF(AINIRec: TMemIniFile;
-  gIBSUF: TgIBSUF; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gIBSUF' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gIBSUF.pIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'pIBSUF', ''), 0);
-    gIBSUF.vIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSUF', ''), 0);
-
-    gIBSUF.gDif.pDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDif', ''), 0);
-    gIBSUF.gDif.vDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDif', ''), 0);
-
-    gIBSUF.gDevTrib.pDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDevTrib', ''), 0);
-    gIBSUF.gDevTrib.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
-
-    gIBSUF.gRed.pRedAliq := StringToFloatDef(AINIRec.ReadString(sSecao, 'pRedAliq', ''), 0);
-    gIBSUF.gRed.pAliqEfet := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqEfet', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gIBSMun(AINIRec: TMemIniFile;
-  gIBSMun: TgIBSMun; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gIBSMun' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gIBSMun.pIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'pIBSMun', ''), 0);
-    gIBSMun.vIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMun', ''), 0);
-
-    gIBSMun.gDif.pDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDif', ''), 0);
-    gIBSMun.gDif.vDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDif', ''), 0);
-
-    gIBSMun.gDevTrib.pDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDevTrib', ''), 0);
-    gIBSMun.gDevTrib.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
-
-    gIBSMun.gRed.pRedAliq := StringToFloatDef(AINIRec.ReadString(sSecao, 'pRedAliq', ''), 0);
-    gIBSMun.gRed.pAliqEfet := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqEfet', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gCBS(AINIRec: TMemIniFile;
-  gCBS: TgCBS; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gCBS' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gCBS.pCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pCBS', ''), 0);
-    gCBS.vCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBS', ''), 0);
-
-    gCBS.gDif.pDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDif', ''), 0);
-    gCBS.gDif.vDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDif', ''), 0);
-
-    gCBS.gDevTrib.pDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDevTrib', ''), 0);
-    gCBS.gDevTrib.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
-
-    gCBS.gRed.pRedAliq := StringToFloatDef(AINIRec.ReadString(sSecao, 'pRedAliq', ''), 0);
-    gCBS.gRed.pAliqEfet := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqEfet', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gTribRegular(AINIRec: TMemIniFile;
-  gTribRegular: TgTribRegular; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gTribRegular' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gTribRegular.CSTReg := StrToCSTIBSCBS(AINIRec.ReadString(sSecao, 'CSTReg', ''));
-    gTribRegular.cClassTribReg := AINIRec.ReadString(sSecao, 'cClassTribReg', '');
-
-    gTribRegular.pAliqEfetRegIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqEfetRegIBSUF', ''), 0);
-    gTribRegular.vTribRegIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribRegIBSUF', ''), 0);
-    gTribRegular.pAliqEfetRegIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqEfetRegIBSMun', ''), 0);
-    gTribRegular.vTribRegIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribRegIBSMun', ''), 0);
-    gTribRegular.pAliqEfetRegCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqEfetRegCBS', ''), 0);
-    gTribRegular.vTribRegCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribRegCBS', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gAjusteCompet(AINIRec: TMemIniFile;
-  gAjusteCompet: TgAjusteCompet; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gAjusteCompet' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gAjusteCompet.competApur := StringToDateTime(AINIRec.ReadString( sSecao,'competApur','0'));
-    gAjusteCompet.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBS', ''), 0);
-    gAjusteCompet.vCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBS', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gEstornoCred(AINIRec: TMemIniFile;
-  gEstornoCred: TgEstornoCred; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gEstornoCred' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gEstornoCred.vIBSEstCred := StringToFloatDef(AINIRec.ReadString(sSecao,'vIBSEstCred','') ,0);
-    gEstornoCred.vCBSEstCred := StringToFloatDef(AINIRec.ReadString(sSecao,'vCBSEstCred','') ,0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gCredPresOper(AINIRec: TMemIniFile;
-  gCredPresOper: TgCredPresOper; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gCredPresOper' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gCredPresOper.vBCCredPres := StringToFloatDef(AINIRec.ReadString(sSecao,'vBCCredPres','') ,0);
-    gCredPresOper.cCredPres := StrTocCredPres(AINIRec.ReadString(sSecao, 'cCredPres', ''));
-
-    Ler_IBSCBS_gIBSCBSCredPres(AINIRec, gCredPresOper.gIBSCredPres, 'gIBSCredPres', Idx);
-    Ler_IBSCBS_gIBSCBSCredPres(AINIRec, gCredPresOper.gCBSCredPres, 'gCBSCredPres', Idx);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBSCredPres(
-  AINIRec: TMemIniFile; IBSCredPres: TgIBSCBSCredPres; const Grupo: string;
-  Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := Grupo + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    IBSCredPres.pCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'pCredPres', ''), 0);
-    IBSCredPres.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
-    IBSCredPres.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gTribCompraGov(AINIRec: TMemIniFile;
-  gTribCompraGov: TgTribCompraGov; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gTribCompraGov' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gTribCompraGov.pAliqIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqIBSUF', ''), 0);
-    gTribCompraGov.vTribIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribIBSUF', ''), 0);
-    gTribCompraGov.pAliqIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqIBSMun', ''), 0);
-    gTribCompraGov.vTribIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribIBSMun', ''), 0);
-    gTribCompraGov.pAliqCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pAliqCBS', ''), 0);
-    gTribCompraGov.vTribCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTribCBS', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBS_gALCZFMCBS(AINIRec: TMemIniFile;
-  gALCZFMCBS: TgALCZFMCBS; Idx: Integer);
-var
-  sSecao, lValor: string;
-begin
-  sSecao := 'gALCZFMCBS' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gALCZFMCBS.nProcSuframa := AINIRec.ReadString(sSecao, 'nProcSuframa', '');
-    gALCZFMCBS.pAliqEfetRegCBS := AINIRec.ReadFloat(sSecao, 'pAliqEfetRegCBS', 0);
-
-    lValor := AINIRec.ReadString(sSecao, 'tpALCZFMCBS', '');
-    if lValor <> '' then
-      gALCZFMCBS.tpALCZFMCBS := StrTotpALCZFMCBS(lValor);
-
-    gALCZFMCBS.vTribRegCBS := AINIRec.ReadFloat(sSecao, 'vTribRegCBS', 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gIBSCBSMono(AINIRec: TMemIniFile;
-  IBSCBSMono: TgIBSCBSMono; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gIBSCBSMono' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    IBSCBSMono.vTotIBSMonoItem := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTotIBSMonoItem', ''), 0);
-    IBSCBSMono.vTotCBSMonoItem := StringToFloatDef(AINIRec.ReadString(sSecao, 'vTotCBSMonoItem', ''), 0);
-
-    Ler_IBSCBS_gMonoPadrao(AINIRec, IBSCBSMono.gMonoPadrao, Idx);
-    Ler_IBSCBS_gMonoReten(AINIRec, IBSCBSMono.gMonoReten, Idx);
-    Ler_IBSCBS_gMonoRet(AINIRec, IBSCBSMono.gMonoRet, Idx);
-    Ler_IBSCBS_gMonoDif(AINIRec, IBSCBSMono.gMonoDif, Idx);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gMonoPadrao(AINIRec: TMemIniFile;
-  gMonoPadrao: TgMonoPadrao; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gMonoPadrao' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gMonoPadrao.qBCMono := StringToFloatDef(AINIRec.ReadString(sSecao, 'qBCMono', ''), 0);
-    gMonoPadrao.adRemIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemIBS', ''), 0);
-    gMonoPadrao.adRemCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemCBS', ''), 0);
-    gMonoPadrao.vIBSMono := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMono', ''), 0);
-    gMonoPadrao.vCBSMono := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBSMono', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gMonoReten(AINIRec: TMemIniFile;
-  gMonoReten: TgMonoReten; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gMonoReten' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gMonoReten.qBCMonoReten := StringToFloatDef(AINIRec.ReadString(sSecao, 'qBCMonoReten', ''), 0);
-    gMonoReten.adRemIBSReten := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemIBSReten', ''), 0);
-    gMonoReten.vIBSMonoReten := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMonoReten', ''), 0);
-    gMonoReten.adRemCBSReten := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemCBSReten', ''), 0);
-    gMonoReten.vCBSMonoReten := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBSMonoReten', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gMonoRet(AINIRec: TMemIniFile;
-  gMonoRet: TgMonoRet; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gMonoRet' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gMonoRet.qBCMonoRet := StringToFloatDef(AINIRec.ReadString(sSecao, 'qBCMonoRet', ''), 0);
-    gMonoRet.adRemIBSRet := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemIBSRet', ''), 0);
-    gMonoRet.vIBSMonoRet := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMonoRet', ''), 0);
-    gMonoRet.adRemCBSRet := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemCBSRet', ''), 0);
-    gMonoRet.vCBSMonoRet := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBSMonoRet', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gMonoDif(AINIRec: TMemIniFile;
-  gMonoDif: TgMonoDif; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gMonoDif' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gMonoDif.pDifIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDifIBS', ''), 0);
-    gMonoDif.vIBSMonoDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMonoDif', ''), 0);
-    gMonoDif.pDifCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pDifCBS', ''), 0);
-    gMonoDif.vCBSMonoDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBSMonoDif', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gTransfCred(AINIRec: TMemIniFile;
-  gTransfCred: TgTransfCred; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gTransfCred' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gTransfCred.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBS', ''), 0);
-    gTransfCred.vCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBS', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBS_gCredPresIBSZFM(AINIRec: TMemIniFile;
-  gCredPresIBSZFM: TCredPresIBSZFM; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'gCredPresIBSZFM' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gCredPresIBSZFM.competApur := StringToDateTime(AINIRec.ReadString( sSecao,'competApur','0'));
-    gCredPresIBSZFM.tpCredPresIBSZFM := StrToTpCredPresIBSZFM(AINIRec.ReadString(sSecao, 'tpCredPresIBSZFM', ''));
-    gCredPresIBSZFM.vCredPresIBSZFM := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresIBSZFM', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_Det_DFeReferenciado(AINIRec: TMemIniFile;
-  DFeReferenciado: TDFeReferenciado; Idx: Integer);
-var
-  sSecao: string;
-begin
-  sSecao := 'DFeReferenciado' + IntToStrZero(Idx, 3);
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    DFeReferenciado.chaveAcesso := AINIRec.ReadString(sSecao, 'chaveAcesso', '');
-    DFeReferenciado.nItem := AINIRec.ReadInteger(sSecao, 'nItem', 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_ISTot(AINIRec: TMemIniFile; ISTot: TISTot);
-var
-  sSecao: string;
-begin
-  sSecao := 'ISTot';
-
-  if AINIRec.SectionExists(sSecao) then
-    ISTot.vIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIS', ''), 0);
-end;
-
-procedure TNFeIniReader.Ler_IBSCBSTot(AINIRec: TMemIniFile;
-  IBSCBSTot: TIBSCBSTot);
-var
-  sSecao: string;
-begin
-  sSecao := 'IBSCBSTot';
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    IBSCBSTot.vBCIBSCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vBCIBSCBS', ''), 0);
-
-    Ler_IBSCBSTot_gIBS(AINIRec, IBSCBSTot.gIBS);
-    Ler_IBSCBSTot_gCBS(AINIRec, IBSCBSTot.gCBS);
-    Ler_IBSCBSTot_gMono(AINIRec, IBSCBSTot.gMono);
-    Ler_IBSCBSTot_gEstornoCred(AINIRec, IBSCBSTot.gEstornoCred);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBSTot_gIBS(AINIRec: TMemIniFile; IBS: TgIBSTot);
-var
-  sSecao: string;
-begin
-  sSecao := 'gIBS';
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    IBS.vIBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBS', ''), 0);
-    IBS.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
-    IBS.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
-
-    Ler_IBSCBSTot_gIBS_gIBSUFTot(AINIRec, IBS.gIBSUFTot);
-    Ler_IBSCBSTot_gIBS_gIBSMunTot(AINIRec, IBS.gIBSMunTot);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBSTot_gIBS_gIBSUFTot(AINIRec: TMemIniFile;
-  gIBSUFTot: TgIBSUFTot);
-var
-  sSecao: string;
-begin
-  sSecao := 'gIBSUFTot';
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gIBSUFTot.vDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDif', ''), 0);
-    gIBSUFTot.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
-    gIBSUFTot.vIBSUF := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSUF', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBSTot_gIBS_gIBSMunTot(AINIRec: TMemIniFile;
-  gIBSMunTot: TgIBSMunTot);
-var
-  sSecao: string;
-begin
-  sSecao := 'gIBSMunTot';
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gIBSMunTot.vDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDif', ''), 0);
-    gIBSMunTot.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
-    gIBSMunTot.vIBSMun := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMun', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBSTot_gCBS(AINIRec: TMemIniFile;
-  gCBS: TgCBSTot);
-var
-  sSecao: string;
-begin
-  sSecao := 'gCBSTot';
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gCBS.vDif := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDif', ''), 0);
-    gCBS.vDevTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'vDevTrib', ''), 0);
-    gCBS.vCBS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBS', ''), 0);
-    gCBS.vCredPres := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPres', ''), 0);
-    gCBS.vCredPresCondSus := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCredPresCondSus', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBSTot_gMono(AINIRec: TMemIniFile;
-  gMono: TgMono);
-var
-  sSecao: string;
-begin
-  sSecao := 'gMono';
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gMono.vIBSMono := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMono', ''), 0);
-    gMono.vCBSMono := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBSMono', ''), 0);
-    gMono.vIBSMonoReten := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMonoReten', ''), 0);
-    gMono.vCBSMonoReten := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBSMonoReten', ''), 0);
-    gMono.vIBSMonoRet := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIBSMonoRet', ''), 0);
-    gMono.vCBSMonoRet := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCBSMonoRet', ''), 0);
-  end;
-end;
-
-procedure TNFeIniReader.Ler_IBSCBSTot_gEstornoCred(AINIRec: TMemIniFile;
-  gEstornoCred: TgEstornoCred);
-var
-  sSecao: string;
-begin
-  sSecao := 'gEstornoCredTot';
-
-  if AINIRec.SectionExists(sSecao) then
-  begin
-    gEstornoCred.vIBSEstCred := StringToFloatDef(AINIRec.ReadString(sSecao,'vIBSEstCred',''), 0);
-    gEstornoCred.vCBSEstCred := StringToFloatDef(AINIRec.ReadString(sSecao,'vCBSEstCred',''), 0);
   end;
 end;
 

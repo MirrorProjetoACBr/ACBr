@@ -44,7 +44,6 @@ uses
    System.Contnrs,
   {$IfEnd}
   ACBrBase,
-  pcnConversao,
   pcnConversaoNFe,
   ACBrXmlBase,
   ACBrDFe.Conversao;
@@ -73,7 +72,7 @@ type
   TRetAdmCSCNFCe = class(TObject)
   private
     Fversao: string;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FindOP: TpcnIndOperacao;
     FcStat: Integer;
     FxMotivo: string;
@@ -85,7 +84,7 @@ type
     function LerXml: Boolean;
 
     property versao: string                   read Fversao   write Fversao;
-    property tpAmb: TpcnTipoAmbiente          read FtpAmb    write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente         read FtpAmb    write FtpAmb;
     property indOP: TpcnIndOperacao           read FindOP    write FindOP;
     property cStat: Integer                   read FcStat    write FcStat;
     property xMotivo: string                  read FxMotivo  write FxMotivo;
@@ -163,7 +162,7 @@ begin
       if ANode <> nil then
       begin
         versao := ObterConteudoTag(ANode.Attributes.Items['versao']);
-        tpAmb := StrToTpAmb(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
+        tpAmb := StrToTipoAmbiente(ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAmb'), tcStr));
         indOp := StrToIndOperacao(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('indOp'), tcStr));
         cStat := ObterConteudoTag(ANode.Childrens.FindAnyNs('cStat'), tcInt);
         xMotivo := ObterConteudoTag(ANode.Childrens.FindAnyNs('xMotivo'), tcStr);

@@ -37,7 +37,10 @@ unit ACBrNFe.JSONReader;
 interface
 
 uses
-  Classes, SysUtils, ACBrJSON, ACBrNFe.Classes;
+  Classes, SysUtils,
+  ACBrJSON,
+  ACBrDFe.RTC.Classes,
+  ACBrNFe.Classes;
 
 type
   { TNFeJSONReader }
@@ -123,17 +126,19 @@ type
     procedure Ler_IBSCBS(const AJSONObject: TACBrJSONObject; AIBSCBS: TIBSCBS);
     procedure Ler_IBSCBS_gIBSCBS(const AJSONObject: TACBrJSONObject; AGIBSCBS: TgIBSCBS);
     procedure Ler_IBSCBS_gIBSCBSMono(const AJSONObject: TACBrJSONObject; AIBSCBSMono: TgIBSCBSMono);
+    {
     procedure Ler_IBSCBS_gIBSCBSMono_gMonoPadrao(const AJSONObject: TACBrJSONObject; AGMonoPadrao: TgMonoPadrao);
     procedure Ler_IBSCBS_gIBSCBSMono_gMonoReten(const AJSONObject: TACBrJSONObject; AGMonoReten: TgMonoReten);
     procedure Ler_IBSCBS_gIBSCBSMono_gMonoRet(const AJSONObject: TACBrJSONObject; AGMonoRet: TgMonoRet);
     procedure Ler_IBSCBS_gIBSCBSMono_gMonoDif(const AJSONObject: TACBrJSONObject; AGMonoDif: TgMonoDif);
+    }
     procedure Ler_IBSCBS_gTransfCred(const AJSONObject: TACBrJSONObject; AGTransfCred: TgTransfCred);
     procedure Ler_IBSCBS_gCredPresIBSZFM(const AJSONObject: TACBrJSONObject; AGCredPresIBSZFM: TCredPresIBSZFM);
-    procedure Ler_IBSCBS_gIBSCBS_gIBSUF(const AJSONObject: TACBrJSONObject; AIBSUF: TgIBSUF);
+    procedure Ler_IBSCBS_gIBSCBS_gIBSUF(const AJSONObject: TACBrJSONObject; AIBSUF: TgIBSUFValores);
     procedure Ler_IBSCBS_gIBSCBS_gIBSCBSUFMun_gDevTrib(const AJSONObject: TACBrJSONObject; AGDevTrib: TgDevTrib);
     procedure Ler_IBSCBS_gIBSCBS_gIBSCBSUFMun_gRed(const AJSONObject: TACBrJSONObject; AGRed: TgRed);
-    procedure Ler_IBSCBS_gIBSCBS_gIBSMun(const AJSONObject: TACBrJSONObject; AIBSMun: TgIBSMun);
-    procedure Ler_IBSCBS_gIBSCBS_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBS);
+    procedure Ler_IBSCBS_gIBSCBS_gIBSMun(const AJSONObject: TACBrJSONObject; AIBSMun: TgIBSMunValores);
+    procedure Ler_IBSCBS_gIBSCBS_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBSValores);
     procedure Ler_IBSCBS_gIBSCBS__gDif(const AJSONObject: TACBrJSONObject; AGDif: TgDif);
     procedure Ler_IBSCBS_gIBSCBS_gTribRegular(const AJSONObject: TACBrJSONObject; AGTribRegular: TgTribRegular);
     procedure Ler_IBSCBS_gIBSCBS_gIBSCBSCredPres(const AJSONObject: TACBrJSONObject; AGIBSCredPres: TgIBSCBSCredPres);
@@ -142,10 +147,10 @@ type
     procedure Ler_Det_DFeReferenciado(const AJSONObject: TACBrJSONObject; ADFeReferenciado: TDFeReferenciado);
     procedure Ler_ISTot(const AJSONObject: TACBrJSONObject; AISTot: TISTot);
     procedure Ler_IBSCBSTot(const AJSONObject: TACBrJSONObject; AIBSCBSTot: TIBSCBSTot);
-    procedure Ler_IBSCBSTot_gIBS(const AJSONObject: TACBrJSONObject; AGIBS: TgIBSTot);
+    procedure Ler_IBSCBSTot_gIBS(const AJSONObject: TACBrJSONObject; AGIBS: TgIBS);
     procedure Ler_IBSCBSTot_gIBS_gIBSUFTot(const AJSONObject: TACBrJSONObject; AGIBSUFTot: TgIBSUFTot);
     procedure Ler_IBSCBSTot_gIBS_gIBSMunTot(const AJSONObject: TACBrJSONObject; AGIBSMunTot: TgIBSMunTot);
-    procedure Ler_IBSCBSTot_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBSTot);
+    procedure Ler_IBSCBSTot_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBS);
     procedure Ler_IBSCBSTot_gMono(const AJSONObject: TACBrJSONObject; AGMono: TgMono);
   public
     constructor Create(AOwner: TNFe); reintroduce;
@@ -162,7 +167,8 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
-  ACBrDFe.Conversao, pcnConversao, pcnConversaoNFe;
+  ACBrDFe.Conversao,
+  pcnConversaoNFe;
 
 { TNFeJSONReader }
 
@@ -257,14 +263,14 @@ begin
   AIde.nNF := AJSONObject.AsInteger['nNF'];
   AIde.dEmi := AJSONObject.AsISODateTime['dhEmi'];
   AIde.dSaiEnt := AJSONObject.AsISODateTime['dhSaiEnt'];
-  AIde.tpNF := StrToTpNF(ok, AJSONObject.AsString['tpNF']);
+  AIde.tpNF := StrToTpNF(AJSONObject.AsString['tpNF']);
   AIde.idDest := StrToDestinoOperacao(ok, AJSONObject.AsString['idDest']);
   AIde.cMunFG := AJSONObject.AsInteger['cMunFG'];
   AIde.cMunFGIBS := AJSONObject.AsInteger['cMunFGIBS'];
-  AIde.tpImp := StrToTpImp(ok, AJSONObject.AsString['tpImp']);
-  AIde.tpEmis := StrToTpEmis(ok, AJSONObject.AsString['tpEmis']);
+  AIde.tpImp := StrToTpImp(AJSONObject.AsString['tpImp']);
+  AIde.tpEmis := StrToTipoEmissao(AJSONObject.AsString['tpEmis']);
   AIde.cDV := AJSONObject.AsInteger['cDV'];
-  AIde.tpAmb := StrToTpAmb(ok, AJSONObject.AsString['tpAmb']);
+  AIde.tpAmb := StrToTipoAmbiente(AJSONObject.AsString['tpAmb']);
   AIde.finNFe := StrToFinNFe(ok, AJSONObject.AsString['finNFe']);
   AIde.tpNFDebito := StrTotpNFDebito(AJSONObject.AsString['tpNFDebito']);
   AIde.tpNFCredito := StrTotpNFCredito(AJSONObject.AsString['tpNFCredito']);
@@ -272,7 +278,7 @@ begin
   AIde.indPres := StrToPresencaComprador(ok, AJSONObject.AsString['indPres']);
   AIde.indIntermed := StrToIndIntermed(ok, AJSONObject.AsString['indIntermed']);
   AIde.cIndOp:= AJSONObject.AsString['cIndOp'];
-  AIde.procEmi := StrToProcEmi(ok, AJSONObject.AsString['procEmi']);
+  AIde.procEmi := StrToProcEmi(AJSONObject.AsString['procEmi']);
   AIde.verProc := AJSONObject.AsString['verProc'];
   AIde.dhCont := AJSONObject.AsISODateTime['dhCont'];
   AIde.xJust := AJSONObject.AsString['xJust'];
@@ -287,7 +293,6 @@ procedure TNFeJSONReader.Ler_gPagAntecipado(const AJSONArray: TACBrJSONArray;
   AgPagAntecipado: TgPagAntecipado);
 var
   AJSONItem: TACBrJSONObject;
-  Item: TgPagAntecipado;
   i: Integer;
 begin
   if not Assigned(AJSONArray) then
@@ -435,8 +440,6 @@ begin
 end;
 
 procedure TNFeJSONReader.LerDest(const AJSONObject: TACBrJSONObject; ADest: TDest);
-var
-  ok: Boolean;
 begin
   if not Assigned(AJSONObject) then
   begin
@@ -451,7 +454,7 @@ begin
 
   ADest.idEstrangeiro := AJSONObject.AsString['idEstrangeiro'];
   ADest.xNome := AJSONObject.AsString['xNome'];
-  ADest.indIEDest := StrToindIEDest(Ok, AJSONObject.AsString['indIEDest']);
+  ADest.indIEDest := StrToindIEDest(AJSONObject.AsString['indIEDest']);
   ADest.IE := AJSONObject.AsString['IE'];
   ADest.ISUF := AJSONObject.AsString['ISUF'];
   ADest.IM := AJSONObject.AsString['IM'];
@@ -638,7 +641,7 @@ begin
   AProd.nRECOPI  := AJSONObject.AsString['nRECOPI'];
   AProd.nFCI     := AJSONObject.AsString['nFCI'];
   // Reforma Tributria
-  AProd.indBemMovelUsado := StrToTIndicadorEx(ok, AJSONObject.AsString['indBemMovelUsado']);
+  AProd.indBemMovelUsado := StrToTIndicadorEx(AJSONObject.AsString['indBemMovelUsado']);
 
   LerDetProd_CredPresumido(AJSONObject.AsJSONArray['gCred'], AProd.CredPresumido);
   LerDetProd_NVE(AJSONObject.AsJSONArray['NVE'], AProd.NVE);
@@ -1039,9 +1042,9 @@ begin
   if not Assigned(AJSONObject) then
     Exit;
 
-  AICMS.orig := StrToOrig(ok, AJSONObject.AsString['orig']);
-  AICMS.CST := StrToCSTICMS(ok, AJSONObject.AsString['CST']);
-  AICMS.CSOSN := StrToCSOSNIcms(ok, AJSONObject.AsString['CSOSN']);
+  AICMS.orig := StrToOrig(AJSONObject.AsString['orig']);
+  AICMS.CST := StrToCSTICMS(AJSONObject.AsString['CST']);
+  AICMS.CSOSN := StrToCSOSNIcms(AJSONObject.AsString['CSOSN']);
   AICMS.modBC := StrToModBC(ok, AJSONObject.AsString['modBC']);
   AICMS.pRedBC := AJSONObject.AsFloat['pRedBC'];
   AICMS.vBC := AJSONObject.AsFloat['vBC'];
@@ -1104,7 +1107,7 @@ begin
 
   AICMS.qBCMonoRet := AJSONObject.AsFloat['qBCMonoRet'];
   AICMS.vICMSMonoOp := AJSONObject.AsFloat['vICMSMonoOp'];
-  AICMS.indDeduzDeson := StrToTIndicadorEx(Ok, AJSONObject.AsString['indDeduzDeson']);
+  AICMS.indDeduzDeson := StrToTIndicadorEx(AJSONObject.AsString['indDeduzDeson']);
   AICMS.cBenefRBC := AJSONObject.AsString['cBenefRBC'];
 end;
 
@@ -1174,7 +1177,6 @@ end;
 procedure TNFeJSONReader.LerDetImposto_PIS(const AJSONObject: TACBrJSONObject; APIS: TPIS);
 var
   lPISAligJSONObj, lPISQtdeJSONObj, lPISNTJSONObj, lPISOutrJSONObj: TACBrJSONObject;
-  OK: Boolean;
 begin
   if not Assigned(AJSONObject) then
     exit;
@@ -1182,7 +1184,7 @@ begin
   lPISAligJSONObj := AJSONObject.AsJSONObject['PISAliq'];
   if Assigned(lPISAligJSONObj) then
   begin
-    APIS.CST := StrToCSTPIS(ok, lPISAligJSONObj.AsString['CST']);
+    APIS.CST := StrToCSTPIS(lPISAligJSONObj.AsString['CST']);
     APIS.vBC := lPISAligJSONObj.AsFloat['vBC'];
     APIS.pPIS := lPISAligJSONObj.AsFloat['pPIS'];
     APIS.vPIS := lPISAligJSONObj.AsFloat['vPIS'];
@@ -1191,7 +1193,7 @@ begin
   lPISQtdeJSONObj := AJSONObject.AsJSONObject['PISQtde'];
   if Assigned(lPISQtdeJSONObj) then
   begin
-    APIS.CST := StrToCSTPIS(ok, lPISQtdeJSONObj.AsString['CST']);
+    APIS.CST := StrToCSTPIS(lPISQtdeJSONObj.AsString['CST']);
     APIS.qBCProd := lPISQtdeJSONObj.AsFloat['qBCProd'];
     APIS.vAliqProd := lPISQtdeJSONObj.AsFloat['vAliqProd'];
     APIS.vPIS := lPISQtdeJSONObj.AsFloat['vPIS'];
@@ -1200,13 +1202,13 @@ begin
   lPISNTJSONObj := AJSONObject.AsJSONObject['PISNT'];
   if Assigned(lPISNTJSONObj) then
   begin
-    APIS.CST := StrToCSTPIS(ok, lPISNTJSONObj.AsString['CST']);
+    APIS.CST := StrToCSTPIS(lPISNTJSONObj.AsString['CST']);
   end;
 
   lPISOutrJSONObj := AJSONObject.AsJSONObject['PISOutr'];
   if Assigned(lPISOutrJSONObj) then
   begin
-    APIS.CST := StrToCSTPIS(ok, lPISOutrJSONObj.AsString['CST']);
+    APIS.CST := StrToCSTPIS(lPISOutrJSONObj.AsString['CST']);
     APIS.vBC := lPISOutrJSONObj.AsFloat['vBC'];
     APIS.pPIS := lPISOutrJSONObj.AsFloat['pPIS'];
     APIS.qBCProd := lPISOutrJSONObj.AsFloat['qBCProd'];
@@ -1233,7 +1235,6 @@ end;
 procedure TNFeJSONReader.LerDetImposto_COFINS(const AJSONObject: TACBrJSONObject; ACOFINS: TCOFINS);
 var
   lCOFINSAligJSONObj, lCOFINSQtdeJSONObj, lCOFINSNTJSONObj, lCOFINSOutrJSONObj: TACBrJSONObject;
-  Ok: Boolean;
 begin
   if not Assigned(AJSONObject) then
     exit;
@@ -1241,7 +1242,7 @@ begin
   lCOFINSAligJSONObj := AJSONObject.AsJSONObject['COFINSAliq'];
   if Assigned(lCOFINSAligJSONObj) then
   begin
-    ACOFINS.CST := StrToCSTCOFINS(ok, lCOFINSAligJSONObj.AsString['CST']);
+    ACOFINS.CST := StrToCSTCOFINS(lCOFINSAligJSONObj.AsString['CST']);
     ACOFINS.vBC := lCOFINSAligJSONObj.AsFloat['vBC'];
     ACOFINS.pCOFINS := lCOFINSAligJSONObj.AsFloat['pCOFINS'];
     ACOFINS.vCOFINS := lCOFINSAligJSONObj.AsFloat['vCOFINS'];
@@ -1250,7 +1251,7 @@ begin
   lCOFINSQtdeJSONObj := AJSONObject.AsJSONObject['COFINSQtde'];
   if Assigned(lCOFINSQtdeJSONObj) then
   begin
-    ACOFINS.CST := StrToCSTCOFINS(ok, lCOFINSQtdeJSONObj.AsString['CST']);
+    ACOFINS.CST := StrToCSTCOFINS(lCOFINSQtdeJSONObj.AsString['CST']);
     ACOFINS.qBCProd := lCOFINSQtdeJSONObj.AsFloat['qBCProd'];
     ACOFINS.vAliqProd := lCOFINSQtdeJSONObj.AsFloat['vAliqProd'];
     ACOFINS.vCOFINS := lCOFINSQtdeJSONObj.AsFloat['vCOFINS'];
@@ -1259,13 +1260,13 @@ begin
   lCOFINSNTJSONObj := AJSONObject.AsJSONObject['COFINSNT'];
   if Assigned(lCOFINSNTJSONObj) then
   begin
-    ACOFINS.CST := StrToCSTCOFINS(ok, lCOFINSNTJSONObj.AsString['CST']);
+    ACOFINS.CST := StrToCSTCOFINS(lCOFINSNTJSONObj.AsString['CST']);
   end;
 
   lCOFINSOutrJSONObj := AJSONObject.AsJSONObject['COFINSOutr'];
   if Assigned(lCOFINSOutrJSONObj) then
   begin
-    ACOFINS.CST := StrToCSTCOFINS(ok, lCOFINSOutrJSONObj.AsString['CST']);
+    ACOFINS.CST := StrToCSTCOFINS(lCOFINSOutrJSONObj.AsString['CST']);
     ACOFINS.vBC := lCOFINSOutrJSONObj.AsFloat['vBC'];
     ACOFINS.pCOFINS := lCOFINSOutrJSONObj.AsFloat['pCOFINS'];
     ACOFINS.qBCProd := lCOFINSOutrJSONObj.AsFloat['qBCProd'];
@@ -1312,7 +1313,7 @@ begin
   AISSQN.cMun := AJSONObject.AsInteger['cMun'];
   AISSQN.cPais := AJSONObject.AsInteger['cPais'];
   AISSQN.nProcesso := AJSONObject.AsString['nProcesso'];
-  AISSQN.indIncentivo := StrToindIncentivo(Ok, AJSONObject.AsString['indIncentivo']);
+  AISSQN.indIncentivo := StrToindIncentivo(AJSONObject.AsString['indIncentivo']);
 end;
 
 procedure TNFeJSONReader.LerDetObs(const AJSONObject: TACBrJSONObject; AObs: TobsItem);
@@ -1542,7 +1543,7 @@ begin
       lCardJSONObj := lDetPagJSONObj.AsJSONObject['card'];
       if Assigned(lCardJSONObj) then
       begin
-        APag[i].tpIntegra := StrTotpIntegra(Ok, lCardJSONObj.AsString['tpIntegra']);
+        APag[i].tpIntegra := StrTotpIntegra(lCardJSONObj.AsString['tpIntegra']);
         APag[i].CNPJ := lCardJSONObj.AsString['CNPJ'];
         APag[i].tBand := StrToBandeiraCartao(Ok, lCardJSONObj.AsString['tBand']);
         APag[i].cAut := lCardJSONObj.AsString['cAut'];
@@ -1802,7 +1803,7 @@ begin
     begin
       aRefDFeAntObject := aRefDFeAnt.ItemAsJSONObject[i];
       AgCompraGov.refDFeAnt.New;
-      AgCompraGov.refDFeAnt[i].refDFEChave := aRefDFeAntObject.AsString['refDFeAnt'];
+      AgCompraGov.refDFeAnt[i].refDFeChave := aRefDFeAntObject.AsString['refDFeAnt'];
     end;
 end;
 
@@ -1858,12 +1859,12 @@ procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBSMono(const AJSONObject: TACBrJSONObje
 begin
   if not Assigned(AJSONObject) then
     Exit;
-
+{
   Ler_IBSCBS_gIBSCBSMono_gMonoPadrao(AJSONObject.AsJSONObject['gMonoPadrao'], AIBSCBSMono.gMonoPadrao);
   Ler_IBSCBS_gIBSCBSMono_gMonoReten(AJSONObject.AsJSONObject['gMonoReten'], AIBSCBSMono.gMonoReten);
   Ler_IBSCBS_gIBSCBSMono_gMonoRet(AJSONObject.AsJSONObject['gMonoRet'], AIBSCBSMono.gMonoRet);
   Ler_IBSCBS_gIBSCBSMono_gMonoDif(AJSONObject.AsJSONObject['gMonoDif'], AIBSCBSMono.gMonoDif);
-
+}
   AIBSCBSMono.vTotIBSMonoItem := AJSONObject.AsFloat['vTotIBSMonoItem'];
   AIBSCBSMono.vTotCBSMonoItem := AJSONObject.AsFloat['vTotCBSMonoItem'];
 end;
@@ -1886,7 +1887,7 @@ begin
   AGCredPresIBSZFM.vCredPresIBSZFM := AJSONObject.AsFloat['vCredPresIBSZFM'];
 end;
 
-procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBS_gIBSUF(const AJSONObject: TACBrJSONObject; AIBSUF: TgIBSUF);
+procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBS_gIBSUF(const AJSONObject: TACBrJSONObject; AIBSUF: TgIBSUFValores);
 begin
   if not Assigned(AJSONObject) then
     Exit;
@@ -1908,7 +1909,7 @@ begin
   AGDif.pDif := AJSONObject.AsFloat['pDif'];
   AGDif.vDif := AJSONObject.AsFloat['vDif'];
 end;
-
+{
 procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBSMono_gMonoDif(const AJSONObject: TACBrJSONObject; AGMonoDif: TgMonoDif);
 begin
   if not Assigned(AJSONObject) then
@@ -1955,7 +1956,7 @@ begin
   AGMonoReten.adRemCBSReten := AJSONObject.AsFloat['adRemCBSReten'];
   AGMonoReten.vCBSMonoReten := AJSONObject.AsFloat['vCBSMonoReten'];
 end;
-
+}
 procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBS_gIBSCBSUFMun_gDevTrib(const AJSONObject: TACBrJSONObject; AGDevTrib: TgDevTrib);
 begin
   if not Assigned(AJSONObject) then
@@ -1974,7 +1975,7 @@ begin
   AGRed.pAliqEfet := AJSONObject.AsFloat['pAliqEfet'];
 end;
 
-procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBS_gIBSMun(const AJSONObject: TACBrJSONObject; AIBSMun: TgIBSMun);
+procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBS_gIBSMun(const AJSONObject: TACBrJSONObject; AIBSMun: TgIBSMunValores);
 begin
   if not Assigned(AJSONObject) then
     Exit;
@@ -1988,7 +1989,7 @@ begin
   AIBSMun.vIBSMun := AJSONObject.AsFloat['vIBSMun'];
 end;
 
-procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBS_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBS);
+procedure TNFeJSONReader.Ler_IBSCBS_gIBSCBS_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBSValores);
 begin
   if not Assigned(AJSONObject) then
     Exit;
@@ -2100,8 +2101,6 @@ begin
 end;
 
 procedure TNFeJSONReader.LerTotal_ISSQNTot(const AJSONObject: TACBrJSONObject; AISSQNTot: TISSQNtot);
-var
-  OK: Boolean;
 begin
   if not Assigned(AJSONObject) then
     exit;
@@ -2117,7 +2116,7 @@ begin
   AISSQNtot.vDescIncond := AJSONObject.AsFloat['vDescIncond'];
   AISSQNtot.vDescCond   := AJSONObject.AsFloat['vDescCond'];
   AISSQNtot.vISSRet     := AJSONObject.AsFloat['vISSRet'];
-  AISSQNtot.cRegTrib    := StrToRegTribISSQN(Ok, AJSONObject.AsString['cRegTrib']);
+  AISSQNtot.cRegTrib    := StrToRegTribISSQN(AJSONObject.AsString['cRegTrib']);
 end;
 
 procedure TNFeJSONReader.LerTotal_retTrib(const AJSONObject: TACBrJSONObject; ARetTrib: TretTrib);
@@ -2153,7 +2152,7 @@ begin
   Ler_IBSCBSTot_gMono(AJSONObject.AsJSONObject['gMono'], AIBSCBSTot.gMono);
 end;
 
-procedure TNFeJSONReader.Ler_IBSCBSTot_gIBS(const AJSONObject: TACBrJSONObject; AGIBS: TgIBSTot);
+procedure TNFeJSONReader.Ler_IBSCBSTot_gIBS(const AJSONObject: TACBrJSONObject; AGIBS: TgIBS);
 begin
   if not Assigned(AJSONObject) then
     Exit;
@@ -2190,7 +2189,7 @@ begin
   //AGIBSMunTot.vCredPresCondSus := AJSONObject.AsFloat['vCredPresCondSus'];
 end;
 
-procedure TNFeJSONReader.Ler_IBSCBSTot_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBSTot);
+procedure TNFeJSONReader.Ler_IBSCBSTot_gCBS(const AJSONObject: TACBrJSONObject; AGCBS: TgCBS);
 begin
   if not Assigned(AJSONObject) then
     Exit;

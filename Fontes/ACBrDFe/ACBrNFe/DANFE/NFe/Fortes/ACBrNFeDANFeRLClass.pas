@@ -45,7 +45,8 @@ uses
   ACBrBase, 
   ACBrNFe.Classes, 
   ACBrNFeDANFEClass, 
-  pcnConversao, ACBrDFeUtil;
+  ACBrDFe.Conversao,
+  ACBrDFeUtil;
 
 type
   TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);
@@ -86,7 +87,7 @@ type
     FExibeEAN: Boolean;
 
     procedure SetExibeEAN(AValue: Boolean); virtual;
-    procedure SetTipoDANFE(AValue: TpcnTipoImpressao); override;
+    procedure SetTipoDANFE(AValue: TACBrTipoImpressao); override;
   private
     FMarcadagua: String;
     FLarguraCodProd: Integer;
@@ -215,7 +216,7 @@ begin
     FExibeEAN := AValue;
 end;
 
-procedure TACBrNFeDANFeRL.SetTipoDANFE(AValue: TpcnTipoImpressao);
+procedure TACBrNFeDANFeRL.SetTipoDANFE(AValue: TACBrTipoImpressao);
 begin
   inherited SetTipoDANFE(AValue);
 

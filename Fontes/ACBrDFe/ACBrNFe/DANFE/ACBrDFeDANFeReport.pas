@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrBase, ACBrDFeReport,
-  pcnConversao, ACBrNFe.Classes, pcnConversaoNFe;
+  ACBrDFe.Conversao, ACBrNFe.Classes, pcnConversaoNFe;
 
 type
   TpcnTributos = (trbNenhum, trbNormal, trbSeparadamente);
@@ -71,7 +71,7 @@ type
     FExibeTotalTributosItem: Boolean;
     FExibeInforAdicProduto: TinfAdcProd;
     FImprimeNomeFantasia: Boolean;
-    FTipoDANFE: TpcnTipoImpressao;
+    FTipoDANFE: TACBrTipoImpressao;
     FImprimeXPedNItemPed : Boolean;
 
     procedure SetACBrNFE(const AValue: TComponent);
@@ -83,7 +83,7 @@ type
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    procedure SetTipoDANFE(AValue: TpcnTipoImpressao); virtual;
+    procedure SetTipoDANFE(AValue: TACBrTipoImpressao); virtual;
 
   public
 
@@ -120,7 +120,7 @@ type
     function ManterObsFisco(ANFe: TNFe): String; virtual;
     function ManterProcreferenciado(ANFe: TNFe): String; virtual;
     function ManterVprod(dVProd, dvDesc: Double): String; virtual;
-    function ManterCst(dCRT: TpcnCRT; dCSOSN: TpcnCSOSNIcms; dCST: TpcnCSTIcms): String; virtual;
+    function ManterCst(dCRT: TpcnCRT; dCSOSN: TCSOSNIcms; dCST: TCSTIcms): String; virtual;
     function ManterdvTotTrib(dvTotTrib: Double): String; virtual;
     function CalcularValorLiquidoItem(const ANFE: TNFe;  const ANItem: Integer; ATipoCalculo: TValorLiquidoFlag): Double; overload;
     function CalcularValorLiquidoItem(const ANFE: TNFe; const ANItem: Integer):Double;overload;
@@ -138,7 +138,7 @@ type
 
   published
     property ACBrNFe: TComponent read FACBrNFe write SetACBrNFE;
-    property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write SetTipoDANFE default tiRetrato;
+    property TipoDANFE: TACBrTipoImpressao read FTipoDANFE write SetTipoDANFE default tiRetrato;
     property QuebraLinhaEmDetalhamentos: Boolean read FQuebraLinhaEmDetalhamentos write FQuebraLinhaEmDetalhamentos default True;
     property ImprimeTotalLiquido: Boolean read FImprimeTotalLiquido write FImprimeTotalLiquido default False;
     property ImprimeTributos: TpcnTributos read FImprimeTributos write FImprimeTributos default trbNormal;
@@ -263,7 +263,7 @@ begin
   raise EACBrNFeException.Create(NomeProcedure + ' não implementado em: ' + ClassName);
 end;
 
-procedure TACBrDFeDANFeReport.SetTipoDANFE(AValue: TpcnTipoImpressao);
+procedure TACBrDFeDANFeReport.SetTipoDANFE(AValue: TACBrTipoImpressao);
 begin
   if (AValue <> FTipoDANFE) then
     FTipoDANFE := AValue;
@@ -611,7 +611,7 @@ begin
             + ManterXPedNItemPed(aNFE, inItem);
 end;
 
-function TACBrDFeDANFeReport.ManterCst(dCRT: TpcnCRT; dCSOSN: TpcnCSOSNIcms; dCST: TpcnCSTIcms): String;
+function TACBrDFeDANFeReport.ManterCst(dCRT: TpcnCRT; dCSOSN: TCSOSNIcms; dCST: TCSTIcms): String;
 begin
   if (dCRT in [crtSimplesNacional, crtMEI]) and not (dCST in [cst02, cst15, cst53, cst61]) then
     Result := CSOSNIcmsToStr(dCSOSN)

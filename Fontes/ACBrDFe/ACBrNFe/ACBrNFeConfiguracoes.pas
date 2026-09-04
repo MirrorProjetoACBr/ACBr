@@ -39,7 +39,9 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, pcnConversaoNFe;
+  ACBrDFeConfiguracoes,
+  ACBrDFe.Conversao,
+  pcnConversaoNFe;
 
 type
 
@@ -104,7 +106,7 @@ type
 
     function GetPathInu(const CNPJ: string = ''; const IE: String = ''; const AModelo: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''; Modelo: Integer = 0): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
+    function GetPathEvento(tipoEvento: TACBrTipoEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -342,7 +344,7 @@ begin
   PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
 end;
 
-function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ, IE: String;
+function TArquivosConfNFe.GetPathEvento(tipoEvento: TACBrTipoEvento; const CNPJ, IE: String;
   Data: TDateTime): String;
 var
   Dir: String;

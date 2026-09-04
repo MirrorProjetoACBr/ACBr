@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  ACBrDFe.Conversao,
   pcnConversaoNFe;
 
 type
@@ -46,7 +46,7 @@ type
   TAdmCSCNFCe = class(TObject)
   private
     FVersao: string;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FindOP: TpcnIndOperacao;
     FraizCNPJ: string;
     FidCsc: Integer;
@@ -56,7 +56,7 @@ type
     function ObterNomeArquivo: string;
 
     property Versao: string          read FVersao    write FVersao;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb     write FtpAmb;
     property indOP: TpcnIndOperacao  read FindOP     write FindOP;
     property raizCNPJ: string        read FraizCNPJ  write FraizCNPJ;
     property idCsc: Integer          read FidCsc     write FidCsc;
@@ -89,7 +89,7 @@ begin
   end;
 
   Result := '<admCscNFCe ' + NAME_SPACE + ' versao="' + Fversao + '">' +
-              '<tpAmb>' + tpAmbToStr(tpAmb) + '</tpAmb>' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
               '<indOp>' + IndOperacaoToStr(indOp) + '</indOp>' +
               '<raizCNPJ>' + raizCNPJ + '</raizCNPJ>' +
               xDadosCSC +

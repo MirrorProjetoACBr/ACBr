@@ -48,7 +48,7 @@ uses
   {$EndIf}
   ACBrNFe.IniReader, ACBrNFe.IniWriter,
   ACBrNFe.JSONReader, ACBrNFe.JSONWriter,
-  pcnConversao, pcnLeitor;
+  ACBrDFe.Conversao, pcnLeitor;
 
 type
 
@@ -528,7 +528,7 @@ end;
 function NotaFiscal.LerArqIni(const AIniString: String): Boolean;
 begin
   FNFeIniR.VersaoDF := FConfiguracoes.Geral.VersaoDF;
-  FNFeIniR.Ambiente := StrToInt(TpAmbToStr(FConfiguracoes.WebServices.Ambiente));
+  FNFeIniR.Ambiente := StrToInt(TipoAmbienteToStr(FConfiguracoes.WebServices.Ambiente));
   FNFeIniR.tpEmis := FConfiguracoes.Geral.FormaEmissaoCodigo;
 
   FNFeIniR.LerIni(AIniString);
@@ -663,15 +663,10 @@ begin
 
     TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
-    {
-      Ao gerar o XML as tags e atributos tem que ser exatamente os da configuração
-    }
-    {
     FNFeW.VersaoDF := Configuracoes.Geral.VersaoDF;
     FNFeW.ModeloDF := Configuracoes.Geral.ModeloDF;
     FNFeW.tpAmb := Configuracoes.WebServices.Ambiente;
     FNFeW.tpEmis := Configuracoes.Geral.FormaEmissao;
-    }
     FNFeW.idCSRT := Configuracoes.RespTec.IdCSRT;
     FNFeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
@@ -808,7 +803,7 @@ begin
     (Copy(chaveNFe, 21, 2) <> IntToStrZero(NFe.Ide.modelo, 2)) or
     (Copy(chaveNFe, 23, 3) <> IntToStrZero(NFe.Ide.serie, 3)) or
     (Copy(chaveNFe, 26, 9) <> IntToStrZero(NFe.Ide.nNF, 9)) or
-    (Copy(chaveNFe, 35, 1) <> TpEmisToStr(NFe.Ide.tpEmis)) or
+    (Copy(chaveNFe, 35, 1) <> TipoEmissaoToStr(NFe.Ide.tpEmis)) or
     (Copy(chaveNFe, 36, 8) <> IntToStrZero(NFe.Ide.cNF, 8)));
   {*)}
 end;
@@ -1036,16 +1031,8 @@ function TNotasFiscais.LoadFromFile(const CaminhoArquivo: String;
 var
   XMLUTF8: AnsiString;
   i, l: integer;
-  MS: TMemoryStream;
 begin
-  MS := TMemoryStream.Create;
-  try
-    MS.LoadFromFile(CaminhoArquivo);
-    XMLUTF8 := ReadStrFromStream(MS, MS.Size);
-    XMLUTF8 := RemoverUTF8Bom(XMLUTF8);
-  finally
-    MS.Free;
-  end;
+  XMLUTF8 := CarregarArquivo(CaminhoArquivo);
 
   l := Self.Count; // Indice da última nota já existente
   //Result := LoadFromString(String(XMLUTF8), AGerarNFe);

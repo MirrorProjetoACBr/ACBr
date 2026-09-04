@@ -48,15 +48,15 @@ uses
   ACBr_fpdf_ext,
   ACBr_fpdf_report,
   ACBrNFe.Classes,
-  pcnConversao,
+  ACBrDFe.Conversao,
   pcnConversaoNFe,
   ACBrNFe.EventoClass,
   ACBrNFe.EnvEvento,
-  pcnRetDistDFeInt,
   ACBrValidador,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
+  ACBrUtil.Base,
   ACBrDFeUtil,
   ACBrUtil.Compatibilidade,
   ACBrNFeUtilsFPDF,
@@ -3024,7 +3024,7 @@ begin
   texto := 'ÓRGÃO';
   SetFontBoxHeader(PDF);
   PDF.TextBox(x, y, w, h, texto, 'T', 'C', 1, '');
-  texto := CUFtoUF(FProcEvento.InfEvento.cOrgao);
+  texto := CodigoUFparaUF(FProcEvento.InfEvento.cOrgao);
   SetFontBoxContent(PDF);
   PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
 
@@ -3198,7 +3198,7 @@ begin
   texto := 'CHAVE DE ACESSO';
   SetFontBoxHeader(PDF);
   PDF.TextBox(x, y, w, h, texto, 'T', 'L', 1, '');
-  texto := FormatarChaveAcesso(OnlyAlphaNum(NFe.infNFe.ID));
+  texto := FormatarChaveAcesso(RemoverLiteralChave(NFe.infNFe.ID));
   SetFontBoxContentBold(PDF);
   PDF.TextBox(x, y, w, h, texto, 'B', 'C', 0, '');
 end;

@@ -46,6 +46,10 @@ Símbolo : Significado
 
 
 04/09/2026
+-- Diversos --
+[+] Diversas implementações e ajustes no componente para que o mesmo passe a utilizar
+    as units padrões para a RTC.
+   Por: Italo Giurizzato Junior
 -- ACBrNFe.XmlWriter --
 [-] Corrigido a posição onde se deve gerar as tags: qBCMonoDif e adRemICMSDif para
     o CST=53 do ICMS.

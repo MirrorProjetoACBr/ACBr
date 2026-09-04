@@ -42,7 +42,6 @@ uses
   {$IFNDEF USE_ACBr_XMLDOCUMENT}
   pcnSignature,
   {$ENDIF}
-  pcnConversao,
   ACBrNFe.Consts,
   ACBrNFe.RetInut,
   ACBrDFe.Conversao,
@@ -54,7 +53,7 @@ type
 
   TinutNFe = class(TObject)
   private
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FcUF: Integer;
     Fano: Integer;
     FCNPJ: string;
@@ -78,7 +77,7 @@ type
     function LerXMLFromString(const AXML: string): Boolean;
     function ObterNomeArquivo: string;
 
-    property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb      write FtpAmb;
     property cUF: Integer            read FcUF        write FcUF;
     property ano: Integer            read Fano        write Fano;
     property CNPJ: string            read FCNPJ       write FCNPJ;
@@ -168,7 +167,7 @@ begin
 
   Result := '<inutNFe ' + NAME_SPACE + ' versao="' + Fversao + '">' +
               '<infInut Id="' + FIDInutilizacao + '">' +
-                '<tpAmb>' + tpAmbToStr(tpAmb) + '</tpAmb>' +
+                '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
                 '<xServ>INUTILIZAR</xServ>' +
                 '<cUF>' + IntToStr(cUF) + '</cUF>' +
                 '<ano>' + IntToStr(ano) + '</ano>' +
@@ -209,7 +208,6 @@ function TinutNFe.LerXMLFromString(const AXML: string): Boolean;
 var
   Document: TACBrXmlDocument;
   ANode, AuxNode, AuxNode2: TACBrXmlNode;
-  ok: Boolean;
   RetornoInutNFe: TRetInutNFe;
 begin
   RetornoInutNFe := TRetInutNFe.Create;
@@ -242,7 +240,7 @@ begin
             if AuxNode2 <> nil then
             begin
               FIDInutilizacao := ObterConteudoTag(AuxNode2.Attributes.Items['Id']);
-              tpAmb := StrToTpAmb(ok, ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('tpAmb'), tcStr));
+              tpAmb := StrToTipoAmbiente(ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('tpAmb'), tcStr));
               cUF := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('cUF'), tcInt);
               ano := ObterConteudoTag(AuxNode2.Childrens.FindAnyNs('ano'), tcInt);
               CNPJ := ObterConteudoTagCNPJCPF(AuxNode2);

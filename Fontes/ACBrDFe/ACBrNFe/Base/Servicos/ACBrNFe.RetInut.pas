@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrXmlBase;
 
 type
@@ -47,7 +47,7 @@ type
   private
     Fversao: string;
     FId: string;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FverAplic: string;
     FcStat: Integer;
     FxMotivo: string;
@@ -70,7 +70,7 @@ type
 
     property versao: string          read Fversao   write Fversao;
     property Id: string              read FId       write FId;
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb    write FtpAmb;
     property verAplic: string        read FverAplic write FverAplic;
     property cStat: Integer          read FcStat    write FcStat;
     property xMotivo: string         read FxMotivo  write FxMotivo;
@@ -110,7 +110,6 @@ function TRetInutNFe.LerXml: Boolean;
 var
   Document: TACBrXmlDocument;
   ANode, AuxNode: TACBrXmlNode;
-  ok: Boolean;
 begin
   Document := TACBrXmlDocument.Create;
 
@@ -138,7 +137,7 @@ begin
         if AuxNode <> nil then
         begin
           Id := ObterConteudoTag(AuxNode.Attributes.Items['Id']);
-          tpAmb := StrToTpAmb(ok, ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
+          tpAmb := StrToTipoAmbiente(ObterConteudoTag(AuxNode.Childrens.FindAnyNs('tpAmb'), tcStr));
           verAplic := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('verAplic'), tcStr);
           cStat := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cStat'), tcInt);
           xMotivo := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMotivo'), tcStr);

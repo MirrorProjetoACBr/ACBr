@@ -443,14 +443,6 @@ const
   TCSTISArrayStrings: array[TCSTIS] of string = ('',
     '000', '100', '200', '300', '400','500', '600');
 
-type
-  TTpCredPresIBSZFM = (tcpNenhum, tcpSemCredito, tcpBensConsumoFinal, tcpBensCapital,
-                       tcpBensIntermediarios, tcpBensInformaticaOutros);
-
-const
-  TTpCredPresIBSZFMArrayStrings: array[TTpCredPresIBSZFM] of string = ('', '0',
-    '1', '2', '3', '4');
-
 {
   Declaração das funções de conversão
 }
@@ -542,9 +534,6 @@ function StrTotpNFCredito(const s: string): TtpNFCredito;
 function CSTISToStr(const t: TCSTIS): string;
 function TryStrToCSTIS(const s: string; out Value: TCSTIS): Boolean;
 function StrToCSTIS(const s: string): TCSTIS;
-
-function TpCredPresIBSZFMToStr(const t: TTpCredPresIBSZFM): string;
-function StrToTpCredPresIBSZFM(const s: string): TTpCredPresIBSZFM;
 
 implementation
 
@@ -1817,26 +1806,6 @@ function StrToCSTIS(const s: string): TCSTIS;
 begin
   if not TryStrToCSTIS(s, Result) then
     raise EACBrException.CreateFmt('Valor string inválido para TCSTIS: %s', [s]);
-end;
-
-function TpCredPresIBSZFMToStr(const t: TTpCredPresIBSZFM): string;
-begin
-  Result := TTpCredPresIBSZFMArrayStrings[t];
-end;
-
-function StrToTpCredPresIBSZFM(const s: string): TTpCredPresIBSZFM;
-var
-  idx: TTpCredPresIBSZFM;
-begin
-  for idx:= Low(TTpCredPresIBSZFMArrayStrings) to High(TTpCredPresIBSZFMArrayStrings) do
-  begin
-    if(TTpCredPresIBSZFMArrayStrings[idx] = s)then
-    begin
-      Result := idx;
-      exit;
-    end;
-  end;
-  raise EACBrException.CreateFmt('Valor string inválido para TTpCredPresIBSZFM: %s', [s]);
 end;
 
 initialization

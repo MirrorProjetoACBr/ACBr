@@ -7,7 +7,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 10
   inherited RLNFeInut: TRLReport
     Left = 1
@@ -16,9 +16,9 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
     Font.Name = 'Courier New'
     BeforePrint = RLInutBeforePrint
     object rlb_01_Titulo: TRLBand
-      Left = 38
-      Top = 38
-      Width = 718
+      Left = 47
+      Top = 47
+      Width = 898
       Height = 61
       AutoSize = True
       BandType = btTitle
@@ -80,9 +80,9 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       end
     end
     object rlb_07_Rodape: TRLBand
-      Left = 38
-      Top = 433
-      Width = 718
+      Left = 47
+      Top = 442
+      Width = 898
       Height = 32
       BandType = btFooter
       Color = clWhite
@@ -128,9 +128,9 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       end
     end
     object rlb_03_Inutilizacao: TRLBand
-      Left = 38
-      Top = 213
-      Width = 718
+      Left = 47
+      Top = 222
+      Width = 898
       Height = 220
       BandType = btTitle
       Borders.Sides = sdAll
@@ -500,9 +500,9 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       end
     end
     object rlb_02_Emitente: TRLBand
-      Left = 38
-      Top = 99
-      Width = 718
+      Left = 47
+      Top = 108
+      Width = 898
       Height = 114
       AutoSize = True
       BandType = btTitle

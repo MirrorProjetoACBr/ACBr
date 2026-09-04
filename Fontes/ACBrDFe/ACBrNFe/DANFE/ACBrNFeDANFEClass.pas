@@ -44,7 +44,6 @@ uses
   ACBrDFe.Conversao,
   ACBrDFeDANFeReport,
   ACBrNFe.Classes,
-  pcnConversao, 
   pcnConversaoNFe, 
   StrUtilsEx, 
   TypInfo;
@@ -620,7 +619,7 @@ begin
       ' modelo: ' + ANFe.ide.NFref[i].RefNFP.modelo +
       ' emit: ' + FormatarCNPJouCPF(ANFe.ide.NFref[i].RefNFP.CNPJCPF) +
       ' IE: ' + ANFe.ide.NFref[i].RefNFP.IE +
-      ' UF: ' + CUFtoUF(ANFe.ide.NFref[i].RefNFP.cUF));
+      ' UF: ' + CodigoUFparaUF(ANFe.ide.NFref[i].RefNFP.cUF));
   end;
 
   if (Result <> '') then

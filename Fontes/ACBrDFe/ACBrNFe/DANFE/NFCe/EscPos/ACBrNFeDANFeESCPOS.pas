@@ -122,7 +122,7 @@ uses
   ACBrUtil.DateTime,
   ACBrDFeUtil,
   ACBrConsts,
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrImage;
 
 { TACBrNFeDANFeESCPOS }
@@ -506,7 +506,7 @@ begin
     UrlChave := FpNFe.infNFeSupl.urlChave;
 
   FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(UrlChave, ColunasCondensado) );
-  FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(OnlyAlphaNum(RemoverLiteralChave(FpNFe.infNFe.ID)), ColunasCondensado) );
+  FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(RemoverLiteralChave(FpNFe.infNFe.ID), ColunasCondensado) );
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarTotalTributos;
@@ -982,7 +982,7 @@ begin
 
   FPosPrinter.Buffer.Add(' ');
   FPosPrinter.Buffer.Add(TagLigaCondensado+'CHAVE ACESSO');
-  FPosPrinter.Buffer.Add(FormatarChaveAcesso(OnlyAlphaNum(FpNFe.infNFe.ID)));
+  FPosPrinter.Buffer.Add(FormatarChaveAcesso(RemoverLiteralChave(FpNFe.infNFe.ID)));
   FPosPrinter.Buffer.Add('</linha_simples>');
 
   // dados do evento
