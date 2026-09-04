@@ -43,6 +43,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+04/09/22026
+-- ACBrMonitor1 --
+[*] Altera nomenclatura de chNFe para chDFe
+   Por: Diego Folieni
+
 18/06/2026
 -- Diversas units  --
 [*] Ajuste das chaves chaves e cnpj alfanumérico.
