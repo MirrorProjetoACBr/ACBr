@@ -660,7 +660,7 @@ begin
     ISel.cClassTribIS := AINIRec.ReadString(sSecao, 'cClassTribIS', '');
     ISel.vBCIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vBCIS', ''), 0);
     ISel.pIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'pIS', ''), 0);
-    ISel.pISEspec := StringToFloatDef(AINIRec.ReadString(sSecao, 'pISEspec', ''), 0);
+    ISel.adRemIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'adRemIS', ''), 0);
     ISel.uTrib := AINIRec.ReadString(sSecao, 'uTrib', '');
     ISel.qTrib := StringToFloatDef(AINIRec.ReadString(sSecao, 'qTrib', ''), 0);
     ISel.vIS := StringToFloatDef(AINIRec.ReadString(sSecao, 'vIS', ''), 0);

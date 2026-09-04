@@ -831,8 +831,8 @@ begin
     Result.AppendChild(AddNode(tcDe2, 'UB07', 'pIS', 1, 5, 1,
                                                         ISel.pIS, DSC_PIMPSEL));
 
-    Result.AppendChild(AddNode(tcDe2, 'UB08', 'pISEspec', 1, 5, 0,
-                                              ISel.pISEspec, DSC_PIMPSELESPEC));
+    Result.AppendChild(AddNode(tcDe4, 'UB08', 'adRemIS', 1, 5, 0,
+                                                    ISel.adRemIS, DSC_ADREMIS));
 
     if (ISel.uTrib <> '') or (ISel.qTrib > 0) then
     begin

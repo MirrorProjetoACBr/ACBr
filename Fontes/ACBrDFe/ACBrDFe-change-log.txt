@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/09/2026
+-- ACBrDFe.RTC.Classes/ACBrDFe.RTC.IniReader/ACBrDFe.RTC.IniWriter --
+-- ACBrDFe.RTC.XmlReader/ACBrDFe.RTC.XmlWriter --
+[*] Alterado o nome da tag de pISEspec para adRemIS conforme consta nos Schemas.
+   Por: Italo Giurizzato Junior
+
 01/09/2026
 -- ACBrDFe.RTC.Classes/ACBrDFe.RTC.IniReader/ACBrDFe.RTC.IniWriter --
 -- ACBrDFe.RTC.XmlReader/ACBrDFe.RTC.XmlWriter --

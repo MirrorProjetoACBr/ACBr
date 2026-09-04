@@ -468,7 +468,7 @@ begin
   ISel.cClassTribIS := ObterConteudo(ANode.Childrens.Find('cClassTribIS'), tcStr);
   ISel.vBCIS := ObterConteudo(ANode.Childrens.Find('vBCIS'), tcDe2);
   ISel.pIS := ObterConteudo(ANode.Childrens.Find('pIS'), tcDe2);
-  ISel.pISEspec := ObterConteudo(ANode.Childrens.Find('pISEspec'), tcDe2);
+  ISel.adRemIS := ObterConteudo(ANode.Childrens.Find('adRemIS'), tcDe4);
   ISel.uTrib := ObterConteudo(ANode.Childrens.Find('uTrib'), tcStr);
   ISel.qTrib := ObterConteudo(ANode.Childrens.Find('qTrib'), tcDe4);
   ISel.vIS := ObterConteudo(ANode.Childrens.Find('vIS'), tcDe2);

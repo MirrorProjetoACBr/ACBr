@@ -720,7 +720,7 @@ begin
   AINIRec.WriteString(sSecao, 'cClassTribIS', ISel.cClassTribIS);
   AINIRec.WriteFloat(sSecao, 'vBCIS', ISel.vBCIS);
   AINIRec.WriteFloat(sSecao, 'pIS', ISel.pIS);
-  AINIRec.WriteFloat(sSecao, 'pISEspec', ISel.pISEspec);
+  AINIRec.WriteFloat(sSecao, 'adRemIS', ISel.adRemIS);
   AINIRec.WriteString(sSecao, 'uTrib', ISel.uTrib);
   AINIRec.WriteFloat(sSecao, 'qTrib', ISel.qTrib);
   AINIRec.WriteFloat(sSecao, 'vIS', ISel.vIS);

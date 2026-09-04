@@ -201,8 +201,8 @@ resourcestring
   DSC_CNPJPAA = 'CNPJ do Provedor de Assinatura e Autorização';
   DSC_REFNFE = 'NFe Referenciada';
   DSC_VBCIMPSEL = 'Valor da Base de Cálculo do Imposto Seletivo';
-  DSC_PIMPSEL = 'Alíquota do Imposto Seletivo';
-  DSC_PIMPSELESPEC = 'Alíquota específica por unidade de medida apropriada';
+  DSC_PIMPSEL = 'Alíquota do Imposto Seletivo (percentual)';
+  DSC_ADREMIS = 'Alíquota do Imposto Seletivo (por valor)';
   DSC_VIMPSEL = 'Valor do Imposto Seletivo';
   DSC_UTRIB = 'Unidade Tributável';
   DSC_QTRIB = 'Quantidade Tributável';

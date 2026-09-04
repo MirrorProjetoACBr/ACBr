@@ -786,7 +786,7 @@ type
     FcClassTribIS: string;
     FvBCIS: Double;
     FpIS: Double;
-    FpISEspec: Double;
+    FadRemIS: Double;
     FuTrib: string;
     FqTrib: Double;
     FvIS: Double;
@@ -798,7 +798,7 @@ type
     property cClassTribIS: string read FcClassTribIS write FcClassTribIS;
     property vBCIS: Double read FvBCIS write FvBCIS;
     property pIS: Double read FpIS write FpIS;
-    property pISEspec: Double read FpISEspec write FpISEspec;
+    property adRemIS: Double read FadRemIS write FadRemIS;
     property uTrib: string read FuTrib write FuTrib;
     property qTrib: Double read FqTrib write FqTrib;
     property vIS: Double read FvIS write FvIS;
@@ -1271,7 +1271,7 @@ begin
   cClassTribIS := Source.cClassTribIS;
   vBCIS := Source.vBCIS;
   pIS := Source.pIS;
-  pISEspec := Source.pISEspec;
+  adRemIS := Source.adRemIS;
   uTrib := Source.uTrib;
   qTrib := Source.qTrib;
   vIS := Source.vIS;
