@@ -41,6 +41,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+04/09/2026
+[-] Substitui pcnAuxiliar por ACBrDFeUtil e pcnConversao por ACBrDFe.Conversao
+   Por: Diego Folieni
+
 22/06/2026
 -- ACBrLibNFeBase  --
 [*] Ajuste das chaves chaves e cnpj alfanumérico

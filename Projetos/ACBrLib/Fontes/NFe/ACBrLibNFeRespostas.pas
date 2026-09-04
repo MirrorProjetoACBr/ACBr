@@ -564,7 +564,7 @@ type
 implementation
 
 uses
-  pcnAuxiliar, pcnConversao, pcnConversaoNFe,
+  ACBrDFeUtil, ACBrDFe.Conversao, pcnConversaoNFe,
   ACBrLibNFeConsts, ACBrUtil.Base, ACBrUtil.FilesIO, ACBrUtil.Strings;
 
 { TPathNFeResposta }
@@ -704,7 +704,7 @@ Var
   Item: TConsultaNFeChNFePendResposta;
 begin
   NomeArquivo := ARetInfEvento.NomeArquivo;
-  tpAmb := TpAmbToStr(ARetInfEvento.tpAmb);
+  tpAmb := TipoAmbienteToStr(ARetInfEvento.tpAmb);
   verAplic := ARetInfEvento.verAplic;
   cOrgao := IntToStr(ARetInfEvento.cOrgao);
   cStat := ARetInfEvento.cStat;
@@ -819,7 +819,7 @@ Var
   RetEvento: TConsultaNFeRetEventoResposta;
 begin
    cOrgao := IntToStr(AEvento.RetEventoNFe.InfEvento.cOrgao);
-   tpAmb := TpAmbToStr(AEvento.RetEventoNFe.InfEvento.tpAmb);
+   tpAmb := TipoAmbienteToStr(AEvento.RetEventoNFe.InfEvento.tpAmb);
    CNPJ := AEvento.RetEventoNFe.InfEvento.CNPJ;
    chNFe := AEvento.RetEventoNFe.InfEvento.chNFe;
    dhEvento := AEvento.RetEventoNFe.InfEvento.dhEvento;
@@ -848,7 +848,7 @@ procedure TConsultaNFeInfCanResposta.Processar(const ACBrNFe: TACBrNFe);
 begin
   with ACBrNFe.WebServices.Consulta do
   begin
-    Self.tpAmb := TpAmbToStr(retCancNFe.tpAmb);
+    Self.tpAmb := TipoAmbienteToStr(retCancNFe.tpAmb);
     Self.VerAplic := retCancNFe.verAplic;
     Self.CStat := retCancNFe.cStat;
     Self.XMotivo := retCancNFe.xMotivo;
@@ -869,7 +869,7 @@ end;
 procedure TEventoItemResposta.Processar(const AInfEvento: TRetInfEvento);
 begin
   Id := AInfEvento.Id;
-  tpAmb := TpAmbToStr(AInfEvento.tpAmb);
+  tpAmb := TipoAmbienteToStr(AInfEvento.tpAmb);
   verAplic := AInfEvento.verAplic;
   cOrgao := AInfEvento.cOrgao;
   cStat := AInfEvento.cStat;
@@ -937,7 +937,7 @@ begin
   with ACBrNFe.WebServices.EnvEvento do
   begin
     Self.VerAplic := EventoRetorno.VerAplic;
-    Self.tpAmb := TpAmbToStr(EventoRetorno.tpAmb);
+    Self.tpAmb := TipoAmbienteToStr(EventoRetorno.tpAmb);
     Self.CStat := EventoRetorno.cStat;
     Self.XMotivo := EventoRetorno.XMotivo;
     Self.idLote := EventoRetorno.IdLote;
@@ -989,7 +989,7 @@ begin
   begin
     Arquivo:= RetInfEvento.NomeArquivo;
     Versao := RetInfevento.verAplic;
-    TpAmb := TpAmbToStr(RetInfevento.TpAmb);
+    TpAmb := TipoAmbienteToStr(RetInfevento.TpAmb);
     VerAplic := RetInfevento.VerAplic;
     CStat := RetInfevento.cStat;
     XMotivo := RetInfevento.XMotivo;
@@ -1027,7 +1027,7 @@ begin
   with ACBrNFe.WebServices do
   begin
     Versao := Enviar.versao;
-    TpAmb := TpAmbToStr(Enviar.TpAmb);
+    TpAmb := TipoAmbienteToStr(Enviar.TpAmb);
     verAplic := Enviar.verAplic;
     CStat := Enviar.cStat;
     XMotivo := Enviar.xMotivo;
@@ -1041,15 +1041,15 @@ begin
 
   if (ACBrNFe.WebServices.Enviar.Sincrono) and (ACBrNFe.NotasFiscais.Count > 0) then
   begin
-    NumeroNota := IntToStr(ExtrairNumeroChaveAcesso(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe));
+    NumeroNota := IntToStr(ExtrairNumeroChaveAcesso(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chDFe));
     if Trim(NumeroNota) = '' then Exit;
     if Trim(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt) = '' then Exit;
 
     FItemRetorno := TRetornoItemResposta.Create('NFe' + NumeroNota, Tipo, Codificacao);
     FItemRetorno.Id := 'ID' + ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt;
-    FItemRetorno.tpAmb := TpAmbToStr(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.tpAmb);
+    FItemRetorno.tpAmb := TipoAmbienteToStr(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.tpAmb);
     FItemRetorno.verAplic := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.verAplic;
-    FItemRetorno.chDFe := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe;
+    FItemRetorno.chDFe := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chDFe;
     FItemRetorno.dhRecbto := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.dhRecbto;
     FItemRetorno.nProt := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt;
     FItemRetorno.digVal := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.digVal;
@@ -1072,7 +1072,7 @@ begin
   begin
     Msg := StatusServico.Msg;
     Versao := StatusServico.versao;
-    TpAmb := TpAmbToStr(StatusServico.TpAmb);
+    TpAmb := TipoAmbienteToStr(StatusServico.TpAmb);
     VerAplic := StatusServico.VerAplic;
     CStat := StatusServico.CStat;
     XMotivo := StatusServico.XMotivo;
@@ -1096,7 +1096,7 @@ begin
   begin
     Msg := Inutilizacao.Msg;
     Versao := Inutilizacao.versao;
-    TpAmb := TpAmbToStr(Inutilizacao.TpAmb);
+    TpAmb := TipoAmbienteToStr(Inutilizacao.TpAmb);
     VerAplic := Inutilizacao.VerAplic;
     CStat := Inutilizacao.CStat;
     XMotivo := Inutilizacao.XMotivo;
@@ -1154,7 +1154,7 @@ begin
   begin
     Msg := Consulta.Msg;
     Versao := Consulta.versao;
-    TpAmb := TpAmbToStr(Consulta.TpAmb);
+    TpAmb := TipoAmbienteToStr(Consulta.TpAmb);
     VerAplic := Consulta.VerAplic;
     CStat := Consulta.CStat;
     XMotivo := Consulta.XMotivo;
