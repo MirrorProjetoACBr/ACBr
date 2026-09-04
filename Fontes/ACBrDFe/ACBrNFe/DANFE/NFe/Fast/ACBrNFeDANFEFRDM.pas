@@ -1407,9 +1407,9 @@ begin
     FieldByName('TpNF').AsString    := tpNFToStr( FNFe.Ide.TpNF );
     FieldByName('CMunFG').AsString  := IntToStr(FNFe.Ide.CMunFG);
     FieldByName('TpImp').AsString   := TpImpToStr( FNFe.Ide.TpImp );
-    FieldByName('TpEmis').AsString  := TpEmisToStr( FNFe.Ide.TpEmis );
+    FieldByName('TpEmis').AsString  := TipoEmissaoToStr( FNFe.Ide.TpEmis );
     FieldByName('CDV').AsString     := IntToStr(FNFe.Ide.CDV);
-    FieldByName('TpAmb').AsString   := TpAmbToStr( FNFe.Ide.TpAmb );
+    FieldByName('TpAmb').AsString   := TipoAmbienteToStr( FNFe.Ide.TpAmb );
     FieldByName('FinNFe').AsString  := FinNFeToStr( FNFe.Ide.FinNFe );
     FieldByName('ProcEmi').AsString := procEmiToStr( FNFe.Ide.ProcEmi );
     FieldByName('VerProc').AsString := FNFe.Ide.VerProc;
@@ -1424,10 +1424,10 @@ begin
       FieldByName('DEmi').AsString := FormatDateTimeBr(FNFe.Ide.DEmi);
 
       if (FNFe.Ide.tpEmis <> teNormal) and EstaVazio(FNFe.procNFe.nProt) then
-        FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA'+LineBreak+'Pendente de autorização');
+        FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA'+sLineBreak+'Pendente de autorização');
 
       if FNFe.Ide.TpAmb = taHomologacao then
-        FieldByName('MensagemFiscal').AsString := FieldByName('MensagemFiscal').AsString+LineBreak+LineBreak+ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+        FieldByName('MensagemFiscal').AsString := FieldByName('MensagemFiscal').AsString+sLineBreak+sLineBreak+ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
 
       //if EstaVazio(FieldByName('MensagemFiscal').AsString) then
       //  FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
@@ -2051,7 +2051,7 @@ begin
          FieldByName('cStat').AsInteger     := cStat;
          FieldByName('xMotivo').AsString    := xMotivo;
          FieldByName('dhRecbto').AsDateTime := dhRecbto;
-         FieldByName('cUF').AsString        := CUFtoUF(cUF);
+         FieldByName('cUF').AsString        := CodigoUFParaUF(cUF);
 
          case tpAmb of
             taProducao:    FieldByName('tpAmb').AsString := ACBrStr('PRODUÇÃO');

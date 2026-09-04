@@ -46,6 +46,9 @@ Símbolo : Significado
 
 
 04/09/2026
+-- ACBrNFeDANFEFRDM --
+[-] Correções visando utilizar as novas funções da unit ACBrDFe.Conversao
+   Por: Italo Giurizzato Junior
 -- Diversos --
 [+] Diversas implementações e ajustes no componente para que o mesmo passe a utilizar
     as units padrões para a RTC.
