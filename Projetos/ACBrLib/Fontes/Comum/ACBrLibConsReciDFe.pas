@@ -39,7 +39,7 @@ interface
 uses
   Classes, SysUtils, contnrs,
   ACBrLibResposta, ACBrLibConfig,
-  pcnRetConsReciDFe;
+  ACBrDFeComum.RetConsReciDFe;
 
 type
   { TRetornoItemResposta }
