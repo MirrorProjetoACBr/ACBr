@@ -41,6 +41,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+04/09/2026
+-- ACBrMDFeWebServices --
+[-] Substitui chamada de pcnRetConsReciDFe para ACBrDFeComum.RetConsReciDFe
+   Por: Diego Folieni
+
 25/06/2026
 -- ACBrMDFe.XmlWriter  --
 [*] Ajuste ao escrever XML das chaves chaves alfanumérico.

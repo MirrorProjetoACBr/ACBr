@@ -43,7 +43,7 @@ uses
   ACBrDFe, ACBrDFeWebService,
   ACBrMDFe.Classes,
   pcnConversao, pmdfeConversaoMDFe,
-  pcnRetConsReciDFe,
+  ACBrDFeComum.RetConsReciDFe,
   ACBrMDFe.ProcInfraSA,
   ACBrMDFe.EnvEvento,
   ACBrMDFe.RetEnvEvento,
@@ -1535,7 +1535,7 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
 
   //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-  FMDFeRetorno.Leitor.Arquivo := UTF8ToNativeString(ParseText(FPRetWS));
+  FMDFeRetorno.XmlRetorno := UTF8ToNativeString(ParseText(FPRetWS));
   FMDFeRetorno.LerXML;
 
   Fversao := FMDFeRetorno.versao;
