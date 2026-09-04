@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+04/09/2026
+-- ACBrNFe.XmlWriter --
+[-] Corrigido a posição onde se deve gerar as tags: qBCMonoDif e adRemICMSDif para
+    o CST=53 do ICMS.
+   Por Italo Giurizzato Junior
+
 03/09/2026
 -- ACBrNFe.XmlWriter --
 [*] Alterado as condições para gerar o XML corretamente quando o tipo de débito for
