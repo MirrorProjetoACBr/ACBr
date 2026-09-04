@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2026
+-- ACBrCTeWebServices --
+[-] Substitui chamada de pcnRetConsReciDFe para ACBrDFeComum.RetConsReciDFe
+   Por: Diego Folieni
+
 01/09/2026
 -- ACBrCTeWebServices --
 [-] Ajuste para que o nome do arquivo seja gerado corretamente na DistribuicaoDFe quando definido caminho em DownloadDFe.PathDownload
