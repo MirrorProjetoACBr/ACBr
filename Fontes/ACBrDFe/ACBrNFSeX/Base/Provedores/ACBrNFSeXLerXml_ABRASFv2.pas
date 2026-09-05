@@ -678,6 +678,8 @@ begin
     LerDeclaracaoPrestacaoServico(AuxNode);
 
     NFSe.ChaveAcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('ChaveAcesso'), tcStr);
+    if (NFSe.ChaveAcesso = '') then
+        NFSe.ChaveAcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('ChaveADN'), tcStr);
 
     if NFSe.ChaveAcesso = '' then
       NFSe.ChaveAcesso := NFSe.infNFSe.ID;

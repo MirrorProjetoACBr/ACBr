@@ -349,7 +349,9 @@ var
 implementation
 
 uses
-  StrUtils, DateUtils, Types,
+  StrUtils, 
+  DateUtils, 
+  Types,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
@@ -414,7 +416,10 @@ var
 begin
   inherited;
 
-  rllChaveAcesso.Caption := ACBrStr(fpNFSe.CodigoVerificacao);
+  if Length(fpNFSe.ChaveAcesso)=50 then
+     rllChaveAcesso.Caption := ACBrStr(fpNFSe.ChaveAcesso)
+  else
+     rllChaveAcesso.Caption := ACBrStr(fpNFSe.CodigoVerificacao);
   rllNumNF0.Caption := fpNFSe.Numero;
   rllNumeroDPS.Caption := fpNFSe.IdentificacaoRps.Numero;
 
