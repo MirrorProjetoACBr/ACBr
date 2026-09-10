@@ -1488,6 +1488,7 @@ begin
 
   AJsonObject.AddPair('ctpoProteTitlo', LTipoProtesto);
   AJsonObject.AddPair('ctpoPrzProte', LDiasProtesto);
+  AJsonObject.AddPair('ctpoProteDecurs', LTipoProtesto);  
 end;
 
 procedure TBoletoW_Bradesco.GerarProtestoOuNegativacao(
