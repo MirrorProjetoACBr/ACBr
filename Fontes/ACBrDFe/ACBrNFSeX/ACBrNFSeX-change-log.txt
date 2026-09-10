@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2026
+-- Fiorilli.Provider --
+[*] Ajuste visando o correto envio de eventos para a versão 1.01 do provedor Fiorilli
+   Por: Diego Folieni
+   Veja: https://www.projetoacbr.com.br/forum/topic/94689-acbrnfsex-fiorilli-layout-nacional-nenhuma-versao-consegue-emitir-e-cancelar/
+
 09/09/2026
 -- Giss.Provider --
 [*] Adiciona a leitura do retorno da tag ContextoTecnico e concatena seu conteúdo a Mensagem.

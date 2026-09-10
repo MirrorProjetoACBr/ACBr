@@ -1419,7 +1419,7 @@ begin
   URL := GetWebServiceURL(AMetodo);
 
   if AMetodo in [tmGerar, tmRecepcionar, tmRecepcionarSincrono, tmConsultarLote,
-                 tmConsultarNFSePorRps, tmConsultarNFSePorChave] then
+                 tmConsultarNFSePorRps, tmConsultarNFSePorChave, tmEnviarEvento] then
     AMimeType := 'text/xml; charset=utf-8'
   else
     AMimeType := 'application/json';
