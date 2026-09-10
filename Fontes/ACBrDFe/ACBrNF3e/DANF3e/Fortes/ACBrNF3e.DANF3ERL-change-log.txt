@@ -41,7 +41,9 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+10/09/2026
+[*] Ajustes fortes alfanumericos das chaves.
+   [ACBr-9471] Por: Daniel de Morais InfoCotidiano
 
 13/08/2024
 [*] Alteração visando a impressão de todos os quadros com os seus valores.

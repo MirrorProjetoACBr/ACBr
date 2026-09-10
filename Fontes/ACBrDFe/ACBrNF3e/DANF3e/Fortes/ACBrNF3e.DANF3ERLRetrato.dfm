@@ -7,8 +7,8 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
   Position = poDesigned
   TextHeight = 24
   inherited RLNF3e: TRLReport
-    Left = 8
-    Top = -320
+    Left = 32
+    Top = -352
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -23,9 +23,9 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
     Title = 'DADCe Retrato'
     BeforePrint = RLNF3eBeforePrint
     object RLDivisao_04: TRLBand
-      Left = 33
-      Top = 667
-      Width = 926
+      Left = 26
+      Top = 660
+      Width = 742
       Height = 174
       BandType = btHeader
       BeforePrint = RLDivisao_04BeforePrint
@@ -441,9 +441,9 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
       end
     end
     object RLDivisao_05: TRLBand
-      Left = 33
-      Top = 841
-      Width = 926
+      Left = 26
+      Top = 834
+      Width = 742
       Height = 143
       BandType = btHeader
       BeforePrint = RLDivisao_05BeforePrint
@@ -731,9 +731,9 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
       end
     end
     object RLDivisao_03: TRLBand
-      Left = 33
-      Top = 440
-      Width = 926
+      Left = 26
+      Top = 433
+      Width = 742
       Height = 227
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -1530,9 +1530,9 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
       end
     end
     object RLDivisao_01: TRLBand
-      Left = 33
-      Top = 33
-      Width = 926
+      Left = 26
+      Top = 26
+      Width = 742
       Height = 149
       BandType = btHeader
       BeforePrint = RLDivisao_01BeforePrint
@@ -1607,9 +1607,9 @@ inherited frmDANF3eRLRetrato: TfrmDANF3eRLRetrato
       end
     end
     object RLDivisao_02: TRLBand
-      Left = 33
-      Top = 182
-      Width = 926
+      Left = 26
+      Top = 175
+      Width = 742
       Height = 258
       BandType = btHeader
       BeforePrint = RLDivisao_02BeforePrint
