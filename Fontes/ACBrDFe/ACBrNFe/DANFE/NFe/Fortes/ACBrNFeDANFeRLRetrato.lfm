@@ -767,26 +767,26 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object rllNumNF1: TRLLabel
-        Left = 263
-        Height = 11
-        Top = 75
-        Width = 61
+        Left = 262
+        Height = 16
+        Top = 78
+        Width = 85
         Caption = 'Nº 999999999'
         Font.Color = clBlack
-        Font.Height = -9
+        Font.Height = -13
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object rllSERIE1: TRLLabel
-        Left = 263
-        Height = 10
-        Top = 87
-        Width = 40
+        Left = 260
+        Height = 12
+        Top = 97
+        Width = 50
         Alignment = taCenter
         Caption = 'SÉRIE 000'
         Font.Color = clBlack
-        Font.Height = -8
+        Font.Height = -9
         Font.Name = 'Arial'
         ParentFont = False
       end
@@ -1094,10 +1094,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Margins.RightMargin = 1
       end
       object rllPageNumber: TRLSystemInfo
-        Left = 263
+        Left = 317
         Height = 13
         Top = 97
-        Width = 37
+        Width = 19
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -9
@@ -1107,10 +1107,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Text = 'fl. '
       end
       object rllLastPage: TRLSystemInfo
-        Left = 301
+        Left = 337
         Height = 13
         Top = 97
-        Width = 24
+        Width = 17
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -9

@@ -826,28 +826,28 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object rllNumNF1: TRLLabel
-        Left = 263
-        Top = 75
-        Width = 61
-        Height = 11
+        Left = 262
+        Top = 78
+        Width = 85
+        Height = 16
         Caption = 'N'#186' 999999999'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -9
+        Font.Height = -13
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object rllSERIE1: TRLLabel
-        Left = 263
-        Top = 87
-        Width = 40
-        Height = 10
+        Left = 260
+        Top = 97
+        Width = 50
+        Height = 12
         Alignment = taCenter
         Caption = 'S'#201'RIE 000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -8
+        Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -1185,9 +1185,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         BarcodeType = bcCode128
       end
       object rllPageNumber: TRLSystemInfo
-        Left = 263
+        Left = 317
         Top = 97
-        Width = 37
+        Width = 19
         Height = 13
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -1200,9 +1200,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Text = 'fl. '
       end
       object rllLastPage: TRLSystemInfo
-        Left = 301
+        Left = 337
         Top = 97
-        Width = 24
+        Width = 17
         Height = 13
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET

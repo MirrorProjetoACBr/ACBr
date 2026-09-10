@@ -45,6 +45,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+10/09/2026
+-- Ajustes NFE ACBrNFeDANFeRLRetrato, alinhar serie, folhas e numero nfe, deixando um pouco maior --
+[*] #ACBR-9471 - Ajustes para chaves e cnpj alfanumericos.
+  Por: Daniel de Morais InfoCotidiano
+
 04/08/2026
 -- Ajustes NFE DANFe Fortes Simplificado e Etiqueta --
 [*] #ACBR-9471 - Ajustes para chaves e cnpj alfanumericos.
