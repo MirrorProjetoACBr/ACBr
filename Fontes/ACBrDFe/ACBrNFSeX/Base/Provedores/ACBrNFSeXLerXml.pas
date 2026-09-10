@@ -1719,6 +1719,8 @@ end;
 
 procedure TNFSeRClass.LerXMLEnderecoDestinatario(
   const ANode: TACBrXmlNode; ender: Tender);
+var
+  xUF: String;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -1729,6 +1731,14 @@ begin
   ender.nro := ObterConteudo(ANode.Childrens.FindAnyNs('nro'), tcStr);
   ender.xCpl := ObterConteudo(ANode.Childrens.FindAnyNs('xCpl'), tcStr);
   ender.xBairro := ObterConteudo(ANode.Childrens.FindAnyNs('xBairro'), tcStr);
+
+  ender.DescricaoMunicipio := ObterNomeMunicipioUF(ender.endNac.cMun, xUF);
+
+  if ender.UF = '' then
+  begin
+    ender.UF := xUF;
+    ender.endNac.UF := xUF;
+  end;
 end;
 
 procedure TNFSeRClass.LerXMLEnderecoNacionalDestinatario(

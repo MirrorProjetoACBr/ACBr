@@ -541,6 +541,7 @@ begin
   if fpNFSe.IBSCBS.dest.xNome <> '' then
   begin
     rllDestinatarioNaoIdentificado.Visible := False;
+    RLLabel42.Visible := True;
     rlbBanda05_Destinatario.Height := 120;
     RLLabel81.Visible := True;
     RLLabel84.Visible := True;
@@ -559,7 +560,7 @@ begin
 
     rllDestInscMunicipal.Caption := fpNFSe.IBSCBS.dest.IM;
     rllDestEmail.Caption := fpNFSe.IBSCBS.dest.Email;
-    rllInterMunicipio.Caption := IntToStr(fpNFSe.IBSCBS.dest.ender.endNac.cMun) + '/' +
+    rllDestMunicipio.Caption := fpNFSe.IBSCBS.dest.ender.DescricaoMunicipio + '/' +
                                  fpNFSe.IBSCBS.dest.ender.endNac.UF;
     rllDestTelefone.Caption := FormatarFone(fpNFSe.IBSCBS.dest.fone);
     rllDestCEP.Caption := IntToStr(fpNFSe.IBSCBS.dest.ender.endNac.cMun) + ' / ' +

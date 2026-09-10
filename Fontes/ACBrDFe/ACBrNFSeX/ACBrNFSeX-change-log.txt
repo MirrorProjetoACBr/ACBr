@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/09/2026
+-- ACBrNFSeXLerXml/ACBrNFSeXDANFSeRLPadraoNacional --
+[*] Ajustes visando melhorar a exibição de informações da seção Destinatário
+   Por: Diego Folieni
+   Veja: https://www.projetoacbr.com.br/forum/topic/94648-erro-na-emiss%C3%A3o-da-danfse-nota-de-servi%C3%A7os/ 
 -- Fiorilli.Provider --
 [*] Ajuste visando o correto envio de eventos para a versão 1.01 do provedor Fiorilli
    Por: Diego Folieni
