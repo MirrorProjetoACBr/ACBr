@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2026
+-- ACBrDFe.RTC.XmlWriter --
+[-] ACBR-9844 - Ajuste para que o grupo gIBSCBSMono seja gerado apenas caso tenha valor atribuído.
+   Por: Diego Folieni
+   Veja: https://www.projetoacbr.com.br/forum/topic/94675-acbr-9844rejei%C3%A7%C3%A3o-n%C3%A3o-informada-tributa%C3%A7%C3%A3o-monof%C3%A1sica-ad-valorem-do-ibs-cst-620/
+
 10/09/2026
 -- ACBrDFe.RTC.XmlReader.pas --
 [*] Ajustes para CNPJBasePSP alfanumerico.

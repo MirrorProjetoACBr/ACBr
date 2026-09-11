@@ -850,38 +850,56 @@ end;
 
 function TDFeRTCXmlWriter.Gerar_gIBSCBSMono(
   gIBSCBSMono: TgIBSCBSMono): TACBrXmlNode;
+var
+  lGerargIBSCBSMono, lGerarIBSMonoAdRem, lGerarIBSMonoAdValorem,
+  lGerarCBSMonoAdRem, lGerarCBSMonoAdValorem: Boolean;
 begin
-  Result := FDocument.CreateElement('gIBSCBSMono');
+  Result := nil;
 
-  if (gIBSCBSMono.gIBSMonoAdRem.gMonoPadrao.qBCMono > 0) or
-     (gIBSCBSMono.gIBSMonoAdRem.gMonoReten.qBCMonoReten > 0) or
-     (gIBSCBSMono.gIBSMonoAdRem.gMonoRet.vIBSMonoRet > 0) then
-    Result.AppendChild(Gerar_gIBSMonoAdRem(gIBSCBSMono.gIBSMonoAdRem))
-  else
+  lGerarIBSMonoAdRem := (gIBSCBSMono.gIBSMonoAdRem.gMonoPadrao.qBCMono > 0) or
+                        (gIBSCBSMono.gIBSMonoAdRem.gMonoReten.qBCMonoReten > 0) or
+                        (gIBSCBSMono.gIBSMonoAdRem.gMonoRet.vIBSMonoRet > 0);
+  lGerarIBSMonoAdValorem := (gIBSCBSMono.gIBSMonoAdValorem.gMonoPadrao.vBCMono > 0) or
+                            (gIBSCBSMono.gIBSMonoAdValorem.gMonoReten.vBCMonoReten > 0) or
+                            (gIBSCBSMono.gIBSMonoAdValorem.gMonoRet.vIBSMonoRet > 0);
+  lGerarCBSMonoAdRem := (gIBSCBSMono.gCBSMonoAdRem.gMonoPadrao.qBCMono > 0) or
+                        (gIBSCBSMono.gCBSMonoAdRem.gMonoReten.qBCMonoReten > 0) or
+                        (gIBSCBSMono.gCBSMonoAdRem.gMonoRet.vCBSMonoRet > 0);
+  lGerarCBSMonoAdValorem := (gIBSCBSMono.gCBSMonoAdValorem.gMonoPadrao.vBCMono > 0) or
+                            (gIBSCBSMono.gCBSMonoAdValorem.gMonoReten.vBCMonoReten > 0) or
+                            (gIBSCBSMono.gCBSMonoAdValorem.gMonoRet.vCBSMonoRet > 0);
+
+  lGerargIBSCBSMono := lGerarIBSMonoAdRem or
+                       lGerarIBSMonoAdValorem or
+                       lGerarCBSMonoAdRem or
+                       lGerarCBSMonoAdValorem;
+
+  if lGerargIBSCBSMono then
   begin
-    if (gIBSCBSMono.gIBSMonoAdValorem.gMonoPadrao.vBCMono > 0) or
-       (gIBSCBSMono.gIBSMonoAdValorem.gMonoReten.vBCMonoReten > 0) or
-       (gIBSCBSMono.gIBSMonoAdValorem.gMonoRet.vIBSMonoRet > 0) then
-      Result.AppendChild(Gerar_gIBSMonoAdValorem(gIBSCBSMono.gIBSMonoAdValorem));
+    Result := FDocument.CreateElement('gIBSCBSMono');
+
+    if lGerarIBSMonoAdRem then
+      Result.AppendChild(Gerar_gIBSMonoAdRem(gIBSCBSMono.gIBSMonoAdRem))
+    else
+    begin
+      if lGerarIBSMonoAdValorem then
+        Result.AppendChild(Gerar_gIBSMonoAdValorem(gIBSCBSMono.gIBSMonoAdValorem));
+    end;
+
+    if lGerarCBSMonoAdRem then
+      Result.AppendChild(Gerar_gCBSMonoAdRem(gIBSCBSMono.gCBSMonoAdRem))
+    else
+    begin
+      if lGerarCBSMonoAdValorem then
+        Result.AppendChild(Gerar_gCBSMonoAdValorem(gIBSCBSMono.gCBSMonoAdValorem));
+    end;
+
+    Result.AppendChild(AddNode(tcDe2, 'UB104', 'vTotIBSMonoItem', 1, 15, 1,
+                                   gIBSCBSMono.vTotIBSMonoItem, DSC_VTOTIBSMONO));
+
+    Result.AppendChild(AddNode(tcDe2, 'UB105', 'vTotCBSMonoItem', 1, 15, 1,
+                                   gIBSCBSMono.vTotCBSMonoItem, DSC_VTOTCBSMONO));
   end;
-
-  if (gIBSCBSMono.gCBSMonoAdRem.gMonoPadrao.qBCMono > 0) or
-     (gIBSCBSMono.gCBSMonoAdRem.gMonoReten.qBCMonoReten > 0) or
-     (gIBSCBSMono.gCBSMonoAdRem.gMonoRet.vCBSMonoRet > 0) then
-    Result.AppendChild(Gerar_gCBSMonoAdRem(gIBSCBSMono.gCBSMonoAdRem))
-  else
-  begin
-    if (gIBSCBSMono.gCBSMonoAdValorem.gMonoPadrao.vBCMono > 0) or
-       (gIBSCBSMono.gCBSMonoAdValorem.gMonoReten.vBCMonoReten > 0) or
-       (gIBSCBSMono.gCBSMonoAdValorem.gMonoRet.vCBSMonoRet > 0) then
-      Result.AppendChild(Gerar_gCBSMonoAdValorem(gIBSCBSMono.gCBSMonoAdValorem));
-  end;
-
-  Result.AppendChild(AddNode(tcDe2, 'UB104', 'vTotIBSMonoItem', 1, 15, 1,
-                                 gIBSCBSMono.vTotIBSMonoItem, DSC_VTOTIBSMONO));
-
-  Result.AppendChild(AddNode(tcDe2, 'UB105', 'vTotCBSMonoItem', 1, 15, 1,
-                                 gIBSCBSMono.vTotCBSMonoItem, DSC_VTOTCBSMONO));
 end;
 
 function TDFeRTCXmlWriter.Gerar_gIBSMonoAdRem(
