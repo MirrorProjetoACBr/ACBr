@@ -36,6 +36,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+11/09/2026
+-- ACBrUtil.Strings.pas --
+[-] Correção no método "Split" para D7, e Strings que terminam com o Delimitador
+    (por: DSA)
+
 25/05/2026
 -- ACBrUtil.Strings.pas --
 [*] Ajuste na função OnlyCPFCNPJAlphaNum para devolver sempre maiúsculo.

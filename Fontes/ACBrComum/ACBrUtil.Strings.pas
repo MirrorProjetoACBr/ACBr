@@ -207,6 +207,7 @@ begin
   vRows := TStringList.Create;
   try
     ACount := AddDelimitedTextToList(AString, ADelimiter, vRows);
+    Result := nil;
     SetLength(Result, ACount);
     for i := 0 to ACount - 1 do
       Result[i] := vRows.Strings[i];
@@ -1594,8 +1595,12 @@ begin
          Inc(Pf);
        end;
 
-       Pi := Pf + 1;
+       Pi := Pf + 1;  // Pula o Delimiter
      end;
+
+     if (Pi > 1) and (AText[Pi-1] = ADelimiter) then // Termina com Delimiter ?
+       SL.Add('');                                   // Se SIM, adiciona item vazio
+
     {$EndIf}
     Result := SL.Count;
 
