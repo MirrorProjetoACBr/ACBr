@@ -452,6 +452,10 @@ type
     procedure Split_DelimitadorHifenSemHifen;
     procedure Split_DelimitadorHifenTresItens;
     procedure Split_DelimitadorHifenPalavraComposta;
+    procedure Split_DelimitadorNoFinal;
+    procedure Split_DelimitadorNoFinalComQuotes;
+    procedure Split_ItemComQuotesVaziaNoFinal;
+    procedure Split_SomenteDelimiter;
   end;
 
   { RemoverQuebraLinhaFinal }
@@ -1785,10 +1789,60 @@ var
   SR: TSplitResult;
 begin
   SR := Split('-', 'EL17 - Prepare-se para mostrar-lhes - Terceira parte da string');
-  CheckEquals(3, Length(SR));
+  CheckEquals(5, Length(SR));
   CheckEquals('EL17 ', SR[0]);
-  CheckEquals(' Segunda parte da String ', SR[1]);
-  CheckEquals(' Terceira parte da string', SR[2]);
+  CheckEquals(' Prepare', SR[1]);
+  CheckEquals('se para mostrar', SR[2]);
+  CheckEquals('lhes ', SR[3]);
+  CheckEquals(' Terceira parte da string', SR[4]);
+end;
+
+procedure SplitTeste.Split_DelimitadorNoFinal;
+var
+  SR: TSplitResult;
+begin
+  SR := split('|','008|TRIBANCO||034|');
+  CheckEquals(5, Length(SR));
+  CheckEquals('008', SR[0]);
+  CheckEquals('TRIBANCO', SR[1]);
+  CheckEquals('034', SR[3]);
+  CheckEquals('', SR[4]);
+end;
+
+procedure SplitTeste.Split_DelimitadorNoFinalComQuotes;
+var
+  SR: TSplitResult;
+begin
+  SR := split('|','"008"|"TRIBANCO"|"|pegadinha|"|"034"|');
+  CheckEquals(5, Length(SR));
+  CheckEquals('008', SR[0]);
+  CheckEquals('TRIBANCO', SR[1]);
+  CheckEquals('|pegadinha|', SR[2]);
+  CheckEquals('034', SR[3]);
+  CheckEquals('', SR[4]);
+end;
+
+procedure SplitTeste.Split_ItemComQuotesVaziaNoFinal;
+var
+  SR: TSplitResult;
+begin
+  SR := split('|','"008"|"TRIBANCO"|"|pegadinha|"|"034"|""');
+  CheckEquals(5, Length(SR));
+  CheckEquals('008', SR[0]);
+  CheckEquals('TRIBANCO', SR[1]);
+  CheckEquals('|pegadinha|', SR[2]);
+  CheckEquals('034', SR[3]);
+  CheckEquals('', SR[4]);
+end;
+
+procedure SplitTeste.Split_SomenteDelimiter;
+var
+  SR: TSplitResult;
+begin
+  SR := split('|','|');
+  CheckEquals(2, Length(SR));
+  CheckEquals('', SR[0]);
+  CheckEquals('', SR[1]);
 end;
 
 procedure SplitTeste.Split_DoisItens;
