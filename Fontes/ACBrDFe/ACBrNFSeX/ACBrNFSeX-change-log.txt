@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2026
+-- ACBrNFSeXDANFSeRLPadraoNacional --
+[*] Ajustes visando melhor escala no grupo destinatário e exibição de label antes oculto no mesmo grupo.
+   Por: Diego Folieni
+   Veja: https://www.projetoacbr.com.br/forum/topic/94648-erro-na-emiss%C3%A3o-da-danfse-nota-de-servi%C3%A7os/
+
 10/09/2026
 -- ACBrNFSeXLerXml/ACBrNFSeXDANFSeRLPadraoNacional --
 [*] Ajustes visando melhorar a exibição de informações da seção Destinatário

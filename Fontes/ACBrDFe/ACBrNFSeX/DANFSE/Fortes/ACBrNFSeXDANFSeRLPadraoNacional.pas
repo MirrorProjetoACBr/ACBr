@@ -542,7 +542,8 @@ begin
   begin
     rllDestinatarioNaoIdentificado.Visible := False;
     RLLabel42.Visible := True;
-    rlbBanda05_Destinatario.Height := 120;
+    RLLabel53.Visible := True;
+    rlbBanda05_Destinatario.Height := 102;
     RLLabel81.Visible := True;
     RLLabel84.Visible := True;
     RLLabel85.Visible := True;
