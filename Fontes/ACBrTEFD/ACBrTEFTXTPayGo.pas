@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-{ mentos de Automação Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera��o com equipa- }
+{ mentos de Automa��o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2026 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{  Voc� pode obter a �ltima vers�o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
+{  Esta biblioteca � software livre; voc� pode redistribu�-la e/ou modific�-la }
+{ sob os termos da Licen�a P�blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers�o 2.1 da Licen�a, ou (a seu crit�rio) }
+{ qualquer vers�o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca � distribu�da na expectativa de que seja �til, por�m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl�cita de COMERCIABILIDADE OU      }
+{ ADEQUA��O A UMA FINALIDADE ESPEC�FICA. Consulte a Licen�a P�blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN�A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
+{  Voc� deve ter recebido uma c�pia da Licen�a P�blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n�o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere�o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc� tamb�m pode obter uma copia da licen�a em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{ Daniel Sim�es de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu� - SP - 18270-170         }
 {******************************************************************************}
 
 unit ACBrTEFTXTPayGo;
@@ -49,7 +49,7 @@ const
 
   CACBRTEFTXT_CMD_CDP = 'CDP';  // Solicita CPF ou CNPJ no PinPad
   CACBRTEFTXT_CMD_QRP = 'QRP';  // Exibe QRCode no PinPad
-  CACBRTEFTXT_CMD_FQR = 'FQR';  // Fim da Exibição de Imagem QRCode no PinPad
+  CACBRTEFTXT_CMD_FQR = 'FQR';  // Fim da Exibicao de Imagem QRCode no PinPad
   CACBRTEFTXT_CMD_MNU = 'MNU';  // Menu no PinPad
 
   CPayGoVersaoInterface = 225;
@@ -128,8 +128,8 @@ type
     property DadosAdicionais1: String read fDadosAdicionais1 write fDadosAdicionais1;
     property DadosAdicionais2: String read fDadosAdicionais2 write fDadosAdicionais2;
 
-    property Moeda: Integer read fModelo write fMoeda default 0; // 0: Real; 1: Dólar; 2: Euro
-    property Idioma: Integer read fIdioma write fIdioma default 0; // 0-pt: português, 1-en: inglês, 2-es: espanhol
+    property Moeda: Integer read fModelo write fMoeda default 0; // 0: Real; 1: Dolar; 2: Euro
+    property Idioma: Integer read fIdioma write fIdioma default 0; // 0-pt: portugues, 1-en: ingles, 2-es: espanhol
   end;
 
 
@@ -156,7 +156,7 @@ begin
     727: fpTaxaServico := ALinha.Informacao.AsFloat;
     739:
     begin
-      // 739-000 Índice da Rede Adquirente
+      // 739-000 i�ndice da Rede Adquirente
       fpCodigoRedeAutorizada := ALinha.Informacao.AsString;
       fpNFCeSAT.CodCredenciadora := fpCodigoRedeAutorizada;
       CodRede := StrToIntDef(fpCodigoRedeAutorizada, 0);
@@ -173,34 +173,34 @@ begin
     end;
     740 :
     begin
-      // 740-000 - Número do cartão, mascarado (
+      // 740-000 - Numero do cartao, mascarado (
       // SetPAN ajusta PAN, BIN (6 primeiros), e Embosso (4 ultimos))
       PAN := ALinha.Informacao.AsString;
     end;
     741 :
     begin
-      // 741-000 - Nome do Cliente, extraído do cartão ou informado pelo emissor.
+      // 741-000 - Nome do Cliente, extraido do cartao ou informado pelo emissor.
       fpNFCeSAT.DonoCartao := ALinha.Informacao.AsString;
     end;
     742 :
     begin
-      // 742-000 - Nome do produto enviado na transação pela rede adquirente:
+      // 742-000 - Nome do produto enviado na transacao pela rede adquirente:
       fpModalidadePagto := ALinha.Informacao.AsString;
     end;
     744 :
     begin
       // 744-000 - Valor reajustado pela Rede Adquirente, conforme acordos contratuais com o estabelecimento,
-      //           Valor total (003-000) = Valor reajustado (744-000) + Valor do troco (708-000) – Valor do desconto (709-000) – Valor devido (743-000)
+      //           Valor total (003-000) = Valor reajustado (744-000) + Valor do troco (708-000) - Valor do desconto (709-000) - Valor devido (743-000)
       fpValorTotal := ALinha.Informacao.AsFloat;
     end;
     747 :
     begin
-      // 747-000 - Data de vencimento do cartão (MMAA)
+      // 747-000 - Data de vencimento do cartao (MMAA)
       fpNFCeSAT.DataExpiracao := ALinha.Informacao.AsString;
     end;
     748 :
     begin
-      // 748-000 - Nome do cartão padronizado. Se existir, substitui o 040-000
+      // 748-000 - Nome do cartao padronizado. Se existir, substitui o 040-000
       fpNomeAdministradora := ALinha.Informacao.AsString;
       fpNFCeSAT.Bandeira := fpNomeAdministradora;
     end;
@@ -218,14 +218,14 @@ begin
   inherited ConteudoToProperty;
 
   // 737-000 Vias de Comprovante
-  //   0: não há comprovante
+  //   0: nao ha comprovante
   //   1: imprimir somente a via do Cliente
   //   2: imprimir somente a via do Estabelecimento
   //   3: imprimir ambas as vias do Cliente e do Estabelecimento
   ViasDeComprovante := Trim(LeInformacao(737, 0).AsString);
-  if (ViasDeComprovante = '') then  //  Não informado, se basear em 028-000
+  if (ViasDeComprovante = '') then  //  Nao informado, se basear em 028-000
   begin
-    if (fpQtdLinhasComprovante > 0) then // 028-000 é maior que Zero
+    if (fpQtdLinhasComprovante > 0) then // 028-000 � maior que Zero
       ViasDeComprovante := '3'
     else
       ViasDeComprovante := '0';
@@ -283,10 +283,10 @@ begin
   fpQtdLinhasComprovante := max(fpImagemComprovante1aVia.Count, fpImagemComprovante2aVia.Count);
   fpNFCeSAT.Autorizacao := fpNSU;
 
-  // 731-000 - Tipo de cartão
-  //     0: qualquer / não definido (padrão)
-  //     1: crédito
-  //     2: débito
+  // 731-000 - Tipo de cartao
+  //     0: qualquer / nao definido (padrao)
+  //     1: credito
+  //     2: debito
   //     3: voucher
   TipoDeCartao := Trim(LeInformacao(731, 0).AsString);
   if (TipoDeCartao <> '') then
@@ -296,12 +296,12 @@ begin
   end;
 
   // 732-000 - Tipo de financiamento
-  //     0: qualquer / não definido (padrão)
-  //     1: à vista
+  //     0: qualquer / nao definido (padrao)
+  //     1: a vista
   //     2: parcelado pelo Emissor
   //     3: parcelado pelo Estabelecimento
-  //     4: pré-datado
-  //     5: pré-datado forçado
+  //     4: pre-datado
+  //     5: pre-datado forcado
   TipoDeFinanciamento := Trim(LeInformacao(732, 0).AsString);
   if (TipoDeFinanciamento <> '') then
   begin
@@ -329,15 +329,15 @@ begin
       fpTipoOperacao := opPreDatado;
   end;
 
-  // 729-000 - Status da confirmação
-  //    1: transação não requer confirmação, ou já confirmada
-  //    2: transação requer confirmação
-  //    Se não encontrado, assumir que a transação requer confirmação se houver comprovantes a serem impressos.
+  // 729-000 - Status da confirmacao
+  //    1: transacao nao requer confirmcao, ou ja confirmada
+  //    2: transacao requer confirmacao
+  //    Se nao encontrado, assumir que a transacao requer confirmacao se houver comprovantes a serem impressos.
   StatusConfirmacao := Trim(LeInformacao(729,0).AsString);
   if (StatusConfirmacao <> '') then
     fpConfirmar := (StatusConfirmacao = '2');
 
-  // 730-000 - Operação
+  // 730-000 - Operacao
   Operacao := Trim(LeInformacao(730,0).AsString);
   if (Operacao <> '') then
     fpTipoTransacao := StrToIntDef(Operacao, fpTipoTransacao);
@@ -515,16 +515,16 @@ begin
     Inc(Result, 32 +  // 32: funcionalidade de valor devido (ver campo 743-000)
                 64);  // 64: funcionalidade de valor reajustado (ver campo 744-000)
 
-  Inc(Result, 128);   // 128: suporta NSU com tamanho de até 40 caracteres (campos 012-000 e 025-000)
-  Inc(Result, 256);   // 256: suporta índice da aplicação com tamanho de até 4 caracteres (campo 739-000)
+  Inc(Result, 128);   // 128: suporta NSU com tamanho de ate 40 caracteres (campos 012-000 e 025-000)
+  Inc(Result, 256);   // 256: suporta indice da aplicacao com tamanho de ate 4 caracteres (campo 739-000)
 end;
 
 procedure TACBrTEFTXTPayGo.AdicionarCamposConfiguracao;
 var
   s, h: String;
 begin
-  // 733-000 Versão da interface n..3 Valor fixo, identificando a versão deste documento
-  // implementada pela Automação Comercial (somente números, por exemplo, 210 para “v2.10”)
+  // 733-000 Versao da interface n..3 Valor fixo, identificando a versao deste documento
+  // implementada pela Automacao Comercial (somente numeros, por exemplo, 210 para “v2.10”)
   Req.Campo[733,0].AsInteger := CPayGoVersaoInterface;
 
   if (RegistroCertificacao <> '') then
@@ -534,7 +534,7 @@ begin
   if (pos(h, 'ATV,CNF,NCN') > 0) then
     Exit;
 
-  // 706-000 Capacidades da Automação
+  // 706-000 Capacidades da Automacao
   Req.Campo[706,0].AsInteger := CalcularCapacidadesAutomacao;
 
   if (SoftwareHouse <> '') then
