@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2026
+-- ACBrTEFPayGoRedes --
+[-] Correção de Bug, em leitura da Tabela de Redes em D7 e Itens sem CNPJ
+    (por: DSA)
+
 10/08/2026
 -- ACBrTEFAPITPag, ACBrTEFTPagAPI --
 [*] Refaforação de código em EfetuarAdministrativa

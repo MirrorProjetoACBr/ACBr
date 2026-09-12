@@ -180,7 +180,8 @@ begin
           ARede.NomeTrad := Trim(Colunas[1]);
           ARede.NomePGWeb := Trim(Colunas[2]);
           ARede.CodSATCFe := StrToIntDef(Colunas[3], 999);  // 999 = Outros
-          ARede.CNPJ := Colunas[4];
+      	  if Length(Colunas) > 4 then
+            ARede.CNPJ := Colunas[4];
           Add(ARede);
         except
           ARede.Free;
