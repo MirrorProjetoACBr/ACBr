@@ -37,7 +37,7 @@ unit ACBrLibMDFeConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, pcnConversao,
+  Classes, SysUtils, IniFiles, ACBrDFe.Conversao,
   ACBrMDFeConfiguracoes,
   {$IfNDef NOREPORT}
   ACBrMDFeDAMDFeRLClass,
@@ -52,7 +52,7 @@ type
   private
     FImprimeHoraSaida: Boolean;
     FImprimeHoraSaida_Hora: String;
-    FTipoDAMDFe: TpcnTipoImpressao;
+    FTipoDAMDFe: TACBrTipoImpressao;
     FProtocolo: String;
     FCancelada: Boolean;
     FEncerrado: Boolean;
@@ -69,7 +69,7 @@ type
 
     property ImprimeHoraSaida: Boolean read FImprimeHoraSaida write FImprimeHoraSaida;
     property ImprimeHoraSaida_Hora: String read FImprimeHoraSaida_Hora write FImprimeHoraSaida_Hora;
-    property TipoDAMDFe: TpcnTipoImpressao read FTipoDAMDFe write FTipoDAMDFe;
+    property TipoDAMDFe: TACBrTipoImpressao read FTipoDAMDFe write FTipoDAMDFe;
     property Protocolo: String read FProtocolo write FProtocolo;
     property Cancelada: Boolean read FCancelada write FCancelada;
     property Encerrado: Boolean read FEncerrado write FEncerrado;
@@ -101,7 +101,7 @@ type
 implementation
 
 uses
-  blcksock, pcnAuxiliar, pmdfeConversaoMDFe,
+  blcksock, ACBrMDFe.Conversao,
   ACBrLibMDFeBase, ACBrLibMDFeConsts, ACBrLibConsts,
   ACBrUtil.FilesIO, ACBrUtil.Strings;
 
@@ -126,7 +126,7 @@ procedure TDAMDFeConfig.LerIniChild(const AIni: TCustomIniFile);
 begin
   FImprimeHoraSaida := AIni.ReadBool(FSessao, CChaveImprimeHoraSaida, FImprimeHoraSaida);
   FImprimeHoraSaida_Hora := AIni.ReadString(FSessao, CChaveImprimeHoraSaida_Hora, FImprimeHoraSaida_Hora);
-  FTipoDAMDFe := TpcnTipoImpressao(AIni.ReadInteger(FSessao, CChaveTipoDAMDFe, Integer(FTipoDAMDFe)));
+  FTipoDAMDFe := TACBrTipoImpressao(AIni.ReadInteger(FSessao, CChaveTipoDAMDFe, Integer(FTipoDAMDFe)));
   FProtocolo := AIni.ReadString(FSessao, CChaveProtocolo, FProtocolo);
   FCancelada := AIni.ReadBool(FSessao, CChaveCancelada, FCancelada);
   FEncerrado := AIni.ReadBool(FSessao, CChaveEncerrado, FEncerrado);

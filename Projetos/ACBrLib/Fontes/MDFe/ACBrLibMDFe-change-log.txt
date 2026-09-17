@@ -41,6 +41,13 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+17/09/2026
+-- ACBrLibMDFeBase/ACBrLibMDFeConfig --
+[*] Substitui unit pmdfeMDFeConversao pela unit ACBrMDFe.Conversao
+   Por: Diego Folieni / Italo Giurizzato Junior
+   Veja: https://www.projetoacbr.com.br/forum/topic/94539-fim-do-uso-da-unit-pcnconversao-nos-dfe-e-uso-das-units-exclusivas-para-a-rtc/
+
 25/06/2026
 -- ACBrLibMDFeBase, ACBrLibMDFeRespostas --
 [*] Ajuste das chaves chaves e cnpj alfanumérico.
