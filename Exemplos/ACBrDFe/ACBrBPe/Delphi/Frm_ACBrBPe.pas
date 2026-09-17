@@ -32,11 +32,15 @@ unit Frm_ACBrBPe;
 
 interface
 
+//descomentar o motor de relatório que desejar utilizar! removendo o ponto
+{.$DEFINE GERADOR_FPDF}
+
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ExtCtrls, StdCtrls,
   Spin, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail,
   ACBrPosPrinter, ACBrBPeDABPeESCPOS, ACBrBPeDABPEClass,
+{$IFDEF GERADOR_FPDF}ACBrBPeDABPeFPDF,{$ENDIF}
   ACBrDFeReport, ACBrBase, ACBrDFe,
   ACBrBPe, ShellAPI, XMLIntf, XMLDoc, zlib;
 
@@ -259,6 +263,12 @@ type
     btnVincPagto: TButton;
     btnCancelarPagVinc: TButton;
     btnLerArqEventoINI: TButton;
+    btnGerarPDFStream: TButton;
+    LblPathPDF: TLabel;
+    edtPathPDF: TEdit;
+    sbPathPDF: TSpeedButton;
+    btnGerarPDFEvento: TButton;
+    btnGerarPDFStreamEvento: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -319,8 +329,13 @@ type
     procedure btnVincPagtoClick(Sender: TObject);
     procedure btnCancelarPagVincClick(Sender: TObject);
     procedure btnLerArqEventoINIClick(Sender: TObject);
+    procedure sbPathPDFClick(Sender: TObject);
   private
     { Private declarations }
+  {$IFDEF GERADOR_FPDF}
+    FACBrBPeDABPeFPDF: TACBrBPeDABPeFPDF;
+  {$ENDIF}
+
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
@@ -1579,6 +1594,7 @@ end;
 procedure TfrmACBrBPe.btnGerarPDFClick(Sender: TObject);
 var
   CarregarMaisXML: Boolean;
+  LStream: TMemoryStream;
 begin
 	CarregarMaisXML := true;
   OpenDialog1.Title := 'Selecione a BPe';
@@ -1596,7 +1612,23 @@ begin
     CarregarMaisXML := MessageDlg('Carregar mais Bilhetes?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
   end;
 
-  ACBrBPe1.Bilhetes.ImprimirPDF;
+  if Sender = btnGerarPDF then
+    ACBrBPe1.Bilhetes.ImprimirPDF
+  else
+  begin
+    LStream := TMemoryStream.Create;
+    try
+      ACBrBPe1.Bilhetes.ImprimirPDF(LStream);
+
+      LStream.Position := 0;
+      //LStream.SaveToFile(IncludeTrailingPathDelimiter(edtPathPDF.Text) + 'teste.pdf');
+
+      MemoDados.Lines.Clear;
+      MemoDados.Lines.LoadFromStream(LStream);
+    finally
+      LStream.Free;
+    end;
+  end;
 end;
 
 procedure TfrmACBrBPe.btnGerarXMLClick(Sender: TObject);
@@ -1690,6 +1722,8 @@ begin
 end;
 
 procedure TfrmACBrBPe.btnImprimirEventoClick(Sender: TObject);
+var
+  LStream: TMemoryStream;
 begin
   OpenDialog1.Title := 'Selecione a BPe';
   OpenDialog1.DefaultExt := '*-BPe.XML';
@@ -1713,7 +1747,26 @@ begin
   begin
     ACBrBPe1.EventoBPe.Evento.Clear;
     ACBrBPe1.EventoBPe.LerXML(OpenDialog1.FileName);
-    ACBrBPe1.ImprimirEvento;
+
+    if Sender = btnImprimirEvento then
+      ACBrBPe1.ImprimirEvento
+    else if Sender = btnGerarPDFEvento then
+      ACBrBPe1.ImprimirEventoPDF
+    else
+    begin
+      LStream := TMemoryStream.Create;
+      try
+        ACBrBPe1.ImprimirEventoPDF(LStream);
+
+        LStream.Position := 0;
+        //LStream.SaveToFile(IncludeTrailingPathDelimiter(edtPathPDF.Text) + 'teste.pdf');
+
+        MemoDados.Lines.Clear;
+        MemoDados.Lines.LoadFromStream(LStream);
+      finally
+        LStream.Free;
+      end;
+    end;
   end;
 end;
 
@@ -2202,6 +2255,17 @@ begin
   cbxPorta.Items.Add('/dev/ttyUSB1') ;
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
 
+{$IFDEF GERADOR_FPDF}
+  if (rgComponenteDABPE.Items.Count > 0) and
+     (rgComponenteDABPE.Items[rgComponenteDABPE.Items.Count-1] <> 'FPDF') then
+  begin
+    rgComponenteDABPE.Columns := rgComponenteDABPE.Columns + 1;
+    rgComponenteDABPE.Items.Add('FPDF');
+  end;
+
+  FACBrBPeDABPeFPDF := TACBrBPeDABPeFPDF.Create(Self);
+{$ENDIF}
+
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 2;
 end;
@@ -2260,6 +2324,7 @@ begin
     Ini.WriteBool(  'Arquivos', 'SepararPorModelo', cbxSepararPorModelo.Checked);
     Ini.WriteString('Arquivos', 'PathBPe',          edtPathBPe.Text);
     Ini.WriteString('Arquivos', 'PathEvento',       edtPathEvento.Text);
+    Ini.WriteString('Arquivos', 'PathPDF',          edtPathPDF.Text);
 
     Ini.WriteString('Emitente', 'CNPJ',        edtEmitCNPJ.Text);
     Ini.WriteString('Emitente', 'IE',          edtEmitIE.Text);
@@ -2397,6 +2462,7 @@ begin
     cbxSepararPorModelo.Checked := Ini.ReadBool(  'Arquivos', 'SepararPorModelo', false);
     edtPathBPe.Text             := Ini.ReadString('Arquivos', 'PathBPe',          '');
     edtPathEvento.Text          := Ini.ReadString('Arquivos', 'PathEvento',       '');
+    edtPathPDF.Text             := Ini.ReadString('Arquivos', 'PathPDF',          '');
 
     edtEmitCNPJ.Text       := Ini.ReadString('Emitente', 'CNPJ',        '');
     edtEmitIE.Text         := Ini.ReadString('Emitente', 'IE',          '');
@@ -2455,6 +2521,10 @@ begin
   ACBrBPe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
   ACBrBPe1.DABPe := ACBrBPeDABPeESCPOS1;
+{$IFDEF GERADOR_FPDF}
+  if rgComponenteDABPE.Items[rgComponenteDABPE.ItemIndex] = 'FPDF' then
+    ACBrBPe1.DABPe := FACBrBPeDABPeFPDF;
+{$ENDIF}
 
   ACBrBPe1.SSL.DescarregarCertificado;
 
@@ -2530,6 +2600,7 @@ begin
     ACBrBPe1.DABPE.TipoDABPe := StrToTpImp(IntToStr(rgTipoDaBPe.ItemIndex + 1));
     ACBrBPe1.DABPE.Logo      := edtLogoMarca.Text;
     ACBrBPe1.DABPE.ImprimeLogoLateral := chkLogoLateral.Checked;
+    ACBrBPe1.DABPE.PathPDF := edtPathPDF.Text;
   end;
 end;
 
@@ -2593,6 +2664,11 @@ end;
 procedure TfrmACBrBPe.sbPathEventoClick(Sender: TObject);
 begin
   PathClick(edtPathEvento);
+end;
+
+procedure TfrmACBrBPe.sbPathPDFClick(Sender: TObject);
+begin
+  PathClick(edtPathPDF);
 end;
 
 procedure TfrmACBrBPe.sbPathBPeClick(Sender: TObject);

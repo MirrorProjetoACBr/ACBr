@@ -1076,6 +1076,34 @@ object frmACBrBPe: TfrmACBrBPe
               NumGlyphs = 2
               OnClick = sbPathEventoClick
             end
+            object LblPathPDF: TLabel
+              Left = 6
+              Top = 217
+              Width = 94
+              Height = 13
+              Caption = 'Pasta Arquivos PDF'
+            end
+            object sbPathPDF: TSpeedButton
+              Left = 247
+              Top = 232
+              Width = 23
+              Height = 24
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337}
+              NumGlyphs = 2
+              OnClick = sbPathPDFClick
+            end
             object cbxSalvarArqs: TCheckBox
               Left = 6
               Top = 0
@@ -1145,6 +1173,13 @@ object frmACBrBPe: TfrmACBrBPe
               Height = 17
               Caption = 'Separar Arqs pelo Modelo do Documento'
               TabOrder = 8
+            end
+            object edtPathPDF: TEdit
+              Left = 6
+              Top = 233
+              Width = 235
+              Height = 21
+              TabOrder = 9
             end
           end
         end
@@ -1379,7 +1414,7 @@ object frmACBrBPe: TfrmACBrBPe
           Columns = 2
           ItemIndex = 1
           Items.Strings = (
-            'Fortes Report'
+            'Fortes'
             'Esc Pos')
           TabOrder = 3
         end
@@ -1556,7 +1591,7 @@ object frmACBrBPe: TfrmACBrBPe
           Width = 177
           Height = 25
           Caption = 'Gerar PDF'
-          TabOrder = 3
+          TabOrder = 9
           OnClick = btnGerarPDFClick
         end
         object btnValidarXML: TButton
@@ -1565,7 +1600,7 @@ object frmACBrBPe: TfrmACBrBPe
           Width = 177
           Height = 25
           Caption = 'Validar XML'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnValidarXMLClick
         end
         object btnImprimir: TButton
@@ -1574,16 +1609,16 @@ object frmACBrBPe: TfrmACBrBPe
           Width = 177
           Height = 25
           Caption = 'Imprimir DABPE'
-          TabOrder = 5
+          TabOrder = 7
           OnClick = btnImprimirClick
         end
         object btnEnviarEmail: TButton
-          Left = 192
+          Left = 375
           Top = 99
           Width = 177
           Height = 25
           Caption = 'Enviar BPe Email'
-          TabOrder = 6
+          TabOrder = 11
           OnClick = btnEnviarEmailClick
         end
         object btnAdicionarProtocolo: TButton
@@ -1592,7 +1627,7 @@ object frmACBrBPe: TfrmACBrBPe
           Width = 177
           Height = 25
           Caption = 'Adicionar Protocolo ao XML'
-          TabOrder = 7
+          TabOrder = 6
           OnClick = btnAdicionarProtocoloClick
         end
         object btnCarregarXMLEnviar: TButton
@@ -1601,7 +1636,7 @@ object frmACBrBPe: TfrmACBrBPe
           Width = 177
           Height = 25
           Caption = 'Carregar XML e Enviar'
-          TabOrder = 8
+          TabOrder = 4
           OnClick = btnCarregarXMLEnviarClick
         end
         object btnValidarAssinatura: TButton
@@ -1610,7 +1645,7 @@ object frmACBrBPe: TfrmACBrBPe
           Width = 177
           Height = 25
           Caption = 'Validar Assinatura'
-          TabOrder = 9
+          TabOrder = 5
           OnClick = btnValidarAssinaturaClick
         end
         object btnImprimirDANFCEOffline: TButton
@@ -1619,8 +1654,17 @@ object frmACBrBPe: TfrmACBrBPe
           Width = 177
           Height = 25
           Caption = 'Imprimir DABPE Offline'
-          TabOrder = 10
+          TabOrder = 8
           OnClick = btnImprimirDANFCEOfflineClick
+        end
+        object btnGerarPDFStream: TButton
+          Left = 192
+          Top = 99
+          Width = 177
+          Height = 25
+          Caption = 'Gerar PDF (Stream)'
+          TabOrder = 10
+          OnClick = btnGerarPDFClick
         end
       end
       object tsConsultas: TTabSheet
@@ -1713,8 +1757,8 @@ object frmACBrBPe: TfrmACBrBPe
               OnClick = btnExcessoBagagemClick
             end
             object btnImprimirEvento: TButton
-              Left = 3
-              Top = 65
+              Left = 315
+              Top = 34
               Width = 150
               Height = 25
               Caption = 'Imprimir Evento'
@@ -1722,13 +1766,31 @@ object frmACBrBPe: TfrmACBrBPe
               OnClick = btnImprimirEventoClick
             end
             object btnEnviarEventoEmail: TButton
-              Left = 159
+              Left = 315
               Top = 65
               Width = 150
               Height = 25
               Caption = 'Enviar Evento Email'
-              TabOrder = 6
+              TabOrder = 8
               OnClick = btnEnviarEventoEmailClick
+            end
+            object btnGerarPDFEvento: TButton
+              Left = 3
+              Top = 65
+              Width = 150
+              Height = 25
+              Caption = 'Gerar PDF Evento'
+              TabOrder = 6
+              OnClick = btnImprimirEventoClick
+            end
+            object btnGerarPDFStreamEvento: TButton
+              Left = 159
+              Top = 65
+              Width = 150
+              Height = 25
+              Caption = 'Gerar PDF Evento (Stream)'
+              TabOrder = 7
+              OnClick = btnImprimirEventoClick
             end
           end
           object tsRTC: TTabSheet
