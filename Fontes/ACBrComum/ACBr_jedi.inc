@@ -666,6 +666,7 @@
   DEPRECATED_TCHARACTER          TCharacter is deprecated and replaced by a record helper on Char (D18+)
   HAS_PROPERTY_OLDCREATEORDER    The OldCreateOrder property is available (D5 - D27)
   SUPPORTS_SCOPEDENUMS           Compiler supports the SCOPEDENUMS directive and enumerations can be scoped (D12+)
+  SUPPORTS_NORETURN              Copmiler supports the NORETURN directive (D37+)
 
 
 - Compiler Settings
@@ -2079,6 +2080,10 @@
 {$IFDEF COMPILER17_UP}
   {$DEFINE SUPPORTS_LEGACYIFEND}
 {$ENDIF COMPILER17_UP}
+
+{$IFDEF COMPILER37_UP}
+  {$DEFINE SUPPORTS_NORETURN}
+{$ENDIF COMPILER37_UP}
 
 {$IFDEF RTL130_UP}
   {$DEFINE HAS_UNIT_CONTNRS}
