@@ -770,7 +770,7 @@ var
 
         ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
 
-        CodVerif := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+        CodVerif := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
         NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
         DataAut := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
         NotaID := ObterConteudoTag(ANode.Attributes.Items['Id']);
@@ -1066,7 +1066,7 @@ var
 
         ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
 
-        CodVerif := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+        CodVerif := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
         NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
         DataAut := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
 
@@ -1124,7 +1124,6 @@ begin
           AResumo := Response.Resumos.New;
           AResumo.Link := JSon.AsString['chave'];
           AResumo.Situacao := JSon.AsString['situacao'];
-          
           Response.Situacao := JSon.AsString['situacao'];
           AResumo.CodigoVerificacao := JSon.AsString['codAutenticidade'];
 

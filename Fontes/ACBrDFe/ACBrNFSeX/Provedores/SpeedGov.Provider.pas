@@ -291,7 +291,6 @@ begin
 
   with ConfigSchemas do
   begin
-    Validar := True;
     Recepcionar := 'enviar_lote_rps_envio_v1.xsd';
     ConsultarSituacao := 'consultar_situacao_lote_rps_envio_v1.xsd';
     ConsultarLote := 'consultar_lote_rps_envio_v1.xsd';

@@ -514,6 +514,7 @@ begin
   Result := RemoverIdentacao(Result);
   Result := RemoverPrefixosDesnecessarios(Result);
   Result := RemoverCaracteresDesnecessarios(Result);
+  Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
 end;
 
 { TACBrNFSeXWebserviceISSNet204 }
@@ -1648,7 +1649,8 @@ begin
     if AuxNode <> nil then
     begin
       AuxNode := AuxNode.Childrens.FindAnyNs('infDPS');
-      if not Assigned(AuxNode) then
+
+      if AuxNode <> nil then
       begin
         NumRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nDPS'), tcStr);
         SerieRps := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('serie'), tcStr);

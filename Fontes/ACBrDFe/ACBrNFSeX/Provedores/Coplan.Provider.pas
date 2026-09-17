@@ -182,7 +182,8 @@ type
 implementation
 
 uses
-  acbrutil.FilesIO,
+  ACBrUtil.FilesIO,
+  ACBrDFeUtil,
   StrUtilsEx,
   synacode,
   ACBrUtil.Base,
@@ -1257,7 +1258,7 @@ begin
           NFSeXml := AuxNode.OuterXml;
           AuxNode := AuxNode.Childrens.FindAnyNs('infNFSe');
 
-          CodVerif := OnlyNumber(ObterConteudoTag(AuxNode.Attributes.Items['Id']));
+          CodVerif := RemoverLiteralChave(ObterConteudoTag(AuxNode.Attributes.Items['Id']));
           NumNFSe := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFSe'), tcStr);
           DataAut := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhProc'), tcDatHor);
 
@@ -1655,7 +1656,7 @@ begin
         ANode := ANode.Childrens.FindAnyNs('NFSe');
         AuxNode := ANode.Childrens.FindAnyNs('infNFSe');
 
-        Response.CodigoVerificacao := OnlyNumber(ObterConteudoTag(AuxNode.Attributes.Items['Id']));
+        Response.CodigoVerificacao := RemoverLiteralChave(ObterConteudoTag(AuxNode.Attributes.Items['Id']));
         Response.NumeroNota := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('nNFSe'), tcStr);
         Response.Data := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('dhProc'), tcDatHor);
 

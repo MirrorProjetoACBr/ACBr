@@ -181,6 +181,7 @@ uses
   synacode,
   ACBrCompress,
   ACBrDFe.Conversao,
+  ACBrDFeUtil,
   ACBrNFSeXConsts,
   ACBrDFeException,
   ACBrUtil.Strings,
@@ -819,7 +820,7 @@ begin
     if not Assigned(Node) then Exit;
 
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('nNFSe'), tcStr);
-    CodVerif := OnlyNumber(ObterConteudoTag(Node.Attributes.Items['Id']));
+    CodVerif := RemoverLiteralChave(ObterConteudoTag(Node.Attributes.Items['Id']));
     DataAut := ObterConteudoTag(Node.Childrens.FindAnyNs('dhProc'), tcDatHor);
 
     Node2 := Node.Childrens.FindAnyNs('DeclaracaoPrestacaoServico');
@@ -910,7 +911,7 @@ begin
   NFSeXml := ANode.OuterXml;
   ANode := ANode.Childrens.FindAnyNs('infNFSe');
 
-  CodVerif := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+  CodVerif := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
   NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
   DataAut := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
 
@@ -1459,7 +1460,7 @@ begin
     if not Assigned(Node) then Exit;
 
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('nNFSe'), tcStr);
-    CodVerif := OnlyNumber(ObterConteudoTag(Node.Attributes.Items['Id']));
+    CodVerif := RemoverLiteralChave(ObterConteudoTag(Node.Attributes.Items['Id']));
     DataAut := ObterConteudoTag(Node.Childrens.FindAnyNs('dhProc'), tcDatHor);
 
     Node2 := Node.Childrens.FindAnyNs('DPS');
@@ -1526,7 +1527,7 @@ begin
     if not Assigned(Node) then Exit;
 
     NumNFSe := ObterConteudoTag(Node.Childrens.FindAnyNs('nNFSe'), tcStr);
-    CodVerif := OnlyNumber(ObterConteudoTag(Node.Attributes.Items['Id']));
+    CodVerif := RemoverLiteralChave(ObterConteudoTag(Node.Attributes.Items['Id']));
     DataAut := ObterConteudoTag(Node.Childrens.FindAnyNs('dhProc'), tcDatHor);
 
     Node2 := Node.Childrens.FindAnyNs('DPS');

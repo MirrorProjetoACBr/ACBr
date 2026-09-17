@@ -119,6 +119,7 @@ uses
   ACBrJSON,
   ACBrCompress,
   ACBrDFeException,
+  ACBrDFeUtil,
   ACBrNFSeXNotasFiscais,
   ACBrNFSeXConsts,
   ACBrUtil.Base,
@@ -569,7 +570,7 @@ var
 
         ANode := DocumentXml.Root.Childrens.FindAnyNs('infNFSe');
 
-        CodVerif := OnlyNumber(ObterConteudoTag(ANode.Attributes.Items['Id']));
+        CodVerif := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
         NumNFSe := ObterConteudoTag(ANode.Childrens.FindAnyNs('nNFSe'), tcStr);
         DataAut := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
 

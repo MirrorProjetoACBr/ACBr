@@ -373,6 +373,8 @@ function TACBrNFSeProviderActcon201.GetSchemaPath: string;
 begin
   Result := inherited GetSchemaPath;
 
+  Result := PathWithDelim(Result + ConfigGeral.CodIBGE);
+
   if ConfigGeral.Ambiente = taProducao then
     Result := PathWithDelim(Result + 'Producao')
   else

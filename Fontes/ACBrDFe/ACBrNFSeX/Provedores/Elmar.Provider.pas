@@ -211,7 +211,8 @@ begin
 
   FpPath := '/' + TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.WSUser +
             '/api/Rps/Xml/' +
-            TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.CNPJ;
+            TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente.CNPJ +
+            '?tipoRetorno=abrasf';
 
   FpMethod := 'POST';
   FpMimeType := 'application/xml';
@@ -228,17 +229,16 @@ end;
 
 procedure TACBrNFSeXWebserviceElmar202.SetHeaders(aHeaderReq: THTTPHeader);
 var
-  Auth: string;
+  Chave, Auth: string;
 begin
-//  if (FpMetodo <> tmGerarToken) then
-//  begin
-    Auth := 'Bearer ' +
-            TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAcesso;
+  Chave := TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAcesso;
+  Auth := 'Bearer ' +
+            TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSChaveAutoriz;
 
-    aHeaderReq.AddHeader('Authorization', Auth);
+  aHeaderReq.AddHeader('AppKey', Chave);
+  aHeaderReq.AddHeader('Authorization', Auth);
 //    aHeaderReq.AddHeader('Connection', 'keep-alive');
-//    aHeaderReq.AddHeader('Accept', '*/*');
-//  end;
+  aHeaderReq.AddHeader('Accept', '*/*');
 end;
 
 function TACBrNFSeXWebserviceElmar202.Recepcionar(const ACabecalho,
@@ -272,6 +272,12 @@ var
 begin
   FPMsgOrig := AMSG;
 
+  Request := AMSG;
+
+  Result := Executar('', Request, [], []);
+  {
+  FPMsgOrig := AMSG;
+
   Request := '<nfse:RecepcionarLoteRpsSincronoRequest>';
   Request := Request + '<nfseCabecMsg>' + XmlToStr(ACabecalho) + '</nfseCabecMsg>';
   Request := Request + '<nfseDadosMsg>' + XmlToStr(AMSG) + '</nfseDadosMsg>';
@@ -280,6 +286,7 @@ begin
   Result := Executar('http://nfse.abrasf.org.br/RecepcionarLoteRpsSincrono', Request,
                      ['outputXML', 'EnviarLoteRpsSincronoResposta'],
                      ['xmlns:nfse="http://nfse.abrasf.org.br"']);
+  }
 end;
 
 function TACBrNFSeXWebserviceElmar202.GerarNFSe(const ACabecalho,
