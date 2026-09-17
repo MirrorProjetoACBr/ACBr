@@ -42,8 +42,7 @@ uses
   ACBrDFe.Conversao,
   ACBrDFe, ACBrDFeWebService,
   ACBrMDFe.Classes,
-  pcnConversao, pmdfeConversaoMDFe,
-  ACBrDFeComum.RetConsReciDFe,
+  ACBrMDFe.Conversao,
   ACBrMDFe.ProcInfraSA,
   ACBrMDFe.EnvEvento,
   ACBrMDFe.RetEnvEvento,
@@ -53,6 +52,7 @@ uses
   ACBrDFeComum.RetEnvio,
   ACBrDFeComum.DistDFeInt,
   ACBrDFeComum.RetDistDFeInt,
+  ACBrDFeComum.RetConsReciDFe,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes;
 
 type
@@ -234,7 +234,7 @@ type
     FManifestos: TManifestos;
     FRecibo: String;
     Fversao: String;
-    FTpAmb: TpcnTipoAmbiente;
+    FTpAmb: TACBrTipoAmbiente;
     FverAplic: String;
     FcStat: Integer;
     FxMotivo: String;
@@ -259,7 +259,7 @@ type
     procedure Clear; override;
 
     property versao: String read Fversao;
-    property TpAmb: TpcnTipoAmbiente read FTpAmb;
+    property TpAmb: TACBrTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
     property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
@@ -334,7 +334,6 @@ type
     FEvento: TEventoMDFe;
     FcStat: Integer;
     FxMotivo: String;
-//    FTpAmb: TpcnTipoAmbiente;
     FTpAmb: TACBrTipoAmbiente;
     FCNPJ: String;
 
@@ -358,7 +357,6 @@ type
     property idLote: Int64 read FidLote write FidLote;
     property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
-//    property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property TpAmb: TACBrTipoAmbiente read FTpAmb;
 
     property EventoRetorno: TRetEventoMDFe read FEventoRetorno;
@@ -516,7 +514,7 @@ uses
   ACBrUtil.FilesIO,
   ACBrCompress,
   ACBrMDFe,
-  pcnConsReciDFe,
+  ACBrDFeComum.ConsReciDFe,
   ACBrDFeComum.ConsStatServ,
   ACBrDFeComum.RetConsStatServ,
   ACBrMDFe.Consts,
@@ -655,7 +653,7 @@ begin
     FTMed := MDFeRetorno.TMed;
     FdhRetorno := MDFeRetorno.dhRetorno;
     FxObs := MDFeRetorno.xObs;
-    FPMsg := FxMotivo + LineBreak + FxObs;
+    FPMsg := FxMotivo + sLineBreak + FxObs;
 
     if FPConfiguracoesMDFe.WebServices.AjustaAguardaConsultaRet then
       FPConfiguracoesMDFe.WebServices.AguardarConsultaRet := FTMed * 1000;
@@ -669,16 +667,16 @@ end;
 
 function TMDFeStatusServico.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s' + LineBreak +
-                           'Status Descrição: %s' + LineBreak +
-                           'UF: %s' + LineBreak +
-                           'Recebimento: %s' + LineBreak +
-                           'Tempo Médio: %s' + LineBreak +
-                           'Retorno: %s' + LineBreak +
-                           'Observação: %s' + LineBreak),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Ambiente: %s' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Status Código: %s' + sLineBreak +
+                           'Status Descrição: %s' + sLineBreak +
+                           'UF: %s' + sLineBreak +
+                           'Recebimento: %s' + sLineBreak +
+                           'Tempo Médio: %s' + sLineBreak +
+                           'Retorno: %s' + sLineBreak +
+                           'Observação: %s' + sLineBreak),
                    [Fversao, TipoAmbienteToStr(FtpAmb), FverAplic, IntToStr(FcStat),
                     FxMotivo, CodigoUFparaUF(FcUF),
                     IfThen(FdhRecbto = 0, '', FormatDateTimeBr(FdhRecbto)),
@@ -689,7 +687,7 @@ end;
 
 function TMDFeStatusServico.GerarMsgErro(E: Exception): String;
 begin
-  Result := ACBrStr('WebService Consulta Status serviço:' + LineBreak +
+  Result := ACBrStr('WebService Consulta Status serviço:' + sLineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 
@@ -801,8 +799,8 @@ begin
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
-    TpcnTipoAmbiente(FTpAmb),
+    CodigoUFparaUF(FcUF),
+    FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -1004,14 +1002,14 @@ function TMDFeRecepcao.GerarMsgLog: String;
 begin
   {(*}
   if Sincrono then
-    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
+    Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Ambiente: %s ' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Status Código: %s ' + sLineBreak +
+                           'Status Descrição: %s ' + sLineBreak +
                            'UF: %s ' + sLineBreak +
                            'dhRecbto: %s ' + sLineBreak +
-                           'chMDFe: %s ' + LineBreak),
+                           'chMDFe: %s ' + sLineBreak),
                      [FMDFeRetornoSincrono.versao,
                       TipoAmbienteToStr(FMDFeRetornoSincrono.TpAmb),
                       FMDFeRetornoSincrono.verAplic,
@@ -1021,15 +1019,15 @@ begin
                       FormatDateTimeBr(FMDFeRetornoSincrono.protMDFe.dhRecbto),
                       FMDFeRetornoSincrono.chMDFe])
   else
-    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                             'Ambiente: %s ' + LineBreak +
-                             'Versão Aplicativo: %s ' + LineBreak +
-                             'Status Código: %s ' + LineBreak +
-                             'Status Descrição: %s ' + LineBreak +
+    Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                             'Ambiente: %s ' + sLineBreak +
+                             'Versão Aplicativo: %s ' + sLineBreak +
+                             'Status Código: %s ' + sLineBreak +
+                             'Status Descrição: %s ' + sLineBreak +
                              'UF: %s ' + sLineBreak +
-                             'Recibo: %s ' + LineBreak +
-                             'Recebimento: %s ' + LineBreak +
-                             'Tempo Médio: %s ' + LineBreak),
+                             'Recibo: %s ' + sLineBreak +
+                             'Recebimento: %s ' + sLineBreak +
+                             'Tempo Médio: %s ' + sLineBreak),
                        [FMDFeRetorno.versao,
                         TipoAmbienteToStr(FMDFeRetorno.TpAmb),
                         FMDFeRetorno.verAplic,
@@ -1201,8 +1199,8 @@ begin
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
-    TpcnTipoAmbiente(FTpAmb),
+    CodigoUFparaUF(FcUF),
+    FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -1226,11 +1224,7 @@ begin
     ConsReciMDFe.tpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsReciMDFe.nRec := FRecibo;
 
-    AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
-
-    ConsReciMDFe.GerarXML;
-
-    FPDadosMsg := ConsReciMDFe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsReciMDFe.GerarXML;
   finally
     ConsReciMDFe.Free;
   end;
@@ -1363,7 +1357,7 @@ begin
   begin
     if not FManifestos.Items[I].Confirmado then
     begin
-      FPMsg := ACBrStr('Manifesto(s) não confirmado(s):') + LineBreak;
+      FPMsg := ACBrStr('Manifesto(s) não confirmado(s):') + sLineBreak;
       break;
     end;
   end;
@@ -1373,7 +1367,7 @@ begin
   begin
     if not FManifestos.Items[I].Confirmado then
       FPMsg := FPMsg + IntToStr(FManifestos.Items[I].MDFe.Ide.nMDF) +
-        '->' + IntToStr(FManifestos.Items[I].cStat) + '-' + FManifestos.Items[I].Msg + LineBreak;
+        '->' + IntToStr(FManifestos.Items[I].cStat) + '-' + FManifestos.Items[I].Msg + sLineBreak;
   end;
 
   if AInfProt.Count > 0 then
@@ -1391,16 +1385,16 @@ end;
 
 function TMDFeRetRecepcao.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Recibo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak +
-                           'cMsg: %s ' + LineBreak +
-                           'xMsg: %s ' + LineBreak),
-                   [FMDFeRetorno.versao, TpAmbToStr(FMDFeRetorno.tpAmb),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Ambiente: %s ' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Recibo: %s ' + sLineBreak +
+                           'Status Código: %s ' + sLineBreak +
+                           'Status Descrição: %s ' + sLineBreak +
+                           'UF: %s ' + sLineBreak +
+                           'cMsg: %s ' + sLineBreak +
+                           'xMsg: %s ' + sLineBreak),
+                   [FMDFeRetorno.versao, TipoAmbienteToStr(FMDFeRetorno.tpAmb),
                     FMDFeRetorno.verAplic, FMDFeRetorno.nRec,
                     IntToStr(FMDFeRetorno.cStat), FMDFeRetorno.xMotivo,
                     CodigoUFparaUF(FMDFeRetorno.cUF), IntToStr(FMDFeRetorno.cMsg),
@@ -1501,7 +1495,7 @@ begin
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
+    CodigoUFparaUF(FcUF),
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
@@ -1520,11 +1514,7 @@ begin
     ConsReciMDFe.tpAmb := FTpAmb;
     ConsReciMDFe.nRec := FRecibo;
 
-    AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
-
-    ConsReciMDFe.GerarXML;
-
-    FPDadosMsg := ConsReciMDFe.Gerador.ArquivoFormatoXML;
+    FPDadosMsg := ConsReciMDFe.GerarXML;
   finally
     ConsReciMDFe.Free;
   end;
@@ -1535,7 +1525,7 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
 
   //A função UTF8ToNativeString deve ser removida quando for refatorado para usar ACBrXmlDocument
-  FMDFeRetorno.XmlRetorno := UTF8ToNativeString(ParseText(FPRetWS));
+  FMDFeRetorno.XmlRetorno := ParseText(FPRetWS);
   FMDFeRetorno.LerXML;
 
   Fversao := FMDFeRetorno.versao;
@@ -1553,14 +1543,14 @@ end;
 
 function TMDFeRecibo.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Recibo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak),
-                   [FMDFeRetorno.versao, TpAmbToStr(FMDFeRetorno.TpAmb),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Ambiente: %s ' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Recibo: %s ' + sLineBreak +
+                           'Status Código: %s ' + sLineBreak +
+                           'Status Descrição: %s ' + sLineBreak +
+                           'UF: %s ' + sLineBreak),
+                   [FMDFeRetorno.versao, TipoAmbienteToStr(FMDFeRetorno.TpAmb),
                    FMDFeRetorno.verAplic, FMDFeRetorno.nRec,
                    IntToStr(FMDFeRetorno.cStat),
                    FMDFeRetorno.xMotivo,
@@ -1655,8 +1645,8 @@ begin
 
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
-    CUFtoUF(FcUF),
-    TpcnTipoAmbiente(FTpAmb),
+    CodigoUFparaUF(FcUF),
+    FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -1699,7 +1689,7 @@ var
   aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJCPF: string;
   DhEvt: TDateTime;
   Inicio, Fim: Integer;
-  TipoEvento: TpcnTpEvento;
+  TipoEvento: TACBrTipoEvento;
   Ok: Boolean;
 begin
   while Retorno <> '' do
@@ -1800,9 +1790,9 @@ begin
     if Assigned(MDFeRetorno.procEventoMDFe) and (MDFeRetorno.procEventoMDFe.Count > 0) then
     begin
       aEventos := '=====================================================' +
-        LineBreak + '================== Eventos da MDF-e ==================' +
-        LineBreak + '=====================================================' +
-        LineBreak + '' + LineBreak + 'Quantidade total de eventos: ' +
+        sLineBreak + '================== Eventos da MDF-e ==================' +
+        sLineBreak + '=====================================================' +
+        sLineBreak + '' + sLineBreak + 'Quantidade total de eventos: ' +
         IntToStr(MDFeRetorno.procEventoMDFe.Count);
 
       FprocEventoMDFe.Clear;
@@ -1860,13 +1850,13 @@ begin
         begin
           for j := 0 to retEvento.Count -1 do
           begin
-            aEventos := aEventos + LineBreak + LineBreak +
-              Format(ACBrStr('Número de sequência: %s ' + LineBreak +
-                             'Código do evento: %s ' + LineBreak +
-                             'Descrição do evento: %s ' + LineBreak +
-                             'Status do evento: %s ' + LineBreak +
-                             'Descrição do status: %s ' + LineBreak +
-                             'Protocolo: %s ' + LineBreak +
+            aEventos := aEventos + sLineBreak + sLineBreak +
+              Format(ACBrStr('Número de sequência: %s ' + sLineBreak +
+                             'Código do evento: %s ' + sLineBreak +
+                             'Descrição do evento: %s ' + sLineBreak +
+                             'Status do evento: %s ' + sLineBreak +
+                             'Descrição do status: %s ' + sLineBreak +
+                             'Protocolo: %s ' + sLineBreak +
                              'Data/Hora do registro: %s '),
                      [IntToStr(InfEvento.nSeqEvento),
                       TpEventoToStr(InfEvento.TpEvento),
@@ -2041,17 +2031,17 @@ end;
 
 function TMDFeConsulta.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Identificador: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak +
-                           'Chave Acesso: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak +
-                           'Protocolo: %s ' + LineBreak +
-                           'Digest Value: %s ' + LineBreak),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Identificador: %s ' + sLineBreak +
+                           'Ambiente: %s ' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Status Código: %s ' + sLineBreak +
+                           'Status Descrição: %s ' + sLineBreak +
+                           'UF: %s ' + sLineBreak +
+                           'Chave Acesso: %s ' + sLineBreak +
+                           'Recebimento: %s ' + sLineBreak +
+                           'Protocolo: %s ' + sLineBreak +
+                           'Digest Value: %s ' + sLineBreak),
                    [Fversao, FMDFeChave, TipoAmbienteToStr(FTpAmb), FverAplic,
                     IntToStr(FcStat), FXMotivo, CodigoUFparaUF(FcUF), FMDFeChave,
                     FormatDateTimeBr(FDhRecbto), FProtocolo, FprotMDFe.digVal]);
@@ -2122,7 +2112,7 @@ begin
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJCPF;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := 'MDFe';
-  UF      := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chMDFe));
+  UF      := CodigoUFparaUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chMDFe));
 
   FPLayout := LayMDFeEvento;
 
@@ -2131,8 +2121,7 @@ begin
   TACBrMDFe(FPDFeOwner).LerServicoDeParams(
     Modelo,
     UF,
-    TpcnTipoAmbiente(FTpAmb),
-//    FTpAmb,
+    FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
     FPURL
@@ -2520,17 +2509,17 @@ function TMDFeEnvEvento.GerarMsgLog: String;
 var
   aMsg: String;
 begin
-  aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                         'Ambiente: %s ' + LineBreak +
-                         'Versão Aplicativo: %s ' + LineBreak +
-                         'Status Código: %s ' + LineBreak +
-                         'Status Descrição: %s ' + LineBreak),
+  aMsg := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                         'Ambiente: %s ' + sLineBreak +
+                         'Versão Aplicativo: %s ' + sLineBreak +
+                         'Status Código: %s ' + sLineBreak +
+                         'Status Descrição: %s ' + sLineBreak),
                  [FEventoRetorno.versao, TipoAmbienteToStr(FEventoRetorno.tpAmb),
                   FEventoRetorno.verAplic, IntToStr(FEventoRetorno.cStat),
                   FEventoRetorno.xMotivo]);
 
   if FEventoRetorno.retEvento.Count > 0 then
-    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + LineBreak),
+    aMsg := aMsg + Format(ACBrStr('Recebimento: %s ' + sLineBreak),
        [IfThen(FEventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento = 0, '',
                FormatDateTimeBr(FEventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento))]);
 
@@ -2657,12 +2646,12 @@ end;
 
 function TMDFeConsultaMDFeNaoEnc.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + LineBreak),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Ambiente: %s ' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Status Código: %s ' + sLineBreak +
+                           'Status Descrição: %s ' + sLineBreak +
+                           'UF: %s ' + sLineBreak),
                    [FRetConsMDFeNaoEnc.versao, TipoAmbienteToStr(FRetConsMDFeNaoEnc.tpAmb),
                     FRetConsMDFeNaoEnc.verAplic, IntToStr(FRetConsMDFeNaoEnc.cStat),
                     FRetConsMDFeNaoEnc.xMotivo,
@@ -2671,7 +2660,7 @@ end;
 
 function TMDFeConsultaMDFeNaoEnc.GerarMsgErro(E: Exception): String;
 begin
-  Result := ACBrStr('WebService Consulta MDF-e nao Encerradas:' + LineBreak +
+  Result := ACBrStr('WebService Consulta MDF-e nao Encerradas:' + sLineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 
@@ -2814,15 +2803,15 @@ end;
 
 function TDistribuicaoDFe.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'Resposta: %s ' + LineBreak +
-                           'Último NSU: %s ' + LineBreak +
-                           'Máximo NSU: %s ' + LineBreak),
-                   [FretDistDFeInt.versao, TpAmbToStr(FretDistDFeInt.tpAmb),
+  Result := Format(ACBrStr('Versão Layout: %s ' + sLineBreak +
+                           'Ambiente: %s ' + sLineBreak +
+                           'Versão Aplicativo: %s ' + sLineBreak +
+                           'Status Código: %s ' + sLineBreak +
+                           'Status Descrição: %s ' + sLineBreak +
+                           'Resposta: %s ' + sLineBreak +
+                           'Último NSU: %s ' + sLineBreak +
+                           'Máximo NSU: %s ' + sLineBreak),
+                   [FretDistDFeInt.versao, TipoAmbienteToStr(FretDistDFeInt.tpAmb),
                     FretDistDFeInt.verAplic, IntToStr(FretDistDFeInt.cStat),
                     FretDistDFeInt.xMotivo,
                     IfThen(FretDistDFeInt.dhResp = 0, '',
@@ -2832,7 +2821,7 @@ end;
 
 function TDistribuicaoDFe.GerarMsgErro(E: Exception): String;
 begin
-  Result := ACBrStr('WebService Distribuição de DFe:' + LineBreak +
+  Result := ACBrStr('WebService Distribuição de DFe:' + sLineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 
@@ -2952,7 +2941,7 @@ end;
 
 function TMDFeEnvioWebService.GerarMsgErro(E: Exception): String;
 begin
-  Result := ACBrStr('WebService: '+FPServico + LineBreak +
+  Result := ACBrStr('WebService: '+FPServico + sLineBreak +
                     '- Inativo ou Inoperante tente novamente.');
 end;
 

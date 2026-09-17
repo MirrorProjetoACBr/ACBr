@@ -45,7 +45,6 @@ uses
   {$IFEND}
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrBase;
 
 type
@@ -123,7 +122,6 @@ var
   Document: TACBrXmlDocument;
   ANode, ANodeAux: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
-  ok: Boolean;
   i: Integer;
   Item: TRetInfMDFeCollectionItem;
 begin

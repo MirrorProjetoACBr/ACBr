@@ -42,6 +42,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2026
+-- Diversos --
+[*] Diversas alterações visando utilizar a nova unit ACBrDFe.Conversao e adoção
+    da unit ACBrMDFe.Conversao, ocorreram mudanças na nomenclatura de algumas funções
+    de conversão e de tipos enumerados.
+    Para saber as novas nomenclaturas de funções e tipos favor ler o tópico:
+    https://www.projetoacbr.com.br/forum/topic/94539-fim-do-uso-da-unit-pcnconversao-nos-dfe-e-uso-das-units-exclusivas-para-a-rtc/
+   Por: Italo Giurizzato Junior
+
 04/09/2026
 -- ACBrMDFeWebServices --
 [-] Substitui chamada de pcnRetConsReciDFe para ACBrDFeComum.RetConsReciDFe

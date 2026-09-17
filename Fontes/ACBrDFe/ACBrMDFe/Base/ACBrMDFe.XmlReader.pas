@@ -41,8 +41,7 @@ uses
   ACBrXmlDocument, ACBrXmlReader,
   ACBrMDFe.Classes,
   ACBrXmlBase,
-  ACBrDFe.Conversao,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
   { TMDFeXmlReader }
@@ -160,7 +159,7 @@ implementation
 
 uses
   ACBrUtil.Base,
-  pmdfeConversaoMDFe;
+  ACBrMDFe.Conversao;
 
 { TMDFeXmlReader }
 
@@ -290,7 +289,7 @@ begin
   if not Assigned(ANode) then Exit;
 
   MDFe.ide.cUF := ObterConteudo(ANode.Childrens.Find('cUF'), tcInt);
-  MDFe.Ide.tpAmb := StrToTpAmb(ok, ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
+  MDFe.Ide.tpAmb := StrToTipoAmbiente(ObterConteudo(ANode.Childrens.Find('tpAmb'), tcStr));
   MDFe.Ide.tpEmit := StrToTpEmitente(Ok, ObterConteudo(ANode.Childrens.Find('tpEmit'), tcStr));
   MDFe.Ide.tpTransp := StrToTTransportador(Ok, ObterConteudo(ANode.Childrens.Find('tpTransp'), tcStr));
   MDFe.ide.modelo := ObterConteudo(ANode.Childrens.Find('mod'), tcInt);
@@ -300,8 +299,8 @@ begin
   MDFe.Ide.cDV := ObterConteudo(ANode.Childrens.Find('cDV'), tcInt);
   MDFe.Ide.modal := StrToModal(Ok, ObterConteudo(ANode.Childrens.Find('modal'), tcStr));
   MDFe.ide.dhEmi := ObterConteudo(ANode.Childrens.Find('dhEmi'), tcDatHor);
-  MDFe.Ide.tpEmis := StrToTpEmis(ok, ObterConteudo(ANode.Childrens.Find('tpEmis'), tcStr));
-  MDFe.Ide.procEmi := StrToprocEmi(ok, ObterConteudo(ANode.Childrens.Find('procEmi'), tcStr));
+  MDFe.Ide.tpEmis := StrToTipoEmissao(ObterConteudo(ANode.Childrens.Find('tpEmis'), tcStr));
+  MDFe.Ide.procEmi := StrToprocEmi(ObterConteudo(ANode.Childrens.Find('procEmi'), tcStr));
   MDFe.Ide.verProc := ObterConteudo(ANode.Childrens.Find('verProc'), tcStr);
   MDFe.Ide.UFIni := ObterConteudo(ANode.Childrens.Find('UFIni'), tcStr);
   MDFe.Ide.UFFim := ObterConteudo(ANode.Childrens.Find('UFFim'), tcStr);
@@ -592,7 +591,7 @@ begin
   aux := ObterConteudo(ANode.Childrens.Find('indAntecipaAdiant'), tcStr);
 
   if aux <> '' then
-    Item.indAntecipaAdiant := StrToTIndicador(ok, aux);
+    Item.indAntecipaAdiant := StrToTIndicador(aux);
 
   ANodes := ANode.Childrens.FindAll('infPrazo');
   Item.infPrazo.Clear;
@@ -645,7 +644,6 @@ end;
 
 procedure TMDFeXmlReader.Ler_veicTracao(const ANode: TACBrXmlNode);
 var
-  ok: Boolean;
   AuxNode: TACBrXmlNode;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
@@ -668,7 +666,7 @@ begin
     MDFe.Rodo.veicTracao.prop.xNome := ObterConteudo(AuxNode.Childrens.Find('xNome'), tcStr);
     MDFe.Rodo.veicTracao.prop.IE := ObterConteudo(AuxNode.Childrens.Find('IE'), tcStr);
     MDFe.Rodo.veicTracao.prop.UF := ObterConteudo(AuxNode.Childrens.Find('UF'), tcStr);
-    MDFe.Rodo.veicTracao.prop.tpProp := StrToTpProp(ok, ObterConteudo(AuxNode.Childrens.Find('tpProp'), tcStr));
+    MDFe.Rodo.veicTracao.prop.tpProp := StrToTpProp(ObterConteudo(AuxNode.Childrens.Find('tpProp'), tcStr));
   end;
 
   ANodes := ANode.Childrens.FindAll('condutor');
@@ -678,8 +676,8 @@ begin
     Ler_condutor(ANodes[i]);
   end;
 
-  MDFe.Rodo.veicTracao.tpRod := StrToTpRodado(ok, ObterConteudo(ANode.Childrens.Find('tpRod'), tcStr));
-  MDFe.Rodo.veicTracao.tpCar := StrToTpCarroceria(ok, ObterConteudo(ANode.Childrens.Find('tpCar'), tcStr));
+  MDFe.Rodo.veicTracao.tpRod := StrToTpRodado(ObterConteudo(ANode.Childrens.Find('tpRod'), tcStr));
+  MDFe.Rodo.veicTracao.tpCar := StrToTpCarroceria(ObterConteudo(ANode.Childrens.Find('tpCar'), tcStr));
   MDFe.Rodo.veicTracao.UF := ObterConteudo(ANode.Childrens.Find('UF'), tcStr);
 end;
 
@@ -697,7 +695,6 @@ end;
 
 procedure TMDFeXmlReader.Ler_veicReboque(const ANode: TACBrXmlNode);
 var
-  ok: Boolean;
   AuxNode: TACBrXmlNode;
   Item: TveicReboqueCollectionItem;
 begin
@@ -721,10 +718,10 @@ begin
     Item.prop.xNome := ObterConteudo(AuxNode.Childrens.Find('xNome'), tcStr);
     Item.prop.IE := ObterConteudo(AuxNode.Childrens.Find('IE'), tcStr);
     Item.prop.UF := ObterConteudo(AuxNode.Childrens.Find('UF'), tcStr);
-    Item.prop.tpProp := StrToTpProp(ok, ObterConteudo(AuxNode.Childrens.Find('tpProp'), tcStr));
+    Item.prop.tpProp := StrToTpProp(ObterConteudo(AuxNode.Childrens.Find('tpProp'), tcStr));
   end;
 
-  Item.tpCar := StrToTpCarroceria(ok, ObterConteudo(ANode.Childrens.Find('tpCar'), tcStr));
+  Item.tpCar := StrToTpCarroceria(ObterConteudo(ANode.Childrens.Find('tpCar'), tcStr));
   Item.UF := ObterConteudo(ANode.Childrens.Find('UF'), tcStr);
 end;
 
@@ -753,9 +750,9 @@ end;
 
 procedure TMDFeXmlReader.Ler_Aquaviario(const ANode: TACBrXmlNode);
 var
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
+  aValor: string;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -768,7 +765,11 @@ begin
   MDFe.aquav.cPrtEmb := ObterConteudo(ANode.Childrens.Find('cPrtEmb'), tcStr);
   MDFe.aquav.cPrtDest := ObterConteudo(ANode.Childrens.Find('cPrtDest'), tcStr);
   MDFe.aquav.prtTrans := ObterConteudo(ANode.Childrens.Find('prtTrans'), tcStr);
-  MDFe.aquav.tpNav := StrToTpNavegacao(ok, ObterConteudo(ANode.Childrens.Find('tpNav'), tcStr));
+
+  aValor := ObterConteudo(ANode.Childrens.Find('tpNav'), tcStr);
+  if aValor <> '' then
+    MDFe.aquav.tpNav := StrToTpNavegacao(aValor);
+
   MDFe.aquav.MMSI := ObterConteudo(ANode.Childrens.Find('MMSI'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('infTermCarreg');
@@ -846,27 +847,25 @@ end;
 procedure TMDFeXmlReader.Ler_infUnidCargaVazia(const ANode: TACBrXmlNode);
 var
   Item: TinfUnidCargaVaziaCollectionItem;
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
   Item := MDFe.aquav.infUnidCargaVazia.New;
 
   Item.idUnidCargaVazia := ObterConteudo(ANode.Childrens.Find('idUnidCargaVazia'), tcStr);
-  Item.tpUnidCargaVazia := StrToUnidCarga(ok, ObterConteudo(ANode.Childrens.Find('tpUnidCargaVazia'), tcStr));
+  Item.tpUnidCargaVazia := StrToUnidCarga(ObterConteudo(ANode.Childrens.Find('tpUnidCargaVazia'), tcStr));
 end;
 
 procedure TMDFeXmlReader.Ler_infUnidTranspVazia(const ANode: TACBrXmlNode);
 var
   Item: TinfUnidTranspVaziaCollectionItem;
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
   Item := MDFe.aquav.infUnidTranspVazia.New;
 
   Item.idUnidTranspVazia := ObterConteudo(ANode.Childrens.Find('idUnidTranspVazia'), tcStr);
-  Item.tpUnidTranspVazia := StrToUnidTransp(ok, ObterConteudo(ANode.Childrens.Find('tpUnidTranspVazia'), tcStr));
+  Item.tpUnidTranspVazia := StrToUnidTransp(ObterConteudo(ANode.Childrens.Find('tpUnidTranspVazia'), tcStr));
 end;
 
 procedure TMDFeXmlReader.Ler_Ferroviario(const ANode: TACBrXmlNode);
@@ -985,7 +984,6 @@ var
   ANodes: TACBrXmlNodeArray;
   i: Integer;
   AuxNode: TACBrXmlNode;
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -1017,7 +1015,7 @@ begin
     ItemCTe.infEntregaParcial.qtdParcial := ObterConteudo(AuxNode.Childrens.Find('qtdParcial'), tcDe4);
   end;
 
-  ItemCTe.indPrestacaoParcial := StrToTIndicadorEx(ok, ObterConteudo(ANode.Childrens.Find('indPrestacaoParcial'), tcStr));
+  ItemCTe.indPrestacaoParcial := StrToTIndicadorEx(ObterConteudo(ANode.Childrens.Find('indPrestacaoParcial'), tcStr));
 
   ANodes := ANode.Childrens.FindAll('infNFePrestParcial');
   ItemCTe.infNFePrestParcial.Clear;
@@ -1031,7 +1029,6 @@ procedure TMDFeXmlReader.Ler_infUnidTranspCTe(const ANode: TACBrXmlNode;
   Item: TinfCTeCollectionItem);
 var
   ItemUnidTransp: TinfUnidTranspCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1039,7 +1036,7 @@ begin
 
   ItemUnidTransp := Item.infUnidTransp.New;
 
-  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ok, ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
+  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
   ItemUnidTransp.idUnidTransp := ObterConteudo(ANode.Childrens.Find('idUnidTransp'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidTransp');
@@ -1075,7 +1072,6 @@ procedure TMDFeXmlReader.Ler_infUnidCargaCTe(const ANode: TACBrXmlNode;
   Item: TinfUnidTranspCollectionItem);
 var
   IteminfUnidCarga: TinfUnidCargaCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1083,7 +1079,7 @@ begin
 
   IteminfUnidCarga := Item.infUnidCarga.New;
 
-  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ok, ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
+  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
   IteminfUnidCarga.idUnidCarga := ObterConteudo(ANode.Childrens.Find('idUnidCarga'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidCarga');
@@ -1166,7 +1162,6 @@ procedure TMDFeXmlReader.Ler_infUnidTranspCT(const ANode: TACBrXmlNode;
   Item: TinfCTCollectionItem);
 var
   ItemUnidTransp: TinfUnidTranspCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1174,7 +1169,7 @@ begin
 
   ItemUnidTransp := Item.infUnidTransp.New;
 
-  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ok, ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
+  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
   ItemUnidTransp.idUnidTransp := ObterConteudo(ANode.Childrens.Find('idUnidTransp'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidTransp');
@@ -1210,7 +1205,6 @@ procedure TMDFeXmlReader.Ler_infUnidCargaCT(const ANode: TACBrXmlNode;
   Item: TinfUnidTranspCollectionItem);
 var
   IteminfUnidCarga: TinfUnidCargaCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1218,7 +1212,7 @@ begin
 
   IteminfUnidCarga := Item.infUnidCarga.New;
 
-  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ok, ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
+  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
   IteminfUnidCarga.idUnidCarga := ObterConteudo(ANode.Childrens.Find('idUnidCarga'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidCarga');
@@ -1277,7 +1271,6 @@ procedure TMDFeXmlReader.Ler_infUnidTranspNFe(const ANode: TACBrXmlNode;
   Item: TinfNFeCollectionItem);
 var
   ItemUnidTransp: TinfUnidTranspCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1285,7 +1278,7 @@ begin
 
   ItemUnidTransp := Item.infUnidTransp.New;
 
-  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ok, ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
+  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
   ItemUnidTransp.idUnidTransp := ObterConteudo(ANode.Childrens.Find('idUnidTransp'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidTransp');
@@ -1321,7 +1314,6 @@ procedure TMDFeXmlReader.Ler_infUnidCargaNFe(const ANode: TACBrXmlNode;
   Item: TinfUnidTranspCollectionItem);
 var
   IteminfUnidCarga: TinfUnidCargaCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1329,7 +1321,7 @@ begin
 
   IteminfUnidCarga := Item.infUnidCarga.New;
 
-  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ok, ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
+  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
   IteminfUnidCarga.idUnidCarga := ObterConteudo(ANode.Childrens.Find('idUnidCarga'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidCarga');
@@ -1402,7 +1394,6 @@ procedure TMDFeXmlReader.Ler_infUnidTranspNF(const ANode: TACBrXmlNode;
   Item: TinfNFCollectionItem);
 var
   ItemUnidTransp: TinfUnidTranspCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1410,7 +1401,7 @@ begin
 
   ItemUnidTransp := Item.infUnidTransp.New;
 
-  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ok, ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
+  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
   ItemUnidTransp.idUnidTransp := ObterConteudo(ANode.Childrens.Find('idUnidTransp'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidTransp');
@@ -1446,7 +1437,6 @@ procedure TMDFeXmlReader.Ler_infUnidCargaNF(const ANode: TACBrXmlNode;
   Item: TinfUnidTranspCollectionItem);
 var
   IteminfUnidCarga: TinfUnidCargaCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1454,7 +1444,7 @@ begin
 
   IteminfUnidCarga := Item.infUnidCarga.New;
 
-  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ok, ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
+  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
   IteminfUnidCarga.idUnidCarga := ObterConteudo(ANode.Childrens.Find('idUnidCarga'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidCarga');
@@ -1512,7 +1502,6 @@ procedure TMDFeXmlReader.Ler_infUnidTranspMDFe(const ANode: TACBrXmlNode;
   Item: TinfMDFeTranspCollectionItem);
 var
   ItemUnidTransp: TinfUnidTranspCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1520,7 +1509,7 @@ begin
 
   ItemUnidTransp := Item.infUnidTransp.New;
 
-  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ok, ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
+  ItemUnidTransp.tpUnidTransp := StrToUnidTransp(ObterConteudo(ANode.Childrens.Find('tpUnidTransp'), tcStr));
   ItemUnidTransp.idUnidTransp := ObterConteudo(ANode.Childrens.Find('idUnidTransp'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidTransp');
@@ -1556,7 +1545,6 @@ procedure TMDFeXmlReader.Ler_infUnidCargaMDFe(const ANode: TACBrXmlNode;
   Item: TinfUnidTranspCollectionItem);
 var
   IteminfUnidCarga: TinfUnidCargaCollectionItem;
-  ok: Boolean;
   ANodes: TACBrXmlNodeArray;
   i: Integer;
 begin
@@ -1564,7 +1552,7 @@ begin
 
   IteminfUnidCarga := Item.infUnidCarga.New;
 
-  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ok, ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
+  IteminfUnidCarga.tpUnidCarga := StrToUnidCarga(ObterConteudo(ANode.Childrens.Find('tpUnidCarga'), tcStr));
   IteminfUnidCarga.idUnidCarga := ObterConteudo(ANode.Childrens.Find('idUnidCarga'), tcStr);
 
   ANodes := ANode.Childrens.FindAll('lacUnidCarga');
@@ -1702,8 +1690,6 @@ begin
 end;
 
 procedure TMDFeXmlReader.Ler_tot(const ANode: TACBrXmlNode);
-var
-  ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -1713,7 +1699,7 @@ begin
   MDFe.tot.qNF := ObterConteudo(ANode.Childrens.Find('qNF'), tcInt);
   MDFe.tot.qMDFe := ObterConteudo(ANode.Childrens.Find('qMDFe'), tcInt);
   MDFe.tot.vCarga := ObterConteudo(ANode.Childrens.Find('vCarga'), tcDe2);
-  MDFe.tot.cUnid := StrToUnidMed(Ok, ObterConteudo(ANode.Childrens.Find('cUnid'), tcStr));
+  MDFe.tot.cUnid := StrToUnidMed(ObterConteudo(ANode.Childrens.Find('cUnid'), tcStr));
   MDFe.tot.qCarga := ObterConteudo(ANode.Childrens.Find('qCarga'), tcDe4);
 end;
 

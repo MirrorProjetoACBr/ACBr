@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, StrUtils, Classes,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
@@ -168,7 +168,7 @@ const
 {
   Declaração das funções de conversão
 }
-function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoMDFe(out ok: boolean; const s: string): TACBrTipoEvento;
 
 function TpEmitenteToStr(const t: TTpEmitenteMDFe): String;
 function StrToTpEmitente(out ok: Boolean; const s: String): TTpEmitenteMDFe;
@@ -227,7 +227,7 @@ implementation
 uses
   typinfo;
 
-function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEventoMDFe(out ok: boolean; const s: string): TACBrTipoEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110111', '110112', '110114', '110115', '110116',
@@ -461,14 +461,16 @@ end;
 
 function TCompToStr(const t: TComp): String;
 begin
-  Result := EnumeradoToStr(t, ['01', '02', '03', '99'],
-                             [tcValePedagio, tcImpostos, tcDespesas, tcOutros]);
+  Result := EnumeradoToStr(t, ['01', '02', '03', '04', '99'],
+                             [tcValePedagio, tcImpostos, tcDespesas, tcFrete,
+                              tcOutros]);
 end;
 
 function StrToTComp(out ok: Boolean; const s: String): TComp;
 begin
-  Result := StrToEnumerado(ok, s, ['01', '02', '03', '99'],
-                             [tcValePedagio, tcImpostos, tcDespesas, tcOutros]);
+  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '99'],
+                             [tcValePedagio, tcImpostos, tcDespesas, tcFrete,
+                              tcOutros]);
 end;
 
 function indAltoDesempToStr(const t: TIndicador): String;

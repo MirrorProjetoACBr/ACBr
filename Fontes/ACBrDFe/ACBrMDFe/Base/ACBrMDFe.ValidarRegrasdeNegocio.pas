@@ -41,8 +41,7 @@ uses
   ACBrMDFe.Classes,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
-  pmdfeConversaoMDFe;
+  ACBrMDFe.Conversao;
 
 type
   { TMDFeValidarRegras }
@@ -53,7 +52,7 @@ type
 
     FMDFe: TMDFe;
     FVersaoDF: TVersaoMDFe;
-    FAmbiente: TpcnTipoAmbiente;
+    FAmbiente: TACBrTipoAmbiente;
     FtpEmis: Integer;
     FCodigoUF: Integer;
     FUF: string;
@@ -96,7 +95,7 @@ type
 
     property MDFe: TMDFe read FMDFe write FMDFe;
     property VersaoDF: TVersaoMDFe read FVersaoDF write FVersaoDF;
-    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
+    property Ambiente: TACBrTipoAmbiente read FAmbiente write FAmbiente;
     property tpEmis: Integer read FtpEmis write FtpEmis;
     property CodigoUF: Integer read FCodigoUF write FCodigoUF;
     property UF: string read FUF write FUF;

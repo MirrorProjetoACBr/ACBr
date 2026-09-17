@@ -43,8 +43,7 @@ uses
   ACBrDFe.Conversao,
   ACBrMDFe.Classes,
   ACBrDFeComum.Proc,
-//  ACBrMDFe.Conversao,
-  pmdfeConversaoMDFe;
+  ACBrMDFe.Conversao;
 
 type
   { TMDFeIniWriter }
@@ -122,8 +121,7 @@ implementation
 uses
   ACBrDFeUtil,
   ACBrMDFe,
-  ACBrUtil.Base,
-  pcnConversao;
+  ACBrUtil.Base;
 
 { TMDFeIniWriter }
 
@@ -197,7 +195,7 @@ begin
   AINIRec.WriteInteger(sSecao, 'cMDF', Ide.cMDF);
   AINIRec.WriteString(sSecao, 'modal', ModalToStr(Ide.modal));
   AINIRec.WriteString(sSecao, 'dhEmi', DateToStr(Ide.dhEmi));
-  AINIRec.WriteString(sSecao, 'tpEmis', TpEmisToStr(Ide.tpEmis));
+  AINIRec.WriteString(sSecao, 'tpEmis', TipoEmissaoToStr(Ide.tpEmis));
   AINIRec.WriteString(sSecao, 'procEmi', procEmiToStr(Ide.procEmi));
   AINIRec.WriteString(sSecao, 'verProc', Ide.verProc);
   AINIRec.WriteString(sSecao, 'UFIni', Ide.UFIni);

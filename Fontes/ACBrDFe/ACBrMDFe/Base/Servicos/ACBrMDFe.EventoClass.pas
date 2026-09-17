@@ -45,7 +45,6 @@ uses
   {$IfEnd}
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrBase,
   ACBrMDFe.Classes;
 
@@ -129,13 +128,12 @@ type
   TInfEvento = class(TObject)
   private
     FId: string;
-//    FtpAmbiente: TpcnTipoAmbiente;
     FtpAmbiente: TACBrTipoAmbiente;
     FCNPJCPF: string;
     FcOrgao: Integer;
     FChave: string;
     FDataEvento: TDateTime;
-    FTpEvento: TpcnTpEvento;
+    FTpEvento: TACBrTipoEvento;
     FnSeqEvento: Integer;
     FVersaoEvento: string;
     FDetEvento: TDetEvento;
@@ -146,16 +144,15 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function DescricaoTipoEvento(TipoEvento:TpcnTpEvento): string;
+    function DescricaoTipoEvento(TipoEvento:TACBrTipoEvento): string;
 
     property Id: string              read FId             write FId;
     property cOrgao: Integer         read getcOrgao       write FcOrgao;
-//    property tpAmb: TpcnTipoAmbiente read FtpAmbiente     write FtpAmbiente;
     property tpAmb: TACBrTipoAmbiente read FtpAmbiente     write FtpAmbiente;
     property CNPJCPF: string         read FCNPJCPF        write FCNPJCPF;
     property chMDFe: string          read FChave          write FChave;
     property dhEvento: TDateTime     read FDataEvento     write FDataEvento;
-    property tpEvento: TpcnTpEvento  read FTpEvento       write FTpEvento;
+    property tpEvento: TACBrTipoEvento read FTpEvento       write FTpEvento;
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
     property versaoEvento: string    read FVersaoEvento   write FversaoEvento;
     property detEvento: TDetEvento   read FDetEvento      write FDetEvento;
@@ -168,14 +165,13 @@ type
   TRetInfEvento = class(TObject)
   private
     FId: string;
-//    FtpAmb: TpcnTipoAmbiente;
     FtpAmb: TACBrTipoAmbiente;
     FverAplic: string;
     FcOrgao: Integer;
     FcStat: Integer;
     FxMotivo: string;
     FchMDFe: string;
-    FtpEvento: TpcnTpEvento;
+    FtpEvento: TACBrTipoEvento;
     FxEvento: string;
     FnSeqEvento: Integer;
     FCNPJDest: string;
@@ -186,14 +182,13 @@ type
     FNomeArquivo: string;
   public
     property Id: string              read FId          write FId;
-//    property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
     property tpAmb: TACBrTipoAmbiente read FtpAmb       write FtpAmb;
     property verAplic: string        read FverAplic    write FverAplic;
     property cOrgao: Integer         read FcOrgao      write FcOrgao;
     property cStat: Integer          read FcStat       write FcStat;
     property xMotivo: string         read FxMotivo     write FxMotivo;
     property chMDFe: string          read FchMDFe      write FchMDFe;
-    property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
+    property tpEvento: TACBrTipoEvento  read FtpEvento    write FtpEvento;
     property xEvento: string         read FxEvento     write FxEvento;
     property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
     property CNPJDest: string        read FCNPJDest    write FCNPJDest;
@@ -286,7 +281,7 @@ begin
   end;
 end;
 
-function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): string;
+function TInfEvento.DescricaoTipoEvento(TipoEvento: TACBrTipoEvento): string;
 begin
   case TipoEvento of
     teCCe                          : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';

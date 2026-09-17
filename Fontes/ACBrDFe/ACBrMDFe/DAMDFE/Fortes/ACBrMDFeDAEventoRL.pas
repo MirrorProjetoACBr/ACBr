@@ -60,7 +60,7 @@ uses
   ACBrMDFeDAMDFeRLClass, 
   ACBrDFeReportFortes,
   ACBrMDFe.Classes,
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrMDFe.EnvEvento;
 
 type

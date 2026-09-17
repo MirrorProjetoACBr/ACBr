@@ -40,8 +40,8 @@ uses
   Classes, SysUtils,
   IniFiles,
   ACBrMDFe.Classes,
-//  ACBrMDFe.Conversao;
-  pmdfeConversaoMDFe;
+  ACBrDFe.Conversao,
+  ACBrMDFe.Conversao;
 
 type
   { TMDFeIniReader }
@@ -127,8 +127,7 @@ uses
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
-  ACBrUtil.DateTime,
-  pcnConversao;
+  ACBrUtil.DateTime;
 
 { TMDFeIniReader }
 
@@ -192,15 +191,15 @@ begin
   Ide.cMDF    := AINIRec.ReadInteger(sSecao, 'cMDF', 0);
   Ide.modal   := StrToModal(OK, AINIRec.ReadString(sSecao, 'modal', '1'));
   Ide.dhEmi   := StringToDateTime(AINIRec.ReadString(sSecao, 'dhEmi', '0'));
-  Ide.tpEmis  := StrToTpEmis(OK, AINIRec.ReadString(sSecao, 'tpEmis', IntToStr(tpEmis)));
-  Ide.procEmi := StrToProcEmi(OK, AINIRec.ReadString(sSecao, 'procEmi', '0'));
+  Ide.tpEmis  := StrToTipoEmissao(AINIRec.ReadString(sSecao, 'tpEmis', IntToStr(tpEmis)));
+  Ide.procEmi := StrToProcEmi(AINIRec.ReadString(sSecao, 'procEmi', '0'));
   Ide.verProc := AINIRec.ReadString(sSecao, 'verProc', 'ACBrMDFe');
   Ide.UFIni   := AINIRec.ReadString(sSecao, 'UFIni', '');
   Ide.UFFim   := AINIRec.ReadString(sSecao, 'UFFim', '');
   Ide.tpTransp := StrToTTransportador(OK, AINIRec.ReadString(sSecao, 'tpTransp', '1'));
   Ide.dhIniViagem := StringToDateTime(AINIRec.ReadString(sSecao, 'dhIniViagem', '0'));
-  Ide.indCanalVerde := StrToTIndicador(Ok, AINIRec.ReadString(sSecao, 'indCanalVerde', '0'));
-  Ide.indCarregaPosterior := StrToTIndicador(Ok, AINIRec.ReadString(sSecao, 'indCarregaPosterior', '0'));
+  Ide.indCanalVerde := StrToTIndicador(AINIRec.ReadString(sSecao, 'indCanalVerde', '0'));
+  Ide.indCarregaPosterior := StrToTIndicador(AINIRec.ReadString(sSecao, 'indCarregaPosterior', '0'));
 end;
 
 procedure TMDFeIniReader.Ler_Carregamento(AINIRec: TMemIniFile;
@@ -438,7 +437,7 @@ begin
       Item.indPag        := StrToTIndPag(ok, AINIRec.ReadString(sSecao, 'indPag', '0'));
       Item.vAdiant       := StringToFloatDef(AINIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
 
-      Item.indAntecipaAdiant := StrToTIndicador(ok, AINIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
+      Item.indAntecipaAdiant := StrToTIndicador(AINIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
       Item.tpAntecip := StrTotpAntecip(ok, AINIRec.ReadString(sSecao, 'tpAntecip', ''));
 
       Ler_Componentes(AINIRec, Item.Comp, i);
@@ -536,7 +535,6 @@ procedure TMDFeIniReader.Ler_VeiculoTracao(AINIRec: TMemIniFile;
   veicTracao: TveicTracao);
 var
   sSecao: string;
-  Ok: Boolean;
 begin
   sSecao := 'veicTracao';
 
@@ -548,8 +546,8 @@ begin
     veicTracao.tara    := AINIRec.ReadInteger(sSecao, 'tara', 0);
     veicTracao.capKG   := AINIRec.ReadInteger(sSecao, 'capKG', 0);
     veicTracao.capM3   := AINIRec.ReadInteger(sSecao, 'capM3', 0);
-    veicTracao.tpRod   := StrToTpRodado(OK, AINIRec.ReadString(sSecao, 'tpRod', '01'));
-    veicTracao.tpCar   := StrToTpCarroceria(OK, AINIRec.ReadString(sSecao, 'tpCar', '00'));
+    veicTracao.tpRod   := StrToTpRodado(AINIRec.ReadString(sSecao, 'tpRod', '01'));
+    veicTracao.tpCar   := StrToTpCarroceria(AINIRec.ReadString(sSecao, 'tpCar', '00'));
     veicTracao.UF      := AINIRec.ReadString(sSecao, 'UF', '');
   end;
 
@@ -560,7 +558,7 @@ begin
     veicTracao.prop.xNome   := AINIRec.ReadString(sSecao, 'xNome', '');
     veicTracao.prop.IE      := AINIRec.ReadString(sSecao, 'IE', 'ISENTO');
     veicTracao.prop.UF      := AINIRec.ReadString(sSecao, 'UFProp', '');
-    veicTracao.prop.tpProp  := StrToTpProp(OK, AINIRec.ReadString(sSecao, 'tpProp', '0'));
+    veicTracao.prop.tpProp  := StrToTpProp(AINIRec.ReadString(sSecao, 'tpProp', '0'));
   end;
 
   Ler_Motoristas(AINIRec, veicTracao.condutor);
@@ -597,7 +595,6 @@ var
   i: Integer;
   sSecao, sFim: string;
   Item: TveicReboqueCollectionItem;
-  Ok: Boolean;
 begin
   I := 1;
   while true do
@@ -616,7 +613,7 @@ begin
     Item.tara    := AINIRec.ReadInteger(sSecao, 'tara', 0);
     Item.capKG   := AINIRec.ReadInteger(sSecao, 'capKG', 0);
     Item.capM3   := AINIRec.ReadInteger(sSecao, 'capM3', 0);
-    Item.tpCar   := StrToTpCarroceria(OK, AINIRec.ReadString(sSecao, 'tpCar', '00'));
+    Item.tpCar   := StrToTpCarroceria(AINIRec.ReadString(sSecao, 'tpCar', '00'));
     Item.UF      := AINIRec.ReadString(sSecao, 'UF', '');
 
     if AINIRec.ReadString(sSecao, 'CNPJCPF', '') <> '' then
@@ -626,7 +623,7 @@ begin
       Item.prop.xNome   := AINIRec.ReadString(sSecao, 'xNome', '');
       Item.prop.IE      := AINIRec.ReadString(sSecao, 'IE', '');
       Item.prop.UF      := AINIRec.ReadString(sSecao, 'UFProp', '');
-      Item.prop.tpProp  := StrToTpProp(OK, AINIRec.ReadString(sSecao, 'tpProp', '0'));
+      Item.prop.tpProp  := StrToTpProp(AINIRec.ReadString(sSecao, 'tpProp', '0'));
     end;
 
     Inc(I);
@@ -675,7 +672,6 @@ procedure TMDFeIniReader.Ler_ModalAquaviario(AINIRec: TMemIniFile;
   aquav: Taquav);
 var
   sSecao: string;
-  Ok: Boolean;
 begin
   sSecao := 'aquav';
 
@@ -694,7 +690,7 @@ begin
 
     //Campos MDF-e 3.0
     Aquav.prtTrans := AINIRec.ReadString(sSecao, 'prtTrans', '');
-    Aquav.tpNav    := StrToTpNavegacao(OK, AINIRec.ReadString(sSecao, 'tpNav', '0') );
+    Aquav.tpNav    := StrToTpNavegacao(AINIRec.ReadString(sSecao, 'tpNav', '0') );
 
     Ler_InfTerminalCarregamento(AINIRec, aquav.infTermCarreg);
     Ler_InfTerminalDescarregamento(AINIRec, aquav.infTermDescarreg);
@@ -785,7 +781,6 @@ var
   i: Integer;
   sSecao, sFim: string;
   Item: TinfUnidCargaVaziaCollectionItem;
-  Ok: Boolean;
 begin
   I := 1;
   while true do
@@ -799,7 +794,7 @@ begin
     Item := infUnidCargaVazia.New;
 
     Item.idUnidCargaVazia := sFim;
-    Item.tpUnidCargaVazia := StrToUnidCarga(OK, AINIRec.ReadString(sSecao, 'tpUnidCargaVazia', '1'));
+    Item.tpUnidCargaVazia := StrToUnidCarga(AINIRec.ReadString(sSecao, 'tpUnidCargaVazia', '1'));
 
     inc(I);
   end;
@@ -811,7 +806,6 @@ var
   i: Integer;
   sSecao, sFim: string;
   Item: TinfUnidTranspVaziaCollectionItem;
-  Ok: Boolean;
 begin
   I := 1;
   while true do
@@ -825,7 +819,7 @@ begin
     Item := infUnidTranspVazia.New;
 
     Item.idUnidTranspVazia := sFim;
-    Item.tpUnidTranspVazia := StrToUnidTransp (OK, AINIRec.ReadString(sSecao, 'tpUnidTranspVazia', '1'));
+    Item.tpUnidTranspVazia := StrToUnidTransp (AINIRec.ReadString(sSecao, 'tpUnidTranspVazia', '1'));
 
     inc(I);
   end;
@@ -916,7 +910,6 @@ var
   i: Integer;
   sSecao, sFim: string;
   Item: TinfCTeCollectionItem;
-  Ok: Boolean;
 begin
   i := 1;
   while true do
@@ -937,7 +930,7 @@ begin
     Item.chCTe       := sFim;
     Item.SegCodBarra := AINIRec.ReadString(sSecao, 'SegCodBarra', '');
     Item.indReentrega:= AINIRec.ReadString(sSecao, 'indReentrega', '');
-    Item.indPrestacaoParcial:= StrToTIndicadorEx(OK, AINIRec.ReadString(sSecao, 'indPrestacaoParcial', ''));
+    Item.indPrestacaoParcial:= StrToTIndicadorEx(AINIRec.ReadString(sSecao, 'indPrestacaoParcial', ''));
 
     Ler_Peri(AINIRec, Item.peri, Idx, i);
     Ler_InfNFePrestParcial(AINIRec, Item.infNFePrestParcial, Idx, i);
@@ -1021,7 +1014,6 @@ var
   i: Integer;
   sSecao, sFim: string;
   Item: TinfUnidTranspCollectionItem;
-  Ok: Boolean;
 begin
   i := 1;
   while true do
@@ -1034,7 +1026,7 @@ begin
 
     Item := infUnidTransp.New;
 
-    Item.tpUnidTransp := StrToUnidTransp(OK,AINIRec.ReadString(sSecao,'tpUnidTransp','1'));
+    Item.tpUnidTransp := StrToUnidTransp(AINIRec.ReadString(sSecao,'tpUnidTransp','1'));
     Item.idUnidTransp := sFim;
     Item.qtdRat       := StringToFloatDef(AINIRec.ReadString(sSecao,'qtdRat',''),0);
 
@@ -1073,7 +1065,6 @@ var
   i: Integer;
   sSecao, sFim: string;
   Item: TinfUnidCargaCollectionItem;
-  Ok: Boolean;
 begin
   i := 1;
   while true do
@@ -1087,9 +1078,9 @@ begin
 
     Item := infUnidCarga.New;
 
-    Item.tpUnidCarga := StrToUnidCarga(OK,AINIRec.ReadString(sSecao,'tpUnidCarga','1'));
+    Item.tpUnidCarga := StrToUnidCarga(AINIRec.ReadString(sSecao,'tpUnidCarga','1'));
     Item.idUnidCarga := sFim;
-    Item.qtdRat      := StringToFloatDef( AINIRec.ReadString(sSecao,'qtdRat',''),0);
+    Item.qtdRat      := StringToFloatDef(AINIRec.ReadString(sSecao,'qtdRat',''),0);
 
     Ler_LacUnidCarga(AINIRec, Item.lacUnidCarga, Idx1, Idx2, Idx3, i);
 
@@ -1276,7 +1267,6 @@ end;
 procedure TMDFeIniReader.Ler_Totais(AINIRec: TMemIniFile; tot: Ttot);
 var
   sSecao: string;
-  Ok: Boolean;
 begin
   sSecao := 'tot';
   tot.qCTe   := AINIRec.ReadInteger(sSecao, 'qCTe', 0);
@@ -1285,7 +1275,7 @@ begin
   tot.qNF    := AINIRec.ReadInteger(sSecao, 'qNF', 0);
   tot.qMDFe  := AINIRec.ReadInteger(sSecao, 'qMDFe', 0);
   tot.vCarga := StringToFloatDef(AINIRec.ReadString(sSecao, 'vCarga', ''), 0);
-  tot.cUnid  := StrToUnidMed(OK, AINIRec.ReadString(sSecao, 'cUnid', '01'));
+  tot.cUnid  := StrToUnidMed(AINIRec.ReadString(sSecao, 'cUnid', '01'));
   tot.qCarga := StringToFloatDef(AINIRec.ReadString(sSecao, 'qCarga', ''), 0);
 end;
 

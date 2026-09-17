@@ -47,8 +47,8 @@ uses
    System.Contnrs,
   {$IFEND}
   ACBrBase,
-  pcnConversao,
-  pmdfeConversaoMDFe,
+  ACBrDFe.Conversao,
+  ACBrMDFe.Conversao,
   ACBrXmlBase,
   {$IFNDEF USE_ACBr_XMLDOCUMENT}
    pcnSignature,
@@ -188,7 +188,7 @@ type
   TIde = class(TObject)
   private
     FcUF: Integer;
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FtpEmit: TTpEmitenteMDFe;
     FtpTransp: TTransportadorMDFe;
     Fmod: string;
@@ -198,8 +198,8 @@ type
     FcDV: Integer;
     Fmodal: TModalMDFe;
     FdhEmi: TDateTime;
-    FtpEmis: TpcnTipoEmissao;
-    FprocEmi: TpcnProcessoEmissao;
+    FtpEmis: TACBrTipoEmissao;
+    FprocEmi: TACBrProcessoEmissao;
     FverProc: string;
     FUFIni: string;
     FUFFim: string;
@@ -215,7 +215,7 @@ type
     constructor Create;
     destructor Destroy; override;
     property cUF: Integer                            read FcUF           write FcUF;
-    property tpAmb: TpcnTipoAmbiente                 read FtpAmb         write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente                read FtpAmb         write FtpAmb;
     property tpEmit: TTpEmitenteMDFe                 read FtpEmit        write FtpEmit;
     property tpTransp: TTransportadorMDFe            read FtpTransp      write FtpTransp;
     property modelo: string                          read Fmod           write Fmod;
@@ -225,8 +225,8 @@ type
     property cDV: Integer                            read FcDV           write FcDV;
     property modal: TModalMDFe                       read Fmodal         write Fmodal;
     property dhEmi: TDateTime                        read FdhEmi         write FdhEmi;
-    property tpEmis: TpcnTipoEmissao                 read FtpEmis        write FtpEmis;
-    property procEmi: TpcnProcessoEmissao            read FprocEmi       write FprocEmi;
+    property tpEmis: TACBrTipoEmissao                read FtpEmis        write FtpEmis;
+    property procEmi: TACBrProcessoEmissao           read FprocEmi       write FprocEmi;
     property verProc: string                         read FverProc       write FverProc;
     property UFIni: string                           read FUFIni         write FUFIni;
     property UFFim: string                           read FUFFim         write FUFFim;
@@ -517,8 +517,8 @@ type
     FcapM3: Integer;
     Fprop: Tprop;
     Fcondutor: TcondutorCollection;
-    FtpRod: TpcteTipoRodado;
-    FtpCar: TpcteTipoCarroceria;
+    FtpRod: TTipoRodado;
+    FtpCar: TTipoCarroceria;
     FUF: string;
 
     procedure Setcondutor(const Value: TcondutorCollection);
@@ -534,8 +534,8 @@ type
     property capM3: Integer                read FcapM3    write FcapM3;
     property prop: Tprop                   read Fprop     write Fprop;
     property condutor: TcondutorCollection read Fcondutor write Setcondutor;
-    property tpRod: TpcteTipoRodado        read FtpRod    write FtpRod;
-    property tpCar: TpcteTipoCarroceria    read FtpCar    write FtpCar;
+    property tpRod: TTipoRodado            read FtpRod    write FtpRod;
+    property tpCar: TTipoCarroceria        read FtpCar    write FtpCar;
     property UF: string                    read FUF       write FUF;
   end;
 
@@ -546,14 +546,14 @@ type
     FxNome: string;
     FIE: string;
     FUF: string;
-    FtpProp: TpcteProp;
+    FtpProp: TtpProp;
   public
     property CNPJCPF: string   read FCNPJCPF write FCNPJCPF;
     property RNTRC: string     read FRNTRC   write FRNTRC;
     property xNome: string     read FxNome   write FxNome;
     property IE: string        read FIE      write FIE;
     property UF: string        read FUF      write FUF;
-    property tpProp: TpcteProp read FtpProp  write FtpProp;
+    property tpProp: TtpProp   read FtpProp  write FtpProp;
   end;
 
   TcondutorCollection = class(TACBrObjectList)
@@ -594,20 +594,20 @@ type
     FcapKG: Integer;
     FcapM3: Integer;
     Fprop: Tprop;
-    FtpCar: TpcteTipoCarroceria;
+    FtpCar: TTipoCarroceria;
     FUF: string;
   public
     constructor Create;
     destructor Destroy; override;
-    property cInt: string               read FcInt    write FcInt;
-    property placa: string              read Fplaca   write Fplaca;
-    property RENAVAM: string            read FRENAVAM write FRENAVAM;
-    property tara: Integer              read Ftara    write Ftara;
-    property capKG: Integer             read FcapKG   write FcapKG;
-    property capM3: Integer             read FcapM3   write FcapM3;
-    property prop: Tprop                read Fprop    write Fprop;
-    property tpCar: TpcteTipoCarroceria read FtpCar   write FtpCar;
-    property UF: string                 read FUF      write FUF;
+    property cInt: string           read FcInt    write FcInt;
+    property placa: string          read Fplaca   write Fplaca;
+    property RENAVAM: string        read FRENAVAM write FRENAVAM;
+    property tara: Integer          read Ftara    write Ftara;
+    property capKG: Integer         read FcapKG   write FcapKG;
+    property capM3: Integer         read FcapM3   write FcapM3;
+    property prop: Tprop            read Fprop    write Fprop;
+    property tpCar: TTipoCarroceria read FtpCar   write FtpCar;
+    property UF: string             read FUF      write FUF;
   end;
 
   TvalePed = class(TObject)
@@ -776,10 +776,10 @@ type
   TinfUnidCargaVaziaCollectionItem = class(TObject)
   private
     FidUnidCargaVazia: string;
-    FtpUnidCargaVazia: TpcnUnidCarga;
+    FtpUnidCargaVazia: TUnidCarga;
   public
-    property idUnidCargaVazia: string        read FidUnidCargaVazia write FidUnidCargaVazia;
-    property tpUnidCargaVazia: TpcnUnidCarga read FtpUnidCargaVazia write FtpUnidCargaVazia;
+    property idUnidCargaVazia: string     read FidUnidCargaVazia write FidUnidCargaVazia;
+    property tpUnidCargaVazia: TUnidCarga read FtpUnidCargaVazia write FtpUnidCargaVazia;
   end;
 
   TinfUnidTranspVaziaCollection = class(TACBrObjectList)
@@ -795,10 +795,10 @@ type
   TinfUnidTranspVaziaCollectionItem = class(TObject)
   private
     FidUnidTranspVazia: string;
-    FtpUnidTranspVazia: TpcnUnidTransp;
+    FtpUnidTranspVazia: TUnidTransp;
   public
-    property idUnidTranspVazia: string        read FidUnidTranspVazia write FidUnidTranspVazia;
-    property tpUnidTranspVazia: TpcnUnidTransp read FtpUnidTranspVazia write FtpUnidTranspVazia;
+    property idUnidTranspVazia: string      read FidUnidTranspVazia write FidUnidTranspVazia;
+    property tpUnidTranspVazia: TUnidTransp read FtpUnidTranspVazia write FtpUnidTranspVazia;
   end;
 
   Tferrov = class(TObject)
@@ -990,7 +990,7 @@ type
 
   TinfUnidTranspCollectionItem = class(TObject)
   private
-    FtpUnidTransp: TpcnUnidTransp;
+    FtpUnidTransp: TUnidTransp;
     FidUnidTransp: string;
     FlacUnidTransp: TlacUnidTranspCollection;
     FinfUnidCarga: TinfUnidCargaCollection;
@@ -998,7 +998,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    property tpUnidTransp: TpcnUnidTransp            read FtpUnidTransp  write FtpUnidTransp;
+    property tpUnidTransp: TUnidTransp               read FtpUnidTransp  write FtpUnidTransp;
     property idUnidTransp: string                    read FidUnidTransp  write FidUnidTransp;
     property lacUnidTransp: TlacUnidTranspCollection read FlacUnidTransp write FlacUnidTransp;
     property infUnidCarga: TinfUnidCargaCollection   read FinfUnidCarga  write FinfUnidCarga;
@@ -1032,14 +1032,14 @@ type
 
   TinfUnidCargaCollectionItem = class(TObject)
   private
-    FtpUnidCarga: TpcnUnidCarga;
+    FtpUnidCarga: TUnidCarga;
     FidUnidCarga: string;
     FlacUnidCarga: TlacUnidCargaCollection;
     FqtdRat: Double;
   public
     constructor Create;
     destructor Destroy; override;
-    property tpUnidCarga: TpcnUnidCarga            read FtpUnidCarga  write FtpUnidCarga;
+    property tpUnidCarga: TUnidCarga               read FtpUnidCarga  write FtpUnidCarga;
     property idUnidCarga: string                   read FidUnidCarga  write FidUnidCarga;
     property lacUnidCarga: TlacUnidCargaCollection read FlacUnidCarga write FlacUnidCarga;
     property qtdRat: Double                        read FqtdRat       write FqtdRat;

@@ -40,19 +40,19 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
 
   TConsMDFeNaoEnc = class(TObject)
   private
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FCNPJCPF: String;
     FVersao: String;
   public
     function GerarXML: string;
 
-    property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb   write FtpAmb;
     property CNPJCPF: String         read FCNPJCPF write FCNPJCPF;
     property Versao: String          read FVersao  write FVersao;
   end;
@@ -77,7 +77,7 @@ begin
     xTagDoc := '<CPF>' + nDoc + '</CPF>';
 
   Result := '<consMDFeNaoEnc ' + NAME_SPACE_MDFe + ' versao="' + versao + '">' +
-              '<tpAmb>' + tpAmbToStr(tpAmb) + '</tpAmb>' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
               '<xServ>' + ACBrStr('CONSULTAR NÃO ENCERRADOS') + '</xServ>' +
               xTagDoc +
             '</consMDFeNaoEnc>';

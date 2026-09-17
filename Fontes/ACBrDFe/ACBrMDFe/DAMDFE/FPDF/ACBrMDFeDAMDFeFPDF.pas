@@ -50,14 +50,14 @@ uses
   ACBrMDFe.EnvEvento,
   ACBrMDFe.EventoClass,
   ACBrDFe.Conversao,
-  pcnConversao,
-  pmdfeConversaoMDFe,
+  ACBrMDFe.Conversao,
   ACBrValidador,
   ACBrUtil.DateTime,
   ACBrUtil.Strings,
   ACBrUtil.FilesIO,
   ACBrDFeUtil,
   ACBrUtil.Compatibilidade,
+  ACBrUtil.Base,
   ACBrMDFe,
   ACBrBase,
   ACBrMDFeUtilsFPDF,
@@ -2581,7 +2581,7 @@ begin
   w := w1;
   LPDF.SetFont(6, '');
   LPDF.TextBox(x, y, w, h, 'ORGAO', 'T', 'C', 1, '');
-  Texto := CUFtoUF(FProcEvento.InfEvento.cOrgao);
+  Texto := CodigoUFParaUF(FProcEvento.InfEvento.cOrgao);
   LPDF.SetFont(10, '');
   LPDF.TextBox(x, y, w, h, Texto, 'B', 'C', 0, '');
 
@@ -2747,7 +2747,7 @@ begin
   w := w2;
   LPDF.SetFont(6, '');
   LPDF.TextBox(x, y, w, h, 'UF', 'T', 'L', 1, '');
-  Texto := CUFtoUF(DetEvento.cUF);
+  Texto := CodigoUFParaUF(DetEvento.cUF);
   LPDF.SetFont(10, '');
   LPDF.TextBox(x, y, w, h, Texto, 'B', 'C', 0, '');
 

@@ -44,10 +44,16 @@ uses
   ACBrXmlBase,
   ACBrDFe.Conversao,
   ACBrDFeUtil,
-  ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
-  ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
+  ACBrDFe,
+  ACBrDFeConfiguracoes,
+  ACBrDFeException,
+  ACBrBase,
+  ACBrMDFeConfiguracoes,
+  ACBrMDFeWebServices,
+  ACBrMDFeManifestos,
   ACBrMDFeDAMDFeClass,
-  ACBrMDFe.Classes, pcnConversao, pmdfeConversaoMDFe,
+  ACBrMDFe.Classes,
+  ACBrMDFe.Conversao,
   ACBrMDFe.EnvEvento;
 
 const
@@ -115,7 +121,7 @@ type
     function LerVersaoDeParams(LayOutServico: TLayOutMDFe): String; reintroduce; overload;
 
     function GetURLConsulta(const CUF: integer;
-      const TipoAmbiente: TpcnTipoAmbiente;
+      const TipoAmbiente: TACBrTipoAmbiente;
       const Versao: Double): String;
     function GetURLQRCode(FMDFe: TMDFe): String;
 
@@ -261,7 +267,7 @@ begin
 end;
 
 function TACBrMDFe.GetURLConsulta(const CUF: integer;
-  const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
+  const TipoAmbiente: TACBrTipoAmbiente; const Versao: Double): String;
 //var
 //  VersaoDFe: TVersaoMDFe;
 //  ok: Boolean;
@@ -270,7 +276,7 @@ begin
   // devemos descomentar as linhas e trocar o zero da função abaixo pela variável
   // VersaoDFe
 //  VersaoDFe := DblToVersaoMDFe(ok, Versao);
-  Result := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaMDFe', 0);
+  Result := LerURLDeParams('MDFe', CodigoUFparaUF(CUF), TipoAmbiente, 'URL-ConsultaMDFe', 0);
 end;
 
 function TACBrMDFe.GetURLQRCode(FMDFe: TMDFe): String;
@@ -278,7 +284,7 @@ var
   idMDFe,
   sEntrada, urlUF, Passo2, sign: String;
 begin
-  urlUF := LerURLDeParams('MDFe', CUFtoUF(FMDFe.Ide.cUF), FMDFe.Ide.tpAmb, 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('MDFe', CodigoUFparaUF(FMDFe.Ide.cUF), FMDFe.Ide.tpAmb, 'URL-QRCode', 0);
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
@@ -286,7 +292,7 @@ begin
   idMDFe := RemoverLiteralChave(FMDFe.infMDFe.ID);
 
   // Passo 1
-  sEntrada := 'chMDFe=' + idMDFe + '&tpAmb=' + TpAmbToStr(FMDFe.Ide.tpAmb);
+  sEntrada := 'chMDFe=' + idMDFe + '&tpAmb=' + TipoAmbienteToStr(FMDFe.Ide.tpAmb);
 
   // Passo 2 calcular o SHA-1 da string idMDFe se emissão em contingência
   if FMDFe.ide.tpEmis = teContingencia then
@@ -346,7 +352,7 @@ end;
 
 function TACBrMDFe.IdentificaSchema(const AXML: String): TSchemaMDFe;
 var
- lTipoEvento: TpcnTpEvento;
+ lTipoEvento: TACBrTipoEvento;
  I: Integer;
  Ok: Boolean;
 begin

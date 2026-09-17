@@ -45,7 +45,6 @@ uses
   {$IfEnd}
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrBase,
   ACBrDFeComum.Proc,
   ACBrMDFe.Consts,
@@ -142,7 +141,6 @@ var
   Document: TACBrXmlDocument;
   ANode, ANodeAux, ANodeAux2: TACBrXmlNode;
   ANodeArray: TACBrXmlNodeArray;
-  ok: Boolean;
   i: Integer;
   Item : TRetEventoMDFeCollectionItem;
 begin

@@ -37,7 +37,8 @@ unit ACBrMDFeDAMDFEFR;
 interface
 
 uses
-  SysUtils, Classes, DB, DBClient, ACBrXmlBase, ACBrBase, ACBrMDFeDAMDFeClass, pcnConversao,
+  SysUtils, Classes, DB, DBClient, ACBrXmlBase, ACBrBase, ACBrMDFeDAMDFeClass,
+  ACBrDFe.Conversao,
   ACBrMDFe.Classes, frxClass, ACBrDFeUtil,
   ACBrMDFe.EnvEvento,
   frxDBSet,
@@ -171,8 +172,8 @@ implementation
 
 uses
   StrUtils,
-  ACBrMDFe, pmdfeConversaoMDFe,
-  ACBrDFe.Conversao,
+  ACBrMDFe,
+  ACBrMDFe.Conversao,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
   ACBrUtil.FilesIO,

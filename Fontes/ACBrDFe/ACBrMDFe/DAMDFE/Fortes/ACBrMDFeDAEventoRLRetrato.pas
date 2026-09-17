@@ -50,7 +50,7 @@ uses
   RLFilters,
   ACBrMDFeDAEventoRL, 
   ACBrDFeReportFortes,
-  pcnConversao,
+  ACBrDFe.Conversao,
   DB;
 
 type
@@ -350,7 +350,7 @@ begin
 
     rllOrgao.Caption := IntToStr(InfEvento.cOrgao);
 
-    case TpcnTipoAmbiente(InfEvento.tpAmb) of
+    case InfEvento.tpAmb of
       taProducao: rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
       taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end;
@@ -409,12 +409,12 @@ begin
             (fpEventoMDFe.InfEvento.tpEvento = teAlteracaoPagtoServMDFe) or
             (fpEventoMDFe.InfEvento.tpEvento = teConfirmaServMDFe);
 
-  printIt := Exibir or (TpcnTipoAmbiente(fpEventoMDFe.InfEvento.tpAmb) = taHomologacao);
+  printIt := Exibir or (fpEventoMDFe.InfEvento.tpAmb = taHomologacao);
 
   rllMsgTeste.Visible := False;
   rllMsgTeste.Enabled := False;
 
-  if TpcnTipoAmbiente(fpEventoMDFe.InfEvento.tpAmb) = taHomologacao then
+  if fpEventoMDFe.InfEvento.tpAmb = taHomologacao then
   begin
     rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;

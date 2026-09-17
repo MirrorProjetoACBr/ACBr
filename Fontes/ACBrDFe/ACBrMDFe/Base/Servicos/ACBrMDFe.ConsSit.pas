@@ -38,7 +38,6 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao,
   ACBrXmlBase,
   ACBrDFeUtil,
   ACBrDFe.Conversao;

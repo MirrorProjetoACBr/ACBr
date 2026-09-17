@@ -49,8 +49,9 @@ uses
   pmdfeMDFeW,
   {$EndIf}
   ACBrMDFe.IniReader, ACBrMDFe.IniWriter,
-  pcnConversao,
-  pcnLeitor;
+  ACBrDFe.Conversao,
+  ACBrXmlBase,
+  ACBrXmlDocument;
 
 type
 
@@ -201,7 +202,7 @@ uses
   ACBrUtil.FilesIO,
   ACBrUtil.DateTime,
   ACBrDFeUtil, 
-  pmdfeConversaoMDFe;
+  ACBrMDFe.Conversao;
 
 { Manifesto }
 
@@ -290,7 +291,8 @@ procedure TManifesto.Assinar;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
-  Leitor: TLeitor;
+  Document: TACBrXmlDocument;
+  ANode, SignatureNode, ReferenceNode, X509DataNode: TACBrXmlNode;
 begin
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
@@ -310,15 +312,26 @@ begin
     // SSL.Assinar() sempre responde em UTF8...
     FXMLOriginal := FXMLAssinado;
 
-    Leitor := TLeitor.Create;
+    Document := TACBrXmlDocument.Create;
     try
-      leitor.Grupo := FXMLAssinado;
-      MDFe.signature.URI := Leitor.rAtributo('Reference URI=');
-      MDFe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-      MDFe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-      MDFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+      Document.LoadFromXml(FXMLOriginal);
+      ANode := Document.Root;
+
+      if ANode <> nil then
+      begin
+        SignatureNode := ANode.Childrens.FindAnyNs('Signature');
+        ReferenceNode := SignatureNode.Childrens.FindAnyNs('SignedInfo')
+                                      .Childrens.FindAnyNs('Reference');
+        X509DataNode :=  SignatureNode.Childrens.FindAnyNs('KeyInfo')
+                                      .Childrens.FindAnyNs('X509Data');
+
+        MDFe.signature.URI := ObterConteudoTag(ReferenceNode.Attributes.Items['URI']);
+        MDFe.signature.DigestValue := ObterConteudoTag(ReferenceNode.Childrens.FindAnyNs('DigestValue'), tcStr);
+        MDFe.signature.SignatureValue := ObterConteudoTag(SignatureNode.Childrens.FindAnyNs('SignatureValue'), tcStr);
+        MDFe.signature.X509Certificate := ObterConteudoTag(X509DataNode.Childrens.FindAnyNs('X509Certificate'), tcStr);
+      end;
     finally
-      Leitor.Free;
+      FreeAndNil(Document);
     end;
 
     MDFe.infMDFeSupl.qrCodMDFe := GetURLQRCode(MDFe);
@@ -671,7 +684,7 @@ begin
     (Copy(MDFe.infMDFe.ID, 25, 2) <> MDFe.Ide.modelo) or
     (Copy(MDFe.infMDFe.ID, 27, 3) <> IntToStrZero(MDFe.Ide.serie, 3)) or
     (Copy(MDFe.infMDFe.ID, 30, 9) <> IntToStrZero(MDFe.Ide.nMDF, 9)) or
-    (Copy(MDFe.infMDFe.ID, 39, 1) <> TpEmisToStr(MDFe.Ide.tpEmis)) or
+    (Copy(MDFe.infMDFe.ID, 39, 1) <> TipoEmissaoToStr(MDFe.Ide.tpEmis)) or
     (Copy(MDFe.infMDFe.ID, 40, 8) <> IntToStrZero(MDFe.Ide.cMDF, 8)));
 end;
 

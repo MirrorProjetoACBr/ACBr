@@ -42,7 +42,7 @@ uses
   SysUtils,
   StrUtils,
   ACBrMDFe.Classes,
-  pcnConversao,
+  ACBrDFe.Conversao,
   ACBrMDFe,
   ACBrMDFeDAMDFeClass,
   StrUtilsEx;

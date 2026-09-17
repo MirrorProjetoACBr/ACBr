@@ -40,10 +40,9 @@ uses
   Classes, SysUtils,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrXmlDocument, ACBrXmlWriter,
   ACBrMDFe.Classes,
-  pmdfeConversaoMDFe;
+  ACBrMDFe.Conversao;
 
 type
   TMDFeXmlWriterOptions = class(TACBrXmlWriterOptions)
@@ -304,7 +303,7 @@ begin
   VersaoDF :=  DblToVersaoMDFe(Ok, MDFe.infMDFe.Versao);
 
   FChaveMDFe := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJCPF,
-      MDFe.ide.serie, MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),
+      MDFe.ide.serie, MDFe.ide.nMDF, StrToInt(TipoEmissaoToStr(MDFe.ide.tpEmis)),
       MDFe.ide.cMDF, StrToInt(MDFe.ide.modelo));
 
   MDFe.infMDFe.ID := 'MDFe' + FChaveMDFe;
@@ -424,7 +423,7 @@ begin
     wAlerta('#5', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
   Result.AppendChild(AddNode(tcStr, '#6', 'tpAmb  ', 1, 1, 1,
-                                        TpAmbToStr(MDFe.Ide.tpAmb), DSC_TPAMB));
+                                 TipoAmbienteToStr(MDFe.Ide.tpAmb), DSC_TPAMB));
 
   Result.AppendChild(AddNode(tcStr, '#7', 'tpEmit  ', 1, 1, 1,
                                  TpEmitenteToStr(MDFe.Ide.tpEmit), DSC_TPEMIT));
@@ -460,7 +459,7 @@ begin
       MDFe.ide.dhEmi), DSC_DEMI));
 
   Result.AppendChild(AddNode(tcStr, '#14', 'tpEmis', 1, 1, 1,
-                                     tpEmisToStr(MDFe.Ide.tpEmis), DSC_TPEMIS));
+                                TipoEmissaoToStr(MDFe.Ide.tpEmis), DSC_TPEMIS));
 
   Result.AppendChild(AddNode(tcStr, '#16', 'procEmi', 1, 1, 1,
                                   procEmiToStr(MDFe.Ide.procEmi), DSC_PROCEMI));

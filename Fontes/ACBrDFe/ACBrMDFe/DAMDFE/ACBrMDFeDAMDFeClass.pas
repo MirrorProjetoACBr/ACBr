@@ -38,7 +38,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrBase, ACBrDFeReport, ACBrMDFe.Classes, pcnConversao;
+  ACBrBase, ACBrDFeReport, ACBrMDFe.Classes, ACBrDFe.Conversao;
 
 type
   TDadosExtrasMDFe = (deValorTotal, deRelacaoDFe);
@@ -59,8 +59,7 @@ type
     FACBrMDFe: TComponent;
     FImprimirHoraSaida: Boolean;
     FImprimirHoraSaida_Hora: String;
-    FTipoDAMDFe: TpcnTipoImpressao;
-//    FTamanhoPapel: TpcnTamanhoPapel;
+    FTipoDAMDFe: TACBrTipoImpressao;
     FProtocoloMDFe: String;
     FMDFeCancelada: Boolean;
     FMDFeEncerrado: Boolean;
@@ -88,8 +87,7 @@ type
     property ACBrMDFe: TComponent           read FACBrMDFe               write SetACBrMDFe;
     property ImprimeHoraSaida: Boolean      read FImprimirHoraSaida      write FImprimirHoraSaida;
     property ImprimeHoraSaida_Hora: String  read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
-    property TipoDAMDFe: TpcnTipoImpressao  read FTipoDAMDFe             write FTipoDAMDFe;
-//    property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel           write FTamanhoPapel;
+    property TipoDAMDFe: TACBrTipoImpressao read FTipoDAMDFe             write FTipoDAMDFe;
     property Protocolo: String              read FProtocoloMDFe          write FProtocoloMDFe;
     property Cancelada: Boolean             read FMDFeCancelada          write FMDFeCancelada;
     property Encerrado: Boolean             read FMDFeEncerrado          write FMDFeEncerrado;

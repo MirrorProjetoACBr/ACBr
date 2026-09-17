@@ -45,7 +45,6 @@ uses
   {$IfEnd}
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrMDFe.EventoClass,
   ACBrBase,
   ACBrXmlDocument;
@@ -74,7 +73,6 @@ type
   private
     FidLote: Int64;
     Fversao: string;
-//    FtpAmb: TpcnTipoAmbiente;
     FtpAmb: TACBrTipoAmbiente;
     FverAplic: string;
     FcStat: Integer;
@@ -106,7 +104,6 @@ type
 
     property idLote: Int64                      read FidLote    write FidLote;
     property versao: string                     read Fversao    write Fversao;
-//    property tpAmb: TpcnTipoAmbiente            read FtpAmb     write FtpAmb;
     property tpAmb: TACBrTipoAmbiente           read FtpAmb     write FtpAmb;
     property verAplic: string                   read FverAplic  write FverAplic;
     property cOrgao: Integer                    read FcOrgao    write FcOrgao;
@@ -124,7 +121,7 @@ type
 implementation
 
 uses
-  pmdfeConversaoMDFe,
+  ACBrMDFe.Conversao,
   ACBrMDFe.Classes,
   ACBrUtil.Strings,
   ACBrUtil.XMLHTML;
@@ -237,7 +234,7 @@ begin
     sAux := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('indEncPorTerceiro'), tcStr);
 
     if sAux = '1' then
-      InfEvento.detEvento.indEncPorTerceiro := pcnConversao.tiSim;
+      InfEvento.detEvento.indEncPorTerceiro := tiSim;
 
     InfEvento.detEvento.cMunCarrega := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('cMunCarrega'), tcInt);
     InfEvento.DetEvento.xMunCarrega := ObterConteudoTag(AuxNode.Childrens.FindAnyNs('xMunCarrega'), tcStr);
@@ -307,7 +304,7 @@ begin
   sAux := ObterConteudoTag(ANode.Childrens.FindAnyNs('indAntecipaAdiant'), tcStr);
 
   if sAux <> '' then
-    Item.indAntecipaAdiant := pcnConversao.StrToTIndicador(ok, sAux);
+    Item.indAntecipaAdiant := StrToTIndicador(sAux);
 
   Item.tpAntecip := StrTotpAntecip(ok, ObterConteudoTag(ANode.Childrens.FindAnyNs('tpAntecip'), tcStr));
 

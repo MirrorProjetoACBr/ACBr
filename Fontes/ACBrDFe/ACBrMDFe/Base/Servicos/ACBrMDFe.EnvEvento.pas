@@ -46,7 +46,6 @@ uses
   ACBrDFeConsts,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnConversao,
   ACBrMDFe.Consts,
   ACBrMDFe.EventoClass,
   ACBrBase,
@@ -123,7 +122,7 @@ type
 
     function LerXML(const CaminhoArquivo: string): Boolean;
     function LerXMLFromString(const AXML: string): Boolean;
-    function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+    function ObterNomeArquivo(tpEvento: TACBrTipoEvento): string;
     function LerFromIni(const AIniString: string): Boolean;
 
     property idLote: Int64 read FidLote write FidLote;
@@ -144,7 +143,7 @@ uses
   ACBrUtil.FilesIO,
   ACBrMDFe.RetEnvEvento,
   ACBrMDFe.Classes,
-  pmdfeConversaoMDFe;
+  ACBrMDFe.Conversao;
 
 { TEventoMDFe }
 
@@ -167,7 +166,7 @@ begin
   inherited;
 end;
 
-function TEventoMDFe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
+function TEventoMDFe.ObterNomeArquivo(tpEvento: TACBrTipoEvento): string;
 var
   sChave: string;
 begin
@@ -846,7 +845,7 @@ begin
         InfEvento.detEvento.cMun := INIRec.ReadInteger(sSecao, 'cMun', 0);
         infEvento.detEvento.xNome := INIRec.ReadString(sSecao, 'xNome', '');
         infEvento.detEvento.CPF := INIRec.ReadString(sSecao, 'CPF', '');
-        infEvento.detEvento.indEncPorTerceiro := StrToTIndicador(Ok, INIRec.ReadString(sSecao, 'indEncPorTerceiro', '0'));
+        infEvento.detEvento.indEncPorTerceiro := StrToTIndicador(INIRec.ReadString(sSecao, 'indEncPorTerceiro', '0'));
         infEvento.detEvento.cMunCarrega := INIRec.ReadInteger(sSecao, 'cMunCarrega', 0);
         infEvento.detEvento.xMunCarrega := INIRec.ReadString(sSecao, 'xMunCarrega', '');
 
@@ -906,7 +905,7 @@ begin
             ItemInfPag.indPag := StrToTIndPag(ok, INIRec.ReadString(sSecao, 'indPag', '0'));
             ItemInfPag.vAdiant := StringToFloatDef(INIRec.ReadString(sSecao, 'vAdiant', ''), 0 );
 
-            ItemInfPag.indAntecipaAdiant := StrToTIndicador(ok, INIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
+            ItemInfPag.indAntecipaAdiant := StrToTIndicador(INIRec.ReadString(sSecao, 'indAntecipaAdiant', '0'));
             ItemInfPag.tpAntecip := StrTotpAntecip(ok, INIRec.ReadString(sSecao, 'tpAntecip', ''));
 
             K := 1;

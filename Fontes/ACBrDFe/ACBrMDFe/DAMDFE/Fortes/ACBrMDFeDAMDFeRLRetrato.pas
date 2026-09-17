@@ -48,9 +48,9 @@ uses
   RLBarcode, 
   RLPDFFilter, 
   RLFilters,
-  pcnConversao, 
-  pmdfeConversaoMDFe, 
-  ACBrMDFeDAMDFeRL, 
+  ACBrDFe.Conversao,
+  ACBrMDFe.Conversao,
+  ACBrMDFeDAMDFeRL,
   ACBrMDFeDAMDFeClass;
 
 type

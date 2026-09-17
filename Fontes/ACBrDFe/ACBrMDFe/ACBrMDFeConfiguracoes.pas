@@ -38,7 +38,9 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, pmdfeConversaoMDFe;
+  ACBrDFeConfiguracoes,
+  ACBrDFe.Conversao,
+  ACBrMDFe.Conversao;
 
 type
 
@@ -78,7 +80,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathMDFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
+    function GetPathEvento(tipoEvento: TACBrTipoEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathMDFe: boolean read FEmissaoPathMDFe
       write FEmissaoPathMDFe default False;
@@ -228,7 +230,7 @@ begin
   inherited;
 end;
 
-function TArquivosConfMDFe.GetPathEvento(tipoEvento: TpcnTpEvento;
+function TArquivosConfMDFe.GetPathEvento(tipoEvento: TACBrTipoEvento;
   const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
 var
   Dir: String;
