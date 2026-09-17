@@ -125,7 +125,8 @@ type
 
     procedure SetStatus(const stNewStatus: TStatusACBrBPe);
     procedure ImprimirEvento;
-    procedure ImprimirEventoPDF;
+    procedure ImprimirEventoPDF; overload;
+    procedure ImprimirEventoPDF(AStream: TStream); overload;
 
     function GravarStream(AStream: TStream): Boolean;
 
@@ -602,7 +603,7 @@ begin
   if not Assigned(DABPE) then
     GerarException('Componente DABPE não associado.')
   else
-    DABPE.ImprimirEVENTO(nil);
+    DABPE.ImprimirEVENTO;
 end;
 
 procedure TACBrBPe.ImprimirEventoPDF;
@@ -610,7 +611,15 @@ begin
   if not Assigned(DABPE) then
     GerarException('Componente DABPE não associado.')
   else
-    DABPE.ImprimirEVENTOPDF(nil);
+    DABPE.ImprimirEVENTOPDF;
+end;
+
+procedure TACBrBPe.ImprimirEventoPDF(AStream: TStream);
+begin
+  if not Assigned(DABPE) then
+    GerarException('Componente DABPE não associado.')
+  else
+    DABPE.ImprimirEVENTOPDF(AStream, nil);
 end;
 
 procedure TACBrBPe.EnviarEmailEvento(const sPara, sAssunto: String;

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_BPe_DABPeFPDF"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\FPDF"/>
+        <UnitOutputDirectory Value="..\..\..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrBPe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - DABPE em FPDF Report - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="3">
+      <Item1>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\FPDF\ACBrBPeDABPeFPDF.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="ACBrBPeDABPeFPDF"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\FPDF\ACBrBPeDABPeFPDFReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrBPeDABPeFPDFReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\FPDF\ACBrBPeUtilsFPDF.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="ACBrBPeUtilsFPDF"/>
+      </Item3>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBr_BPe"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

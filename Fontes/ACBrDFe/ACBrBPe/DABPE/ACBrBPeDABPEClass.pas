@@ -75,10 +75,12 @@ type
     procedure ImprimirDABPE(BPe: TBPe = nil); virtual;
     procedure ImprimirDABPECancelado(BPe: TBPe = nil); virtual;
     procedure ImprimirDABPEResumido(BPe: TBPe = nil); virtual;
-    procedure ImprimirDABPEPDF(BPe: TBPe = nil); virtual;
+    procedure ImprimirDABPEPDF(BPe: TBPe = nil); overload; virtual;
+    procedure ImprimirDABPEPDF(AStream: TStream; BPe: TBPe = nil); overload; virtual;
     procedure ImprimirDABPEResumidoPDF(BPe: TBPe = nil); virtual;
     procedure ImprimirEVENTO(BPe: TBPe = nil); virtual;
-    procedure ImprimirEVENTOPDF(BPe: TBPe = nil); virtual;
+    procedure ImprimirEVENTOPDF(BPe: TBPe = nil); overload; virtual;
+    procedure ImprimirEVENTOPDF(AStream: TStream; BPe: TBPe = nil); overload; virtual;
 
   published
     property ACBrBPe: TComponent                     read FACBrBPe                        write SetBPe;
@@ -135,6 +137,11 @@ begin
   ErroAbstract('ImprimirDABPEPDF');
 end;
 
+procedure TACBrBPeDABPEClass.ImprimirDABPEPDF(AStream: TStream; BPe: TBPe = nil);
+begin
+  ErroAbstract('ImprimirDABPEPDF');
+end;
+
 procedure TACBrBPeDABPEClass.ImprimirDABPEResumidoPDF(BPe: TBPe = nil);
 begin
   ErroAbstract('ImprimirDABPEResumidoPDF');
@@ -146,6 +153,11 @@ begin
 end;
 
 procedure TACBrBPeDABPEClass.ImprimirEVENTOPDF(BPe: TBPe = nil);
+begin
+  ErroAbstract('ImprimirEVENTOPDF');
+end;
+
+procedure TACBrBPeDABPEClass.ImprimirEVENTOPDF(AStream: TStream; BPe: TBPe = nil);
 begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;

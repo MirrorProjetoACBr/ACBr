@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2026
+-- ACBrBPe,ACBrBPeBilhetes,ACBrBPeDABPEClass,ACBrBPeDABPeFPDF,ACBrBPeDABPeFPDFReg,ACBrBPeUtilsFPDF,ACBr_BPeDABPeFPDF,DCLACBr_BPeDABPeFPDF,ACBr_BPe_DABPeFPDF,ACBr.FrameLista --
+[+] ACBR-9750: Implementado componente ACBr_BPe_DABPeFPDF
+  Por: Renato Rubinho
+
 01/09/2026
 -- ACBrBPeIniReader/ACBrBPeIniWriter/ACBrBPeEnvEvento --
 [*] Simplificação na chamada ao grupo de compra governamental e ajuste nos campos

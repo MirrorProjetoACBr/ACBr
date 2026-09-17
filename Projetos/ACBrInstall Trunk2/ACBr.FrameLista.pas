@@ -239,6 +239,8 @@ type
     ACBr_LibXML2_dpk: TCheckBox;
     ACBr_NFGas_dpk: TCheckBox;
     ACBr_NFAg_dpk: TCheckBox;
+    ACBr_BPeDABPeFPDF_dpk: TCheckBox;
+    LblDABPeFPDF: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

@@ -87,7 +87,8 @@ type
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
     procedure Imprimir;
-    procedure ImprimirPDF;
+    procedure ImprimirPDF; overload;
+    procedure ImprimirPDF(AStream: TStream); overload;
 
     procedure Assinar;
     procedure Validar;
@@ -154,7 +155,8 @@ type
     procedure Imprimir;
     procedure ImprimirCancelado;
     procedure ImprimirResumido;
-    procedure ImprimirPDF;
+    procedure ImprimirPDF; overload;
+    procedure ImprimirPDF(AStream: TStream); overload;
     procedure ImprimirResumidoPDF;
     procedure ImprimirOffline;
 
@@ -252,6 +254,17 @@ begin
       raise EACBrBPeException.Create('Componente DABPE não associado.')
     else
       DABPE.ImprimirDABPEPDF(BPe);
+  end;
+end;
+
+procedure TBilhete.ImprimirPDF(AStream: TStream);
+begin
+  with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
+  begin
+    if not Assigned(DABPE) then
+      raise EACBrBPeException.Create('Componente DABPE não associado.')
+    else
+      DABPE.ImprimirDABPEPDF(AStream, BPe);
   end;
 end;
 
@@ -857,7 +870,13 @@ end;
 procedure TBilhetes.ImprimirPDF;
 begin
   VerificarDABPE;
-  TACBrBPe(FACBrBPe).DABPE.ImprimirDABPEPDF(nil);
+  TACBrBPe(FACBrBPe).DABPE.ImprimirDABPEPDF;
+end;
+
+procedure TBilhetes.ImprimirPDF(AStream: TStream);
+begin
+  VerificarDABPE;
+  TACBrBPe(FACBrBPe).DABPE.ImprimirDABPEPDF(AStream, nil);
 end;
 
 procedure TBilhetes.ImprimirResumidoPDF;
