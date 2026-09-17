@@ -806,7 +806,7 @@ begin
    //ctpoProteTitlo: Tipo de protesto automático do título: 1 = Dias corridos | 2 = Dias úteis.
     LJsonObject.AddPair('ctpoProteTitlo', 0);//NÃO Obrigatório;
     //Quantidade de dias após o vencimento, para protesto automático. Obrigatório? Sim, caso informado ctpoProteTitlo.
-    LJsonObject.AddPair('ctpoPrzProte', 0);
+
     //Tipo decurso de protesto: 1 = Dias corridos | 2 = Dias úteis. Obrigatório? Sim, caso informado ctpoProteTitlo.
     LJsonObject.AddPair('ctpoProteDecurs', 0);
     LJsonObject.AddPair('ctpoPrzDecurs', 0);//FIXO.
