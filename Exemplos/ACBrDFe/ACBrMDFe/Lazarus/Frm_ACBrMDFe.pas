@@ -319,7 +319,7 @@ uses
   strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
   ACBrXmlBase,
-  pcnAuxiliar, ACBrMDFe.Classes, ACBrDFe.Conversao, pmdfeConversaoMDFe,
+  ACBrMDFe.Classes, ACBrDFe.Conversao, ACBrMDFe.Conversao,
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
@@ -1944,7 +1944,7 @@ begin
   with ACBrMDFe1.Configuracoes.WebServices do
   begin
     UF         := cbUF.Text;
-    Ambiente   := StrToTipoAmbiente(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+    Ambiente   := StrToTipoAmbiente(IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
     Salvar     := cbxSalvarSOAP.Checked;
 
@@ -1991,7 +1991,7 @@ begin
 
   if ACBrMDFe1.DAMDFe <> nil then
   begin
-    ACBrMDFe1.DAMDFe.TipoDAMDFe := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex + 1));
+    ACBrMDFe1.DAMDFe.TipoDAMDFe := StrToTpImp(IntToStr(rgTipoDaMDFe.ItemIndex + 1));
     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
   end;
 end;

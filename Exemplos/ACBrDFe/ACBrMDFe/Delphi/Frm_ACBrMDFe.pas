@@ -336,7 +336,7 @@ uses
   IniFiles, Printers,
   ACBrXmlBase,
   ACBrDFe.Conversao,
-  pcnAuxiliar, ACBrMDFe.Classes, pcnConversao, pmdfeConversaoMDFe, pcnRetConsReciDFe,
+  ACBrMDFe.Classes, ACBrMDFe.Conversao, pcnRetConsReciDFe,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
@@ -1078,7 +1078,7 @@ begin
   MemoDados.Lines.Add('---------------------------');
   MemoDados.Lines.Add('Retorno do Consultar Recibo');
   MemoDados.Lines.Add('');
-  MemoDados.Lines.Add('tpAmb   : ' + TpAmbToStr(ACBrMDFe1.WebServices.Recibo.tpAmb));
+  MemoDados.Lines.Add('tpAmb   : ' + TipoAmbienteToStr(ACBrMDFe1.WebServices.Recibo.tpAmb));
   MemoDados.Lines.Add('versao  : ' + ACBrMDFe1.WebServices.Recibo.versao);
   MemoDados.Lines.Add('verAplic: ' + ACBrMDFe1.WebServices.Recibo.verAplic);
   MemoDados.Lines.Add('cStat   : ' + IntToStr(ACBrMDFe1.WebServices.Recibo.cStat));
@@ -1950,7 +1950,7 @@ end;
 procedure TfrmACBrMDFe.FormCreate(Sender: TObject);
 var
   T: TSSLLib;
-  I: TpcnTipoEmissao;
+  I: TACBrTipoEmissao;
   K: TVersaoMDFe;
   U: TSSLCryptLib;
   V: TSSLHttpLib;
@@ -1983,8 +1983,8 @@ begin
   cbSSLType.ItemIndex := 5;
 
   cbFormaEmissao.Items.Clear;
-  for I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) );
+  for I := Low(TACBrTipoEmissao) to High(TACBrTipoEmissao) do
+     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TACBrTipoEmissao), integer(I) ) );
   cbFormaEmissao.ItemIndex := 0;
 
   cbVersaoDF.Items.Clear;
@@ -2252,14 +2252,14 @@ begin
     ExibirErroSchema := cbxExibirErroSchema.Checked;
     RetirarAcentos   := cbxRetirarAcentos.Checked;
     FormatoAlerta    := edtFormatoAlerta.Text;
-    FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
+    FormaEmissao     := TACBrTipoEmissao(cbFormaEmissao.ItemIndex);
     VersaoDF         := TVersaoMDFe(cbVersaoDF.ItemIndex);
   end;
 
   with ACBrMDFe1.Configuracoes.WebServices do
   begin
     UF         := cbUF.Text;
-    Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+    Ambiente   := StrToTipoAmbiente(IntToStr(rgTipoAmb.ItemIndex+1));
     Visualizar := cbxVisualizar.Checked;
     Salvar     := cbxSalvarSOAP.Checked;
 
@@ -2318,7 +2318,7 @@ begin
 
   if ACBrMDFe1.DAMDFe <> nil then
   begin
-    ACBrMDFe1.DAMDFe.TipoDAMDFe := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex + 1));
+    ACBrMDFe1.DAMDFe.TipoDAMDFe := StrToTpImp(IntToStr(rgTipoDaMDFe.ItemIndex + 1));
     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
 
     ACBrMDFe1.DAMDFe.PathPDF      := PathMensal;
