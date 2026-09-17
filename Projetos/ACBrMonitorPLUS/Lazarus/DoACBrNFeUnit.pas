@@ -816,12 +816,9 @@ function TACBrObjetoNFe.GerarNFeIni(XML: string): string;
 begin
   fACBrNFe.NotasFiscais.Clear;
   if FilesExists(XML) then
-    fACBrNFe.NotasFiscais.LoadFromFile(XML)
+    fACBrNFe.NotasFiscais.LoadFromFile(XML, True)
   else
-  begin
-    fACBrNFe.NotasFiscais.LoadFromString(ConvertStrRecived(XML));
-    fACBrNFe.NotasFiscais.GerarNFe;
-  end;
+    fACBrNFe.NotasFiscais.LoadFromString(ConvertStrRecived(XML), True);
 
   Result := fACBrNFe.NotasFiscais.GerarIni();
   WriteToTxt('NFe.ini', Result);

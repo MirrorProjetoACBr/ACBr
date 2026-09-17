@@ -48,13 +48,13 @@ uses
   ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto,
   ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids, LazHelpHTML,
   SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml, TreeFilterEdit,
-  ACBrNFSeXConversao, pcnConversao, pcnConversaoNFe, pcteConversaoCTe,
+  ACBrNFSeXConversao, ACBrDFe.Conversao, pcnConversaoNFe, pcteConversaoCTe,
   ACBrBPeConversao, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
   ACBrSATClass, pcnRede, pgnreConversao, ACBrDFeSSL, ACBrGNRE2,
   ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe,
   ACBrCTeDACTeRLClass, types, fileinfo, ACBrDFeConfiguracoes, ACBrBPe,
   ACBrBPeDABPeESCPOS, ACBrReinf, ACBreSocial,
-  pmdfeConversaoMDFe, pcesConversaoeSocial, pcnConversaoReinf,
+  ACBrMDFe.Conversao, pcesConversaoeSocial, pcnConversaoReinf,
   ACBrMonitorConfig, ACBrMonitorConsts, DOACBrNFeUnit, DoACBrCTeUnit,
   DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit, DoBALUnit, DoEmailUnit,
   DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit, DoNcmUnit, DoLCBUnit, DoDISUnit,
@@ -2233,10 +2233,10 @@ var
   ITipoChavePix: TACBrPIXTipoChave;
 
   iSAT: TACBrSATModelo;
-  iTipo: TpcnTipoAmbiente;
-  iRegISSQN: TpcnRegTribISSQN;
-  iRatISSQN: TpcnindRatISSQN;
-  iRegTrib: TpcnRegTrib;
+  iTipo: TACBrTipoAmbiente;
+  iRegISSQN: TRegTribISSQN;
+  iRatISSQN: TindRatISSQN;
+  iRegTrib: TRegTrib;
   AppDir: string;
   ILayout: TACBrBolLayOut;
   iImpressoraESCPOS: TACBrPosPrinterModelo;
@@ -2249,7 +2249,7 @@ var
   X: TSSLXmlSignLib;
   Y: TSSLType;
   IFormaEmissaoNFe, IFormaEmissaoCTe, IFormaEmissaoGNRe,
-  IFormaEmissaoMDFe, IFormaEmissaoBPe: TpcnTipoEmissao;
+  IFormaEmissaoMDFe, IFormaEmissaoBPe: TACBrTipoEmissao;
   IForcarTagICMSSubs: TForcarGeracaoTag;
   IpcnImprimeDescAcrescItem: TpcnImprimeDescAcrescItem;
   IACBrLibRespostaTipo: TACBrLibRespostaTipo;
@@ -2665,20 +2665,20 @@ begin
      cbxModeloSAT.Items.Add( GetEnumName(TypeInfo(TACBrSATModelo), integer(iSAT) ) ) ;
 
   cbxAmbiente.Items.Clear ;
-  For iTipo := Low(TpcnTipoAmbiente) to High(TpcnTipoAmbiente) do
-     cbxAmbiente.Items.Add( GetEnumName(TypeInfo(TpcnTipoAmbiente), integer(iTipo) ) ) ;
+  For iTipo := Low(TACBrTipoAmbiente) to High(TACBrTipoAmbiente) do
+     cbxAmbiente.Items.Add( GetEnumName(TypeInfo(TACBrTipoAmbiente), integer(iTipo) ) ) ;
 
   cbxRegTribISSQN.Items.Clear ;
-  For iRegISSQN := Low(TpcnRegTribISSQN) to High(TpcnRegTribISSQN) do
-     cbxRegTribISSQN.Items.Add( GetEnumName(TypeInfo(TpcnRegTribISSQN), integer(iRegISSQN) ) ) ;
+  For iRegISSQN := Low(TRegTribISSQN) to High(TRegTribISSQN) do
+     cbxRegTribISSQN.Items.Add( GetEnumName(TypeInfo(TRegTribISSQN), integer(iRegISSQN) ) ) ;
 
   cbxIndRatISSQN.Items.Clear ;
-  For iRatISSQN := Low(TpcnindRatISSQN) to High(TpcnindRatISSQN) do
-     cbxIndRatISSQN.Items.Add( GetEnumName(TypeInfo(TpcnindRatISSQN), integer(iRatISSQN) ) ) ;
+  For iRatISSQN := Low(TindRatISSQN) to High(TindRatISSQN) do
+     cbxIndRatISSQN.Items.Add( GetEnumName(TypeInfo(TindRatISSQN), integer(iRatISSQN) ) ) ;
 
   cbxRegTributario.Items.Clear ;
-  For iRegTrib := Low(TpcnRegTrib) to High(TpcnRegTrib) do
-     cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TpcnRegTrib), integer(iRegTrib) ) ) ;
+  For iRegTrib := Low(TRegTrib) to High(TRegTrib) do
+     cbxRegTributario.Items.Add( GetEnumName(TypeInfo(TRegTrib), integer(iRegTrib) ) ) ;
 
   Application.OnException := @TrataErrosSAT ;
 
@@ -2761,28 +2761,28 @@ begin
     cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
 
   cbFormaEmissaoNFe.Items.Clear;
-  for IFormaEmissaoNFe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-    cbFormaEmissaoNFe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoNFe)));
+  for IFormaEmissaoNFe := Low(TACBrTipoEmissao) to High(TACBrTipoEmissao) do
+    cbFormaEmissaoNFe.Items.Add(GetEnumName(TypeInfo(TACBrTipoEmissao), integer(IFormaEmissaoNFe)));
   cbFormaEmissaoNFe.ItemIndex := 0;
 
   cbFormaEmissaoCTe.Items.Clear;
-  for IFormaEmissaoCTe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-    cbFormaEmissaoCTe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoCTe)));
+  for IFormaEmissaoCTe := Low(TACBrTipoEmissao) to High(TACBrTipoEmissao) do
+    cbFormaEmissaoCTe.Items.Add(GetEnumName(TypeInfo(TACBrTipoEmissao), integer(IFormaEmissaoCTe)));
   cbFormaEmissaoCTe.ItemIndex := 0;
 
   cbFormaEmissaoGNRe.Items.Clear;
-  for IFormaEmissaoGNRe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-    cbFormaEmissaoGNRe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoGNRe)));
+  for IFormaEmissaoGNRe := Low(TACBrTipoEmissao) to High(TACBrTipoEmissao) do
+    cbFormaEmissaoGNRe.Items.Add(GetEnumName(TypeInfo(TACBrTipoEmissao), integer(IFormaEmissaoGNRe)));
   cbFormaEmissaoGNRe.ItemIndex := 0;
 
   cbFormaEmissaoMDFe.Items.Clear;
-  for IFormaEmissaoMDFe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-    cbFormaEmissaoMDFe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoMDFe)));
+  for IFormaEmissaoMDFe := Low(TACBrTipoEmissao) to High(TACBrTipoEmissao) do
+    cbFormaEmissaoMDFe.Items.Add(GetEnumName(TypeInfo(TACBrTipoEmissao), integer(IFormaEmissaoMDFe)));
   cbFormaEmissaoMDFe.ItemIndex := 0;
 
   cbFormaEmissaoBPe.Items.Clear;
-  for IFormaEmissaoBPe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
-    cbFormaEmissaoBPe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoBPe)));
+  for IFormaEmissaoBPe := Low(TACBrTipoEmissao) to High(TACBrTipoEmissao) do
+    cbFormaEmissaoBPe.Items.Add(GetEnumName(TypeInfo(TACBrTipoEmissao), integer(IFormaEmissaoBPe)));
   cbFormaEmissaoBPe.ItemIndex := 0;
 
   cbTagRejeicao938.Items.Clear;
@@ -4509,7 +4509,7 @@ begin
   SL := TStringList.Create;
   try
     SL.Add('versao: ' + ACBrNFe1.WebServices.StatusServico.versao);
-    SL.Add('tpAmb: ' + TpAmbToStr(ACBrNFe1.WebServices.StatusServico.tpAmb));
+    SL.Add('tpAmb: ' + TipoAmbienteToStr(ACBrNFe1.WebServices.StatusServico.tpAmb));
     SL.Add('verAplic: ' + ACBrNFe1.WebServices.StatusServico.verAplic);
     SL.Add('cStat: ' + IntToStr(ACBrNFe1.WebServices.StatusServico.cStat));
     SL.Add('xMotivo: ' + ACBrNFe1.WebServices.StatusServico.xMotivo);
@@ -4600,7 +4600,7 @@ begin
 
   if Ok then
   begin
-    cUF := UFtoCUF(cbxBOLUF.Text);
+    cUF := UFparaCodigoUF(cbxBOLUF.Text);
     if (cUF <> FcUF) then
     begin
       //pEmitCodUF.Caption := IntToStrZero(cUF, 2);
@@ -5865,7 +5865,7 @@ begin
     edtBOLCEP.Text                    := CEP;
     edtBoletoCodigoFlash.Text         := CodigoFlash;
 
-    CarregarListaDeCidades(UFtoCUF(UF));
+    CarregarListaDeCidades(UFParaCodigoUF(UF));
     cbxBOLUF.ItemIndex                := cbxBOLUF.Items.IndexOf(UF);
     edtBOLCodCidade.Caption           := IntToStr(CodCidade);
     cbxEmitCidade.Text                := cidade;
@@ -6364,7 +6364,7 @@ begin
 
     ACBrCTeDACTeRL1.TamanhoPapel    := TpcnTamanhoPapel(rgTamanhoPapelDacte.ItemIndex);
 
-    ACBrCTe1.DACTe.TipoDACTE        := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+    ACBrCTe1.DACTe.TipoDACTE        := StrToTpImp(IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo             := edtLogoMarca.Text;
     ACBrCTe1.DACTe.Sistema          := edSH_RazaoSocial.Text;
     ACBrCTe1.DACTe.Site             := edtSiteEmpresa.Text;
@@ -6383,7 +6383,7 @@ begin
     ACBrCTe1.DACTE.UsaSeparadorPathPDF := cbxUsarSeparadorPathPDF.Checked;
     ACBrCTeDACTeRL1.PosCanhoto         := TPosRecibo( rgLocalCanhoto.ItemIndex );
 
-    ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+    ACBrMDFe1.DAMDFe.TipoDAMDFe        := StrToTpImp(IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrMDFe1.DAMDFe.Logo              := edtLogoMarca.Text;
     ACBrMDFe1.DAMDFe.Sistema           := edSH_RazaoSocial.Text;
     ACBrMDFe1.DAMDFe.Site              := edtSiteEmpresa.Text;
@@ -6414,7 +6414,7 @@ begin
     ACBrGNRE1.GNREGuia.PathPDF         := edtPathPDF.Text;
     ACBrGNRE1.GNREGuia.MostrarStatus   := cbxMostraStatus.Checked;
 
-    ACBrBPe1.DABPe.TipoDABPe         := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
+    ACBrBPe1.DABPe.TipoDABPe         := StrToTpImp(IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrBPe1.DABPe.Logo              := edtLogoMarca.Text;
     ACBrBPe1.DABPe.Sistema           := edSH_RazaoSocial.Text;
     ACBrBPe1.DABPe.Site              := edtSiteEmpresa.Text;
@@ -9129,7 +9129,7 @@ begin
       edtBOLBairro.Text := EndAchado.Bairro;
       edtBOLCEP.Text := ACBrValidador.FormatarCEP(EndAchado.CEP);
       edtBOLComplemento.Text := EndAchado.Complemento;
-      cUF := UFtoCUF(EndAchado.UF);
+      cUF := UFParaCodigoUF(EndAchado.UF);
       CarregarListaDeCidades(cUF);
       cbxBOLUF.ItemIndex := cbxBOLUF.Items.IndexOf(EndAchado.UF);
       edtBOLCodCidade.Caption:= trim(EndAchado.IBGE_Municipio);
@@ -9162,7 +9162,7 @@ begin
       edtBOLBairro.Text := ACBrConsultaCNPJ1.Bairro;
       cbxBOLUF.Text := ACBrConsultaCNPJ1.UF;
 
-      cUF := UFtoCUF(ACBrConsultaCNPJ1.UF);
+      cUF := UFParaCodigoUF(ACBrConsultaCNPJ1.UF);
       CarregarListaDeCidades(cUF);
       cbxBOLUF.ItemIndex := cbxBOLUF.Items.IndexOf(ACBrConsultaCNPJ1.UF);
       edtBOLCodCidade.Caption := Trim(ACBrConsultaCNPJ1.IBGE_Municipio);
@@ -11108,14 +11108,14 @@ begin
     NomeDLL := edNomeDLL.Text;
 
     Config.ide_numeroCaixa := seNumeroCaixa.Value;
-    Config.ide_tpAmb       := TpcnTipoAmbiente( cbxAmbiente.ItemIndex );
+    Config.ide_tpAmb       := TACBrTipoAmbiente( cbxAmbiente.ItemIndex );
     Config.ide_CNPJ        := edtSwHCNPJ.Text;
     Config.emit_CNPJ       := edtEmitCNPJ.Text;
     Config.emit_IE         := edtEmitIE.Text;
     Config.emit_IM         := edtEmitIM.Text;
-    Config.emit_cRegTrib      := TpcnRegTrib( cbxRegTributario.ItemIndex ) ;
-    Config.emit_cRegTribISSQN := TpcnRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
-    Config.emit_indRatISSQN   := TpcnindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
+    Config.emit_cRegTrib      := TRegTrib( cbxRegTributario.ItemIndex ) ;
+    Config.emit_cRegTribISSQN := TRegTribISSQN( cbxRegTribISSQN.ItemIndex ) ;
+    Config.emit_indRatISSQN   := TindRatISSQN( cbxIndRatISSQN.ItemIndex ) ;
     Config.PaginaDeCodigo     := sePagCod.Value;
     Config.EhUTF8             := cbxUTF8.Checked;
     Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
@@ -11481,7 +11481,7 @@ begin
 
   if ACBrNFe1.DANFE <> nil then
   begin
-    ACBrNFe1.DANFE.TipoDANFE            := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
+    ACBrNFe1.DANFE.TipoDANFE            := StrToTpImp(IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo                 := edtLogoMarca.Text;
     ACBrNFe1.DANFE.Email                := edtEmailEmpresa.Text;
     ACBrNFe1.DANFE.NumCopias            := edtNumCopia.Value;
@@ -11672,7 +11672,7 @@ begin
 
   if ACBrCTe1.DACTE <> nil then
   begin
-    ACBrCTe1.DACTE.TipoDACTE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
+    ACBrCTe1.DACTE.TipoDACTE := StrToTpImp(IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrCTe1.DACTE.Logo := edtLogoMarca.Text;
     ACBrCTe1.DACTE.Email := edtEmailEmpresa.Text;
     ACBrCTe1.DACTE.ImprimeDescPorc := cbxImpDescPorc.Checked;
@@ -11827,8 +11827,8 @@ end;
 
 procedure TFrmACBrMonitor.ExibeResp(Documento: ansistring);
 begin
-  Documento := StringReplace(Documento, '><', '>' + LineBreak + '<', [rfReplaceAll]);
-  Documento := StringReplace(Documento, '> <', '>' + LineBreak + '<', [rfReplaceAll]);
+  Documento := StringReplace(Documento, '><', '>' + sLineBreak + '<', [rfReplaceAll]);
+  Documento := StringReplace(Documento, '> <', '>' + sLineBreak + '<', [rfReplaceAll]);
   mResposta.Text := Documento;
 end;
 
@@ -12236,7 +12236,7 @@ begin
     with WebServices do
     begin
       UF       := cbUF.Text;
-      Ambiente := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex + 1));
+      Ambiente := StrToTipoAmbiente(IntToStr(rgTipoAmb.ItemIndex + 1));
 
       Salvar   := ckSalvar.Checked;
       TimeOut  := edtTimeoutWebServices.Value * 1000;
@@ -12290,7 +12290,7 @@ begin
   // Configurações específicas
   if Configuracoes is TConfiguracoesNFe then
   begin
-    TConfiguracoesNFe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoNFe.ItemIndex+1));
+    TConfiguracoesNFe(Configuracoes).Geral.FormaEmissao := StrToTipoEmissao(IntToStr(cbFormaEmissaoNFe.ItemIndex+1));
     TConfiguracoesNFe(Configuracoes).Geral.VersaoDF     := StrToVersaoDF(ok, cbVersaoWS.Text);
     TConfiguracoesNFe(Configuracoes).Geral.VersaoQRCode := StrToVersaoQrCode(ok, cbVersaoWSQRCode.Text);
     TConfiguracoesNFe(Configuracoes).Geral.AtualizarXMLCancelado:= FMonitorConfig.DFE.Diretorios.AtualizarXMLCancelado;
@@ -12315,7 +12315,7 @@ begin
   end
   else if Configuracoes is TConfiguracoesCTe then
   begin
-    TConfiguracoesCTe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoCTe.ItemIndex + 1));
+    TConfiguracoesCTe(Configuracoes).Geral.FormaEmissao := StrToTipoEmissao(IntToStr(cbFormaEmissaoCTe.ItemIndex + 1));
     TConfiguracoesCTe(Configuracoes).Geral.VersaoDF     := StrToVersaoCTe(ok, cbVersaoWSCTe.Text);
 
     TConfiguracoesCTe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesCTe.Text;
@@ -12337,7 +12337,7 @@ begin
   end
   else if Configuracoes is TConfiguracoesMDFe then
   begin
-    TConfiguracoesMDFe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoMDFe.ItemIndex + 1));
+    TConfiguracoesMDFe(Configuracoes).Geral.FormaEmissao := StrToTipoEmissao(IntToStr(cbFormaEmissaoMDFe.ItemIndex + 1));
     TConfiguracoesMDFe(Configuracoes).Geral.VersaoDF     := StrToVersaoMDFe(ok, cbVersaoWSMDFe.Text);
 
     TConfiguracoesMDFe(Configuracoes).Arquivos.IniServicos     := edtArquivoWebServicesMDFe.Text;
@@ -12358,7 +12358,7 @@ begin
   end
   else if Configuracoes is TConfiguracoesBPe then
   begin
-    TConfiguracoesBPe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoBPe.ItemIndex + 1));
+    TConfiguracoesBPe(Configuracoes).Geral.FormaEmissao := StrToTipoEmissao(IntToStr(cbFormaEmissaoBPe.ItemIndex + 1));
     TConfiguracoesBPe(Configuracoes).Geral.VersaoDF     := StrToVersaoBPe(OK, cbVersaoWSBPe.Text);
 
     TConfiguracoesBPe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesBPe.Text;
@@ -12381,7 +12381,7 @@ begin
   begin
     // Italo
     TConfiguracoesNFSe(Configuracoes).Arquivos.IniServicos := edtArquivoWebServicesNFSe.Text;
-    TConfiguracoesNFSe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoNFe.ItemIndex + 1));
+    TConfiguracoesNFSe(Configuracoes).Geral.FormaEmissao := StrToTipoEmissao(IntToStr(cbFormaEmissaoNFe.ItemIndex + 1));
     TConfiguracoesNFSe(Configuracoes).Geral.ConsultaLoteAposEnvio := cbxConsultarLoteAposEnvio.Checked;
     TConfiguracoesNFSe(Configuracoes).Geral.ConsultaAposCancelar := cbxConsultarAposCancelar.Checked;
     TConfiguracoesNFSe(Configuracoes).Geral.MontarPathSchema := cbxMontarPathSchemas.Checked;
@@ -12425,7 +12425,7 @@ begin
   end
   else if Configuracoes is TConfiguracoesGNRE then
   begin
-    TConfiguracoesGNRE(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoGNRe.ItemIndex + 1));
+    TConfiguracoesGNRE(Configuracoes).Geral.FormaEmissao := StrToTipoEmissao(IntToStr(cbFormaEmissaoGNRe.ItemIndex + 1));
     TConfiguracoesGNRE(Configuracoes).Geral.VersaoDF     := StrToVersaoGNRe(ok, cbVersaoWSGNRE.Text);
 
     TConfiguracoesGNRE(Configuracoes).Arquivos.IniServicos     := edtArquivoWebServicesGNRe.Text;

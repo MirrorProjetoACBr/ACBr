@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2026
+-- ACBrMonitor1/DoACBrMDFeUnit/DoACBrNFeUnit --
+[*] Substituição das units pcnConversao por ACBrDFe.Conversao, pmdfMDFeConversao por ACBrMDFe.Conversao, remoção da unit pcnAuxiliar das rotinas do MDFe e melhoria das rotinas LerINI para os objetos MDFe e NFe.
+   Por: Diego Folieni / Italo Giurizzato Junior
+   Veja: https://www.projetoacbr.com.br/forum/topic/94539-fim-do-uso-da-unit-pcnconversao-nos-dfe-e-uso-das-units-exclusivas-para-a-rtc/
+
 09/09/2026
 -- ACBrMonitor1 --
 [-] [ACBR-9638] Mitigação de Access Violation no Windows quando não há impressora padrão
