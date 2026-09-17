@@ -41,6 +41,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+17/09/2026
+-- ACBrDFeComum.ConsStatServ/ACBrDFeComum.DistDFeInt/ACBrDFeComum.RetDistDFeInt --
+[*] Troca da unit pcnConversao por ACBrDFe.Conversao
+   Por: Italo Giurizzato Junior
+
 07/07/2026
 -- ACBrDFeComum.DistDFeInt --
 [*] Ajustado para usar o padrao no metodo cnpj alfanumerico conforme topico interno.

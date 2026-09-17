@@ -39,14 +39,13 @@ interface
 uses
   SysUtils, Classes,
   ACBrXmlBase,
-  ACBrDFe.Conversao,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
 
   TConsStatServ = class
   private
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FcUF: Integer;
     FVersao: string;
     FNameSpace: string;
@@ -59,7 +58,7 @@ type
     function GerarXML: string;
     function ObterNomeArquivo: string;
 
-    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb write FtpAmb;
     property cUF: Integer read FcUF write FcUF;
   end;
 
@@ -101,7 +100,7 @@ begin
     xUF := '<cUF>' + IntToStr(cUF) + '</cUF>';
 
   Result := '<consStatServ' + FtagGrupoMsg + ' ' + FNameSpace + ' versao="' + Fversao + '">' +
-              '<tpAmb>' + TpAmbToStr(tpAmb) + '</tpAmb>' +
+              '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
               xUF +
               '<xServ>STATUS</xServ>' +
             '</consStatServ' + FtagGrupoMsg + '>';

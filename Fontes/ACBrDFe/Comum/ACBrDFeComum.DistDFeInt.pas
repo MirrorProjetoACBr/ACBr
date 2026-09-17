@@ -39,8 +39,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrXmlBase,
-  ACBrDFe.Conversao,
-  pcnConversao;
+  ACBrDFe.Conversao;
 
 type
 
@@ -48,7 +47,7 @@ type
 
   TDistDFeInt = class
   private
-    FtpAmb: TpcnTipoAmbiente;
+    FtpAmb: TACBrTipoAmbiente;
     FcUFAutor: Integer;
     FCNPJCPF: string;
     FultNSU: string;
@@ -69,7 +68,7 @@ type
     function GerarXML: string;
     function ObterNomeArquivo: string;
 
-    property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
+    property tpAmb: TACBrTipoAmbiente read FtpAmb    write FtpAmb;
     property cUFAutor: Integer       read FcUFAutor write FcUFAutor;
     property CNPJCPF: string         read FCNPJCPF  write FCNPJCPF;
     property ultNSU: string          read FultNSU   write FultNSU;
@@ -174,7 +173,7 @@ begin
 
   Result := sTagGrupoMsgIni +
               '<distDFeInt ' + FpNameSpace + ' versao="' + FpVersao + '">' +
-                '<tpAmb>' + TpAmbToStr(tpAmb) + '</tpAmb>' +
+                '<tpAmb>' + TipoAmbienteToStr(tpAmb) + '</tpAmb>' +
                 xUFAutor +
                 xDoc +
                 xConsulta +
