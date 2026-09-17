@@ -1283,14 +1283,14 @@ begin
     FieldByName('Id').AsString    := RemoverLiteralChave(FMDFe.infMDFe.Id);
     FieldByName('Chave').AsString := FormatarChaveAcesso(FMDFe.infMDFe.Id);
 
-    FieldByName('tpAmb').AsInteger  := StrToIntDef(TpAmbToStr(FMDFe.Ide.tpAmb), 0);
+    FieldByName('tpAmb').AsInteger  := StrToIntDef(TipoAmbienteToStr(FMDFe.Ide.tpAmb), 0);
     FieldByName('tpEmit').AsInteger := StrToIntDef(TpEmitenteToStr(FMDFe.Ide.tpEmit), 0);
     FieldByName('Modelo').AsString  := FMDFe.Ide.modelo;
     FieldByName('serie').AsString   := Poem_Zeros(FMDFe.Ide.serie, 3);
     FieldByName('nMDF').AsString    := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
     FieldByName('modal').AsInteger  := StrToIntDef(ModalToStr(FMDFe.Ide.modal), 0);
     FieldByName('dhEmi').AsDateTime := FMDFe.Ide.dhEmi;
-    FieldByName('tpEmis').AsInteger := StrToIntDef(TpEmisToStr(FMDFe.Ide.tpEmis), 0);
+    FieldByName('tpEmis').AsInteger := StrToIntDef(TipoEmissaoToStr(FMDFe.Ide.tpEmis), 0);
     FieldByName('UFIni').AsString   := FMDFe.Ide.UFIni;
     FieldByName('UFFim').AsString   := FMDFe.Ide.UFFim;
 

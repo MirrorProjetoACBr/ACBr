@@ -42,6 +42,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/09/2026
+-- ACBrMDFeDAMDFEFR --
+[*] Compatibiliza unit com a substituição de pcnConversao por ACBrDFe.Conversao e pmdfMDFeConversao por ACBrMDFe.Conversao.
+   Por: Diego Folieni / Italo Giurizzato Junior
+   Veja: https://www.projetoacbr.com.br/forum/topic/94539-fim-do-uso-da-unit-pcnconversao-nos-dfe-e-uso-das-units-exclusivas-para-a-rtc/
+
 29/09/2025
 -- ACBrMDFeDAMDFEFR --
 [*] ACBR-8114: Alteração visando utilizar o nome configurado para salvar o PDF.
