@@ -42,6 +42,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2026
+-- ACBrNFSeXServicos --
+[*] ACBR-9835 - O município de Piumhi aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94110-acbr-9835-cidade-piumhi-aderiu-ao-padr%C3%A3o-nacional/
+	Por: vinizioWOW 
+[*] ACBr-9822 - Mundaça de Provedor SafeWeb para Pronim no município de Condor/RS
+	Veja: https://www.projetoacbr.com.br/forum/topic/94480-acbr-9833-condor-rs-provedor-correto-%C3%A9-pronim/
+	Por: dsky 
+[*] ACBR-9832 - O município de Torres/RS aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94532-acbr-9832-torresrs-padr%C3%A3o-nacional/
+	Por: Fabio Defferrari/Larissa Santos
+[*] ACBR-9830 - O município de Toledo/PR aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94531-acbr-9830-toledo-pr-padr%C3%A3o-nacional/
+	Por: Alex Heinen/Larissa Santos
+[*] ACBR-9829 - O município de Cunha Porã/SC aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94644-acbr-9829munic%C3%ADpio-cunha-por%C3%A3sc-padr%C3%A3o-nacional/
+	Por: BluData
+
 17/09/2026
 -- Diversos --
 [*] Ajustes visando o CNPJ Alfa.
