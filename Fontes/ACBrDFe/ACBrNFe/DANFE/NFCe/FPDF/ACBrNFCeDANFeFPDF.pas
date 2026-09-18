@@ -100,6 +100,7 @@ type
     function GetTextoBlocoCabecalho: string;
     function GetTextoBlocoConsumidor: string;
     function GetNFCeItem(Det: TDetCollectionItem; ADescriptionWidth: double; PDF: IFPDF): TACBrNFCeItem;
+    function EhSimplificadoTipo2: Boolean;
     procedure BlocoCabecalho(Args: TFPDFBandDrawArgs);
     procedure BlocoMensagemFiscal(Args: TFPDFBandDrawArgs);
     procedure BlocoItens(Args: TFPDFBandDrawArgs);
@@ -113,6 +114,7 @@ type
     procedure BlocoMensagemContribuinte(Args: TFPDFBandDrawArgs);
     procedure BlocoRodape(Args: TFPDFBandDrawArgs);
     procedure BlocoLinha(Args: TFPDFBandDrawArgs);
+    procedure BlocoInformacoesIBSCBS(Args: TFPDFBandDrawArgs);
 
   protected
     procedure OnStartReport(Args: TFPDFReportEventArgs); override;
@@ -1636,9 +1638,12 @@ begin
 
   y := y + 2;
 
-  texto :=
-    'DANFE NFC-e Documento Auxiliar da' + sLineBreak +
-    'Nota Fiscal de Consumidor Eletronica';
+  if EhSimplificadoTipo2 then
+    texto := 'DANFE Simplificado Tipo 2'
+  else
+    texto :=
+      'DANFE NFC-e Documento Auxiliar da' + sLineBreak +
+      'Nota Fiscal de Consumidor Eletronica';
   PDF.SetFont(8, 'B');
   y := y + PDF.TextBox(0, y, Args.Band.Width, 0, texto, 'T', 'C', 0, '', False);
   y := y + IncY;
@@ -1772,8 +1777,12 @@ begin
   if (FPaperWidth < 70) or QRCodeLateral then
     subSize := 1.0;
 
-  texto := Format('NFCe n. %s Série %s',
-    [FormatFloat('000000000', NFe.Ide.nNF), FormatFloat('000', NFe.Ide.serie)]);
+  if EhSimplificadoTipo2 then
+    texto := Format('NFe n. %s Série %s',
+      [FormatFloat('000000000', NFe.Ide.nNF), FormatFloat('000', NFe.Ide.serie)])
+  else
+    texto := Format('NFCe n. %s Série %s',
+      [FormatFloat('000000000', NFe.Ide.nNF), FormatFloat('000', NFe.Ide.serie)]);
   if not QRCodeLateral then
     texto := Format('%s %s',[texto, FormatDateTimeBr(NFe.Ide.dEmi)]);
 
@@ -1864,6 +1873,47 @@ begin
   end;
 
   y := y1;
+end;
+
+procedure TNFCeDANFeFPDF.BlocoInformacoesIBSCBS(Args: TFPDFBandDrawArgs);
+var
+  PDF: IFPDF;
+  lTexto: string;
+  y, y1, h: double;
+begin
+  y := 0;
+  Args.Band.AutoHeight := True;
+  PDF := Args.PDF;
+
+  PDF.SetFont(8, '');
+  lTexto := '(+) CBS R$';
+  h := PDF.GetStringHeight(lTexto, Args.Band.Width);
+  PDF.TextBox(3, y, Args.Band.Width, h, lTexto, 'T', 'L', 0, '', false);
+  lTexto := FormatFloat('#,0.00', NFe.Total.IBSCBSTot.gCBS.vCBS, FNFeUtils.FormatSettings);
+  h := PDF.GetStringHeight(lTexto, Args.Band.Width);
+  PDF.TextBox(0, y, Args.Band.Width, h, lTexto, 'T', 'R', 0, '', false);
+  y := y + h;
+
+  lTexto := '(+) IBS R$';
+  h := PDF.GetStringHeight(lTexto, Args.Band.Width);
+  PDF.TextBox(3, y, Args.Band.Width, h, lTexto, 'T', 'L', 0, '', false);
+  lTexto := FormatFloat('#,0.00', NFe.Total.IBSCBSTot.gIBS.vIBS, FNFeUtils.FormatSettings);
+  h := PDF.GetStringHeight(lTexto, Args.Band.Width);
+  PDF.TextBox(0, y, Args.Band.Width, h, lTexto, 'T', 'R', 0, '', false);
+  y := y + h;
+
+  if NFe.Total.ISTot.vIS > 0 then
+  begin
+    lTexto := '(+) IS R$';
+    h := PDF.GetStringHeight(lTexto, Args.Band.Width);
+    PDF.TextBox(3, y, Args.Band.Width, h, lTexto, 'T', 'L', 0, '', false);
+    lTexto := FormatFloat('#,0.00', NFe.Total.ISTot.vIS, FNFeUtils.FormatSettings);
+    h := PDF.GetStringHeight(lTexto, Args.Band.Width);
+    PDF.TextBox(0, y, Args.Band.Width, h, lTexto, 'T', 'R', 0, '', false);
+    y := y + h;
+  end;
+
+  PDF.DashedLine(0, y, 0 + Args.Band.Width, y, FDashWidth);
 end;
 
 procedure TNFCeDANFeFPDF.BlocoItens(Args: TFPDFBandDrawArgs);
@@ -2056,13 +2106,47 @@ var
   PDF: IFPDF;
   texto: string;
   y1, y2, z: double;
-  I: Integer;
+  I, fsize: Integer;
   y: double;
 begin
   y := 0;
   Args.Band.AutoHeight := True;
   PDF := Args.PDF;
 
+  if EhSimplificadoTipo2 then
+  begin
+    fsize := 10;
+    if FPaperWidth < 70 then
+      fsize := 8;
+    PDF.SetFont(fsize, 'B');
+    texto := 'Valor a Pagar R$';
+    PDF.TextBox(
+        0,
+        y,
+        Args.Band.Width / 2,
+        3,
+        texto,
+        'T',
+        'L',
+        0,
+        '',
+        false
+    );
+    texto := FormatFloat('#,0.00', NFe.Total.ICMSTot.vNF, FNFeUtils.FormatSettings);
+    PDF.TextBox(
+        0 + Args.Band.Width / 2,
+        y,
+        Args.Band.Width / 2,
+        3,
+        texto,
+        'T',
+        'R',
+        0,
+        '',
+        false
+    );
+    y := y + PDF.GetStringHeight(texto, Args.Band.Width);
+  end;
   PDF.SetFont(7, '');
   texto := 'FORMA PAGAMENTO';
   PDF.TextBox(0, y, Args.Band.Width, 4, texto, 'T', 'L', 0, '', false);
@@ -2103,7 +2187,7 @@ begin
   y1 := y;
 
   w := (Args.Band.Width * 1) + (2 * 0);
-  y1 := y1 + 1;
+  y1 := y1 + 2;
 
   if FQRCodeLateral then
     QrSize := Args.Band.Width * 0.3
@@ -2269,37 +2353,41 @@ begin
       '',
       false
   );
+  y := y + PDF.GetStringHeight(texto, Args.Band.Width);
 
-  fsize := 10;
-  if FPaperWidth < 70 then
-    fsize := 8;
-  PDF.SetFont(fsize, 'B');
-  texto := 'Valor a Pagar R$';
-  PDF.TextBox(
-      0,
-      y + y1 + y2 + y3 + y4,
-      Args.Band.Width / 2,
-      3,
-      texto,
-      'T',
-      'L',
-      0,
-      '',
-      false
-  );
-  texto := FormatFloat('#,0.00', valor, FNFeUtils.FormatSettings);
-  PDF.TextBox(
-      0 + Args.Band.Width / 2,
-      y + y1 + y2 + y3 + y4,
-      Args.Band.Width / 2,
-      3,
-      texto,
-      'T',
-      'R',
-      0,
-      '',
-      false
-  );
+  if not(EhSimplificadoTipo2) then
+  begin
+    fsize := 10;
+    if FPaperWidth < 70 then
+      fsize := 8;
+    PDF.SetFont(fsize, 'B');
+    texto := 'Valor a Pagar R$';
+    PDF.TextBox(
+        0,
+        y + y1 + y2 + y3 + y4,
+        Args.Band.Width / 2,
+        3,
+        texto,
+        'T',
+        'L',
+        0,
+        '',
+        false
+    );
+    texto := FormatFloat('#,0.00', valor, FNFeUtils.FormatSettings);
+    PDF.TextBox(
+        0 + Args.Band.Width / 2,
+        y + y1 + y2 + y3 + y4,
+        Args.Band.Width / 2,
+        3,
+        texto,
+        'T',
+        'R',
+        0,
+        '',
+        false
+    );
+  end;
 
   PDF.DashedLine(0, Args.Band.Height + y, 0 + Args.Band.Width, Args.Band.Height + y, FDashWidth);
 end;
@@ -2344,6 +2432,12 @@ begin
   inherited;
 end;
 
+function TNFCeDANFeFPDF.EhSimplificadoTipo2: Boolean;
+begin
+  Result := (NFe.Ide.tpImp = tiSimplificadoTipo2) or
+            (FDANFEClassOwner.TipoDANFE = tiSimplificadoTipo2);
+end;
+
 function TNFCeDANFeFPDF.GetNFCeItem(Det: TDetCollectionItem;
   ADescriptionWidth: double; PDF: IFPDF): TACBrNFCeItem;
 var
@@ -2373,16 +2467,31 @@ var
 begin
   Emit := NFe.Emit;
   Result := '';
-  if ExibirNomeFantasia and (Emit.xFant <> '') then
-    Result := Emit.xFant + sLineBreak;
-  Result := Result +
-    Emit.xNome + sLineBreak +
-    Emit.EnderEmit.xLgr +
-    IfThen(Emit.EnderEmit.nro <> '', ', ' + Emit.EnderEmit.nro) + ', ' +
-    Emit.EnderEmit.xBairro + ', ' +
-    Emit.EnderEmit.xMun + ', ' +
-    Emit.EnderEmit.UF + sLineBreak +
-    Format('CNPJ: %s    IE: %s', [FormatarCNPJouCPF(Emit.CNPJCPF), Emit.IE]);
+  if EhSimplificadoTipo2 then
+  begin
+    Result := 'CNPJ: ' + Emit.CNPJCPF + ' ';
+    if ExibirNomeFantasia and (Emit.xFant <> '') then
+      Result := Result + Emit.xFant
+    else
+      Result := Result + Emit.xNome;
+    Result := Result + sLineBreak + Emit.EnderEmit.xLgr +
+      IfThen(Emit.EnderEmit.nro <> '', ', ' + Emit.EnderEmit.nro) + ', ' +
+      Emit.EnderEmit.xBairro + ', ' +
+      Emit.EnderEmit.xMun + ', ' +
+      Emit.EnderEmit.UF;
+  end else
+  begin
+    if ExibirNomeFantasia and (Emit.xFant <> '') then
+      Result := Emit.xFant + sLineBreak;
+    Result := Result +
+      Emit.xNome + sLineBreak +
+      Emit.EnderEmit.xLgr +
+      IfThen(Emit.EnderEmit.nro <> '', ', ' + Emit.EnderEmit.nro) + ', ' +
+      Emit.EnderEmit.xBairro + ', ' +
+      Emit.EnderEmit.xMun + ', ' +
+      Emit.EnderEmit.UF + sLineBreak +
+      Format('CNPJ: %s    IE: %s', [FormatarCNPJouCPF(Emit.CNPJCPF), Emit.IE]);
+  end;
 end;
 
 function TNFCeDANFeFPDF.GetTextoBlocoConsumidor: string;
@@ -2450,18 +2559,35 @@ begin
     end;
 
     QRCodeLateral := FDANFEClassOwner.ImprimeQRCodeLateral;
-    AddBand(btData, 10, BlocoCabecalho);
-    AddBand(btData, 10, BlocoMensagemFiscal);
-    if ExibirItens then
+    if EhSimplificadoTipo2 then
+    begin
+      AddBand(btData, 10, BlocoCabecalho);
+      AddBand(btData, 10, BlocoMensagemFiscal);
       AddBand(btData, 10, BlocoItens);
-    AddBand(btData, 16, BlocoTotais);
-    AddBand(btData, 10, BlocoPagamentos);
-    AddBand(btData, 10, BlocoChaveAcesso);
-    AddBand(btData, 10, BlocoQRCodeCentralizadoOuLateral);
-    AddBand(btData, 2, BlocoLinha);
-    AddBand(btData, 10, BlocoMensagemContribuinte);
-    if MensagemRodape <> '' then
-      AddBand(btData, 5, BlocoRodape);
+      AddBand(btData, 10, BlocoTotais);
+      AddBand(btData, 10, BlocoInformacoesIBSCBS);
+      AddBand(btData, 16, BlocoPagamentos);
+      AddBand(btData, 10, BlocoChaveAcesso);
+      AddBand(btData, 15, BlocoQRCodeCentralizadoOuLateral);
+      AddBand(btData, 2, BlocoLinha);
+      AddBand(btData, 15, BlocoMensagemContribuinte);
+      if MensagemRodape <> '' then
+        AddBand(btData, 5, BlocoRodape);
+    end else
+    begin
+      AddBand(btData, 10, BlocoCabecalho);
+      AddBand(btData, 10, BlocoMensagemFiscal);
+      if ExibirItens then
+        AddBand(btData, 10, BlocoItens);
+      AddBand(btData, 16, BlocoTotais);
+      AddBand(btData, 10, BlocoPagamentos);
+      AddBand(btData, 10, BlocoChaveAcesso);
+      AddBand(btData, 10, BlocoQRCodeCentralizadoOuLateral);
+      AddBand(btData, 2, BlocoLinha);
+      AddBand(btData, 10, BlocoMensagemContribuinte);
+      if MensagemRodape <> '' then
+        AddBand(btData, 5, BlocoRodape);
+    end;
 
     FInitialized := True;
   end;

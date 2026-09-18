@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2026
+-- ACBrNFeServicos.ini --
+[-] ACBR-9424 - Altera a URL de consulta e a URL de QR Code para correta emissão de NF-e Varejo em homologação para SP.
+   Por: Diego Folieni
+-- ACBrNFe/ACBrNFCeDANFeFPDF --
+[+] ACBR-9424 - Disponibiliza o DANFe Simplificado Tipo 2 no motor de impressão FPDF.
+   Por: Diego Folieni
+   Veja: https://www.projetoacbr.com.br/forum/topic/94858-danfe-simplificado-tipo-2-sendo-disponibilizado-nos-motores-de-relat%C3%B3rio-do-acbr/ 
 
 04/09/2026
 -- ACBrNFeDANFEFRDM --

@@ -636,6 +636,15 @@ var
   VersaoDFe: TpcnVersaoDF;
   VersaoQrCode: TpcnVersaoQrCode;
 begin
+  if FNFe.Ide.modelo = 55 then
+  begin
+    { NT 2026.003 - DANFE Simplificado Tipo 2: o QRCode da NFe (modelo 55) 
+      sempre utiliza a versao 3 (sem CSC), independente da VersaoQRCode 
+      configurada para a NFC-e. }
+    Result := GetURLQRCodeV3(FNFe);
+    Exit;
+  end;
+
   VersaoDFe := DblToVersaoDF(ok, FNFe.infNFe.Versao);
   VersaoQrCode := AjustarVersaoQRCode(Configuracoes.Geral.VersaoQRCode, VersaoDFe);
 
