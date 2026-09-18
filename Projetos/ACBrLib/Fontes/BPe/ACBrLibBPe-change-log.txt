@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2026
+-- ACBrLibBPeConsoleMT, ACBrLibBPeConsoleMTDemo --
+[-] Corrige falha de compilação por falta de inclusão da ACBr.inc
+  Por: doszapro
+  
 02/09/2026
 -- Diversos --
 [+] ACBR-1589 - Refatorada biblioteca, implementada MT, ConsoleMT e testes unitários
