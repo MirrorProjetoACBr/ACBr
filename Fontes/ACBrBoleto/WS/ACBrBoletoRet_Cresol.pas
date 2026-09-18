@@ -145,8 +145,8 @@ begin
                      ARetornoWS.DadosRet.TituloRet.NossoNumero    := ARetornoWS.DadosRet.IDBoleto.NossoNum;
                      ARetornoWS.DadosRet.TituloRet.Vencimento     := DateCresolToDateTime(LJsonObject.AsString['dtVencimento']);
                      ARetornoWS.DadosRet.TituloRet.NossoNumero    := LJsonObject.AsString['nossoNumero'];
-                     ARetornoWS.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonObject.AsString['NumeroDocumento'] <> '',
-                                                                                 LJsonObject.AsString['NumeroDocumento'],
+                     ARetornoWS.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonObject.AsString['numeroDocumento'] <> '',
+                                                                                 LJsonObject.AsString['numeroDocumento'],
                                                                                  OnlyNumber(LJsonObject.AsString['nossoNumero'])
                                                                               );
                      ARetornoWS.DadosRet.TituloRet.EspecieDoc     := LJsonObject.AsString['idEspecie'];
@@ -192,8 +192,8 @@ begin
                         end;
                         ARetornoWS.DadosRet.TituloRet.CodBarras       := ARetornoWS.DadosRet.IDBoleto.CodBarras;
                         ARetornoWS.DadosRet.TituloRet.LinhaDig        := ARetornoWS.DadosRet.IDBoleto.LinhaDig;
-                        ARetornoWS.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonObject.AsString['NumeroDocumento'] <> '',
-                                                                                    LJsonObject.AsString['NumeroDocumento'],
+                        ARetornoWS.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonObject.AsString['numeroDocumento'] <> '',
+                                                                                    LJsonObject.AsString['numeroDocumento'],
                                                                                     OnlyNumber(LJsonObject.AsString['nossoNumero'])
                                                                                  );
                         ARetornoWS.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonObject.AsString['dtDocumento']);
@@ -342,8 +342,8 @@ begin
                  end;
                  ListaRetorno.DadosRet.TituloRet.CodBarras       := ListaRetorno.DadosRet.IDBoleto.CodBarras;
                  ListaRetorno.DadosRet.TituloRet.LinhaDig        := ListaRetorno.DadosRet.IDBoleto.LinhaDig;
-                 ListaRetorno.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonBoletoObject.AsString['NumeroDocumento'] <> '',
-                                                                             LJsonBoletoObject.AsString['NumeroDocumento'],
+                 ListaRetorno.DadosRet.TituloRet.SeuNumero      := StrUtils.IfThen(LJsonBoletoObject.AsString['numeroDocumento'] <> '',
+                                                                             LJsonBoletoObject.AsString['numeroDocumento'],
                                                                              OnlyNumber(LJsonBoletoObject.AsString['nossoNumero'])
                                                                           );
                  ListaRetorno.DadosRet.TituloRet.DataRegistro    := DateCresolToDateTime(LJsonBoletoObject.AsString['dtDocumento']);
