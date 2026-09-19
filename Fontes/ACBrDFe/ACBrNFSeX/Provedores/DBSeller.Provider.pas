@@ -118,6 +118,12 @@ type
                                      const AListTag: string = 'ListaMensagemRetorno';
                                      const AMessageTag: string = 'MensagemRetorno'); override;
 
+    procedure GerarMsgDadosConsultaporRps(Response: TNFSeConsultaNFSeporRpsResponse;
+      Params: TNFSeParamsResponse); override;
+
+    procedure GerarMsgDadosConsultaLoteRps(Response: TNFSeConsultaLoteRpsResponse;
+      Params: TNFSeParamsResponse); override;
+
     procedure GerarMsgDadosConsultaNFSeServicoPrestado(Response: TNFSeConsultaNFSeResponse;
       Params: TNFSeParamsResponse); override;
 
@@ -623,6 +629,68 @@ begin
       raise EACBrDFeException.Create(ERR_SEM_URL_PRO)
     else
       raise EACBrDFeException.Create(ERR_SEM_URL_HOM);
+  end;
+end;
+
+procedure TACBrNFSeProviderDBSeller204.GerarMsgDadosConsultaporRps(
+  Response: TNFSeConsultaNFSeporRpsResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+
+  with Params do
+  begin
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + '>' +
+                           '<' + Prefixo + 'IdentificacaoRps>' +
+                             '<' + Prefixo2 + 'Numero>' +
+                               Response.NumeroRps +
+                             '</' + Prefixo2 + 'Numero>' +
+                             '<' + Prefixo2 + 'Serie>' +
+                               Response.SerieRps +
+                             '</' + Prefixo2 + 'Serie>' +
+                             '<' + Prefixo2 + 'Tipo>' +
+                               Response.TipoRps +
+                             '</' + Prefixo2 + 'Tipo>' +
+                           '</' + Prefixo + 'IdentificacaoRps>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyCPFCNPJAlphaNum(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                         '</' + Prefixo + TagEnvio + '>';
+  end;
+end;
+
+procedure TACBrNFSeProviderDBSeller204.GerarMsgDadosConsultaLoteRps(
+  Response: TNFSeConsultaLoteRpsResponse; Params: TNFSeParamsResponse);
+var
+  Emitente: TEmitenteConfNFSe;
+  NumeroLote: string;
+begin
+  Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
+  NumeroLote := '';
+
+  with Params do
+  begin
+    if ConfigMsgDados.UsarNumLoteConsLote then
+      NumeroLote := '<' + Prefixo + 'NumeroLote>' +
+                      Response.NumeroLote +
+                    '</' + Prefixo + 'NumeroLote>';
+
+    Response.ArquivoEnvio := '<' + Prefixo + TagEnvio + NameSpace + '>' +
+                           '<' + Prefixo + 'Prestador>' +
+                             '<' + Prefixo2 + 'Cnpj>' +
+                               OnlyCPFCNPJAlphaNum(Emitente.CNPJ) +
+                             '</' + Prefixo2 + 'Cnpj>' +
+                             GetInscMunic(Emitente.InscMun, Prefixo2) +
+                           '</' + Prefixo + 'Prestador>' +
+                           '<' + Prefixo + 'Protocolo>' +
+                             Response.Protocolo +
+                           '</' + Prefixo + 'Protocolo>' +
+                           NumeroLote +
+                         '</' + Prefixo + TagEnvio + '>';
   end;
 end;
 
@@ -1584,75 +1652,6 @@ begin
           end;
         end;
       end;
-  // Existe o elemento outputXML/GerarNfseResposta e o respostaADN
-  // acredito que no elemento outputXML temos um retorno do webservice do provedor
-  // no elemento respostaADN temos um retorno da API do Padrão Nacional.
-      (*
-      respostaADN := ObterConteudoTag(Document.Root.Childrens.FindAnyNs('respostaADN'), tcStr);
-
-      if respostaADN <> '' then
-      begin
-        DocumentXml := TACBrXmlDocument.Create;
-
-        try
-          try
-            if respostaADN = '' then
-            begin
-              AErro := Response.Erros.New;
-              AErro.Codigo := Cod211;
-              AErro.Descricao := ACBrStr(Desc211);
-              Exit
-            end;
-
-            DocumentXml.LoadFromXml(respostaADN);
-
-            ANode := DocumentXml.Root.Childrens.FindAnyNs('infEvento');
-
-            IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
-
-            Response.nSeqEvento := ObterConteudoTag(ANode.Childrens.FindAnyNs('nSeqEvento'), tcInt);
-            Response.Data := ObterConteudoTag(ANode.Childrens.FindAnyNs('dhProc'), tcDatHor);
-
-            ANode := ANode.Childrens.FindAnyNs('pedRegEvento');
-            ANode := ANode.Childrens.FindAnyNs('infPedReg');
-
-            if IDEvento = '' then
-              IDEvento := RemoverLiteralChave(ObterConteudoTag(ANode.Attributes.Items['Id']));
-
-            Response.idNota := ObterConteudoTag(ANode.Childrens.FindAnyNs('chNFSe'), tcStr);
-            Response.idEvento := IDEvento;
-            Response.tpEvento := StrTotpEvento(Ok, Copy(IDEvento, 51, 6));
-            Response.XmlRetorno := respostaADN;
-
-            case Response.tpEvento of
-              teCancelamento:
-                begin
-                  Response.SucessoCanc := True;
-                  Response.DescSituacao := 'Nota Cancelada';
-                end
-            else
-              begin
-                Response.SucessoCanc := False;
-                Response.DescSituacao := '';
-              end;
-            end;
-
-            nomeArq := '';
-            SalvarXmlEvento(IDEvento + '-procEveNFSe', respostaADN, nomeArq);
-            Response.PathNome := nomeArq;
-          except
-            on E:Exception do
-            begin
-              AErro := Response.Erros.New;
-              AErro.Codigo := Cod999;
-              AErro.Descricao := ACBrStr(Desc999 + E.Message);
-            end;
-          end;
-        finally
-          FreeAndNil(DocumentXml);
-        end;
-      end;
-      *)
     except
       on E:Exception do
       begin
