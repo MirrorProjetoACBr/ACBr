@@ -1,31 +1,31 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2020 Daniel Simoes de Almeida               }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
+{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
 {******************************************************************************}
 
 unit Frm_ACBrNFe;
@@ -72,14 +72,10 @@ type
   { TfrmACBrNFe }
 
   TfrmACBrNFe = class(TForm)
-    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeFPDF1: TACBrNFeDANFeFPDF;
-    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
-    btnSolicApropriacaoCredPres: TButton;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
-    WBResposta: TSynEdit;
     SynXMLSyn1: TSynXMLSyn;
     TabSheet1: TTabSheet;
     PageControl4: TPageControl;
@@ -262,7 +258,9 @@ type
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
-    TabSheet6: TTabSheet;    
+    TabSheet6: TTabSheet;
+    //WBResposta: TWebBrowser;
+    WBResposta: TSynEdit;
     TabSheet8: TTabSheet;
     memoLog: TMemo;
     TabSheet9: TTabSheet;
@@ -272,6 +270,9 @@ type
     Dados: TTabSheet;
     MemoDados: TMemo;
     ACBrNFe1: TACBrNFe;
+    ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
+    ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
+    ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrPosPrinter1: TACBrPosPrinter;
     ACBrMail1: TACBrMail;
     OpenDialog1: TOpenDialog;
@@ -295,6 +296,7 @@ type
     rgDANFCE: TRadioGroup;
     btnStatusServ: TButton;
     btVersao: TButton;
+    ACBrNFeDANFCeFortesA41: TACBrNFeDANFCeFortesA4;
     Label51: TLabel;
     edtURLPFX: TEdit;
     Label52: TLabel;
@@ -347,6 +349,7 @@ type
     tsEmitente: TTabSheet;
     tsDestinatario: TTabSheet;
     Sucessora: TTabSheet;
+    btnSolicApropriacaoCredPres: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
@@ -566,7 +569,7 @@ begin
         if ( frmStatus = nil ) then
           frmStatus := TfrmStatus.Create(Application);
 
-        frmStatus.lblStatus.Caption := 'Enviando pedido de InutilizaÁ„o...';
+        frmStatus.lblStatus.Caption := 'Enviando pedido de Inutiliza√ß√£o...';
         frmStatus.Show;
         frmStatus.BringToFront;
       end;
@@ -606,7 +609,7 @@ begin
         if ( frmStatus = nil ) then
           frmStatus := TfrmStatus.Create(Application);
 
-        frmStatus.lblStatus.Caption := 'Enviando Carta de CorreÁ„o...';
+        frmStatus.lblStatus.Caption := 'Enviando Carta de Corre√ß√£o...';
         frmStatus.Show;
         frmStatus.BringToFront;
       end;
@@ -653,7 +656,7 @@ begin
     Ide.dSaiEnt   := now;
     Ide.hSaiEnt   := now;
 
-    // Reforma Tribut·ria
+    // Reforma Tribut√°ria
     if rgReformaTributaria.ItemIndex = 0 then
       Ide.dPrevEntrega := Date + 10;
 
@@ -685,10 +688,17 @@ begin
 //     Ide.dhCont := date;
 //     Ide.xJust  := 'Justificativa Contingencia';
 
-    // Reforma Tribut·ria
+    // Reforma Tribut√°ria
     if rgReformaTributaria.ItemIndex = 0 then
     begin
       Ide.cMunFGIBS := StrToInt(edtEmitCodCidade.Text);
+
+      // Preenchimento obrigat√≥rio em caso de:
+      // - Leil√£o judicial ou licita√ß√£o promovida pelo poder p√∫blico (cIndOp=010104)
+      // - Constata√ß√£o de irregularidade pela falta de documenta√ß√£o fiscal ou pelo
+      //   acobertamento por documenta√ß√£o inid√¥nea (cIndOp=010105);
+      // Observa√ß√£o: Consultar tabela "C√≥digo Indicador do Local da Opera√ß√£o"
+      Ide.cIndOp := '010105';
 
       Ide.tpNFDebito := tdNenhum;
       Ide.tpNFCredito := tcNenhum;
@@ -697,8 +707,15 @@ begin
       Ide.gCompraGov.pRedutor := 5;
       Ide.gCompraGov.tpOperGov := togFornecimento;
 
-//    Informado para abater as parcelas de antecipaÁ„o de pagamento, conforme Art. 10. ß 4∫
-//    refNFe: ReferÍncia uma NF-e (modelo 55) emitida anteriormente, referente a pagamento antecipado
+      // gCompraGov pode conter chave(s) de acesso do documento anterior.
+      Ide.gCompraGov.refDFeAnt.New;
+      Ide.gCompraGov.refDFeAnt[0].refDFEChave := '12345678901234567890123456789012345678901234';
+
+      Ide.gCompraGov.refDFeAnt.New;
+      Ide.gCompraGov.refDFeAnt[1].refDFEChave := '12345678901234567890123456789012345678904567';
+
+//    Informado para abater as parcelas de antecipa√ß√£o de pagamento, conforme Art. 10. ¬ß 4¬∫
+//    refNFe: Refer√™ncia uma NF-e (modelo 55) emitida anteriormente, referente a pagamento antecipado
 
       with Ide.gPagAntecipado.refNFe.New do
         refDFEChave := '12345678901234567890123456789012345678901234';
@@ -730,11 +747,17 @@ begin
     // (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
     Emit.CRT  := StrToCRT(Ok, IntToStr(cbTipoEmpresa.ItemIndex + 1));
 
-    // Na NFC-e o Destinat·rio È opcional
+    // Informar o n√∫mero do cadastro do emitente na Suframa. Campo obrrigat√≥rio
+    // nas opera√ß√µes que se beneficiam de incentivos fiscais existentes nas √°reas
+    // sob controle da SUFRAMA com al√≠quota zero da CBS ref. aos artigos 451 e 466
+    // da LC 214/25
+    Emit.ISUFEmit := '123456789';
+
+    // Na NFC-e o Destinat√°rio √© opcional
     {
-    Dest.CNPJCPF           := 'informar o CPF do destinat·rio';
+    Dest.CNPJCPF           := 'informar o CPF do destinat√°rio';
     Dest.ISUF              := '';
-    Dest.xNome             := 'nome do destinat·rio';
+    Dest.xNome             := 'nome do destinat√°rio';
 
     Dest.indIEDest         := inNaoContribuinte;
 
@@ -745,13 +768,13 @@ begin
     Dest.EnderDest.xCpl    := '';
     Dest.EnderDest.xBairro := 'Centro';
     Dest.EnderDest.cMun    := 3554003;
-    Dest.EnderDest.xMun    := 'TatuÌ';
+    Dest.EnderDest.xMun    := 'Tatu√≠';
     Dest.EnderDest.UF      := 'SP';
     Dest.EnderDest.cPais   := 1058;
     Dest.EnderDest.xPais   := 'BRASIL';
     }
 
-//Use os campos abaixo para informar o endereÁo de retirada quando for diferente do Remetente/Destinat·rio
+//Use os campos abaixo para informar o endere√ßo de retirada quando for diferente do Remetente/Destinat√°rio
     Retirada.CNPJCPF := '';
     Retirada.xLgr    := '';
     Retirada.nro     := '';
@@ -761,7 +784,7 @@ begin
     Retirada.xMun    := '';
     Retirada.UF      := '';
 
-//Use os campos abaixo para informar o endereÁo de entrega quando for diferente do Remetente/Destinat·rio
+//Use os campos abaixo para informar o endere√ßo de entrega quando for diferente do Remetente/Destinat√°rio
     Entrega.CNPJCPF := '';
     Entrega.xLgr    := '';
     Entrega.nro     := '';
@@ -774,13 +797,13 @@ begin
 //Adicionando Produtos
     with Det.New do
     begin
-      Prod.nItem    := 1; // N˙mero sequencial, para cada item deve ser incrementado
+      Prod.nItem    := 1; // N√∫mero sequencial, para cada item deve ser incrementado
       Prod.cProd    := '123456';
       Prod.cEAN     := '7896523206646';
-      Prod.xProd    := 'DescriÁ„o do Produto';
-      Prod.NCM      := '94051010'; // Tabela NCM disponÌvel em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+      Prod.xProd    := 'Descri√ß√£o do Produto';
+      Prod.NCM      := '94051010'; // Tabela NCM dispon√≠vel em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
 
-      // Reforma Tribut·ria
+      // Reforma Tribut√°ria
       if rgReformaTributaria.ItemIndex = 0 then
         Prod.tpCredPresIBSZFM := tcpSemCredito;
 
@@ -803,34 +826,34 @@ begin
 
       Prod.CEST := '1111111';
 
-//         infAdProd      := 'InformaÁ„o Adicional do Produto';
+//         infAdProd      := 'Informa√ß√£o Adicional do Produto';
 
       {
         abaixo os campos incluidos no layout a partir da NT 2020/005
       }
-      // Opcional - Preencher com o CÛdigo de Barras prÛprio ou de terceiros que seja diferente do padr„o GTIN
-      // por exemplo: cÛdigo de barras de cat·logo, partnumber, etc
+      // Opcional - Preencher com o C√≥digo de Barras pr√≥prio ou de terceiros que seja diferente do padr√£o GTIN
+      // por exemplo: c√≥digo de barras de cat√°logo, partnumber, etc
       Prod.cBarra := 'ABC123456';
-      // Opcional - Preencher com o CÛdigo de Barras prÛprio ou de terceiros que seja diferente do padr„o GTIN
-      //  correspondente ‡quele da menor unidade comercializ·vel identificado por CÛdigo de Barras
-      // por exemplo: cÛdigo de barras de cat·logo, partnumber, etc
+      // Opcional - Preencher com o C√≥digo de Barras pr√≥prio ou de terceiros que seja diferente do padr√£o GTIN
+      //  correspondente √†quele da menor unidade comercializ√°vel identificado por C√≥digo de Barras
+      // por exemplo: c√≥digo de barras de cat√°logo, partnumber, etc
       Prod.cBarraTrib := 'ABC123456';
 
-      // Reforma Tribut·ria
+      // Reforma Tribut√°ria
       if rgReformaTributaria.ItemIndex = 0 then
       begin
-        // Indicador de fornecimento de bem mÛvel usado
+        // Indicador de fornecimento de bem m√≥vel usado
         Prod.indBemMovelUsado := tieNenhum;
 
-        // Valor total do Item, correspondente ‡ sua participaÁ„o no total da nota.
-        // A soma dos itens dever· corresponder ao total da nota.
+        // Valor total do Item, correspondente √† sua participa√ß√£o no total da nota.
+        // A soma dos itens dever√° corresponder ao total da nota.
         vItem := 100;
-        // Referenciamento de item de outro Documento Fiscal EletrÙnico - DF-e
+        // Referenciamento de item de outro Documento Fiscal Eletr√¥nico - DF-e
         DFeReferenciado.chaveAcesso := '';
         DFeReferenciado.nItem := 1;
       end;
 
-      // DeclaraÁ„o de ImportaÁ„o. Pode ser adicionada v·rias atravÈs do comando Prod.DI.New
+      // Declara√ß√£o de Importa√ß√£o. Pode ser adicionada v√°rias atrav√©s do comando Prod.DI.New
       (*
       with Prod.DI.New do
       begin
@@ -876,13 +899,13 @@ begin
         begin
           // caso o CRT seja:
           // 1=Simples Nacional
-          // Os valores aceitos para CSOSN s„o:
+          // Os valores aceitos para CSOSN s√£o:
           // csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
           // csosn300, csosn400, csosn500,csosn900
 
           // 2=Simples Nacional, excesso sublimite de receita bruta;
           // ou 3=Regime Normal.
-          // Os valores aceitos para CST s„o:
+          // Os valores aceitos para CST s√£o:
           // cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
           // cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
           // cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60
@@ -938,21 +961,21 @@ begin
           {
             abaixo os campos incluidos no layout a partir da NT 2020/005
           }
-          // Informar apenas nos motivos de desoneraÁ„o documentados abaixo
+          // Informar apenas nos motivos de desonera√ß√£o documentados abaixo
           vICMSSTDeson := 0;
           {
-            o campo abaixo sÛ aceita os valores:
+            o campo abaixo s√≥ aceita os valores:
             mdiProdutorAgropecuario, mdiOutros, mdiOrgaoFomento
-            Campo ser· preenchido quando o campo anterior estiver preenchido.
+            Campo ser√° preenchido quando o campo anterior estiver preenchido.
           }
           motDesICMSST := mdiOutros;
 
-          // Percentual do diferimento do ICMS relativo ao Fundo de Combate ‡ Pobreza (FCP).
+          // Percentual do diferimento do ICMS relativo ao Fundo de Combate √† Pobreza (FCP).
           // No caso de diferimento total, informar o percentual de diferimento "100"
           pFCPDif := 0;
-          // Valor do ICMS relativo ao Fundo de Combate ‡ Pobreza (FCP) diferido
+          // Valor do ICMS relativo ao Fundo de Combate √† Pobreza (FCP) diferido
           vFCPDif := 0;
-          // Valor do ICMS relativo ao Fundo de Combate ‡ Pobreza (FCP) realmente devido.
+          // Valor do ICMS relativo ao Fundo de Combate √† Pobreza (FCP) realmente devido.
           vFCPEfet := 0;
 
           // partilha do ICMS e fundo de probreza
@@ -995,7 +1018,7 @@ begin
             valores aceitos pelo campo:
             ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe
           }
-          // Indica se o valor do PISST compıe o valor total da NF-e
+          // Indica se o valor do PISST comp√µe o valor total da NF-e
           IndSomaPISST :=  ispNenhum;
         end;
 
@@ -1024,15 +1047,15 @@ begin
             valores aceitos pelo campo:
             iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe
           }
-          // Indica se o valor da COFINS ST compıe o valor total da NF-e
+          // Indica se o valor da COFINS ST comp√µe o valor total da NF-e
           indSomaCOFINSST :=  iscNenhum;
         end;
 
-        // Reforma Tribut·ria
+        // Reforma Tribut√°ria
         if rgReformaTributaria.ItemIndex = 0 then
         begin
-          //  InformaÁıes do tributo: Imposto Seletivo sÛ para 2027 e para os
-          //  os produtos nocivos ao meio ambiente e a sa˙de.
+          //  Informa√ß√µes do tributo: Imposto Seletivo s√≥ para 2027 e para os
+          //  os produtos nocivos ao meio ambiente e a sa√∫de.
           {
           ISel.CSTIS := cstis000;
           ISel.cClassTribIS := '000001';
@@ -1051,7 +1074,7 @@ begin
             IBSCBSMono
           }
 
-          //  InformaÁıes do tributo: IBS / CBS
+          //  Informa√ß√µes do tributo: IBS / CBS
           IBSCBS.CST := cst000;
           IBSCBS.cClassTrib := '000001';
           IBSCBS.indDoacao := tieSim;
@@ -1065,6 +1088,7 @@ begin
           IBSCBS.gIBSCBS.gIBSUF.gDif.vDif := 100;
 
           IBSCBS.gIBSCBS.gIBSUF.gDevTrib.vDevTrib := 100;
+          IBSCBS.gIBSCBS.gIBSUF.gDevTrib.pDevTrib := 1;
 
           IBSCBS.gIBSCBS.gIBSUF.gRed.pRedAliq := 5;
           IBSCBS.gIBSCBS.gIBSUF.gRed.pAliqEfet := 5;
@@ -1076,6 +1100,7 @@ begin
           IBSCBS.gIBSCBS.gIBSMun.gDif.vDif := 100;
 
           IBSCBS.gIBSCBS.gIBSMun.gDevTrib.vDevTrib := 100;
+          IBSCBS.gIBSCBS.gIBSMun.gDevTrib.pDevTrib := 1;
 
           IBSCBS.gIBSCBS.gIBSMun.gRed.pRedAliq := 5;
           IBSCBS.gIBSCBS.gIBSMun.gRed.pAliqEfet := 5;
@@ -1090,6 +1115,7 @@ begin
           IBSCBS.gIBSCBS.gCBS.gDif.vDif := 100;
 
           IBSCBS.gIBSCBS.gCBS.gDevTrib.vDevTrib := 100;
+          IBSCBS.gIBSCBS.gCBS.gDevTrib.pDevTrib := 1;
 
           IBSCBS.gIBSCBS.gCBS.gRed.pRedAliq := 5;
           IBSCBS.gIBSCBS.gCBS.gRed.pAliqEfet := 5;
@@ -1103,7 +1129,7 @@ begin
           IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
           IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-          // Tipo TributaÁ„o Compra Governamental
+          // Tipo Tributa√ß√£o Compra Governamental
           IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF := 5;
           IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF := 50;
           IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun := 5;
@@ -1111,7 +1137,7 @@ begin
           IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS := 5;
           IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS := 50;
 
-          //  InformaÁıes do tributo: IBS / CBS em operaÁıes com imposto monof·sico
+          //  Informa√ß√µes do tributo: IBS / CBS em opera√ß√µes com imposto monof√°sico
           {
           IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoPadrao.qBCMono := 1;
           IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoPadrao.adRemIBS := 5;
@@ -1182,20 +1208,20 @@ begin
           IBSCBS.gIBSCBSMono.vTotIBSMonoItem := 100;
           IBSCBS.gIBSCBSMono.vTotCBSMonoItem := 100;
 
-          //  InformaÁıes da Transferencia de CrÈdito
+          //  Informa√ß√µes da Transferencia de Cr√©dito
           IBSCBS.gTransfCred.vIBS := 100;
           IBSCBS.gTransfCred.vCBS := 100;
 
-          //  InformaÁıes Ajuste de CompetÍncia
+          //  Informa√ß√µes Ajuste de Compet√™ncia
           IBSCBS.gAjusteCompet.competApur := Date;
           IBSCBS.gAjusteCompet.vIBS := 100;
           IBSCBS.gAjusteCompet.vCBS := 100;
 
-          //  InformaÁıes Estorno de CrÈdito
+          //  Informa√ß√µes Estorno de Cr√©dito
           IBSCBS.gEstornoCred.vIBSEstCred := 100;
           IBSCBS.gEstornoCred.vCBSEstCred := 100;
 
-          //  InformaÁıes do CrÈdito Presumido Operacional
+          //  Informa√ß√µes do Cr√©dito Presumido Operacional
           IBSCBS.gCredPresOper.cCredPres := cpNenhum;
           IBSCBS.gCredPresOper.vBCCredPres := 100;
           IBSCBS.gCredPresOper.gIBSCredPres.pCredPres := 5;
@@ -1205,12 +1231,30 @@ begin
           IBSCBS.gCredPresOper.gCBSCredPres.vCredPres := 100;
           IBSCBS.gCredPresOper.gCBSCredPres.vCredPresCondSus := 0;
 
-          //  InformaÁıes do CrÈdito Presumido IBS ZFM
+          //  Informa√ß√µes do Cr√©dito Presumido IBS ZFM
           // tcpNenhum, tcpSemCredito, tcpBensConsumoFinal, tcpBensCapital,
           // tcpBensIntermediarios, tcpBensInformaticaOutros
           IBSCBS.gCredPresIBSZFM.competApur := Date;
           IBSCBS.gCredPresIBSZFM.tpCredPresIBSZFM := tcpBensInformaticaOutros;
           IBSCBS.gCredPresIBSZFM.vCredPresIBSZFM := 100;
+
+          // Grupo de Opera√ß√µes em √°reas incentivadas (ALC/ZFM) - CBS(al√≠quota zero)
+          // Para opera√ß√£o n√£o indicada = 0
+          // Para opera√ß√£o indicada = 1
+          // TtpALCZFMCBS = (tpALCZFMCBSnOpInd = 0, tpALCZFMCBSOpInd = 1);
+          IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.tpALCZFMCBS := tpALCZFMCBSOpInd;
+
+          // 1 - quando o forn. e dest. estiverem localizados em √°reas incentivadas
+          //     e opera√ß√£o amparada por al√≠q. zero da CBS e n√£o se tratar de
+          //     opera√ß√£o industrial com processo apovado na Suframa para o item
+          // 2 - quando forn. e dest. em estiverem localizados em √°reas incentivadas
+          //     e opera√ß√£o amparada por aliq. zero da CBS e SE TRATAR DE
+          //     opera√ß√£o industrial com processo aprovado na Suframa para o item
+          IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.nProcSuframa:= '123456789';
+
+          // Al√≠quota efetiva de ref. da CBS
+          IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.pAliqEfetRegCBS := 1; // Percentual efetivo sem redu√ß√£o
+          IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.vTribRegCBS     := 1; // Valor efetivo sem redu√ß√£o
         end;
       end;
     end;
@@ -1249,7 +1293,7 @@ begin
     Total.retTrib.vBCRetPrev := 0;
     Total.retTrib.vRetPrev   := 0;
 
-    // Reforma Tribut·ria
+    // Reforma Tribut√°ria
     if rgReformaTributaria.ItemIndex = 0 then
     begin
       Total.ISTot.vIS := 100;
@@ -1288,7 +1332,7 @@ begin
       Total.vNFTot := 100;
     end;
 
-    Transp.modFrete := mfSemFrete; // NFC-e n„o pode ter FRETE
+    Transp.modFrete := mfSemFrete; // NFC-e n√£o pode ter FRETE
 
     with pag.New do
     begin
@@ -1303,7 +1347,7 @@ begin
       vPag := 100;
     end;
 
-    // O grupo infIntermed sÛ deve ser gerado nos casos de operaÁ„o n„o presencial
+    // O grupo infIntermed s√≥ deve ser gerado nos casos de opera√ß√£o n√£o presencial
     // pela internet em site de terceiros (Intermediadores).
 //    infIntermed.CNPJ := '';
 //    infIntermed.idCadIntTran := '';
@@ -1326,13 +1370,32 @@ begin
     {
       abaixo o campo incluido no layout a partir da NT 2020/006
     }
-    // CNPJ do Intermediador da TransaÁ„o (agenciador, plataforma de delivery,
-    // marketplace e similar) de serviÁos e de negÛcios.
+    // CNPJ do Intermediador da Transa√ß√£o (agenciador, plataforma de delivery,
+    // marketplace e similar) de servi√ßos e de neg√≥cios.
     infIntermed.CNPJ := '';
-    // Nome do usu·rio ou identificaÁ„o do perfil do vendedor no site do intermediador
-    // (agenciador, plataforma de delivery, marketplace e similar) de serviÁos e de
-    // negÛcios.
+    // Nome do usu√°rio ou identifica√ß√£o do perfil do vendedor no site do intermediador
+    // (agenciador, plataforma de delivery, marketplace e similar) de servi√ßos e de
+    // neg√≥cios.
     infIntermed.idCadIntTran := '';
+
+  //Campos espec√≠ficos para agropecuario / defensivo
+  // Devemos gerar somente o grupo defensivo ou o grupo guiaTransito
+  (*
+    with Agropecuario.defensivo.New do
+    begin
+      nReceituario := '123';
+      CPFRespTec := '12345678901';
+    end;
+  *)
+
+  //Campos espec√≠ficos para agropecuario / guiaTransito
+  (*
+    Agropecuario.guiaTransito.tpGuia := tpgGuiaFlorestal;
+    Agropecuario.guiaTransito.UFGuia := 'SP';
+    Agropecuario.guiaTransito.serieGuia := '1';
+    Agropecuario.guiaTransito.nGuia := '1';
+  *)
+
   end;
 
   ACBrNFe1.NotasFiscais.GerarNFe;
@@ -1357,8 +1420,7 @@ var
 //    Reboque: TreboqueCollectionItem;
 //    Lacre: TLacresCollectionItem;
 //    ProcReferenciado: TprocRefCollectionItem;
-//  Agropecuario: Tagropecuario;
-//  Defensivo: TdefensivoCollectionItem;
+  Defensivo: TdefensivoCollectionItem;
   InfoPgto: TpagCollectionItem;
 begin
   NotaF := ACBrNFe1.NotasFiscais.Add;
@@ -1372,7 +1434,7 @@ begin
   NotaF.NFe.Ide.dSaiEnt   := Date;
   NotaF.NFe.Ide.hSaiEnt   := Now;
 
-  // Reforma Tribut·ria
+  // Reforma Tribut√°ria
   if rgReformaTributaria.ItemIndex = 0 then
     NotaF.NFe.Ide.dPrevEntrega := Date + 10;
 
@@ -1380,7 +1442,7 @@ begin
   NotaF.NFe.Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
 
   NotaF.NFe.Ide.tpAmb     := ACBrNFe1.Configuracoes.WebServices.Ambiente;
-  NotaF.NFe.Ide.verProc   := '1.0.0.0'; //Vers„o do seu sistema
+  NotaF.NFe.Ide.verProc   := '1.0.0.0'; //Vers√£o do seu sistema
   NotaF.NFe.Ide.cUF       := UFtoCUF(edtEmitUF.Text);
   NotaF.NFe.Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
   NotaF.NFe.Ide.finNFe    := fnNormal;
@@ -1397,10 +1459,17 @@ begin
   // Indicador de intermediador/marketplace
   NotaF.NFe.Ide.indIntermed := iiSemOperacao;
 
-  // Reforma Tribut·ria
+  // Reforma Tribut√°ria
   if rgReformaTributaria.ItemIndex = 0 then
   begin
     NotaF.NFe.Ide.cMunFGIBS := StrToInt(edtEmitCodCidade.Text);
+
+    // Preenchimento obrigat√≥rio em caso de:
+    // - Leil√£o judicial ou licita√ß√£o promovida pelo poder p√∫blico (cIndOp=010104)
+    // - Constata√ß√£o de irregularidade pela falta de documenta√ß√£o fiscal ou pelo
+    //   acobertamento por documenta√ß√£o inid√¥nea (cIndOp=010105);
+    // Observa√ß√£o: Consultar tabela "C√≥digo Indicador do Local da Opera√ß√£o"
+    NotaF.NFe.Ide.cIndOp := '010105';
 
     NotaF.NFe.Ide.tpNFDebito := tdNenhum;
     NotaF.NFe.Ide.tpNFCredito := tcNenhum;
@@ -1409,8 +1478,15 @@ begin
     NotaF.NFe.Ide.gCompraGov.pRedutor := 5;
     NotaF.NFe.Ide.gCompraGov.tpOperGov := togFornecimento;
 
-//    Informado para abater as parcelas de antecipaÁ„o de pagamento, conforme Art. 10. ß 4∫
-//    refNFe: ReferÍncia uma NF-e (modelo 55) emitida anteriormente, referente a pagamento antecipado
+    // gCompraGov pode conter chave(s) de acesso do documento anterior.
+    NotaF.NFe.Ide.gCompraGov.refDFeAnt.New;
+    NotaF.NFe.Ide.gCompraGov.refDFeAnt[0].refDFEChave := '12345678901234567890123456789012345678901234';
+
+    NotaF.NFe.Ide.gCompraGov.refDFeAnt.New;
+    NotaF.NFe.Ide.gCompraGov.refDFeAnt[1].refDFEChave := '12345678901234567890123456789012345678904567';
+
+    // Informado para abater as parcelas de antecipa√ß√£o de pagamento, conforme Art. 10. ¬ß 4¬∫
+    // refNFe: Refer√™ncia uma NF-e (modelo 55) emitida anteriormente, referente a pagamento antecipado
 
     with NotaF.NFe.Ide.gPagAntecipado.refNFe.New do
       refDFEChave := '12345678901234567890123456789012345678901234';
@@ -1461,14 +1537,20 @@ begin
   NotaF.NFe.Emit.enderEmit.xPais   := 'BRASIL';
 
   NotaF.NFe.Emit.IEST              := '';
-  NotaF.NFe.Emit.IM                := '2648800'; // Preencher no caso de existir serviÁos na nota
-  NotaF.NFe.Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se È permitido
-                                                 // a inclus„o de serviÁos na NFe
+  NotaF.NFe.Emit.IM                := '2648800'; // Preencher no caso de existir servi√ßos na nota
+  NotaF.NFe.Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se √© permitido
+                                                 // a inclus√£o de servi√ßos na NFe
 
     // esta sendo somando 1 uma vez que o ItemIndex inicia do zero e devemos
     // passar os valores 1, 2 ou 3
     // (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
   NotaF.NFe.Emit.CRT  := StrToCRT(Ok, IntToStr(cbTipoEmpresa.ItemIndex + 1));
+
+  // Informar o n√∫mero do cadastro do emitente na Suframa. Campo obrrigat√≥rio
+  // nas opera√ß√µes que se beneficiam de incentivos fiscais existentes nas √°reas
+  // sob controle da SUFRAMA com al√≠quota zero da CBS ref. aos artigos 451 e 466
+  // da LC 214/25
+  NotaF.NFe.Emit.ISUFEmit := '123456789';
 
 //Para NFe Avulsa preencha os campos abaixo
 
@@ -1487,7 +1569,7 @@ begin
   NotaF.NFe.Dest.CNPJCPF           := '05481336000137';
   NotaF.NFe.Dest.IE                := '687138770110';
   NotaF.NFe.Dest.ISUF              := '';
-  NotaF.NFe.Dest.xNome             := 'D.J. COM. E LOCA«√O DE SOFTWARES LTDA - ME';
+  NotaF.NFe.Dest.xNome             := 'D.J. COM. E LOCA√á√ÉO DE SOFTWARES LTDA - ME';
 
   NotaF.NFe.Dest.EnderDest.Fone    := '1532599600';
   NotaF.NFe.Dest.EnderDest.CEP     := 18270170;
@@ -1501,7 +1583,7 @@ begin
   NotaF.NFe.Dest.EnderDest.cPais   := 1058;
   NotaF.NFe.Dest.EnderDest.xPais   := 'BRASIL';
 
-//Use os campos abaixo para informar o endereÁo de retirada quando for diferente do Remetente/Destinat·rio
+//Use os campos abaixo para informar o endere√ßo de retirada quando for diferente do Remetente/Destinat√°rio
 
   NotaF.NFe.Retirada.CNPJCPF := '';
   NotaF.NFe.Retirada.xLgr    := '';
@@ -1512,7 +1594,7 @@ begin
   NotaF.NFe.Retirada.xMun    := '';
   NotaF.NFe.Retirada.UF      := '';
 
-//Use os campos abaixo para informar o endereÁo de entrega quando for diferente do Remetente/Destinat·rio
+//Use os campos abaixo para informar o endere√ßo de entrega quando for diferente do Remetente/Destinat√°rio
 
   NotaF.NFe.Entrega.CNPJCPF := '';
   NotaF.NFe.Entrega.xLgr    := '';
@@ -1525,13 +1607,13 @@ begin
 
 //Adicionando Produtos
   Produto := NotaF.NFe.Det.New;
-  Produto.Prod.nItem    := 1; // N˙mero sequencial, para cada item deve ser incrementado
+  Produto.Prod.nItem    := 1; // N√∫mero sequencial, para cada item deve ser incrementado
   Produto.Prod.cProd    := '123456';
   Produto.Prod.cEAN     := '7896523206646';
   Produto.Prod.xProd    := 'Camisa Polo ACBr';
   Produto.Prod.NCM      := '61051000';
 
-  // Reforma Tribut·ria
+  // Reforma Tribut√°ria
   if rgReformaTributaria.ItemIndex = 0 then
     Produto.Prod.tpCredPresIBSZFM := tcpSemCredito;
 
@@ -1559,15 +1641,15 @@ begin
   {
     abaixo os campos incluidos no layout a partir da NT 2020/005
   }
-  // Opcional - Preencher com o CÛdigo de Barras prÛprio ou de terceiros que seja diferente do padr„o GTIN
-  // por exemplo: cÛdigo de barras de cat·logo, partnumber, etc
+  // Opcional - Preencher com o C√≥digo de Barras pr√≥prio ou de terceiros que seja diferente do padr√£o GTIN
+  // por exemplo: c√≥digo de barras de cat√°logo, partnumber, etc
   Produto.Prod.cBarra := 'ABC123456';
-  // Opcional - Preencher com o CÛdigo de Barras prÛprio ou de terceiros que seja diferente do padr„o GTIN
-  //  correspondente ‡quele da menor unidade comercializ·vel identificado por CÛdigo de Barras
-  // por exemplo: cÛdigo de barras de cat·logo, partnumber, etc
+  // Opcional - Preencher com o C√≥digo de Barras pr√≥prio ou de terceiros que seja diferente do padr√£o GTIN
+  //  correspondente √†quele da menor unidade comercializ√°vel identificado por C√≥digo de Barras
+  // por exemplo: c√≥digo de barras de cat√°logo, partnumber, etc
   Produto.Prod.cBarraTrib := 'ABC123456';
 
-  // DeclaraÁ„o de ImportaÁ„o. Pode ser adicionada v·rias atravÈs do comando Prod.DI.Add
+  // Declara√ß√£o de Importa√ß√£o. Pode ser adicionada v√°rias atrav√©s do comando Prod.DI.Add
   (*
   DI := Produto.Prod.DI.Add;
   DI.nDi         := '';
@@ -1600,7 +1682,7 @@ begin
   Adicao.nDraw       := '';
   *)
 
-//Campos para venda de veÌculos novos
+//Campos para venda de ve√≠culos novos
 
   Produto.Prod.veicProd.tpOP    := toVendaConcessionaria;
   Produto.Prod.veicProd.chassi  := '';
@@ -1627,15 +1709,15 @@ begin
 // Campos de Rastreabilidade do produto
   {
   O grupo <rastro> permiti a rastreabilidade de qualquer produto sujeito a
-  regulaÁıes sanit·rias, casos de recolhimento/recall, alÈm de defensivos agrÌcolas,
-  produtos veterin·rios, odontolÛgicos, medicamentos, bebidas, ·guas envasadas,
-  embalagens, etc., a partir da indicaÁ„o de informaÁıes de n˙mero de lote,
-  data de fabricaÁ„o/produÁ„o, data de validade, etc.
-  ObrigatÛrio o preenchimento deste grupo no caso de medicamentos e
-  produtos farmacÍuticos.
+  regula√ß√µes sanit√°rias, casos de recolhimento/recall, al√©m de defensivos agr√≠colas,
+  produtos veterin√°rios, odontol√≥gicos, medicamentos, bebidas, √°guas envasadas,
+  embalagens, etc., a partir da indica√ß√£o de informa√ß√µes de n√∫mero de lote,
+  data de fabrica√ß√£o/produ√ß√£o, data de validade, etc.
+  Obrigat√≥rio o preenchimento deste grupo no caso de medicamentos e
+  produtos farmac√™uticos.
   }
 
-  // OcorrÍncias: 0 - 500
+  // Ocorr√™ncias: 0 - 500
   (*
   Rastro := Produto.Prod.rastro.Add;
 
@@ -1643,20 +1725,20 @@ begin
   Rastro.qLote  := 1;
   Rastro.dFab   := StrToDate('01/08/2017');
   Rastro.dVal   := StrToDate('01/08/2019');
-  Rastro.cAgreg := ''; // CÛdigo de AgregaÁ„o (opcional) de 1 atÈ 20 dÌgitos
+  Rastro.cAgreg := ''; // C√≥digo de Agrega√ß√£o (opcional) de 1 at√© 20 d√≠gitos
   *)
 
-//Campos especÌficos para venda de medicamentos
+//Campos espec√≠ficos para venda de medicamentos
 
-  // OcorrÍncias: 1 - 500 ==> 1 - 1 (4.00)
+  // Ocorr√™ncias: 1 - 500 ==> 1 - 1 (4.00)
   (*
   Medicamento := Produto.Prod.med.Add;
 
   Medicamento.cProdANVISA := '1256802470029';
-  Medicamento.vPMC        := 100.00; // PreÁo m·ximo consumidor
+  Medicamento.vPMC        := 100.00; // Pre√ßo m√°ximo consumidor
   *)
 
-//Campos especÌficos para venda de armamento
+//Campos espec√≠ficos para venda de armamento
   (*
   Arma := Produto.Prod.arma.Add;
   Arma.nSerie := 0;
@@ -1665,23 +1747,7 @@ begin
   Arma.descr  := '';
   *)
 
-//Campos especÌficos para agropecuario / defensivo
-// Devemos gerar somente o grupo defensivo ou o grupo guiaTransito
-(*
-  Defensivo := Agropecuario.defensivo.Add;
-  Defensivo.nReceituario := '123';
-  Defensivo.CPFRespTec := '12345678901';
-*)
-
-//Campos especÌficos para agropecuario / guiaTransito
-(*
-  Agropecuario.guiaTransito.tpGuia := tpgGuiaFlorestal;
-  Agropecuario.guiaTransito.UFGuia := 'SP';
-  Agropecuario.guiaTransito.serieGuia := '1';
-  Agropecuario.guiaTransito.nGuia := '1';
-*)
-
-//Campos especÌficos para venda de combustÌvel(distribuidoras)
+//Campos espec√≠ficos para venda de combust√≠vel(distribuidoras)
 
   Produto.Prod.comb.cProdANP := 0;
   Produto.Prod.comb.CODIF    := '';
@@ -1704,16 +1770,16 @@ begin
   Produto.Prod.comb.ICMSCons.vICMSSTCons   := 0;
   Produto.Prod.comb.ICMSCons.UFcons        := '';
 
-  // Reforma Tribut·ria
+  // Reforma Tribut√°ria
   if rgReformaTributaria.ItemIndex = 0 then
   begin
-    // Indicador de fornecimento de bem mÛvel usado
+    // Indicador de fornecimento de bem m√≥vel usado
     Produto.Prod.indBemMovelUsado := tieNenhum;
 
-    // Valor total do Item, correspondente ‡ sua participaÁ„o no total da nota.
-    // A soma dos itens dever· corresponder ao total da nota.
+    // Valor total do Item, correspondente √† sua participa√ß√£o no total da nota.
+    // A soma dos itens dever√° corresponder ao total da nota.
     Produto.vItem := 100;
-    // Referenciamento de item de outro Documento Fiscal EletrÙnico - DF-e
+    // Referenciamento de item de outro Documento Fiscal Eletr√¥nico - DF-e
     Produto.DFeReferenciado.chaveAcesso := '';
     Produto.DFeReferenciado.nItem := 1;
   end;
@@ -1727,13 +1793,13 @@ begin
     begin
       // caso o CRT seja:
       // 1=Simples Nacional
-      // Os valores aceitos para CSOSN s„o:
+      // Os valores aceitos para CSOSN s√£o:
       // csosn101, csosn102, csosn103, csosn201, csosn202, csosn203,
       // csosn300, csosn400, csosn500,csosn900
 
       // 2=Simples Nacional, excesso sublimite de receita bruta;
       // ou 3=Regime Normal.
-      // Os valores aceitos para CST s„o:
+      // Os valores aceitos para CST s√£o:
       // cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
       // cst60, cst70, cst80, cst81, cst90, cstPart10, cstPart90,
       // cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60
@@ -1743,14 +1809,14 @@ begin
 
       orig := oeNacional;
 
-      //Grupo de TributaÁ„o do ICMS Monof·sico sobre combustÌveis.
+      //Grupo de Tributa√ß√£o do ICMS Monof√°sico sobre combust√≠veis.
       (*
       CST       := cst02;
       qBCMono   := 100;
       adRemICMS := 10;
       vICMSMono := 10;
       *)
-      //Grupo de TributaÁ„o do ICMS Monof·sico sobre combustÌveis.
+      //Grupo de Tributa√ß√£o do ICMS Monof√°sico sobre combust√≠veis.
       (*
       CST          := cst15;
       qBCMono      := 100;
@@ -1762,7 +1828,7 @@ begin
       pRedAdRem      := 10;
       motRedAdRem    := TmotRedAdRem.motTranspColetivo;
       *)
-      //Grupo de TributaÁ„o do ICMS Monof·sico sobre combustÌveis.
+      //Grupo de Tributa√ß√£o do ICMS Monof√°sico sobre combust√≠veis.
       (*
       CST           := cst53;
       qBCMono       := 100;
@@ -1772,7 +1838,7 @@ begin
       vICMSMonoDif  := 1;
       vICMSMono     := 10;
       *)
-      //Grupo de TributaÁ„o do ICMS Monof·sico sobre combustÌveis.
+      //Grupo de Tributa√ß√£o do ICMS Monof√°sico sobre combust√≠veis.
       (*
       CST           := cst61;
       qBCMonoRet    := 100;
@@ -1841,21 +1907,21 @@ begin
       {
         abaixo os campos incluidos no layout a partir da NT 2020/005
       }
-      // Informar apenas nos motivos de desoneraÁ„o documentados abaixo
+      // Informar apenas nos motivos de desonera√ß√£o documentados abaixo
       vICMSSTDeson := 0;
       {
-        o campo abaixo sÛ aceita os valores:
+        o campo abaixo s√≥ aceita os valores:
         mdiProdutorAgropecuario, mdiOutros, mdiOrgaoFomento
-        Campo ser· preenchido quando o campo anterior estiver preenchido.
+        Campo ser√° preenchido quando o campo anterior estiver preenchido.
       }
       motDesICMSST := mdiOutros;
 
-      // Percentual do diferimento do ICMS relativo ao Fundo de Combate ‡ Pobreza (FCP).
+      // Percentual do diferimento do ICMS relativo ao Fundo de Combate √† Pobreza (FCP).
       // No caso de diferimento total, informar o percentual de diferimento "100"
       pFCPDif := 0;
-      // Valor do ICMS relativo ao Fundo de Combate ‡ Pobreza (FCP) diferido
+      // Valor do ICMS relativo ao Fundo de Combate √† Pobreza (FCP) diferido
       vFCPDif := 0;
-      // Valor do ICMS relativo ao Fundo de Combate ‡ Pobreza (FCP) realmente devido.
+      // Valor do ICMS relativo ao Fundo de Combate √† Pobreza (FCP) realmente devido.
       vFCPEfet := 0;
     end;
 
@@ -1925,7 +1991,7 @@ begin
         valores aceitos pelo campo:
         ispNenhum, ispPISSTNaoCompoe, ispPISSTCompoe
       }
-      // Indica se o valor do PISST compıe o valor total da NF-e
+      // Indica se o valor do PISST comp√µe o valor total da NF-e
       IndSomaPISST :=  ispNenhum;
     end;
 
@@ -1953,15 +2019,15 @@ begin
         valores aceitos pelo campo:
         iscNenhum, iscCOFINSSTNaoCompoe, iscCOFINSSTCompoe
       }
-      // Indica se o valor da COFINS ST compıe o valor total da NF-e
+      // Indica se o valor da COFINS ST comp√µe o valor total da NF-e
       indSomaCOFINSST :=  iscNenhum;
     end;
 
-    // Reforma Tribut·ria
+    // Reforma Tribut√°ria
     if rgReformaTributaria.ItemIndex = 0 then
     begin
-      //  InformaÁıes do tributo: Imposto Seletivo sÛ para 2027 e para os
-      //  os produtos nocivos ao meio ambiente e a sa˙de.
+      //  Informa√ß√µes do tributo: Imposto Seletivo s√≥ para 2027 e para os
+      //  os produtos nocivos ao meio ambiente e a sa√∫de.
       {
       ISel.CSTIS := cstis000;
       ISel.cClassTribIS := '000001';
@@ -1985,9 +2051,9 @@ begin
         gCredPresIBSZFM
       }
 
-      //  InformaÁıes do tributo: IBS / CBS
-      IBSCBS.CST := cst811;
-      IBSCBS.cClassTrib := '000001';
+      //  Informa√ß√µes do tributo: IBS / CBS
+      IBSCBS.CST := cst011;
+      IBSCBS.cClassTrib := '011001';
       IBSCBS.indDoacao := tieSim;
 
       IBSCBS.gIBSCBS.vBC := 100;
@@ -2037,7 +2103,7 @@ begin
       IBSCBS.gIBSCBS.gTribRegular.pAliqEfetRegCBS := 5;
       IBSCBS.gIBSCBS.gTribRegular.vTribRegCBS := 50;
 
-      // Tipo TributaÁ„o Compra Governamental
+      // Tipo Tributa√ß√£o Compra Governamental
       IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSUF := 5;
       IBSCBS.gIBSCBS.gTribCompraGov.vTribIBSUF := 50;
       IBSCBS.gIBSCBS.gTribCompraGov.pAliqIBSMun := 5;
@@ -2045,91 +2111,90 @@ begin
       IBSCBS.gIBSCBS.gTribCompraGov.pAliqCBS := 5;
       IBSCBS.gIBSCBS.gTribCompraGov.vTribCBS := 50;
 
-      //  InformaÁıes do tributo: IBS / CBS em operaÁıes com imposto monof·sico
-      {
+      //  Informa√ß√µes do tributo: IBS / CBS em opera√ß√µes com imposto monof√°sico
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoPadrao.qBCMono := 1;
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoPadrao.adRemIBS := 5;
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoPadrao.vIBSMono := 100;
-      }
       //OU
-
+      {
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoPadrao.vBCMono := 100;
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoPadrao.pAliqMonoUF := 5;
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoPadrao.vIBSMonoUF := 5;
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoPadrao.pAliqMonoMun := 5;
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoPadrao.vIBSMonoMun := 5;
+      }
 
-      {
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoPadrao.qBCMono := 1;
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoPadrao.adRemCBS := 5;
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoPadrao.vCBSMono := 100;
-      }
       //OU
+      {
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gMonoPadrao.vBCMono := 100;
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gMonoPadrao.pAliqMonoCBS := 5;
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gMonoPadrao.vCBSMono := 5;
+      }
 
-      {
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoReten.qBCMonoReten := 1;
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoReten.adRemIBSReten := 5;
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoReten.vIBSMonoReten := 100;
-      }
       //OU
-
+      {
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoReten.vBCMonoReten := 100;
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoReten.pAliqMonoReten := 10;
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoReten.vIBSMonoReten := 10;
+      }
 
-      {
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoReten.qBCMonoReten := 1;
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoReten.adRemCBSReten := 5;
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoReten.vCBSMonoReten := 100;
-      }
       //OU
+      {
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gMonoReten.vBCMonoReten := 100;
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gMonoReten.pAliqMonoReten := 10;
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gMonoReten.vCBSMonoReten := 10;
+      }
 
-      //IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoRet.vIBSMonoRet := 100;
+      IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gMonoRet.vIBSMonoRet := 100;
       //OU
-      IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoRet.vIBSMonoRet := 100;
-      //IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoRet.vCBSMonoRet := 100;
+      //IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gMonoRet.vIBSMonoRet := 100;
+      IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gMonoRet.vCBSMonoRet := 100;
       //OU
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gMonoRet.vCBSMonoRet := 100;
 
-      {
+
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gpBioDiferenca.qBCBioComb := 5;
       IBSCBS.gIBSCBSMono.gIBSMonoAdRem.gpBioDiferenca.vIBSDiferenca := 10;
-      }
       //OU
+      {
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gpBioDiferenca.qBCBioComb := 5;
       IBSCBS.gIBSCBSMono.gIBSMonoAdValorem.gpBioDiferenca.vIBSDiferenca := 10;
+      }
 
-      {
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gpBioDiferenca.qBCBioComb := 5;
       IBSCBS.gIBSCBSMono.gCBSMonoAdRem.gpBioDiferenca.vCBSDiferenca := 10;
-      }
       //OU
+      {
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gpBioDiferenca.qBCBioComb := 5;
       IBSCBS.gIBSCBSMono.gCBSMonoAdValorem.gpBioDiferenca.vCBSDiferenca := 10;
+      }
 
       IBSCBS.gIBSCBSMono.vTotIBSMonoItem := 100;
       IBSCBS.gIBSCBSMono.vTotCBSMonoItem := 100;
 
-      //  InformaÁıes da Transferencia de CrÈdito
+      //  Informa√ß√µes da Transferencia de Cr√©dito
       IBSCBS.gTransfCred.vIBS := 100;
       IBSCBS.gTransfCred.vCBS := 100;
 
-      //  InformaÁıes Ajuste de CompetÍncia
+      //  Informa√ß√µes Ajuste de Compet√™ncia
       IBSCBS.gAjusteCompet.competApur := Date;
       IBSCBS.gAjusteCompet.vIBS := 100;
       IBSCBS.gAjusteCompet.vCBS := 100;
 
-      //  InformaÁıes Estorno de CrÈdito
+      //  Informa√ß√µes Estorno de Cr√©dito
       IBSCBS.gEstornoCred.vIBSEstCred := 100;
       IBSCBS.gEstornoCred.vCBSEstCred := 100;
 
-      //  InformaÁıes do CrÈdito Presumido Operacional
+      //  Informa√ß√µes do Cr√©dito Presumido Operacional
       IBSCBS.gCredPresOper.cCredPres := cpNenhum;
       IBSCBS.gCredPresOper.vBCCredPres := 100;
       IBSCBS.gCredPresOper.gIBSCredPres.pCredPres := 5;
@@ -2139,22 +2204,40 @@ begin
       IBSCBS.gCredPresOper.gCBSCredPres.vCredPres := 100;
       IBSCBS.gCredPresOper.gCBSCredPres.vCredPresCondSus := 0;
 
-      //  InformaÁıes do CrÈdito Presumido IBS ZFM
+      //  Informa√ß√µes do Cr√©dito Presumido IBS ZFM
       // tcpNenhum, tcpSemCredito, tcpBensConsumoFinal, tcpBensCapital,
       // tcpBensIntermediarios, tcpBensInformaticaOutros
       IBSCBS.gCredPresIBSZFM.competApur := Date;
       IBSCBS.gCredPresIBSZFM.tpCredPresIBSZFM := tcpBensInformaticaOutros;
       IBSCBS.gCredPresIBSZFM.vCredPresIBSZFM := 100;
+
+      // Grupo de Opera√ß√µes em √°reas incentivadas (ALC/ZFM) - CBS(al√≠quota zero)
+      // Para opera√ß√£o n√£o indicada = 0
+      // Para opera√ß√£o indicada = 1
+      // TtpALCZFMCBS = (tpALCZFMCBSnOpInd = 0, tpALCZFMCBSOpInd = 1);
+      IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.tpALCZFMCBS := tpALCZFMCBSOpInd;
+
+      // 1 - quando o forn. e dest. estiverem localizados em √°reas incentivadas
+      //     e opera√ß√£o amparada por al√≠q. zero da CBS e n√£o se tratar de
+      //     opera√ß√£o industrial com processo apovado na Suframa para o item
+      // 2 - quando forn. e dest. em estiverem localizados em √°reas incentivadas
+      //     e opera√ß√£o amparada por aliq. zero da CBS e SE TRATAR DE
+      //     opera√ß√£o industrial com processo aprovado na Suframa para o item
+      IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.nProcSuframa:= '123456789';
+
+      // Al√≠quota efetiva de ref. da CBS
+      IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.pAliqEfetRegCBS := 1; // Percentual efetivo sem redu√ß√£o
+      IBSCBS.gIBSCBS.gCBS.gALCZFMCBS.vTribRegCBS     := 1; // Valor efetivo sem redu√ß√£o
     end;
   end;
 
-  //Adicionando ServiÁos
+  //Adicionando Servi√ßos
   (*
   Servico := NotaF.Nfe.Det.Add;
-  Servico.Prod.nItem    := 1; // N˙mero sequencial, para cada item deve ser incrementado
+  Servico.Prod.nItem    := 1; // N√∫mero sequencial, para cada item deve ser incrementado
   Servico.Prod.cProd    := '123457';
   Servico.Prod.cEAN     := '';
-  Servico.Prod.xProd    := 'DescriÁ„o do ServiÁo';
+  Servico.Prod.xProd    := 'Descri√ß√£o do Servi√ßo';
   Servico.Prod.NCM      := '99';
   Servico.Prod.EXTIPI   := '';
   Servico.Prod.CFOP     := '5933';
@@ -2172,16 +2255,16 @@ begin
   Servico.Prod.vSeg      := 0;
   Servico.Prod.vDesc     := 0;
 
-  Servico.infAdProd      := 'InformaÁ„o Adicional do ServiÁo';
+  Servico.infAdProd      := 'Informa√ß√£o Adicional do Servi√ßo';
 
-  //Grupo para serviÁos
+  //Grupo para servi√ßos
   Servico.Imposto.ISSQN
   Servico.Imposto.cSitTrib  := ISSQNcSitTribNORMAL;
   Servico.Imposto.vBC       := 100;
   Servico.Imposto.vAliq     := 2;
   Servico.Imposto.vISSQN    := 2;
   Servico.Imposto.cMunFG    := 3554003;
-  // Preencha este campo usando a tabela disponÌvel
+  // Preencha este campo usando a tabela dispon√≠vel
   // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
   Servico.Imposto.cListServ := '1402';
 
@@ -2236,7 +2319,7 @@ begin
   NotaF.NFe.Total.retTrib.vBCRetPrev := 0;
   NotaF.NFe.Total.retTrib.vRetPrev   := 0;
 
-  // Reforma Tribut·ria
+  // Reforma Tribut√°ria
   if rgReformaTributaria.ItemIndex = 0 then
   begin
     NotaF.NFe.Total.ISTot.vIS := 100;
@@ -2298,7 +2381,7 @@ begin
   Volume.pesoL := 100;
   Volume.pesoB := 110;
 
-  //Lacres do volume. Pode ser adicionado v·rios
+  //Lacres do volume. Pode ser adicionado v√°rios
   (*
   Lacre := Volume.Lacres.Add;
   Lacre.nLacre := '';
@@ -2319,7 +2402,7 @@ begin
   Duplicata.dVenc := now+20;
   Duplicata.vDup  := 50;
 
-    // O grupo infIntermed sÛ deve ser gerado nos casos de operaÁ„o n„o presencial
+    // O grupo infIntermed s√≥ deve ser gerado nos casos de opera√ß√£o n√£o presencial
     // pela internet em site de terceiros (Intermediadores).
 //  NotaF.NFe.infIntermed.CNPJ := '';
 //  NotaF.NFe.infIntermed.idCadIntTran := '';
@@ -2349,7 +2432,7 @@ begin
   NotaF.NFe.compra.xPed  := '';
   NotaF.NFe.compra.xCont := '';
 
-// YA. InformaÁıes de pagamento
+// YA. Informa√ß√µes de pagamento
 
   InfoPgto := NotaF.NFe.pag.New;
   InfoPgto.indPag := ipVista;
@@ -2377,19 +2460,35 @@ begin
 
 // YA09 Troco
 // Regra opcional: Informar se valor dos pagamentos maior que valor da nota.
-// Regra obrigatÛria: Se informado, N„o pode diferir de "(+) vPag (id:YA03) (-) vNF (id:W16)"
+// Regra obrigat√≥ria: Se informado, N√£o pode diferir de "(+) vPag (id:YA03) (-) vNF (id:W16)"
 //  NotaF.NFe.pag.vTroco := 75;
 
   {
     abaixo o campo incluido no layout a partir da NT 2020/006
   }
-  // CNPJ do Intermediador da TransaÁ„o (agenciador, plataforma de delivery,
-  // marketplace e similar) de serviÁos e de negÛcios.
+  // CNPJ do Intermediador da Transa√ß√£o (agenciador, plataforma de delivery,
+  // marketplace e similar) de servi√ßos e de neg√≥cios.
   NotaF.NFe.infIntermed.CNPJ := '';
-  // Nome do usu·rio ou identificaÁ„o do perfil do vendedor no site do intermediador
-  // (agenciador, plataforma de delivery, marketplace e similar) de serviÁos e de
-  // negÛcios.
+  // Nome do usu√°rio ou identifica√ß√£o do perfil do vendedor no site do intermediador
+  // (agenciador, plataforma de delivery, marketplace e similar) de servi√ßos e de
+  // neg√≥cios.
   NotaF.NFe.infIntermed.idCadIntTran := '';
+
+//Campos espec√≠ficos para agropecuario / defensivo
+// Devemos gerar somente o grupo defensivo ou o grupo guiaTransito
+(*
+  Defensivo := NotaF.NFe.Agropecuario.defensivo.New;
+  Defensivo.nReceituario := '123';
+  Defensivo.CPFRespTec := '12345678901';
+*)
+
+//Campos espec√≠ficos para agropecuario / guiaTransito
+(*
+  NotaF.NFe.Agropecuario.guiaTransito.tpGuia := tpgGuiaFlorestal;
+  NotaF.NFe.Agropecuario.guiaTransito.UFGuia := 'SP';
+  NotaF.NFe.Agropecuario.guiaTransito.serieGuia := '1';
+  NotaF.NFe.Agropecuario.guiaTransito.nGuia := '1';
+*)
 
   ACBrNFe1.NotasFiscais.GerarNFe;
 end;
@@ -2421,23 +2520,23 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: Aceite DÈbito ApuraÁ„o Nota de CrÈdito', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Aceite D√©bito Apura√ß√£o Nota de Cr√©dito', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: Aceite DÈbito ApuraÁ„o Nota de CrÈdito', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Aceite D√©bito Apura√ß√£o Nota de Cr√©dito', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: Aceite DÈbito ApuraÁ„o Nota de CrÈdito', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Aceite D√©bito Apura√ß√£o Nota de Cr√©dito', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: Aceite DÈbito ApuraÁ„o Nota de CrÈdito', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Aceite D√©bito Apura√ß√£o Nota de Cr√©dito', 'UF do emitente do Evento', lUF)) then
        exit;
 
     lIndAceitacao := '1';
-    if not(InputQuery('WebServices Eventos: Aceite DÈbito ApuraÁ„o Nota de CrÈdito', 'Indicador de concord‚ncia', lIndAceitacao)) then
+    if not(InputQuery('WebServices Eventos: Aceite D√©bito Apura√ß√£o Nota de Cr√©dito', 'Indicador de concord√¢ncia', lIndAceitacao)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -2518,7 +2617,7 @@ var
   Ok: Boolean;
   i: Integer;
 begin
-  xTitulo := 'Administrar CSC - CÛdigo de SeguranÁa do Contribuinte';
+  xTitulo := 'Administrar CSC - C√≥digo de Seguran√ßa do Contribuinte';
 
   xIndOp := '1';
   if not(InputQuery(xTitulo, '1 = Consultar / 2 = Novo / 3 = Revogar', xIndOp)) then
@@ -2529,7 +2628,7 @@ begin
      exit;
 
   xCodigoCSC := '';
-  if not(InputQuery(xTitulo, 'CÛdigo do CSC', xCodigoCSC)) then
+  if not(InputQuery(xTitulo, 'C√≥digo do CSC', xCodigoCSC)) then
      exit;
 
   xCNPJ := Copy(OnlyNumber(edtEmitCNPJ.Text), 1, 8);
@@ -2558,8 +2657,8 @@ var
 begin
   {
     Esse evento consta na NT 2020/007
-    SÛ ser· possÌvel realizar testes em ambiente de homologaÁ„o a partir de 01/11/2021
-    E enviar em produÁ„o a partir de 30/11/2021
+    S√≥ ser√° poss√≠vel realizar testes em ambiente de homologa√ß√£o a partir de 01/11/2021
+    E enviar em produ√ß√£o a partir de 30/11/2021
   }
   xTitulo := 'Evento Ator Interessado na NF-e - Transportador';
 
@@ -2587,7 +2686,7 @@ begin
 
   {
     1 = Empresa Emitente,
-    2 = Empresa Destinat·ria,
+    2 = Empresa Destinat√°ria,
     3 = Empresa Transportadora.
   }
   TipoAtor := '1';
@@ -2595,7 +2694,7 @@ begin
      exit;
 
   VerAplic := '1.00';
-  if not(InputQuery(xTitulo, 'Vers„o do Aplicativo do emitente', VerAplic)) then
+  if not(InputQuery(xTitulo, 'Vers√£o do Aplicativo do emitente', VerAplic)) then
      exit;
 
   AutXML := '';
@@ -2603,12 +2702,12 @@ begin
      exit;
 
   {
-    0 = N„o permite;
-    1 = Permite o transportador autorizado pelo emitente ou destinat·rio
+    0 = N√£o permite;
+    1 = Permite o transportador autorizado pelo emitente ou destinat√°rio
         autorizar outros transportadores para ter acesso ao download da NF-e
   }
   TipoAutoriz := '0';
-  if not(InputQuery(xTitulo, 'Tipo de AutorizaÁ„o (0 ou 1)', TipoAutoriz)) then
+  if not(InputQuery(xTitulo, 'Tipo de Autoriza√ß√£o (0 ou 1)', TipoAutoriz)) then
      exit;
 
   ACBrNFe1.EventoNFe.Evento.Clear;
@@ -2625,7 +2724,7 @@ begin
     infEvento.detEvento.tpAutor     := StrToTipoAutor(Ok, TipoAtor);
     infEvento.detEvento.verAplic    := VerAplic;
 
-    // No momento a SEFAZ sÛ aceita apenas 1 CNPJ/CPF
+    // No momento a SEFAZ s√≥ aceita apenas 1 CNPJ/CPF
     with InfEvento.detEvento.autXML.New do
       CNPJCPF := AutXML;
 
@@ -2675,19 +2774,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: AtualizaÁ„o Data Prev. Entrega', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Atualiza√ß√£o Data Prev. Entrega', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: AtualizaÁ„o Data Prev. Entrega', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Atualiza√ß√£o Data Prev. Entrega', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: AtualizaÁ„o Data Prev. Entrega', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Atualiza√ß√£o Data Prev. Entrega', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: AtualizaÁ„o Data Prev. Entrega', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Atualiza√ß√£o Data Prev. Entrega', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -2744,7 +2843,7 @@ begin
   if not(InputQuery('WebServices Eventos: Cancelamento', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
      exit;
   Protocolo:='';
-  if not(InputQuery('WebServices Eventos: Cancelamento', 'Protocolo de AutorizaÁ„o', Protocolo)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento', 'Protocolo de Autoriza√ß√£o', Protocolo)) then
      exit;
   Justificativa := 'Justificativa do Cancelamento';
   if not(InputQuery('WebServices Eventos: Cancelamento', 'Justificativa do Cancelamento', Justificativa)) then
@@ -2796,32 +2895,32 @@ var
   OK: Boolean;
 begin
   lChave := '';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Chave da NF-e', lChave)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Chave da NF-e', lChave)) then
      exit;
   lChave := Trim(OnlyNumber(lChave));
   lidLote := '1';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
      exit;
   lnSeqEvento := '1';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'N˙mero sequencial do evento', lnSeqEvento)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'N√∫mero sequencial do evento', lnSeqEvento)) then
      exit;
   lCNPJ := copy(lChave,7,14);
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'CNPJ ou o CPF do autor do Evento', lCNPJ)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'CNPJ ou o CPF do autor do Evento', lCNPJ)) then
      exit;
   lnProtEvento:='';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Protocolo de autorizaÁ„o do evento', lnProtEvento)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Protocolo de autoriza√ß√£o do evento', lnProtEvento)) then
      exit;
   ltpEventoAut := '';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Evento a ser cancelado', ltpEventoAut)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Evento a ser cancelado', ltpEventoAut)) then
      exit;
   ltpAutor := '1';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Autor do Evento a ser cancelado', ltpAutor)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Autor do Evento a ser cancelado', ltpAutor)) then
      exit;
   lVerAplic := '1.00';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
      exit;
   lUF := 'SP';
-  if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'UF do emitente do Evento', lUF)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'UF do emitente do Evento', lUF)) then
      exit;
 
   ACBrNFe1.EventoNFe.Evento.Clear;
@@ -2977,7 +3076,7 @@ begin
       infEvento.chNFe := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.Id, 4, 44);
       infEvento.CNPJ := edtEmitCNPJ.Text;
       infEvento.dhEvento := now;
-      infEvento.cOrgao := 92; // CÛdigo do ”rg„o de recepÁ„o deste evento
+      infEvento.cOrgao := 92; // C√≥digo do √ìrg√£o de recep√ß√£o deste evento
       infEvento.tpEvento := teInsucessoEntregaNFe;
 
       infEvento.detEvento.cOrgaoAutor := ACBrNFe1.Configuracoes.WebServices.UFCodigo;
@@ -3050,7 +3149,7 @@ begin
       infEvento.chNFe := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.Id, 4, 44);
       infEvento.CNPJ := edtEmitCNPJ.Text;
       infEvento.dhEvento := now;
-      infEvento.cOrgao := 92; // CÛdigo do ”rg„o de recepÁ„o deste evento
+      infEvento.cOrgao := 92; // C√≥digo do √ìrg√£o de recep√ß√£o deste evento
       infEvento.tpEvento := teCancInsucessoEntregaNFe;
 
       infEvento.detEvento.cOrgaoAutor := ACBrNFe1.Configuracoes.WebServices.UFCodigo;
@@ -3121,9 +3220,9 @@ begin
       Emit.enderEmit.xPais   := 'BRASIL';
 
       Emit.IEST              := '';
-      Emit.IM                := ''; // Preencher no caso de existir serviÁos na nota
-      Emit.CNAE              := ''; // Verifique na cidade do emissor da NFe se È permitido
-                                    // a inclus„o de serviÁos na NFe
+      Emit.IM                := ''; // Preencher no caso de existir servi√ßos na nota
+      Emit.CNAE              := ''; // Verifique na cidade do emissor da NFe se √© permitido
+                                    // a inclus√£o de servi√ßos na NFe
       Emit.CRT               := StrToCRT(Ok, IntToStr(cbTipoEmpresa.ItemIndex + 1));
     end;
 
@@ -3155,20 +3254,20 @@ var
   Chave, idLote, CNPJ, nSeqEvento, Correcao: string;
 begin
   Chave := '';
-  if not(InputQuery('WebServices Eventos: Carta de CorreÁ„o', 'Chave da NF-e', Chave)) then
+  if not(InputQuery('WebServices Eventos: Carta de Corre√ß√£o', 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
   idLote := '1';
-  if not(InputQuery('WebServices Eventos: Carta de CorreÁ„o', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+  if not(InputQuery('WebServices Eventos: Carta de Corre√ß√£o', 'Identificador de controle do Lote de envio do Evento', idLote)) then
      exit;
   CNPJ := copy(Chave,7,14);
-  if not(InputQuery('WebServices Eventos: Carta de CorreÁ„o', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+  if not(InputQuery('WebServices Eventos: Carta de Corre√ß√£o', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
      exit;
   nSeqEvento := '1';
-  if not(InputQuery('WebServices Eventos: Carta de CorreÁ„o', 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
+  if not(InputQuery('WebServices Eventos: Carta de Corre√ß√£o', 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
      exit;
-  Correcao := 'CorreÁ„o a ser considerada, texto livre. A correÁ„o mais recente substitui as anteriores.';
-  if not(InputQuery('WebServices Eventos: Carta de CorreÁ„o', 'CorreÁ„o a ser considerada', Correcao)) then
+  Correcao := 'Corre√ß√£o a ser considerada, texto livre. A corre√ß√£o mais recente substitui as anteriores.';
+  if not(InputQuery('WebServices Eventos: Carta de Corre√ß√£o', 'Corre√ß√£o a ser considerada', Correcao)) then
      exit;
 
   ACBrNFe1.EventoNFe.Evento.Clear;
@@ -3264,7 +3363,7 @@ begin
     MemoDados.Lines.Add('indCredCTe: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].indCredCTe));
     MemoDados.Lines.Add('Nome: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xNome);
     MemoDados.Lines.Add('Fantasia: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xFant);
-    MemoDados.Lines.Add('Reg. ApuraÁ„o: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xRegApur);
+    MemoDados.Lines.Add('Reg. Apura√ß√£o: ' + ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].xRegApur);
     MemoDados.Lines.Add('CNAE: ' + IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].CNAE));
     MemoDados.Lines.Add('dIniAtiv: ' + DateToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dIniAtiv));
     MemoDados.Lines.Add('dUltSit: ' + DateToStr(ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad[i].dUltSit));
@@ -3325,7 +3424,7 @@ var
   aux: String;
 begin
   aux := '';
-  if not(InputQuery('Consultar Recibo Lote', 'N˙mero do Recibo', aux)) then
+  if not(InputQuery('Consultar Recibo Lote', 'N√∫mero do Recibo', aux)) then
     exit;
 
   ACBrNFe1.WebServices.Recibo.Recibo := aux;
@@ -3368,7 +3467,7 @@ begin
 
   if Trim(vNumLote) = '' then
   begin
-    MessageDlg('N˙mero do Lote inv·lido.', mtError,[mbok], 0);
+    MessageDlg('N√∫mero do Lote inv√°lido.', mtError,[mbok], 0);
     exit;
   end;
 
@@ -3381,15 +3480,15 @@ begin
     }
     if ACBrNFe1.NotasFiscais.Count > 1 then
       {
-        Se o lote tem 2 ou mais notas (atÈ 50) o envio tem que ser no modo
-        assÌncrono (terceiro par‚metro tem que valer False)
+        Se o lote tem 2 ou mais notas (at√© 50) o envio tem que ser no modo
+        ass√≠ncrono (terceiro par√¢metro tem que valer False)
       }
       ACBrNFe1.Enviar(vNumLote, True, False)
     else
     begin
       {
         Se o lote tem apenas 1 nota o envio tem que ser no modo
-        sÌncrono (terceiro par‚metro tem que valer True)
+        s√≠ncrono (terceiro par√¢metro tem que valer True)
       }
       Sincrono := True;
       ACBrNFe1.Enviar(vNumLote, True, True);
@@ -3405,9 +3504,9 @@ begin
 
     Sincrono := True;
     {
-      A NT 2023/002 determina que o envio de NFC-e deve ocorrer de forma unit·ria,
+      A NT 2023/002 determina que o envio de NFC-e deve ocorrer de forma unit√°ria,
       ou seja, o lote deve conter somente uma nota e o modo de envio tem que ser
-      sÌncrono
+      s√≠ncrono
     }
     ACBrNFe1.Enviar(vNumLote, True, True);
   end;
@@ -3486,22 +3585,22 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'UF do emitente do Evento', lUF)) then
        exit;
     ltpAutor := '1';
-    if not(InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Autor do Evento', ltpAutor)) then
+    if not(InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Autor do Evento', ltpAutor)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -3518,27 +3617,27 @@ begin
     lAux := 'S';
     repeat
       lnItem := '1';
-      if not InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Informe nItem', lnItem) then
+      if not InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Informe nItem', lnItem) then
         break;
 
       lvIBS := '1';
-      if not InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Informe vIBS', lvIBS) then
+      if not InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Informe vIBS', lvIBS) then
         break;
 
       lvCBS := '1';
-      if not InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Informe vCBS', lvCBS) then
+      if not InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Informe vCBS', lvCBS) then
         break;
 
       lqConsumo := '1';
-      if not InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Informe qConsumo', lqConsumo) then
+      if not InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Informe qConsumo', lqConsumo) then
         break;
 
       luConsumo := 'UNIDAD';
-      if not InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Informe uConsumo', luConsumo) then
+      if not InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Informe uConsumo', luConsumo) then
         break;
 
       lchaveAcesso := '35251118760540000139550010000000011445690173';
-      if not InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Informe chaveAcesso', lchaveAcesso) then
+      if not InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Informe chaveAcesso', lchaveAcesso) then
         break;
 
       lgConsumo := lEvento.InfEvento.detEvento.gConsumo.New;
@@ -3550,7 +3649,7 @@ begin
       lgConsumo.DFeReferenciado.nItem := StrToIntDef(lnItem, 1);
       lgConsumo.DFeReferenciado.chaveAcesso := lchaveAcesso;
 
-      InputQuery('WebServices Eventos: DestinaÁ„o Item consumo pessoal', 'Adicionar gConsumo? (S/N)', lAux);
+      InputQuery('WebServices Eventos: Destina√ß√£o Item consumo pessoal', 'Adicionar gConsumo? (S/N)', lAux);
     until (UpperCase(lAux) <> 'S');
 
     ACBrNFe1.EnviarEvento(StrToIntDef(lidLote, 1));
@@ -3584,9 +3683,9 @@ procedure TfrmACBrNFe.btnDistrDFePorChaveClick(Sender: TObject);
 var
   xTitulo, cUFAutor, CNPJ, Chave: string;
 begin
-  xTitulo := 'DistribuiÁ„o DFe Por Chave';
+  xTitulo := 'Distribui√ß√£o DFe Por Chave';
   cUFAutor := '';
-  if not(InputQuery(xTitulo, 'CÛdigo da UF do Autor', cUFAutor)) then
+  if not(InputQuery(xTitulo, 'C√≥digo da UF do Autor', cUFAutor)) then
      exit;
 
   CNPJ := '';
@@ -3609,10 +3708,10 @@ procedure TfrmACBrNFe.btnDistrDFePorNSUClick(Sender: TObject);
 var
   xTitulo, cUFAutor, CNPJ, ANSU: string;
 begin
-  xTitulo := 'DistribuiÁ„o DF-e por NSU';
+  xTitulo := 'Distribui√ß√£o DF-e por NSU';
 
   cUFAutor := '';
-  if not(InputQuery(xTitulo, 'CÛdigo da UF do Autor', cUFAutor)) then
+  if not(InputQuery(xTitulo, 'C√≥digo da UF do Autor', cUFAutor)) then
      exit;
 
   CNPJ := '';
@@ -3620,7 +3719,7 @@ begin
      exit;
 
   ANSU := '';
-  if not(InputQuery(xTitulo, 'NSU especÌfico', ANSU)) then
+  if not(InputQuery(xTitulo, 'NSU espec√≠fico', ANSU)) then
      exit;
 
   ACBrNFe1.DistribuicaoDFePorNSU(StrToInt(cUFAutor), CNPJ, ANSU);
@@ -3636,14 +3735,14 @@ var
   xTitulo, cUFAutor, CNPJ, AultNSU: string;
   i: Integer;
 begin
-  // OpÁ„o para simular uma consulta ao WebService lendo o arquivo de retorno e populando o componente
-  OpenDialog1.Title := 'Selecione um Arquivo de DistribuiÁ„o para simular uma consulta ou feche para consultar o WebService';
+  // Op√ß√£o para simular uma consulta ao WebService lendo o arquivo de retorno e populando o componente
+  OpenDialog1.Title := 'Selecione um Arquivo de Distribui√ß√£o para simular uma consulta ou feche para consultar o WebService';
   OpenDialog1.DefaultExt := '*-dist-dfe.XML';
-  OpenDialog1.Filter := 'Arquivos DistribuiÁ„o DFe (*-dist-dfe.XML)|*-dist-dfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.Filter := 'Arquivos Distribui√ß√£o DFe (*-dist-dfe.XML)|*-dist-dfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
   OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
 
-  // LÍ o arquivo selecionado
+  // L√™ o arquivo selecionado
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.CarregarArquivo(OpenDialog1.FileName);
@@ -3654,10 +3753,10 @@ begin
   // Consulta o WebService
   else
   begin
-    xTitulo := 'DistribuiÁ„o DF-e por ˙ltimo NSU';
+    xTitulo := 'Distribui√ß√£o DF-e por √∫ltimo NSU';
 
     cUFAutor := IntToStr(ACBrNFe1.Configuracoes.WebServices.UFCodigo);
-    if not(InputQuery(xTitulo, 'CÛdigo da UF do Autor', cUFAutor)) then
+    if not(InputQuery(xTitulo, 'C√≥digo da UF do Autor', cUFAutor)) then
        exit;
 
     CNPJ := edtEmitCNPJ.Text;
@@ -3665,7 +3764,7 @@ begin
        exit;
 
     AultNSU := '';
-    if not(InputQuery(xTitulo, '⁄ltimo NSU recebido pelo ator', AultNSU)) then
+    if not(InputQuery(xTitulo, '√öltimo NSU recebido pelo ator', AultNSU)) then
        exit;
 
     ACBrNFe1.DistribuicaoDFePorUltNSU(StrToInt(cUFAutor), CNPJ, AultNSU);
@@ -3673,7 +3772,7 @@ begin
 
   with ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt do
   begin
-    // Caso n„o retorne registros, ocorra consumo indevido ou seja o ˙ltimo lote, gera alerta
+    // Caso n√£o retorne registros, ocorra consumo indevido ou seja o √∫ltimo lote, gera alerta
     if ( ( cStat = 137 ) or
          ( cStat = 656 ) or
          ( ultNSU = maxNSU ) ) then
@@ -3681,28 +3780,28 @@ begin
       // 656-Consumo indevido
       if cStat = 656 then
       begin
-        MemoDados.Lines.Add('AtenÁ„o...: Consumo indevido.');
+        MemoDados.Lines.Add('Aten√ß√£o...: Consumo indevido.');
 
         if AultNSU <> ultNSU then
-          MemoDados.Lines.Add('            ultNSU utilizado nesta consulta [' + AultNSU + '] È diferente ' +
+          MemoDados.Lines.Add('            ultNSU utilizado nesta consulta [' + AultNSU + '] √© diferente ' +
                               'do ultNSU consultado na Sefaz [' + ultNSU + '].');
       end
       // 137-Nenhum documento localizado
       else if cStat = 137 then
-        MemoDados.Lines.Add('AtenÁ„o...: N„o existem mais registros disponÌveis.')
-      // ultNSU = maxNSU - Documentos Localizados, mas È o ˙ltimo lote
+        MemoDados.Lines.Add('Aten√ß√£o...: N√£o existem mais registros dispon√≠veis.')
+      // ultNSU = maxNSU - Documentos Localizados, mas √© o √∫ltimo lote
       else
-        MemoDados.Lines.Add('AtenÁ„o...: Este È o ˙ltimo lote de registros disponÌveis para distribuiÁ„o.');
+        MemoDados.Lines.Add('Aten√ß√£o...: Este √© o √∫ltimo lote de registros dispon√≠veis para distribui√ß√£o.');
 
-      MemoDados.Lines.Add('AtenÁ„o...: Aguarde 1 hora para a prÛxima consulta.');
+      MemoDados.Lines.Add('Aten√ß√£o...: Aguarde 1 hora para a pr√≥xima consulta.');
       MemoDados.Lines.Add(' ');
     end;
 
     MemoDados.Lines.Add('Qtde Documentos Retornados: ' + IntToStr(docZip.Count));
     MemoDados.Lines.Add('Status....: ' + IntToStr(cStat));
     MemoDados.Lines.Add('Motivo....: ' + xMotivo);
-    MemoDados.Lines.Add('⁄ltimo NSU: ' + ultNSU);
-    MemoDados.Lines.Add('M·ximo NSU: ' + maxNSU);
+    MemoDados.Lines.Add('√öltimo NSU: ' + ultNSU);
+    MemoDados.Lines.Add('M√°ximo NSU: ' + maxNSU);
     MemoDados.Lines.Add(' ');
     MemoDados.Lines.Add('Documentos Retornados:');
 
@@ -3848,20 +3947,20 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     vProt := '123456789012345';
-    if not(InputQuery('ConciliaÁ„o Financeira:', 'Numero do Protocolo', vProt)) then
+    if not(InputQuery('Concilia√ß√£o Financeira:', 'Numero do Protocolo', vProt)) then
       exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
 
     with ACBrNFe1.EventoNFe.Evento.New do
     begin
-      // Para o Evento de Cancelamento de ConciliaÁ„o Financeira
+      // Para o Evento de Cancelamento de Concilia√ß√£o Financeira
       // nSeqEvento sempre = 1
       infEvento.nSeqEvento := 1;
       infEvento.chNFe := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.Id, 4, 44);
       infEvento.CNPJ := edtEmitCNPJ.Text;
       infEvento.dhEvento := now;
-      infEvento.cOrgao := 92; // CÛdigo do ”rg„o de recepÁ„o deste evento
+      infEvento.cOrgao := 92; // C√≥digo do √ìrg√£o de recep√ß√£o deste evento
       infEvento.tpEvento := teCancConcFinanceira;
 
 //      infEvento.detEvento.cOrgaoAutor := ACBrNFe1.Configuracoes.WebServices.UFCodigo;
@@ -3921,7 +4020,7 @@ begin
       infEvento.chNFe := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.Id, 4, 44);
       infEvento.CNPJ := edtEmitCNPJ.Text;
       infEvento.dhEvento := now;
-      infEvento.cOrgao := 92; // CÛdigo do ”rg„o de recepÁ„o deste evento
+      infEvento.cOrgao := 92; // C√≥digo do √ìrg√£o de recep√ß√£o deste evento
       infEvento.tpEvento := teConcFinanceira;
 
       infEvento.detEvento.verAplic := '1.00';
@@ -3939,14 +4038,14 @@ begin
          fpCreditoEmLojaPorDevolucao, fpFalhaHardware
         }
         tPag := fpDinheiro;
-        xPag := ''; // SÛ informar se a forma de pagamento for Outros.
+        xPag := ''; // S√≥ informar se a forma de pagamento for Outros.
         vPag := 100;
         dPag := Now; // Data do Pagamento
 
         {
          CNPJ transacional do pagamento - Preencher informando o CNPJ do
          estabelecimento onde o pagamento foi processado/transacionado/recebido
-         quando a emiss„o do documento fiscal ocorrer em estabelecimento distinto
+         quando a emiss√£o do documento fiscal ocorrer em estabelecimento distinto
         }
         CNPJPag := '';
         {
@@ -3955,11 +4054,11 @@ begin
         }
         UFPag := '';
         {
-         CNPJ da instituiÁ„o financeira, de pagamento, adquirente ou subadquirente.
+         CNPJ da institui√ß√£o financeira, de pagamento, adquirente ou subadquirente.
         }
         CNPJIF := '';
         {
-         Bandeira da operadora de cart„o
+         Bandeira da operadora de cart√£o
 
          bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
          bcElo, bcHipercard, bcAura, bcCabal, bcAlelo, bcBanesCard,
@@ -3970,17 +4069,17 @@ begin
         }
         tBand := bcVisa;
         {
-         N˙mero de autorizaÁ„o da operaÁ„o com cartıes, PIX, boletos e
-         outros pagamentos eletrÙnicos
+         N√∫mero de autoriza√ß√£o da opera√ß√£o com cart√µes, PIX, boletos e
+         outros pagamentos eletr√¥nicos
         }
         cAut := '';
 
         {
-         Informar o CNPJ do estabelecimento benefici·rio do pagamento
+         Informar o CNPJ do estabelecimento benefici√°rio do pagamento
         }
         CNPJReceb := '';
         {
-         UF do CNPJ do estabelecimento benefici·rio do pagamento
+         UF do CNPJ do estabelecimento benefici√°rio do pagamento
         }
         UFReceb := '';
       end;
@@ -4107,19 +4206,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -4136,19 +4235,19 @@ begin
     lAux := 'S';
     repeat
       lnItem := '1';
-      InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Informe nItem', lnItem);
+      InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Informe nItem', lnItem);
 
       lvIBS := '1';
-      InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Informe vIBS', lvIBS);
+      InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Informe vIBS', lvIBS);
 
       lvCBS := '1';
-      InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Informe vCBS', lvCBS);
+      InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Informe vCBS', lvCBS);
 
       lqNaoFornecida := '1';
-      InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Informe qNaoFornecida', lqNaoFornecida);
+      InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Informe qNaoFornecida', lqNaoFornecida);
 
       luNaoFornecida := 'UNIDAD';
-      InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Informe uNaoFornecida', luNaoFornecida);
+      InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Informe uNaoFornecida', luNaoFornecida);
 
       lgItemNaoFornecido := lEvento.InfEvento.detEvento.gItemNaoFornecido.New;
       lgItemNaoFornecido.nItem := StrToIntDef(lnItem, 1);
@@ -4157,7 +4256,7 @@ begin
       lgItemNaoFornecido.gControleEstoque.qNaoFornecida := StrToFloatDef(lqNaoFornecida, 1);
       lgItemNaoFornecido.gControleEstoque.uNaoFornecida := luNaoFornecida;
 
-      InputQuery('WebServices Eventos: Fornecimento n„o realizado, pag. antecip.', 'Adicionar gItemNaoFornecido? (S/N)', lAux);
+      InputQuery('WebServices Eventos: Fornecimento n√£o realizado, pag. antecip.', 'Adicionar gItemNaoFornecido? (S/N)', lAux);
     until (UpperCase(lAux) <> 'S');
 
     ACBrNFe1.EnviarEvento(StrToIntDef(lidLote, 1));
@@ -4259,7 +4358,7 @@ begin
 
   if Trim(vNumLote) = '' then
   begin
-    MessageDlg('N˙mero do Lote inv·lido.',mtError,[mbok],0);
+    MessageDlg('N√∫mero do Lote inv√°lido.',mtError,[mbok],0);
     exit;
   end;
 
@@ -4344,19 +4443,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: ImobilizaÁ„o de Item', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Imobiliza√ß√£o de Item', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: ImobilizaÁ„o de Item', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Imobiliza√ß√£o de Item', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: ImobilizaÁ„o de Item', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Imobiliza√ß√£o de Item', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: ImobilizaÁ„o de Item', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Imobiliza√ß√£o de Item', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -4373,19 +4472,19 @@ begin
     lAux := 'S';
     repeat
       lnItem := '1';
-      InputQuery('WebServices Eventos: Imobiliz„Á„o de Item', 'Informe nItem', lnItem);
+      InputQuery('WebServices Eventos: Imobiliz√£√ß√£o de Item', 'Informe nItem', lnItem);
 
       lvIBS := '1';
-      InputQuery('WebServices Eventos: Imobiliz„Á„o de Item', 'Informe vIBS', lvIBS);
+      InputQuery('WebServices Eventos: Imobiliz√£√ß√£o de Item', 'Informe vIBS', lvIBS);
 
       lvCBS := '1';
-      InputQuery('WebServices Eventos: Imobiliz„Á„o de Item', 'Informe vCBS', lvCBS);
+      InputQuery('WebServices Eventos: Imobiliz√£√ß√£o de Item', 'Informe vCBS', lvCBS);
 
       lqImobilizado := '1';
-      InputQuery('WebServices Eventos: Imobiliz„Á„o de Item', 'Informe qtde', lqImobilizado);
+      InputQuery('WebServices Eventos: Imobiliz√£√ß√£o de Item', 'Informe qtde', lqImobilizado);
 
       luImobilizado := 'UNIDAD';
-      InputQuery('WebServices Eventos: Imobiliz„Á„o de Item', 'Informe unidade', luImobilizado);
+      InputQuery('WebServices Eventos: Imobiliz√£√ß√£o de Item', 'Informe unidade', luImobilizado);
 
       lgImobilizacao := lEvento.InfEvento.detEvento.gImobilizacao.New;
       lgImobilizacao.nItem := StrToIntDef(lnItem, 1);
@@ -4394,7 +4493,7 @@ begin
       lgImobilizacao.gControleEstoque.qImobilizado := StrToFloatDef(lqImobilizado, 1);
       lgImobilizacao.gControleEstoque.uImobilizado := luImobilizado;
 
-      InputQuery('WebServices Eventos: Imobiliz„Á„o de Item', 'Adicionar gImobilizacao? (S/N)', lAux);
+      InputQuery('WebServices Eventos: Imobiliz√£√ß√£o de Item', 'Adicionar gImobilizacao? (S/N)', lAux);
     until (UpperCase(lAux) <> 'S');
 
     ACBrNFe1.EnviarEvento(StrToIntDef(lidLote, 1));
@@ -4442,19 +4541,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: ImportarÁ„o ALC/ZFM', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Importar√ß√£o ALC/ZFM', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -4471,19 +4570,19 @@ begin
     lAux := 'S';
     repeat
       lnItem := '1';
-      InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Informe nItem', lnItem);
+      InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Informe nItem', lnItem);
 
       lvIBS := '1';
-      InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Informe vIBS', lvIBS);
+      InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Informe vIBS', lvIBS);
 
       lvCBS := '1';
-      InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Informe vCBS', lvCBS);
+      InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Informe vCBS', lvCBS);
 
       lqtde := '1';
-      InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Informe qtde', lqtde);
+      InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Informe qtde', lqtde);
 
       lunidade := 'UNIDAD';
-      InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Informe unidade', lunidade);
+      InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Informe unidade', lunidade);
 
       lgConsumo := lEvento.InfEvento.detEvento.gConsumoZFM.New;
       lgConsumo.nItem := StrToIntDef(lnItem, 1);
@@ -4492,7 +4591,7 @@ begin
       lgConsumo.gControleEstoque.qtde := StrToFloatDef(lqtde, 1);
       lgConsumo.gControleEstoque.unidade := lunidade;
 
-      InputQuery('WebServices Eventos: ImportaÁ„o ALC/ZFM', 'Adicionar gConsumo? (S/N)', lAux);
+      InputQuery('WebServices Eventos: Importa√ß√£o ALC/ZFM', 'Adicionar gConsumo? (S/N)', lAux);
     until (UpperCase(lAux) <> 'S');
 
     ACBrNFe1.EnviarEvento(StrToIntDef(lidLote, 1));
@@ -4524,39 +4623,39 @@ end;
 
 procedure TfrmACBrNFe.btnImportarXMLClick(Sender: TObject);
 //var
-////  i, j, k, n: integer;
-////  Nota, Node, NodePai, NodeItem: TTreeNode;
+//  i, j, k, n: integer;
+//  Nota, Node, NodePai, NodeItem: TTreeNode;
 //  NFeRTXT: TNFeRTXT;
 begin
-  //OpenDialog1.FileName  :=  '';
-  //OpenDialog1.Title := 'Selecione a NFe';
-  //OpenDialog1.DefaultExt := '*-nfe.XML';
-  //OpenDialog1.Filter := 'Arquivos NFe (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Arquivos TXT (*.TXT)|*.TXT|Todos os Arquivos (*.*)|*.*';
-  //
-  //OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
-  //
-  //if OpenDialog1.Execute then
-  //begin
-  //  ACBrNFe1.NotasFiscais.Clear;
-  //  //tenta TXT
-  //  ACBrNFe1.NotasFiscais.Add;
-  //  NFeRTXT := TNFeRTXT.Create(ACBrNFe1.NotasFiscais.Items[0].NFe);
-  //  NFeRTXT.CarregarArquivo(OpenDialog1.FileName);
-  //  if NFeRTXT.LerTxt then
-  //     NFeRTXT.Free
-  //  else
-  //  begin
-  //     NFeRTXT.Free;
-  //     //tenta XML
-  //     ACBrNFe1.NotasFiscais.Clear;
-  //     try
-  //        ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-  //     except
-  //        ShowMessage('Arquivo NFe Inv·lido');
-  //        exit;
-  //     end;
-  //  end;
-  //end;
+//  OpenDialog1.FileName  :=  '';
+//  OpenDialog1.Title := 'Selecione a NFe';
+//  OpenDialog1.DefaultExt := '*-nfe.XML';
+//  OpenDialog1.Filter := 'Arquivos NFe (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Arquivos TXT (*.TXT)|*.TXT|Todos os Arquivos (*.*)|*.*';
+//
+//  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+//
+//  if OpenDialog1.Execute then
+//  begin
+//    ACBrNFe1.NotasFiscais.Clear;
+//    //tenta TXT
+//    ACBrNFe1.NotasFiscais.Add;
+//    NFeRTXT := TNFeRTXT.Create(ACBrNFe1.NotasFiscais.Items[0].NFe);
+//    NFeRTXT.CarregarArquivo(OpenDialog1.FileName);
+//    if NFeRTXT.LerTxt then
+//       NFeRTXT.Free
+//    else
+//    begin
+//       NFeRTXT.Free;
+////       tenta XML
+//       ACBrNFe1.NotasFiscais.Clear;
+//       try
+//          ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+//       except
+//          ShowMessage('Arquivo NFe Inv√°lido');
+//          exit;
+//       end;
+//    end;
+//  end;
 end;
 
 procedure TfrmACBrNFe.btnImprimirClick(Sender: TObject);
@@ -4570,6 +4669,9 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.NotasFiscais.Clear;
+    {Se Escpos e danfe simplificado tipo 2, joga em escpos}
+    if (ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1) and (ACBrNFe1.DANFE.TipoDANFE = tiSimplificadoTipo2) then
+      PrepararImpressao;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
@@ -4585,7 +4687,7 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    //if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+    if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
       PrepararImpressao;
 
     ACBrNFe1.NotasFiscais.Clear;
@@ -4604,7 +4706,7 @@ begin
 
   if OpenDialog1.Execute then
   begin
-    //if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+    if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
       PrepararImpressao;
 
     ACBrNFe1.NotasFiscais.Clear;
@@ -4646,22 +4748,22 @@ var
   Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa: String;
 begin
  Ano := '';
- if not(InputQuery('WebServices InutilizaÁ„o ', 'Ano',    Ano)) then
+ if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Ano',    Ano)) then
     exit;
  Modelo := '';
- if not(InputQuery('WebServices InutilizaÁ„o ', 'Modelo', Modelo)) then
+ if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Modelo', Modelo)) then
     exit;
  Serie := '';
- if not(InputQuery('WebServices InutilizaÁ„o ', 'Serie',  Serie)) then
+ if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Serie',  Serie)) then
     exit;
  NumeroInicial := '';
- if not(InputQuery('WebServices InutilizaÁ„o ', 'N˙mero Inicial', NumeroInicial)) then
+ if not(InputQuery('WebServices Inutiliza√ß√£o ', 'N√∫mero Inicial', NumeroInicial)) then
     exit;
  NumeroFinal := '';
- if not(InputQuery('WebServices InutilizaÁ„o ', 'N˙mero Final', NumeroFinal)) then
+ if not(InputQuery('WebServices Inutiliza√ß√£o ', 'N√∫mero Final', NumeroFinal)) then
     exit;
  Justificativa := '';
- if not(InputQuery('WebServices InutilizaÁ„o ', 'Justificativa', Justificativa)) then
+ if not(InputQuery('WebServices Inutiliza√ß√£o ', 'Justificativa', Justificativa)) then
     exit;
 
   ACBrNFe1.WebServices.Inutiliza(edtEmitCNPJ.Text, Justificativa, StrToInt(Ano), StrToInt(Modelo), StrToInt(Serie), StrToInt(NumeroInicial), StrToInt(NumeroFinal));
@@ -4675,7 +4777,7 @@ begin
 //  ArqXML := ACBrNFe1.WebServices.Inutilizacao.XML_ProcInutNFe;
 
   MemoDados.Lines.Add('');
-  MemoDados.Lines.Add('InutilizaÁ„o');
+  MemoDados.Lines.Add('Inutiliza√ß√£o');
   MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrNFe1.WebServices.Inutilizacao.tpAmb));
   MemoDados.Lines.Add('verAplic: ' + ACBrNFe1.WebServices.Inutilizacao.verAplic);
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrNFe1.WebServices.Inutilizacao.cStat));
@@ -4693,7 +4795,7 @@ end;
 
 procedure TfrmACBrNFe.btnInutilizarImprimirClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione o InutilizaÁ„o';
+  OpenDialog1.Title := 'Selecione o Inutiliza√ß√£o';
   OpenDialog1.DefaultExt := '*.XML';
   OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
@@ -4750,17 +4852,17 @@ begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromIni(OpenDialog1.FileName);
     ACBrNFe1.NotasFiscais.Assinar;
-//    ACBrNFe1.NotasFiscais.GravarXML();
+    ACBrNFe1.NotasFiscais.GravarXML();
 
     memoLog.Lines.Add('Arquivo gerado em: ' + ACBrNFe1.NotasFiscais[0].NomeArq);
 
     try
-//      ACBrNFe1.NotasFiscais.Validar;
+      ACBrNFe1.NotasFiscais.Validar;
 
       if ACBrNFe1.NotasFiscais[0].Alertas <> '' then
         MemoDados.Lines.Add('Alertas: '+ACBrNFe1.NotasFiscais[0].Alertas);
 
-      ShowMessage('Nota Fiscal EletrÙnica Valida');
+      ShowMessage('Nota Fiscal Eletr√¥nica Valida');
     except
       on E: Exception do
       begin
@@ -4788,7 +4890,7 @@ begin
   if OpenDialog1.Execute then
   begin
     lIdLote := '1';
-    if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Identificador de controle do Lote de envio do Evento', lIdLote)) then
+    if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Identificador de controle do Lote de envio do Evento', lIdLote)) then
        exit;
     ACBrNFe1.EventoNFe.Evento.Clear;
     ACBrNFe1.EventoNFe.LerFromIni(OpenDialog1.FileName, False);
@@ -4829,7 +4931,7 @@ begin
   if OpenDialog1.Execute then
   begin
     lIdLote := '1';
-    if not(InputQuery('WebServices Eventos: Cancelamento GenÈrico', 'Identificador de controle do Lote de envio do Evento', lIdLote)) then
+    if not(InputQuery('WebServices Eventos: Cancelamento Gen√©rico', 'Identificador de controle do Lote de envio do Evento', lIdLote)) then
        exit;
     ACBrNFe1.EventoNFe.Evento.Clear;
     ACBrNFe1.EventoNFe.LerFromJSON(OpenDialog1.FileName);
@@ -4871,7 +4973,7 @@ begin
   else
     AtpEvento := teNaoMapeado;
 
-  Titulo := 'ManifestaÁ„o Destinatario - ' + StringReplace(TpEventoToDescStr(AtpEvento),'ManifDest','',[rfReplaceAll]);
+  Titulo := 'Manifesta√ß√£o Destinatario - ' + StringReplace(TpEventoToDescStr(AtpEvento),'ManifDest','',[rfReplaceAll]);
 
   Chave:='';
   if not(InputQuery(Titulo, 'Chave da NF-e', Chave)) then
@@ -4896,25 +4998,25 @@ begin
   with ACBrNFe1.EventoNFe.Evento.New do
   begin
     {
-     Como os Eventos de ManifestaÁ„o do Destinat·rio s„o enviados para o
-     Ambiente Nacional, o cÛdigo informado em cOrgao deve ser sempre 91
+     Como os Eventos de Manifesta√ß√£o do Destinat√°rio s√£o enviados para o
+     Ambiente Nacional, o c√≥digo informado em cOrgao deve ser sempre 91
     }
     InfEvento.cOrgao   := 91;
     infEvento.chNFe    := Chave;
-    infEvento.CNPJ     := CNPJ; // CNPJ/CPF do Destinat·rio da Mercadoria
+    infEvento.CNPJ     := CNPJ; // CNPJ/CPF do Destinat√°rio da Mercadoria
     infEvento.dhEvento := now;
     {
-     Tipos de Eventos de ManifestaÁ„o do Destinat·rio:
-       teManifDestConfirmacao      = ConfirmaÁ„o da OperaÁ„o
-       teManifDestCiencia          = CiÍncia da OperaÁ„o
-       teManifDestDesconhecimento  = Desconhecimento da OperaÁ„o
-       teManifDestOperNaoRealizada = OperaÁ„o N„o Realizada
+     Tipos de Eventos de Manifesta√ß√£o do Destinat√°rio:
+       teManifDestConfirmacao      = Confirma√ß√£o da Opera√ß√£o
+       teManifDestCiencia          = Ci√™ncia da Opera√ß√£o
+       teManifDestDesconhecimento  = Desconhecimento da Opera√ß√£o
+       teManifDestOperNaoRealizada = Opera√ß√£o N√£o Realizada
     }
     infEvento.tpEvento := AtpEvento;
 
     {
-     Se o tipo for: teManifDestOperNaoRealizada, È obrigatÛrio informar a justificativa
-     Se o tipo for: teManifDestDesconhecimento, È opcional informar a justificativa
+     Se o tipo for: teManifDestOperNaoRealizada, √© obrigat√≥rio informar a justificativa
+     Se o tipo for: teManifDestDesconhecimento, √© opcional informar a justificativa
     }
     InfEvento.detEvento.xJust := Justificativa;
   end;
@@ -4963,27 +5065,27 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: ManifestaÁ„o Transf. CrÈd. IBS e CBS', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Manifesta√ß√£o Transf. Cr√©d. IBS e CBS', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: ManifestaÁ„o Transf. CrÈd. IBS e CBS', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Manifesta√ß√£o Transf. Cr√©d. IBS e CBS', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: ManifestaÁ„o Transf. CrÈd. IBS e CBS', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Manifesta√ß√£o Transf. Cr√©d. IBS e CBS', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: ManifestaÁ„o Transf. CrÈd. IBS e CBS', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Manifesta√ß√£o Transf. Cr√©d. IBS e CBS', 'UF do emitente do Evento', lUF)) then
        exit;
 
     lIBSCBS := '';
-    if not(InputQuery('WebServices Eventos: ManifestaÁ„o Transf. CrÈd. IBS e CBS', 'Defina entre "IBS" ou "CBS"', lIBSCBS)) then
+    if not(InputQuery('WebServices Eventos: Manifesta√ß√£o Transf. Cr√©d. IBS e CBS', 'Defina entre "IBS" ou "CBS"', lIBSCBS)) then
        exit;
 
     lIndAceitacao := '0';
-    if not(InputQuery('WebServices Eventos: ManifestaÁ„o Transf. CrÈd. IBS e CBS', 'Indicador de aceitaÁ„o do valor', lindAceitacao)) then
+    if not(InputQuery('WebServices Eventos: Manifesta√ß√£o Transf. Cr√©d. IBS e CBS', 'Indicador de aceita√ß√£o do valor', lindAceitacao)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -4994,7 +5096,7 @@ begin
     else if UpperCase(lIBSCBS) = 'CBS' then
       lEvento.InfEvento.tpEvento := teManifPedTransfCredCBSSucessao
     else
-      raise Exception.Create('… preciso definir o tpEvento escolhendo entre IBS ou CBS');
+      raise Exception.Create('√â preciso definir o tpEvento escolhendo entre IBS ou CBS');
 
     lEvento.InfEvento.dhEvento := Now;
     lEvento.InfEvento.chNFe := OnlyNumber(ACBrNFe1.NotasFiscais[0].NFe.infNFe.ID);
@@ -5053,19 +5155,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: InformaÁ„o Efetiv. Pag. Integral Libera Cred. Pres.', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Informa√ß√£o Efetiv. Pag. Integral Libera Cred. Pres.', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: InformaÁ„o Efetiv. Pag. Integral Libera Cred. Pres.', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Informa√ß√£o Efetiv. Pag. Integral Libera Cred. Pres.', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: InformaÁ„o Efetiv. Pag. Integral Libera Cred. Pres.', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Informa√ß√£o Efetiv. Pag. Integral Libera Cred. Pres.', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: InformaÁ„o Efetiv. Pag. Integral Libera Cred. Pres.', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Informa√ß√£o Efetiv. Pag. Integral Libera Cred. Pres.', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -5132,7 +5234,7 @@ begin
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: Perecimento em transp. pelo contratado fornecedor', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Perecimento em transp. pelo contratado fornecedor', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
@@ -5230,7 +5332,7 @@ begin
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: Perecimento em transp. pelo contratado fornecedor', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Perecimento em transp. pelo contratado fornecedor', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
@@ -5337,19 +5439,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -5366,33 +5468,33 @@ begin
     lAux := 'S';
     repeat
       lnItem := '1';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe nItem', lnItem);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe nItem', lnItem);
 
       lvBC := '1';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe vBC', lvBC);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe vBC', lvBC);
 
       lIBScCredPres := '01';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe cCredPres do IBS', lIBScCredPres);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe cCredPres do IBS', lIBScCredPres);
 
       lIBSpCredPres := '1';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe pCredPres do IBS', lIBSpCredPres);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe pCredPres do IBS', lIBSpCredPres);
 
       lIBSvCredPres := '1';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe vCredPres do IBS', lIBSvCredPres);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe vCredPres do IBS', lIBSvCredPres);
 
       lCBScCredPres := '01';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe cCredPres da CBS', lCBScCredPres);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe cCredPres da CBS', lCBScCredPres);
 
       lCBSpCredPres := '1';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe pCredPres da CBS', lCBSpCredPres);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe pCredPres da CBS', lCBSpCredPres);
 
       lCBSvCredPres := '1';
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Informe vCredPres da CBS', lCBSvCredPres);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Informe vCredPres da CBS', lCBSvCredPres);
 
       lgCredPres := lEvento.InfEvento.detEvento.gCredPres.New;
       lgCredPres.nItem := StrToIntDef(lnItem, 1);
       lgCredPres.vBCCredPres := StrToFloatDef(lvBC, 0);
-      lgCredPres.cCredPres := StrTocCredPres(lIBScCredPres);;
+      lgCredPres.cCredPres := StrTocCredPres(lIBScCredPres);
 
       lgCredPres.gIBSCredPres.pCredPres := StrToFloatDef(lIBSpCredPres, 0);
       lgCredPres.gIBSCredPres.vCredPres := StrToFloatDef(lIBSvCredPres, 0);
@@ -5401,7 +5503,7 @@ begin
       lgCredPres.gCBSCredPres.vCredPres := StrToFloatDef(lCBSvCredPres, 0);
 
 
-      InputQuery('WebServices Eventos: Solic. ApropriaÁ„o CrÈd. Presumido', 'Adicionar gCredPres? (S/N)', lAux);
+      InputQuery('WebServices Eventos: Solic. Apropria√ß√£o Cr√©d. Presumido', 'Adicionar gCredPres? (S/N)', lAux);
     until (UpperCase(lAux) <> 'S');
 
     ACBrNFe1.EnviarEvento(StrToIntDef(lidLote, 1));
@@ -5449,19 +5551,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -5478,20 +5580,20 @@ begin
     lAux := 'S';
     repeat
       lnItem := '1';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'Informe nItem', lnItem);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'Informe nItem', lnItem);
 
       lvCredIBS := '1';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'Informe vCredIBS', lvCredIBS);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'Informe vCredIBS', lvCredIBS);
 
       lvCredCBS := '1';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'Informe vCredCBS', lvCredCBS);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'Informe vCredCBS', lvCredCBS);
 
       lgCredito := lEvento.InfEvento.detEvento.gCredito.New;
       lgCredito.nItem := StrToIntDef(lnItem, 1);
       lgCredito.vCredIBS := StrToFloatDef(lvCredIBS, 0);
       lgCredito.vCredCBS := StrToFloatDef(lvCredCBS, 0);
 
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. Bens Adiq.', 'Adicionar gCredito? (S/N)', lAux);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Bens Adiq.', 'Adicionar gCredito? (S/N)', lAux);
     until (UpperCase(lAux) <> 'S');
 
     ACBrNFe1.EnviarEvento(StrToIntDef(lidLote, 1));
@@ -5539,19 +5641,19 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
     lidLote := '1';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Identificador de controle do Lote de envio do Evento', lidLote)) then
        exit;
 
     lnSeqEvento := '1';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Numero sequencial do evento', lnSeqEvento)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Numero sequencial do evento', lnSeqEvento)) then
        exit;
 
     lVerAplic := '1.00';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Vers„o do Aplicativo do emitente', lVerAplic)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Vers√£o do Aplicativo do emitente', lVerAplic)) then
        exit;
 
     lUF := 'SP';
-    if not(InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'UF do emitente do Evento', lUF)) then
+    if not(InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'UF do emitente do Evento', lUF)) then
        exit;
 
     ACBrNFe1.EventoNFe.Evento.Clear;
@@ -5568,19 +5670,19 @@ begin
     lAux := 'S';
     repeat
       lnItem := '1';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Informe nItem', lnItem);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Informe nItem', lnItem);
 
       lvIBS := '1';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Informe vIBS', lvIBS);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Informe vIBS', lvIBS);
 
       lvCBS := '1';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Informe vCBS', lvCBS);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Informe vCBS', lvCBS);
 
       lqComb := '1';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Informe qtde', lqComb);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Informe qtde', lqComb);
 
       luComb := 'UNIDAD';
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Informe unidade', luComb);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Informe unidade', luComb);
 
       lgConsumoComb := lEvento.InfEvento.detEvento.gConsumoComb.New;
       lgConsumoComb.nItem := StrToIntDef(lnItem, 1);
@@ -5589,7 +5691,7 @@ begin
       lgConsumoComb.gControleEstoque.qComb := StrToFloatDef(lqComb, 1);
       lgConsumoComb.gControleEstoque.uComb := luComb;
 
-      InputQuery('WebServices Eventos: SolicitaÁ„o Aprop. CrÈd. CombustÌvel', 'Adicionar gConsumoComb? (S/N)', lAux);
+      InputQuery('WebServices Eventos: Solicita√ß√£o Aprop. Cr√©d. Combust√≠vel', 'Adicionar gConsumoComb? (S/N)', lAux);
     until (UpperCase(lAux) <> 'S');
 
     ACBrNFe1.EnviarEvento(StrToIntDef(lidLote, 1));
@@ -5630,7 +5732,7 @@ begin
   pgRespostas.ActivePageIndex := 1;
 
   MemoDados.Lines.Add('');
-  MemoDados.Lines.Add('Status ServiÁo');
+  MemoDados.Lines.Add('Status Servi√ßo');
   MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrNFe1.WebServices.StatusServico.tpAmb));
   MemoDados.Lines.Add('verAplic: ' +ACBrNFe1.WebServices.StatusServico.verAplic);
   MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrNFe1.WebServices.StatusServico.cStat));
@@ -5645,7 +5747,7 @@ end;
 procedure TfrmACBrNFe.btnSubNameClick(Sender: TObject);
 begin
   ShowMessage(ACBrNFe1.SSL.CertSubjectName + sLineBreak + sLineBreak +
-              'Raz„o Social: ' + ACBrNFe1.SSL.CertRazaoSocial);
+              'Raz√£o Social: ' + ACBrNFe1.SSL.CertRazaoSocial);
 end;
 
 procedure TfrmACBrNFe.btnValidarAssinaturaClick(Sender: TObject);
@@ -5670,13 +5772,13 @@ begin
       MemoResp.Lines.Add('Erro: '+Msg)
     else
     begin
-      MemoResp.Lines.Add('OK: Assinatura V·lida');
+      MemoResp.Lines.Add('OK: Assinatura V√°lida');
       ACBrNFe1.SSL.CarregarCertificadoPublico( ACBrNFe1.NotasFiscais[0].NFe.signature.X509Certificate );
       MemoResp.Lines.Add('Assinado por: '+ ACBrNFe1.SSL.CertRazaoSocial);
       MemoResp.Lines.Add('CNPJ: '+ ACBrNFe1.SSL.CertCNPJ);
-      MemoResp.Lines.Add('Num.SÈrie: '+ ACBrNFe1.SSL.CertNumeroSerie);
+      MemoResp.Lines.Add('Num.S√©rie: '+ ACBrNFe1.SSL.CertNumeroSerie);
 
-      ShowMessage('ASSINATURA V¡LIDA');
+      ShowMessage('ASSINATURA V√ÅLIDA');
     end;
   end;
 end;
@@ -5719,7 +5821,7 @@ begin
 
   OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
 
-  // Sugest„o de configuraÁ„o para apresentaÁ„o de mensagem mais amig·vel ao usu·rio final
+  // Sugest√£o de configura√ß√£o para apresenta√ß√£o de mensagem mais amig√°vel ao usu√°rio final
   ACBrNFe1.Configuracoes.Geral.ExibirErroSchema := False;
   ACBrNFe1.Configuracoes.Geral.FormatoAlerta := 'Campo:%DESCRICAO% - %MSG%';
 
@@ -5735,7 +5837,7 @@ begin
       if ACBrNFe1.NotasFiscais.Items[0].Alertas <> '' then
         MemoDados.Lines.Add('Alertas: '+ACBrNFe1.NotasFiscais.Items[0].Alertas);
 
-      ShowMessage('Nota Fiscal EletrÙnica Valida');
+      ShowMessage('Nota Fiscal Eletr√¥nica Valida');
     except
       on E: Exception do
       begin
@@ -5979,7 +6081,7 @@ begin
     Ini.WriteString('Emitente', 'UF',          edtEmitUF.Text);
     Ini.WriteInteger('Emitente', 'CRT',        cbTipoEmpresa.ItemIndex);
 
-    // Respons·vel TÈcnico
+    // Respons√°vel T√©cnico
     Ini.WriteString('RespTecnico', 'IdCSRT', edtIdCSRT.Text);
     Ini.WriteString('RespTecnico', 'CSRT', edtCSRT.Text);
 
@@ -6108,7 +6210,7 @@ begin
 
     cbTipoEmpresa.ItemIndex := Ini.ReadInteger('Emitente', 'CRT', 2);
 
-    // Respons·vel TÈcnico
+    // Respons√°vel T√©cnico
     edtIdCSRT.Text := Ini.ReadString('RespTecnico', 'IdCSRT', '');
     edtCSRT.Text := Ini.ReadString('RespTecnico', 'CSRT', '');
 
@@ -6146,6 +6248,12 @@ begin
 end;
 
 procedure TfrmACBrNFe.ConfigurarComponente;
+const
+  // Mapeia o ItemIndex do RadioGroup rgTipoDanfe para o enum TACBrTipoImpressao.
+  // Precisa ser um mapeamento explicito (nao sequencial), pois o enum tem
+  // valores no meio (tiNFCe, tiMsgEletronica) que este exemplo nao expoe na UI.
+  CTipoDanfeMap: array[0..3] of TACBrTipoImpressao =
+    (tiRetrato, tiPaisagem, tiSimplificado, tiSimplificadoTipo2);
 var
   Ok: Boolean;
   PathMensal: string;
@@ -6155,16 +6263,16 @@ begin
   ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
   ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
-  //if cbModeloDF.ItemIndex = 0 then
-  //  //ACBrNFe1.DANFE := ACBrNFeDANFeRL1
-  //else
-  //begin
-  //  case rgDANFCE.ItemIndex of
-  //    0: ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
-  //    1: ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
-  //    2: ACBrNFe1.DANFE := ACBrNFeDANFCeFortesA41;
-  //  end;
-  //end;
+  if (cbModeloDF.ItemIndex = 0) and (CTipoDanfeMap[rgTipoDanfe.ItemIndex] <> tiSimplificadoTipo2) then
+    ACBrNFe1.DANFE := ACBrNFeDANFeRL1
+  else
+  begin
+    case rgDANFCE.ItemIndex of
+      0: ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+      1: ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+      2: ACBrNFe1.DANFE := ACBrNFeDANFCeFortesA41;
+    end;
+  end;
 
   ACBrNFe1.SSL.DescarregarCertificado;
 
@@ -6242,17 +6350,17 @@ begin
     PathSalvar       := PathMensal;
   end;
 
-  // IdCSRT e CSRT do Respons·vel TÈcnico, no momento sÛ a SEFAZ-PR esta exigindo
+  // IdCSRT e CSRT do Respons√°vel T√©cnico, no momento s√≥ a SEFAZ-PR esta exigindo
   ACBrNFe1.Configuracoes.RespTec.idCSRT := StrToIntDef(edtIdCSRT.Text, 0);
   ACBrNFe1.Configuracoes.RespTec.CSRT := edtCSRT.Text;
 
   if ACBrNFe1.DANFE <> nil then
   begin
-    ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
+    ACBrNFe1.DANFE.TipoDANFE := CTipoDanfeMap[rgTipoDanfe.ItemIndex];
 
     {
-      A ConfiguraÁ„o abaixo utilizanda em conjunto com o TipoDANFE = tiSimplificado
-      para impress„o do DANFE Simplificado - Etiqueta (Fortes Report)
+      A Configura√ß√£o abaixo utilizanda em conjunto com o TipoDANFE = tiSimplificado
+      para impress√£o do DANFE Simplificado - Etiqueta (Fortes Report)
 
     ACBrNFeDANFeRL1.Etiqueta := True;
     }
@@ -6297,6 +6405,7 @@ begin
   // exibe resposta
   SynEdit.Text := Trim(vText);
 end;
+
 
 procedure TfrmACBrNFe.PathClick(Sender: TObject);
 var
@@ -6381,54 +6490,62 @@ var
   I: Integer;
 //  ASerie: String;
   AddRow: Boolean;
+  frmSelecionarCertificado:TfrmSelecionarCertificado;
 begin
-  ACBrNFe1.SSL.LerCertificadosStore;
-  AddRow := False;
+  frmSelecionarCertificado := TfrmSelecionarCertificado.Create(self);
+  try
+    ACBrNFe1.SSL.LerCertificadosStore;
+    AddRow := False;
 
-  with frmSelecionarCertificado.StringGrid1 do
-  begin
-    ColWidths[0] := 220;
-    ColWidths[1] := 250;
-    ColWidths[2] := 120;
-    ColWidths[3] := 80;
-    ColWidths[4] := 150;
-
-    Cells[0, 0] := 'Num.SÈrie';
-    Cells[1, 0] := 'Raz„o Social';
-    Cells[2, 0] := 'CNPJ';
-    Cells[3, 0] := 'Validade';
-    Cells[4, 0] := 'Certificadora';
-  end;
-
-  for I := 0 to ACBrNFe1.SSL.ListaCertificados.Count-1 do
-  begin
-    with ACBrNFe1.SSL.ListaCertificados[I] do
+    with frmSelecionarCertificado.StringGrid1 do
     begin
-//      ASerie := NumeroSerie;
+      ColWidths[0] := 220;
+      ColWidths[1] := 250;
+      ColWidths[2] := 120;
+      ColWidths[3] := 80;
+      ColWidths[4] := 150;
 
-      if (CNPJ <> '') then
+      Cells[0, 0] := 'Num.S√©rie';
+      Cells[1, 0] := 'Raz√£o Social';
+      Cells[2, 0] := 'CNPJ';
+      Cells[3, 0] := 'Validade';
+      Cells[4, 0] := 'Certificadora';
+    end;
+
+    for I := 0 to ACBrNFe1.SSL.ListaCertificados.Count-1 do
+    begin
+      with ACBrNFe1.SSL.ListaCertificados[I] do
       begin
-        with frmSelecionarCertificado.StringGrid1 do
+  //      ASerie := NumeroSerie;
+
+        if (CNPJ <> '') then
         begin
-          if Addrow then
-            RowCount := RowCount + 1;
+          with frmSelecionarCertificado.StringGrid1 do
+          begin
+            if Addrow then
+              RowCount := RowCount + 1;
 
-          Cells[0, RowCount-1] := NumeroSerie;
-          Cells[1, RowCount-1] := RazaoSocial;
-          Cells[2, RowCount-1] := CNPJ;
-          Cells[3, RowCount-1] := FormatDateBr(DataVenc);
-          Cells[4, RowCount-1] := Certificadora;
+            Cells[0, RowCount-1] := NumeroSerie;
+            Cells[1, RowCount-1] := RazaoSocial;
+            Cells[2, RowCount-1] := CNPJ;
+            Cells[3, RowCount-1] := FormatDateBr(DataVenc);
+            Cells[4, RowCount-1] := Certificadora;
 
-          AddRow := True;
+            AddRow := True;
+          end;
         end;
       end;
     end;
+
+    frmSelecionarCertificado.ShowModal;
+
+    if frmSelecionarCertificado.ModalResult = mrOK then
+      edtNumSerie.Text := frmSelecionarCertificado.StringGrid1.Cells[0, frmSelecionarCertificado.StringGrid1.Row];
+
+  finally
+    frmSelecionarCertificado.free;
   end;
 
-  frmSelecionarCertificado.ShowModal;
-
-  if frmSelecionarCertificado.ModalResult = mrOK then
-    edtNumSerie.Text := frmSelecionarCertificado.StringGrid1.Cells[0, frmSelecionarCertificado.StringGrid1.Row];
 end;
 
 procedure TfrmACBrNFe.sbtnPathSalvarClick(Sender: TObject);

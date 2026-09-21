@@ -35,9 +35,7 @@ unit Frm_Status;
 interface
 
 uses
-  LCLIntf,
-  LCLType,
-  LMessages,
+  LCLIntf, LCLType, LMessages,
   Messages,
   SysUtils,
   Variants,
@@ -59,7 +57,6 @@ type
   public
     { Public declarations }
   end;
-
 var
   frmStatus: TfrmStatus;
 
@@ -68,3 +65,4 @@ implementation
 {$R *.lfm}
 
 end.
+

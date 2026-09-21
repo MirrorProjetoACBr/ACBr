@@ -83,7 +83,7 @@ type
     procedure VerificaFlow;
   public
     { Public declarations }
-    Device : TACBrDevice;
+    Device: TACBrDevice;
   end;
 
 var
@@ -107,13 +107,13 @@ end;
 
 procedure TfrmConfiguraSerial.FormShow(Sender: TObject);
 begin
-  cmbBaudRate.ItemIndex    := cmbBaudRate.Items.IndexOf(IntToStr( Device.Baud ));
-  cmbDataBits.ItemIndex    := cmbDataBits.Items.IndexOf(IntToStr( Device.Data ));
-  cmbParity.ItemIndex      := Integer( Device.Parity );
-  cmbStopBits.ItemIndex    := Integer( Device.Stop );
-  chHardFlow.Checked       := Device.HardFlow;
-  chSoftFlow.Checked       := Device.SoftFlow;
-  cmbHandShaking.ItemIndex := Integer( Device.HandShake );
+  cmbBaudRate.ItemIndex := cmbBaudRate.Items.IndexOf(IntToStr(Device.Baud));
+  cmbDataBits.ItemIndex := cmbDataBits.Items.IndexOf(IntToStr(Device.Data));
+  cmbParity.ItemIndex := Integer(Device.Parity);
+  cmbStopBits.ItemIndex := Integer(Device.Stop);
+  chHardFlow.Checked := Device.HardFlow;
+  chSoftFlow.Checked := Device.SoftFlow;
+  cmbHandShaking.ItemIndex := Integer(Device.HandShake);
 end;
 
 procedure TfrmConfiguraSerial.cmbPortaSerialChange(Sender: TObject);
@@ -133,17 +133,17 @@ end;
 
 procedure TfrmConfiguraSerial.cmbParityChange(Sender: TObject);
 begin
-  Device.Parity := TACBrSerialParity( cmbParity.ItemIndex );
+  Device.Parity := TACBrSerialParity(cmbParity.ItemIndex);
 end;
 
 procedure TfrmConfiguraSerial.cmbStopBitsChange(Sender: TObject);
 begin
-  Device.Stop := TACBrSerialStop( cmbStopBits.ItemIndex );
+  Device.Stop := TACBrSerialStop(cmbStopBits.ItemIndex);
 end;
 
 procedure TfrmConfiguraSerial.cmbHandShakingChange(Sender: TObject);
 begin
-  Device.HandShake := TACBrHandShake( cmbHandShaking.ItemIndex );
+  Device.HandShake := TACBrHandShake(cmbHandShaking.ItemIndex);
   VerificaFlow;
 end;
 
@@ -161,7 +161,7 @@ end;
 
 procedure TfrmConfiguraSerial.VerificaFlow;
 begin
-  cmbHandShaking.ItemIndex := Integer( Device.HandShake );
+  cmbHandShaking.ItemIndex := Integer(Device.HandShake);
   chHardFlow.Checked := Device.HardFlow;
   chSoftFlow.Checked := Device.SoftFlow;
 end;

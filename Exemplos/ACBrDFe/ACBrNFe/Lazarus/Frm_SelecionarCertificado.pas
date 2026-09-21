@@ -35,20 +35,12 @@ unit Frm_SelecionarCertificado;
 interface
 
 uses
-  Classes,
-  SysUtils,
-  Forms,
-  Controls,
-  Graphics,
-  Dialogs,
-  StdCtrls,
-  Grids,
-  ExtCtrls,
-  Buttons;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Grids, ExtCtrls, Buttons;
 
 type
 
-  { TfrmSelecionarCertificado }
+  { TfrSelecionarCertificado }
 
   TfrmSelecionarCertificado = class(TForm)
     BitBtn1: TBitBtn;
@@ -61,8 +53,6 @@ type
     { public declarations }
   end;
 
-var
-  frmSelecionarCertificado: TfrmSelecionarCertificado;
 
 implementation
 
