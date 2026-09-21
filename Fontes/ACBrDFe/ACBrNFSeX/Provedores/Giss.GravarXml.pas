@@ -112,6 +112,7 @@ begin
   NrOcorrcCredPres := -1;
   NrOcorrDiscriminacao_1 := 1;
   NrOcorrCodigoMunic_1 := 1;
+  NrOcorrCodigoServicoNacional := -1;
 
   NrOcorrDiscriminacao_2 := -1;
   NrOcorrCodigoMunic_2 := -1;
@@ -135,10 +136,10 @@ begin
     Result := CreateElement('Evento');
     if NFSe.Servico.Evento.idAtvEvt <> '' then
       Result.AppendChild(AddNode(tcStr, '#1', 'IdentificacaoEvento', 1, 30, 1,
-                                      NFSe.Servico.Evento.idAtvEvt, ''));
+                                             NFSe.Servico.Evento.idAtvEvt, ''));
 
     Result.AppendChild(AddNode(tcStr, '#2', 'DescricaoEvento', 1, 255, 0,
-                                    NFSe.Servico.Evento.xNome, ''));
+                                                NFSe.Servico.Evento.xNome, ''));
   end;
 end;
 
@@ -178,37 +179,37 @@ begin
 
   if GerarTagServicos then
   begin
-    Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 1, NrOcorrIssRetido,
+    Result.AppendChild(AddNode(tcStr, '#20', 'IssRetido', 1, 1, 1,
       FpAOwner.SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET));
 
-    Result.AppendChild(AddNode(tcStr, '#21', 'ResponsavelRetencao', 1, 1, NrOcorrRespRetencao,
+    Result.AppendChild(AddNode(tcStr, '#21', 'ResponsavelRetencao', 1, 1, 0,
      FpAOwner.ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET));
 
     item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
 
-    Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 8, NrOcorrItemListaServico,
+    Result.AppendChild(AddNode(tcStr, '#29', 'ItemListaServico', 1, 8, 1,
                                                           item, DSC_CLISTSERV));
 
-    Result.AppendChild(AddNode(tcStr, '#30', 'CodigoCnae', 1, 9, NrOcorrCodigoCNAE,
+    Result.AppendChild(AddNode(tcStr, '#30', 'CodigoCnae', 1, 9, 0,
                                 OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE));
 
-    Result.AppendChild(AddNode(tcStr, '#31', 'CodigoTributacaoMunicipio', 1, 20, NrOcorrCodTribMun_1,
+    Result.AppendChild(AddNode(tcStr, '#31', 'CodigoTributacaoMunicipio', 1, 20, 0,
                      NFSe.Servico.CodigoTributacaoMunicipio, DSC_CSERVTRIBMUN));
 
-    Result.AppendChild(AddNode(tcStr, '#32', 'CodigoNbs', 1, 9, NrOcorrCodigoNBS,
+    Result.AppendChild(AddNode(tcStr, '#32', 'CodigoNbs', 1, 9, 0,
                                              NFSe.Servico.CodigoNBS, DSC_CMUN));
 
-    Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, NrOcorrDiscriminacao_1,
+    Result.AppendChild(AddNode(tcStr, '#32', 'Discriminacao', 1, 2000, 1,
       StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
                FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]), DSC_DISCR));
 
-    Result.AppendChild(AddNode(tcStr, '#33', 'CodigoMunicipio', 1, 7, NrOcorrCodigoMunic_1,
+    Result.AppendChild(AddNode(tcStr, '#33', 'CodigoMunicipio', 1, 7, 1,
                            OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN));
 
     Result.AppendChild(GerarCodigoPaisServico);
 
     Result.AppendChild(AddNode(tcInt, '#36', 'ExigibilidadeISS',
-                               NrMinExigISS, NrMaxExigISS, NrOcorrExigibilidadeISS,
+                               NrMinExigISS, NrMaxExigISS, 1,
     StrToInt(FpAOwner.ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS)), DSC_INDISS));
 
     lNaoExigencia:= DSC_INDISS;
@@ -217,10 +218,10 @@ begin
     Result.AppendChild(AddNode(tcInt, '#37', 'IdentifNaoExigibilidade', 1, 4, 0,
         StrToIntDef(NFSe.Servico.IdentifNaoExigibilidade, 0), LNaoExigencia));
 
-    Result.AppendChild(AddNode(tcInt, '#37', 'MunicipioIncidencia', 7, 7, NrOcorrMunIncid,
+    Result.AppendChild(AddNode(tcInt, '#37', 'MunicipioIncidencia', 7, 7, 0,
                                 NFSe.Servico.MunicipioIncidencia, DSC_MUNINCI));
 
-    Result.AppendChild(AddNode(tcStr, '#38', 'NumeroProcesso', 1, 30, NrOcorrNumProcesso,
+    Result.AppendChild(AddNode(tcStr, '#38', 'NumeroProcesso', 1, 30, 0,
                                    NFSe.Servico.NumeroProcesso, DSC_NPROCESSO));
 
     Result.AppendChild(GerarcomExt);
@@ -277,24 +278,24 @@ begin
   begin
     Result[I] := CreateElement('Deducao');
 
-    Result[I].AppendChild(AddNode(tcStr, '#1', 'TipoDeducao', 1, 2, 0,
-                              FpAOwner.tpDedRedToStr(NFSe.Servico.Valores.DocDeducao[I].tpDedRed), ''));
+    Result[I].AppendChild(AddNode(tcStr, '#1', 'TipoDeducao', 1, 2, 1,
+      FpAOwner.tpDedRedToStr(NFSe.Servico.Valores.DocDeducao[I].tpDedRed), ''));
 
     Result[I].AppendChild(AddNode(tcStr, '#2', 'DescricaoDeducao', 1, 150, 0,
-                               NFSe.Servico.Valores.DocDeducao[I].xDescOutDed, ''));
+                           NFSe.Servico.Valores.DocDeducao[I].xDescOutDed, ''));
 
     Result[I].AppendChild(GerarIdentificacaoDocumentosDeducao(I));
 
     Result[I].AppendChild(GerarDadosFornecedor(I));
 
     Result[I].AppendChild(AddNode(tcDat, '#3', 'DataEmissao', 10, 10, 1,
-                                  NFSe.Servico.Valores.DocDeducao[I].dtEmiDoc, ''));
+                              NFSe.Servico.Valores.DocDeducao[I].dtEmiDoc, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorDedutivel', 1, 15, 1,
-             NFSe.Servico.Valores.DocDeducao[I].vDedutivelRedutivel, ''));
+                   NFSe.Servico.Valores.DocDeducao[I].vDedutivelRedutivel, ''));
 
     Result[i].AppendChild(AddNode(tcDe2, '#1', 'ValorUtilizadoDeducao', 1, 15, 1,
-                 NFSe.Servico.Valores.DocDeducao[I].vDeducaoReducao, ''));
+                       NFSe.Servico.Valores.DocDeducao[I].vDeducaoReducao, ''));
   end;
 end;
 
@@ -340,9 +341,10 @@ begin
   lDocDeducao := NFSe.Servico.Valores.DocDeducao[AIndex];
 
   Result.AppendChild(AddNode(tcStr, '#1', 'NifFornecedor', 1, 40, 0,
-                             lDocDeducao.fornec.Identificacao.Nif, ''));
-  Result.AppendChild(AddNode(tcStr, '#2', 'CodigoPais', 1, 4, 1,
-                             PadLeft(IntToStr(lDocDeducao.fornec.Endereco.CodigoPais), 4, '0'), ''));
+                                     lDocDeducao.fornec.Identificacao.Nif, ''));
+
+  Result.AppendChild(AddNode(tcInt, '#2', 'CodigoPais', 4, 4, 1,
+                                   lDocDeducao.fornec.Endereco.CodigoPais, ''));
 end;
 
 function TNFSeW_Giss204.GerarValores: TACBrXmlNode;
@@ -434,16 +436,20 @@ begin
 
     Result.AppendChild(AddNode(tcDe2, '#1', 'vCofins', 1, 15, 0,
                                      NFSe.Servico.Valores.tribFed.vCofins, ''));
-
-    Result.AppendChild(AddNode(tcStr, '#1', 'tpRetPisCofins', 1, 1, 0,
-         tpRetPisCofinsToStr(NFSe.Servico.Valores.tribFed.tpRetPisCofins), ''));
   end;
+
+  Result.AppendChild(AddNode(tcStr, '#1', 'tpRetPisCofins', 1, 1, 0,
+         tpRetPisCofinsToStr(NFSe.Servico.Valores.tribFed.tpRetPisCofins), ''));
 end;
 
 function TNFSeW_Giss204.GerarXMLTotalTributos: TACBrXmlNode;
 begin
   Result := CreateElement('totTrib');
 
+  if NFSe.Servico.Valores.totTrib.indTotTrib = indNao then
+    Result.AppendChild(AddNode(tcStr, '#1', 'indTotTrib', 1, 1, 1,
+                  indTotTribToStr(NFSe.Servico.Valores.totTrib.indTotTrib), ''))
+  else
   if (NFSe.Servico.Valores.totTrib.pTotTribFed > 0) or
      (NFSe.Servico.Valores.totTrib.pTotTribEst > 0) or
      (NFSe.Servico.Valores.totTrib.pTotTribMun > 0) then
