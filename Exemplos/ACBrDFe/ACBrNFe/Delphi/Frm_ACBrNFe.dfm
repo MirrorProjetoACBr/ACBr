@@ -13,7 +13,6 @@ object frmACBrNFe: TfrmACBrNFe
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  TextHeight = 13
   object pnlMenus: TPanel
     Left = 0
     Top = 0
@@ -1321,7 +1320,8 @@ object frmACBrNFe: TfrmACBrNFe
           Items.Strings = (
             'Retrato'
             'Paisagem'
-            'Simplificado')
+            'Simplificado'
+            'Simplificado Tipo 2')
           TabOrder = 1
         end
         object gbEscPos: TGroupBox
@@ -2258,7 +2258,7 @@ object frmACBrNFe: TfrmACBrNFe
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000382E0000871C00000000000000000000000000000000000000000000
+            4C000000C6390000A82300000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -2342,7 +2342,7 @@ object frmACBrNFe: TfrmACBrNFe
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
-      ItemIndex = 1
+      ItemIndex = 0
       Items.Strings = (
         'Sim'
         'N'#227'o')
@@ -2433,6 +2433,7 @@ object frmACBrNFe: TfrmACBrNFe
     Top = 279
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    Logo = 'C:\Testes\MonoCromatico\logo_monol.bmp'
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
@@ -2460,6 +2461,7 @@ object frmACBrNFe: TfrmACBrNFe
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
     Porta = 'COM9'
+    PaginaDeCodigo = pc1252
     EspacoEntreLinhas = 30
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
@@ -2469,6 +2471,7 @@ object frmACBrNFe: TfrmACBrNFe
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 5
+    ArqLOG = 'posprinter.txt'
     Left = 425
     Top = 335
   end

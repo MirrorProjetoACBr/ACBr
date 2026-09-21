@@ -4667,6 +4667,9 @@ begin
   if OpenDialog1.Execute then
   begin
     ACBrNFe1.NotasFiscais.Clear;
+    {Se Escpos e danfe simplificado tipo 2, joga em escpos}
+    if (ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1) and (ACBrNFe1.DANFE.TipoDANFE = tiSimplificadoTipo2) then
+      PrepararImpressao;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ACBrNFe1.NotasFiscais.Imprimir;
   end;
@@ -6245,6 +6248,12 @@ begin
 end;
 
 procedure TfrmACBrNFe.ConfigurarComponente;
+const
+  // Mapeia o ItemIndex do RadioGroup rgTipoDanfe para o enum TACBrTipoImpressao.
+  // Precisa ser um mapeamento explicito (nao sequencial), pois o enum tem
+  // valores no meio (tiNFCe, tiMsgEletronica) que este exemplo nao expoe na UI.
+  CTipoDanfeMap: array[0..3] of TACBrTipoImpressao =
+    (tiRetrato, tiPaisagem, tiSimplificado, tiSimplificadoTipo2);
 var
   Ok: Boolean;
   PathMensal: string;
@@ -6254,7 +6263,7 @@ begin
   ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
   ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
-  if cbModeloDF.ItemIndex = 0 then
+  if (cbModeloDF.ItemIndex = 0) and (CTipoDanfeMap[rgTipoDanfe.ItemIndex] <> tiSimplificadoTipo2) then
     ACBrNFe1.DANFE := ACBrNFeDANFeRL1
   else
   begin
@@ -6347,7 +6356,7 @@ begin
 
   if ACBrNFe1.DANFE <> nil then
   begin
-    ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
+    ACBrNFe1.DANFE.TipoDANFE := CTipoDanfeMap[rgTipoDanfe.ItemIndex];
 
     {
       A Configuração abaixo utilizanda em conjunto com o TipoDANFE = tiSimplificado
