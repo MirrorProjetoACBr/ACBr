@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/09/2026
+-- ACBrNFSeXDANFSeRLPadraoNacional --
+[*] Alteração visando imprimir a UF do municipio de incidencia.
+   Por: Italo Giurizzato Junior
 -- ISSBarueri.GravarXml/ISSBarueri.Provider --
 [-] ACBR-9882 - Varias alterações visando a correta geração do RPS.
    Por: Crystiano Oliveira

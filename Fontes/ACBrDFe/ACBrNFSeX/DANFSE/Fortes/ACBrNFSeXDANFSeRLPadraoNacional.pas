@@ -706,6 +706,7 @@ procedure TfrlXDANFSeRLPadraoNacional.rlbBanda10_TributacaoMunicipalBeforePrint(
 var
   LvDedRed: Double;
   i: Integer;
+  xUF: string;
 begin
   inherited;
 
@@ -769,6 +770,8 @@ begin
   if fpNFSe.infNFSe.xLocIncid <> '' then
   begin
     rllMunicipioIncidencia.Caption := fpNFSe.infNFSe.xLocIncid;
+    ObterNomeMunicipio(fpNFSe.infNFSe.cLocIncid, xUF);
+    rllMunicipioIncidencia.Caption := rllMunicipioIncidencia.Caption + ' / ' + xUF;
 
     if fpNFSe.Servico.Valores.tribMun.cPaisResult > 0 then
       rllMunicipioIncidencia.Caption := rllMunicipioIncidencia.Caption + ' / ' +
