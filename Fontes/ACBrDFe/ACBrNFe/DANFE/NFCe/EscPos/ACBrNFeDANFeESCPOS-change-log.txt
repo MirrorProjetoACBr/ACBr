@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2026
+[+] ACBR-9424 - Disponibiliza o DANFe Simplificado Tipo 2 no motor de impressão EscPos.
+   Por: Daniel de Morais InfoCotidiano
+   Veja: https://www.projetoacbr.com.br/forum/topic/94858-danfe-simplificado-tipo-2-sendo-disponibilizado-nos-motores-de-relat%C3%B3rio-do-acbr/
+
 02/09/2024
 -- ACBrNFeDANFeESCPoS --
 [*] #TK-5866: Ajuste visando padronização do caractere de quebra de linha.

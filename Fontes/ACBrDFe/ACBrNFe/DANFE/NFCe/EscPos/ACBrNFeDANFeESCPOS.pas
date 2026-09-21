@@ -59,6 +59,7 @@ type
     function TagLigaCondensado: String;
     function ColunasCondensado: Integer;
     function FazerImpressaoLateral: Boolean;
+    function EhSimplificadoTipo2: Boolean;
 
     procedure AjustaStringList(AStringList: TStringList);
     procedure MontarEnviarDANFE(NFE: TNFe; const AResumido: Boolean);
@@ -77,6 +78,7 @@ type
     function GerarMensagemContingencia(CaracterDestaque : Char): String;
     procedure GerarDetalhesProdutosServicos;
     procedure GerarInformacoesTotais;
+    procedure GerarInformacoesTotaisSimplificadoTipo2;
     procedure GerarPagamentos;
     procedure GerarInformacoesConsultaChaveAcesso;
     function GerarInformacoesConsumidor(Lateral: Boolean = False): String;
@@ -166,6 +168,11 @@ begin
   Result := SuportaCondensado and
             (PosPrinter.Colunas >= 48) and
             (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0);
+end;
+
+function TACBrNFeDANFeESCPOS.EhSimplificadoTipo2: Boolean;
+begin
+  Result := (TipoDANFE = tiSimplificadoTipo2);
 end;
 
 procedure TACBrNFeDANFeESCPOS.Notification(AComponent: TComponent;
@@ -264,11 +271,15 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarIdentificacaodoDANFE;
 var
-  MsgContingencia: String;
+  MsgContingencia, LTituloDANFE: String;
 begin
+  if EhSimplificadoTipo2 then
+    LTituloDANFE := ACBrStr('DANFE Simplificado Tipo 2')
+  else
+    LTituloDANFE := ACBrStr('Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica');
+
   FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado+'<n>' +
-    QuebraLinhas(ACBrStr('Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica'),
-    ColunasCondensado) + '</n>');
+    QuebraLinhas(LTituloDANFE, ColunasCondensado) + '</n>');
 
   MsgContingencia := GerarMensagemContingencia('=');
   if NaoEstaVazio(Trim(MsgContingencia)) then
@@ -467,6 +478,81 @@ begin
                           );
 end;
 
+procedure TACBrNFeDANFeESCPOS.GerarInformacoesTotaisSimplificadoTipo2;
+var
+  SufixoTitulo, TagLigaExpandido, TagDesligaExpandido: String;
+  FatorExp: Integer;
+  LValorDesconto, LValorAcrescimo, LValorFrete: Double;
+  LValorCBS, LValorIBS, LValorIS: Double;
+begin
+  if (ColunasCondensado >= 46) then
+  begin
+    TagLigaExpandido := '<e>';
+    TagDesligaExpandido := '</e>';
+    FatorExp := 2;
+  end
+  else
+  begin
+    TagLigaExpandido := '';
+    TagDesligaExpandido := '';
+    FatorExp := 1;
+  end;
+
+  if ImprimeDescAcrescItem then
+    SufixoTitulo := ' total'
+  else
+    SufixoTitulo := '';
+
+  FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace('Qtde. total de itens|' +
+     IntToStrZero(FpNFe.Det.Count, 3), ColunasCondensado, '|'));
+
+  FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace(ACBrStr('Valor total R$')+'|' +
+     FormatFloatBr(FpNFe.Total.ICMSTot.vProd + FpNFe.Total.ISSQNtot.vServ),
+     ColunasCondensado, '|'));
+
+  LValorDesconto := CalcularValorDescontoTotal(FpNFe);
+  if (LValorDesconto > 0) then
+    FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace('Desconto'+SufixoTitulo+'|' +
+       FormatFloatBr(LValorDesconto, '-,0.00'),
+       ColunasCondensado, '|'));
+
+  LValorAcrescimo := FpNFe.Total.ICMSTot.vOutro + FpNFe.Total.ICMSTot.vSeg;
+  if (LValorAcrescimo > 0) then
+    FPosPrinter.Buffer.Add(TagLigaCondensado + ACBrStr(PadSpace('Acréscimo'+SufixoTitulo+'|' +
+       FormatFloatBr(LValorAcrescimo, '+,0.00'),
+       ColunasCondensado, '|')));
+
+  LValorFrete := FpNFe.Total.ICMSTot.vFrete;
+  if (LValorFrete > 0) then
+    FPosPrinter.Buffer.Add(TagLigaCondensado + ACBrStr(PadSpace('Frete'+SufixoTitulo+'|' +
+       FormatFloatBr(LValorFrete, '+,0.00'),
+       ColunasCondensado, '|')));
+
+  // Divisão III-A da NT 2026.003 - Reforma Tributária (IBS/CBS/IS)
+  LValorCBS := FpNFe.Total.IBSCBSTot.gCBS.vCBS;
+  LValorIBS := FpNFe.Total.IBSCBSTot.gIBS.vIBS;
+  LValorIS  := FpNFe.Total.ISTot.vIS;
+
+  FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace('(+) CBS R$|' +
+     FormatFloatBr(LValorCBS), ColunasCondensado, '|'));
+
+  FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace('(+) IBS R$|' +
+     FormatFloatBr(LValorIBS), ColunasCondensado, '|'));
+
+  if (LValorIS > 0) then
+    FPosPrinter.Buffer.Add(TagLigaCondensado + PadSpace('(+) IS R$|' +
+       FormatFloatBr(LValorIS), ColunasCondensado, '|'));
+
+  // Valor a Pagar R$ - ID W16, sempre obrigatório no DANFE Simplificado Tipo 2
+  FPosPrinter.Buffer.Add('</ae>'
+                         + TagLigaCondensado
+                         + TagLigaExpandido
+                         + PadSpace('Valor a Pagar R$|' + FormatFloatBr(FpNFe.Total.ICMSTot.vNF),
+                                    ColunasCondensado div FatorExp, '|')
+                         + TagDesligaExpandido
+                        );
+end;
+
 procedure TACBrNFeDANFeESCPOS.GerarPagamentos;
 var
   i: Integer;
@@ -506,7 +592,10 @@ begin
     UrlChave := FpNFe.infNFeSupl.urlChave;
 
   FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(UrlChave, ColunasCondensado) );
-  FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(RemoverLiteralChave(FpNFe.infNFe.ID), ColunasCondensado) );
+  if EhSimplificadoTipo2 then
+    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(FormatarChaveAcesso(RemoverLiteralChave(FpNFe.infNFe.ID)), ColunasCondensado) )
+  else
+    FPosPrinter.Buffer.Add('</ce>'+TagLigaCondensado + QuebraLinhas(RemoverLiteralChave(FpNFe.infNFe.ID), ColunasCondensado) );
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarTotalTributos;
@@ -690,13 +779,28 @@ begin
     else
     begin
       if FpNFe.Dest.idEstrangeiro <> '' then
-        LinhaCmd := 'CONSUMIDOR - Id. Estrangeiro ' + FpNFe.Dest.idEstrangeiro
+      begin
+        if EhSimplificadoTipo2 then
+          LinhaCmd := 'CONSUMIDOR Id. Estrangeiro: ' + FpNFe.Dest.idEstrangeiro
+        else
+          LinhaCmd := 'CONSUMIDOR - Id. Estrangeiro ' + FpNFe.Dest.idEstrangeiro;
+      end
       else
       begin
         if Length(Trim(FpNFe.Dest.CNPJCPF)) > 11 then
-          LinhaCmd := 'CONSUMIDOR - CNPJ '+ FormatarCNPJ(FpNFe.Dest.CNPJCPF)
+        begin
+          if EhSimplificadoTipo2 then
+            LinhaCmd := 'CONSUMIDOR CNPJ: '+ FormatarCNPJ(FpNFe.Dest.CNPJCPF)
+          else
+            LinhaCmd := 'CONSUMIDOR - CNPJ '+ FormatarCNPJ(FpNFe.Dest.CNPJCPF);
+        end
         else
-          LinhaCmd := 'CONSUMIDOR - CPF ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
+        begin
+          if EhSimplificadoTipo2 then
+            LinhaCmd := 'CONSUMIDOR CPF: ' + FormatarCPF(FpNFe.Dest.CNPJCPF)
+          else
+            LinhaCmd := 'CONSUMIDOR - CPF ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
+        end;
       end;
 
       DadosConsumidor.Add( '</ce>'+TagLigaCondensado+'<n>' +
@@ -745,12 +849,22 @@ begin
   else
     LNNF := IntToStr(FpNFe.Ide.nNF);
 
-  InfoNFCe := ACBrStr('NFC-e nº ') + LNNF +
+  if EhSimplificadoTipo2 then
+    InfoNFCe := ACBrStr('NF-e nº ') + LNNF
+  else
+    InfoNFCe := ACBrStr('NFC-e nº ') + LNNF;
+
+  InfoNFCe := InfoNFCe +
               ACBrStr(' Série ') + IntToStrZero(FpNFe.Ide.serie, 3) + '|' +
               DateTimeToStr(FpNFe.ide.dEmi) + '</n>';
 
   if EstaVazio(Trim(FpNFe.procNFe.nProt)) then
-    InfoNFCe := InfoNFCe + IfThen(ViaConsumidor, '|Via Consumidor', '|Via Empresa');
+  begin
+    if EhSimplificadoTipo2 then
+      InfoNFCe := InfoNFCe + IfThen(ViaConsumidor, '|Via Consumidor', '|Via Estabelecimento')
+    else
+      InfoNFCe := InfoNFCe + IfThen(ViaConsumidor, '|Via Consumidor', '|Via Empresa');
+  end;
 
   // dados da nota eletronica de consumidor
   Result := Result +
@@ -865,7 +979,10 @@ begin
   if not AResumido then
     GerarDetalhesProdutosServicos;
 
-  GerarInformacoesTotais;
+  if EhSimplificadoTipo2 then
+    GerarInformacoesTotaisSimplificadoTipo2
+  else
+    GerarInformacoesTotais;
   GerarPagamentos;
   GerarInformacoesConsultaChaveAcesso;
 
