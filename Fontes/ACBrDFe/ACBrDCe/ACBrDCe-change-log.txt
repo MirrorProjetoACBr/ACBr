@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2026
+-- ACBrDCe.XmlWriter --
+[-] ACBr-9884: Remoção da função OnlyNumber da geração da tag email.
+   Por: Fabio Tellini
+
 01/09/2026
 -- Diversos --
 [*] Alterações visando o uso das units especificas para a Reforma Tributária.

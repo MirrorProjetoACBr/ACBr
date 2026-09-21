@@ -532,7 +532,7 @@ begin
                                 OnlyNumber(DCe.dest.enderDest.fone), DSC_FONE));
 
   Result.AppendChild(AddNode(tcStr, 'E19', 'email', 1, 60, 0,
-                              OnlyNumber(DCe.dest.enderDest.email), DSC_EMAIL));
+                                          DCe.dest.enderDest.email, DSC_EMAIL));
 end;
 
 function TDCeXmlWriter.Gerar_autXML: TACBrXmlNodeArray;
