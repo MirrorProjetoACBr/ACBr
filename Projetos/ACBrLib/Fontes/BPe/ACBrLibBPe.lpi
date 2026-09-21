@@ -522,7 +522,7 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="6">
       <Item1>
         <PackageName Value="FCL"/>
       </Item1>
@@ -538,6 +538,9 @@
       <Item5>
         <PackageName Value="ACBr_BPe"/>
       </Item5>
+      <Item6>
+        <PackageName Value="ACBr_BPe_DABPeFPDF"/>
+      </Item6>
     </RequiredPackages>
     <Units Count="13">
       <Unit0>

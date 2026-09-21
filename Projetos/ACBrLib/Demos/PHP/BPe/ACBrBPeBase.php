@@ -485,6 +485,10 @@
                             <input type="text" id="PathEvento">
                         </div>
                         <div class="form-group">
+                            <label for="PathPDF">Pasta PDF</label>
+                            <input type="text" id="PathPDF">
+                        </div>
+                        <div class="form-group">
                             <label for="LogPath">Path Log</label>
                             <input type="text" id="LogPath">
                         </div>
@@ -650,7 +654,7 @@
                     <input type="button" id="Cancelar" value="Cancelar BPe">
                     <input type="button" id="EnviarEventoINI" value="Enviar Evento">
                     <input type="button" id="ImprimirEventoPDF" value="Imprimir PDF Evento">
-                    <input type="button" id="SalvarEventoPDF" value="Salvar PDF Evento">
+                    <input type="button" id="SalvarEventoPDF" value="Salvar PDF Evento (Stream)">
                     <input type="button" id="EnviarEmailEvento" value="Enviar Evento Email">
                 </div>
             </div>
@@ -760,6 +764,7 @@
                 SepararPorModelo: $('#SepararPorModelo').prop('checked') ? 1 : 0,
                 PathBPe: $('#PathBPe').val(),
                 PathEvento: $('#PathEvento').val(),
+                PathPDF: $('#PathPDF').val(),
 
                 proxyServidor: $('#proxyServidor').val(),
                 proxyPorta: $('#proxyPorta').val(),
@@ -1205,6 +1210,7 @@
                 $('#SepararPorModelo').prop('checked', response.dados.SepararPorModelo == 1);
                 $('#PathBPe').val(response.dados.PathBPe);
                 $('#PathEvento').val(response.dados.PathEvento);
+                $('#PathPDF').val(response.dados.PathPDF);
 
                 $('#proxyServidor').val(response.dados.proxyServidor);
                 $('#proxyPorta').val(response.dados.proxyPorta);

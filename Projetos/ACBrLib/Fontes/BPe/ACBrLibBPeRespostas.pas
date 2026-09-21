@@ -37,7 +37,7 @@ unit ACBrLibBPeRespostas;
 interface
 
 uses
-  Classes, SysUtils, Contnrs, pcnConversao, ACBrDfe.Conversao,
+  Classes, SysUtils, Contnrs, ACBrDfe.Conversao,
   ACBrBPeEventoClass, ACBrBPeConversao, ACBrXmlBase, ACBrBase,
   ACBrLibResposta, ACBrLibConfig,
   ACBrLibConsReciDFe, ACBrBPe, ACBrDFeUtil,

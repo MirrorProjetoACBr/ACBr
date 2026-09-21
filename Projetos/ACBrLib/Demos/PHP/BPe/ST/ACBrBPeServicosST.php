@@ -114,6 +114,7 @@ try {
         if (ConfigGravarValor($ffi, "DFe", "NumeroSerie", $_POST['NumeroSerie']) != 0) exit;
 
         if (ConfigGravarValor($ffi, "DABPe", "PathLogo", $_POST['PathLogo']) != 0) exit;
+        if (ConfigGravarValor($ffi, "DABPe", "PathPDF", $_POST['PathPDF']) != 0) exit;
         if (ConfigGravarValor($ffi, "PosPrinter", "Modelo", $_POST['PosPrinterModelo']) != 0) exit;
         if (ConfigGravarValor($ffi, "PosPrinter", "PaginaDeCodigo", $_POST['PaginaDeCodigo']) != 0) exit;
         if (ConfigGravarValor($ffi, "PosPrinter", "Porta", $_POST['PosPrinterPorta']) != 0) exit;
@@ -184,6 +185,7 @@ try {
         if (ConfigLerValor($ffi, "DFe", "NumeroSerie", $NumeroSerie) != 0) exit;
 
         if (ConfigLerValor($ffi, "DABPe", "PathLogo", $PathLogo) != 0) exit;
+        if (ConfigLerValor($ffi, "DABPe", "PathPDF", $PathPDF) != 0) exit;
         if (ConfigLerValor($ffi, "PosPrinter", "Modelo", $PosPrinterModelo) != 0) exit;
         if (ConfigLerValor($ffi, "PosPrinter", "PaginaDeCodigo", $PaginaDeCodigo) != 0) exit;
         if (ConfigLerValor($ffi, "PosPrinter", "Porta", $PosPrinterPorta) != 0) exit;
@@ -250,6 +252,7 @@ try {
                 'NumeroSerie' => $NumeroSerie ?? '',
 
                 'PathLogo' => $PathLogo ?? '',
+                'PathPDF' => $PathPDF ?? '',
                 'PosPrinterModelo' => $PosPrinterModelo ?? '',
                 'PaginaDeCodigo' => $PaginaDeCodigo ?? '',
                 'PosPrinterPorta' => $PosPrinterPorta ?? '',

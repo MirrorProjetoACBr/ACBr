@@ -42,6 +42,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2026
+-- Diversos --
+[+] ACBR-1589 - Implementada Geração de PDF e Stream com FPDF
+-- ACBrBPeBase, ACBrBPeServicosMT, ACBrBPeServicosST --
+[+] ACBR-1589 - Implementada impressão com FPDF nos programas de exemplo em PHP
+   Por: Renato Rubinho
+
 18/09/2026
 -- ACBrLibBPeConsoleMT, ACBrLibBPeConsoleMTDemo --
 [-] Corrige falha de compilação por falta de inclusão da ACBr.inc

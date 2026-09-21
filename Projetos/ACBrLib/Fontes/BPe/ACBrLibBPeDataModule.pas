@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2026 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Rafael Teno Dias, Renato Rubinho                }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - Tatu√≠ - SP - 18270-170         }
+{ Daniel Simıes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - TatuÌ - SP - 18270-170         }
 {******************************************************************************}
 
 unit ACBrLibBPeDataModule;
@@ -40,8 +40,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, ACBrLibComum, ACBrLibDataModule,
-  pcnConversao,
-  //ACBrBPe.DABPeRLClass,
+  ACBrDFe.Conversao,
+  ACBrBPeDABPeFPDF,
   ACBrBPe,
   ACBrMail;
 
@@ -51,7 +51,7 @@ type
   TLibBPeDM = class(TLibDataModule)
     ACBrMail1: TACBrMail;
     ACBrBPe1: TACBrBPe;
-//    FDABPeFortes: TACBrBPeDABPeRL;
+    FDABPeFPDF: TACBrBPeDABPeFPDF;
   protected
     procedure FreeReports;
   public
@@ -76,8 +76,9 @@ uses
 
 procedure TLibBPeDM.FreeReports;
 begin
-//  ACBrBPe1.DABPe := nil;
-//  if Assigned(FDABPeFortes) then FreeAndNil(FDABPeFortes);
+  ACBrBPe1.DABPe := nil;
+  if Assigned(FDABPeFPDF) then
+    FreeAndNil(FDABPeFPDF);
 end;
 
 procedure TLibBPeDM.AplicarConfiguracoes;
@@ -87,10 +88,10 @@ begin
   ACBrBPe1.SSL.DescarregarCertificado;
   pLibBPeConfig := TLibBPeConfig(Lib.Config);
   ACBrBPe1.Configuracoes.Assign(pLibBPeConfig.BPeConfig);
- // ACBrBPe1.DABPe := FDABPeFortes;
+  ACBrBPe1.DABPe := FDABPeFPDF;
 
   {$IFDEF Demo}
-  GravarLog('Modo DEMO - For√ßando ambiente para Homologa√ß√£o', logNormal);
+  GravarLog('Modo DEMO - ForÁando ambiente para HomologaÁ„o', logNormal);
   ACBrBPe1.Configuracoes.WebServices.Ambiente := taHomologacao;
   {$ENDIF}
 
@@ -130,10 +131,8 @@ begin
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
-  GravarLog('M√©todo n√£o implementado', logNormal);
-(*)
-  FDABPeFortes := TACBrBPeDABPeRL.Create(Nil);
-  ACBrBPe1.DABPe := FDABPeFortes;
+  FDABPeFPDF := TACBrBPeDABPeFPDF.Create(Nil);
+  ACBrBPe1.DABPe := FDABPeFPDF;
 
   if GerarPDF then
   begin
@@ -142,14 +141,16 @@ begin
         ForceDirectories(PathWithDelim(LibConfig.DABPeConfig.PathPDF));
   end;
 
-  LibConfig.DABPeConfig.Apply(FDABPeFortes, Lib);
+  if LibConfig.DABPeConfig.MargemInferior = 0 then
+    LibConfig.DABPeConfig.MargemInferior := 7;
+  if LibConfig.DABPeConfig.MargemSuperior = 0 then
+    LibConfig.DABPeConfig.MargemSuperior := 7;
+  if LibConfig.DABPeConfig.MargemEsquerda = 0 then
+    LibConfig.DABPeConfig.MargemEsquerda := 4;
+  if LibConfig.DABPeConfig.MargemDireita = 0 then
+    LibConfig.DABPeConfig.MargemDireita := 4;
 
-  if NaoEstaVazio(NomeImpressora) then
-    FDABPeFortes.Impressora := NomeImpressora;
-
-  if NaoEstaVazio(MostrarPreview) then
-    FDABPeFortes.MostraPreview := StrToBoolDef(MostrarPreview, False);
-*)
+  LibConfig.DABPeConfig.Apply(FDABPeFPDF, Lib);
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;

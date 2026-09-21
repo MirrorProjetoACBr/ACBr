@@ -1,33 +1,33 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÃ§Ã£o com equipa- }
-{ mentos de AutomaÃ§Ã£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2026 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo: Renato Rubinho                                  }
 {                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pagina do  Projeto ACBr    }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca Ã© software livre; vocÃª pode redistribuÃ­-la e/ou modificÃ¡-la }
-{ sob os termos da LicenÃ§a PÃºblica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versÃ£o 2.1 da LicenÃ§a, ou (a seu critÃ©rio) }
-{ qualquer versÃ£o posterior.                                                   }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca Ã© distribuÃ­da na expectativa de que seja Ãºtil, porÃ©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIABILIDADE OU      }
-{ ADEQUAÃ‡ÃƒO A UMA FINALIDADE ESPECÃFICA. Consulte a LicenÃ§a PÃºblica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÃ‡A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral Menor do GNU junto}
-{ com esta biblioteca; se nÃ£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÃ§o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÃª tambÃ©m pode obter uma copia da licenÃ§a em:                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel SimÃµes de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
-{       Rua Coronel Aureliano de Camargo, 963 - TatuÃ­ - SP - 18270-170         }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -331,7 +331,7 @@ begin
       ANomeArquivo := ExtractFileName(ANomeArquivo);
 
       if EstaVazio(ANomeArquivo) then
-        raise EACBrLibException.Create(ErrExecutandoMetodo, 'Nome de arquivo nÃ£o informado');
+        raise EACBrLibException.Create(ErrExecutandoMetodo, 'Nome de arquivo não informado');
 
       if EstaVazio(APathArquivo) then
         APathArquivo := ExtractFilePath(ANomeArquivo);
@@ -740,7 +740,7 @@ begin
           raise EACBrLibException.Create(ErrEnvio, 'ERRO: Nenhuma BPe adicionada ao Lote');
 
         if Bilhetes.Count > 50 then
-           raise EACBrLibException.Create(ErrEnvio, 'ERRO: Conjunto de BPe transmitidas (mÃ¡ximo de 50 BPe)' +
+           raise EACBrLibException.Create(ErrEnvio, 'ERRO: Conjunto de BPe transmitidas (máximo de 50 BPe)' +
                                                     ' excedido. Quantidade atual: ' + IntToStr(Bilhetes.Count));
 
         GravarLog('BPe_Enviar, Limpando Resp', logParanoico);
@@ -990,10 +990,10 @@ begin
           raise EACBrLibException.Create(ErrEnvioEvento, 'ERRO: Nenhum Evento adicionado ao Lote');
 
         if EventoBPe.Evento.Count > 20 then
-          raise EACBrLibException.Create(ErrEnvioEvento,  'ERRO: Conjunto de Eventos transmitidos (mÃ¡ximo de 20) ' +
+          raise EACBrLibException.Create(ErrEnvioEvento,  'ERRO: Conjunto de Eventos transmitidos (máximo de 20) ' +
                                                           'excedido. Quantidade atual: ' + IntToStr(EventoBPe.Evento.Count));
 
-        {Atribuir nSeqEvento, CNPJ, Chave e/ou Protocolo quando nÃ£o especificar}
+        {Atribuir nSeqEvento, CNPJ, Chave e/ou Protocolo quando não especificar}
         for i := 0 to EventoBPe.Evento.Count - 1 do
         begin
           if EventoBPe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
@@ -1015,7 +1015,7 @@ begin
               end;
 
               if j = Bilhetes.Count then
-                raise EACBrLibException.Create(ErrEnvioEvento, 'NÃ£o existe BPe com a chave [' + chBPe + '] carregada');
+                raise EACBrLibException.Create(ErrEnvioEvento, 'Não existe BPe com a chave [' + chBPe + '] carregada');
             end
             else
              j := 0;
@@ -1122,7 +1122,7 @@ begin
           LXmlCarregado := LBPeEnviar.Bilhetes.LoadFromString(AXmlBPe);
 
         if not LXmlCarregado then
-          raise EACBrLibException.Create(ErrEnvio, 'Erro Caminho ou conteudo do XML invÃ¡lido, nÃ£o foi possÃ­vel fazer a leitura do conteÃºdo do XML');
+          raise EACBrLibException.Create(ErrEnvio, 'Erro Caminho ou conteudo do XML inválido, não foi possível fazer a leitura do conteúdo do XML');
 
         if LBPeEnviar.Bilhetes.Count = 0 then
           raise EACBrLibException.Create(ErrEnvio, Format(SInfBPeCarregadas, [LBPeEnviar.Bilhetes.Count]))
@@ -1148,7 +1148,7 @@ begin
               AAssunto,
               slMensagemEmail,
               AEnviaPDF, // Enviar PDF junto
-              slCC,      // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
+              slCC,      // Lista com emails que serão enviado cópias - TStrings
               slAnexos); // Lista de slAnexos - TStrings
 
             Resp.Msg := 'Email enviado com sucesso';
@@ -1360,11 +1360,12 @@ begin
     try
       Resposta := TLibImpressaoResposta.Create(BPeDM.ACBrBPe1.Bilhetes.Count, Config.TipoResposta, Config.CodResposta);
       try
-        BPeDM.ConfigurarImpressao(Impressora, False, MostrarPreview);
+        BPeDM.ConfigurarImpressao(Impressora, True, MostrarPreview);
         if nNumCopias > 0 then
           BPeDM.ACBrBPe1.DABPe.NumCopias := nNumCopias;
 
-        BPeDM.ACBrBPe1.Bilhetes.Imprimir;
+        BPeDM.ACBrBPe1.Bilhetes.ImprimirPDF;
+        Resposta.Msg := BPeDM.ACBrBPe1.DABPe.ArquivoPDF;
         Result := SetRetorno(ErrOK, Resposta.Gerar);
       finally
         BPeDM.FinalizarImpressao;
@@ -1430,7 +1431,7 @@ begin
       AStream := TMemoryStream.Create;
       try
         BPeDM.ConfigurarImpressao('', True);
-        BPeDM.ACBrBPe1.Bilhetes.ImprimirPDF;
+        BPeDM.ACBrBPe1.Bilhetes.ImprimirPDF(AStream);
         Resposta := StreamToBase64(AStream);
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
@@ -1438,7 +1439,6 @@ begin
       finally
         BPeDM.FinalizarImpressao;
         AStream.Free;
-        BPeDM.Free;
       end;
     finally
       BPeDM.Destravar;
@@ -1493,9 +1493,10 @@ begin
         else
           BPeDM.ACBrBPe1.EventoBPe.LerXMLFromString(AArquivoXmlEvento);
 
-        BPeDM.ConfigurarImpressao;
-        BPeDM.ACBrBPe1.ImprimirEvento;
+        BPeDM.ConfigurarImpressao('', True);
+        BPeDM.ACBrBPe1.ImprimirEventoPDF;
 
+        Resposta.Msg := BPeDM.ACBrBPe1.DABPe.ArquivoPDF;
         Result := SetRetorno(ErrOK, Resposta.Gerar);
       finally
         BPeDM.FinalizarImpressao;
@@ -1619,7 +1620,7 @@ begin
 
         BPeDM.ConfigurarImpressao('', True);
 
-        BPeDM.ACBrBPe1.DABPe.ImprimirEventoPDF;
+        BPeDM.ACBrBPe1.DABPe.ImprimirEVENTOPDF(AStream);
 
         Resposta := StreamToBase64(AStream);
 
