@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="ACBr_CIOT"/>
     <Type Value="RunAndDesignTime"/>
@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - CIOT - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="14">
+    <Files Count="15">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\ACBrCIOTWebServices.pas"/>
         <Type Value="Include"/>
@@ -73,7 +73,12 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\Base\ACBrCIOTIniWriter.pas"/>
         <UnitName Value="ACBrCIOTIniWriter"/>
       </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_ANTT.pas"/>
+        <UnitName Value="pcnCIOTW_ANTT"/>
+      </Item15>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDFeComum"/>

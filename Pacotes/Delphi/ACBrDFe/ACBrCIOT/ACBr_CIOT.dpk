@@ -84,6 +84,7 @@ contains
   ACBrCIOTIniWriter in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\Base\ACBrCIOTIniWriter.pas',
   ACBrCIOTIniReader in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\Base\ACBrCIOTIniReader.pas',
   pcnRetEnvCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnRetEnvCIOT.pas',
-  pcnCIOTW_Pamcard in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_Pamcard.pas';
+  pcnCIOTW_Pamcard in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_Pamcard.pas',
+	pcnCIOTW_ANTT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_ANTT.pas';
 
 end.

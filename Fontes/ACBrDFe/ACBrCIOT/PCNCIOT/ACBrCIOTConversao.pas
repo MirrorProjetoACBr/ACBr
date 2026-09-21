@@ -59,22 +59,24 @@ const
   TVersaoCIOTArrayDouble: array[TVersaoCIOT] of Double = (5.00);
 
 type
-  TCIOTIntegradora = (iNone, ieFrete, iRepom, iPamcard);
+  TCIOTIntegradora = (iNone, ieFrete, iRepom, iPamcard, iANTT);
 
 const
   TCIOTIntegradoraArrayStrings: array[TCIOTIntegradora] of string = ('iNone',
-    'ieFrete', 'iRepom', 'iPamcard');
+    'ieFrete', 'iRepom', 'iPamcard', 'iANTT');
 
 type
   TLayOutCIOT = (LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos,
                  LayeFreteMotoristas, LayeFreteOperacaoTransporte,
                  LayeFreteFaturamentoTransportadora,
-                 LayPamcard);
+                 LayPamcard,
+                 LayANTT);
 
 const
   TLayOutCIOTArrayStrings: array[TLayOutCIOT] of string =
                            ('eFreteLogon', 'eFreteProprietarios', 'eFreteVeiculos', 'eFreteMotoristas',
-                           'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora', 'Pamcard');
+                           'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora', 'Pamcard',
+                           'ANTT');
 
 type
   TpOperacao = (opLogin, opLogout,
@@ -88,7 +90,9 @@ type
                 opIncluirRota, opRoteirizar, opIncluirCartaoPortador,
                 opConsultaViagem, opConsultaParcela, opConsultarCartao,
                 opConsultarConta, opConsultarFavorecido, opConsultarFrota,
-                opConsultarRNTRC, opConsultarTAG, opPagamentoPedagio );
+                opConsultarRNTRC, opConsultarTAG, opPagamentoPedagio,
+                opConsultarSituacaoTransportador, opConsultarExcecao,
+                opConsultarCIOTGerado );
 
 const
   TpOperacaoArrayStrings: array[TpOperacao] of string = ('Login', 'Logout',
@@ -100,7 +104,9 @@ const
     'Incluir Rota', 'Roteirizar', 'Incluir Cartão Portador',
     'Consultar Viagem', 'Consultar Parcela', 'Consultar Cartao',
     'Consultar Conta', 'Consultar Favorecido', 'Consultar Frota',
-    'Consultar RNTRC', 'Consultar TAG', 'Pagamento Pedágio' );
+    'Consultar RNTRC', 'Consultar TAG', 'Pagamento Pedágio',
+    'Consultar Situação Transportador', 'Consultar Exceção',
+    'Consultar CIOT Gerado' );
 
 type
   tpTipoConta = (tcIndefinido, tcContaCorrente, tcContaPoupanca, tcContaPagamentos);
@@ -427,7 +433,8 @@ begin
     LayeFreteMotoristas,
     LayeFreteOperacaoTransporte,
     LayeFreteFaturamentoTransportadora,
-    LayPamcard:
+    LayPamcard,
+    LayANTT:
      Result := schEnviar;
   else
     Result := schErro;
@@ -440,11 +447,11 @@ begin
                            ['1', '2', '3',
                             '4', '5',
                             '6',
-                            '7'],
+                            '7', '8'],
                            [LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos,
                             LayeFreteMotoristas, LayeFreteOperacaoTransporte,
                             LayeFreteFaturamentoTransportadora,
-                            LayPamcard]);
+                            LayPamcard, LayANTT]);
 end;
 
 function EnumStrToTLayOutCIOT(out ok: boolean; const s: string): TLayOutCIOT;
@@ -452,10 +459,10 @@ begin
   Result := StrToEnumerado(ok, s,
                            ['1', '2', '3',
                             '4', '5',
-                            '6', '7'],
+                            '6', '7', '8'],
                            [LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos,
                             LayeFreteMotoristas, LayeFreteOperacaoTransporte,
-                            LayeFreteFaturamentoTransportadora, LayPamcard]);
+                            LayeFreteFaturamentoTransportadora, LayPamcard, LayANTT]);
 end;
 
 function LayOutToServico(const t: TLayOutCIOT): string;
@@ -1413,15 +1420,15 @@ end;
 function TCIOTIntegradoraToEnumStr(const t: TCIOTIntegradora): string;
 begin
   Result := EnumeradoToStr(t,
-                           ['0', '1', '2', '3'],
-                           [iNone, ieFrete, iRepom, iPamcard]);
+                           ['0', '1', '2', '3', '4'],
+                           [iNone, ieFrete, iRepom, iPamcard, iANTT]);
 end;
 
 function EnumStrToTCIOTIntegradora(out ok: boolean; const s: string): TCIOTIntegradora;
 begin
   Result := StrToEnumerado(ok, s,
-                           ['0', '1', '2', '3'],
-                           [iNone, ieFrete, iRepom, iPamcard]);
+                           ['0', '1', '2', '3', '4'],
+                           [iNone, ieFrete, iRepom, iPamcard, iANTT]);
 end;
 
 function TipoDocumentoPamcardToStr(const t: tpTipoDocumentoPamcard): string;

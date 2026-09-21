@@ -299,11 +299,18 @@ type
   private
     FPlaca: String;
     FRNTRC: String;
+    //ANTT
+    FNumeroEixos: Integer;
+    FSituacaoVeiculo: Boolean;
 
     procedure SetPlaca(const Value: String);
   public
     property Placa: String read FPlaca write SetPlaca;
     property RNTRC: String read FRNTRC write FRNTRC;
+    //ANTT
+    property NumeroEixos: Integer read FNumeroEixos write FNumeroEixos;
+    // Retorno de ConsultarFrotaTransportador: indica se o veículo pertence ao transportador.
+    property SituacaoVeiculo: Boolean read FSituacaoVeiculo write FSituacaoVeiculo;
   end;
 
   TVeiculoCollection = class(TACBrObjectList)
@@ -476,6 +483,8 @@ type
     FTipoPagamento: TpTipoPagamento;
     FInformacoesBancarias: TInformacoesBancarias;
     FNotasFiscais: TNotaFiscalCollection;
+    //ANTT
+    FQtdViagens: Integer;
 
     procedure SetNotasFiscais(const Value: TNotaFiscalCollection);
   public
@@ -496,6 +505,8 @@ type
     property TipoPagamento: TpTipoPagamento read FTipoPagamento write FTipoPagamento;
     property InformacoesBancarias: TInformacoesBancarias read FInformacoesBancarias write FInformacoesBancarias;
     property NotasFiscais: TNotaFiscalCollection read FNotasFiscais write SetNotasFiscais;
+    //ANTT
+    property QtdViagens: Integer read FQtdViagens write FQtdViagens;
   end;
 
   TViagemCollection = class(TACBrObjectList)
@@ -972,6 +983,12 @@ type
     FCiotEmissor: TPessoa;
     FContratacaoTipo: Integer;
 
+    //ANTT
+    FValorFrete: Double;
+    FDataDeclaracao: TDateTime;
+    FIndContingencia: Boolean;
+    FJustificativaContingencia: string;
+
     procedure SetViagens(const Value: TViagemCollection);
     procedure SetPagamentos(const Value: TPagamentoCollection);
     procedure SetVeiculos(const Value: TVeiculoCollection);
@@ -1042,6 +1059,12 @@ type
     property ContratacaoTipo: Integer read FContratacaoTipo write FContratacaoTipo;
 
     property Integrador: string read FIntegrador write FIntegrador;
+
+    //ANTT
+    property ValorFrete: Double read FValorFrete write FValorFrete;
+    property DataDeclaracao: TDateTime read FDataDeclaracao write FDataDeclaracao;
+    property IndContingencia: Boolean read FIndContingencia write FIndContingencia;
+    property JustificativaContingencia: string read FJustificativaContingencia write FJustificativaContingencia;
   end;
 
   TObterOperacaoTransportePDF = class(TObject)
@@ -1071,6 +1094,8 @@ type
     FCepOrigem: string;
     FCepDestino: string;
     FDistanciaPercorrida: Integer;
+    //ANTT
+    FValorFrete: Double;
 
     procedure SetVeiculos(const Value: TVeiculoCollection);
   public
@@ -1093,6 +1118,8 @@ type
     property CepOrigem: string read FCepOrigem write FCepOrigem;
     property CepDestino: string read FCepDestino write FCepDestino;
     property DistanciaPercorrida: Integer read FDistanciaPercorrida write FDistanciaPercorrida;
+    //ANTT
+    property ValorFrete: Double read FValorFrete write FValorFrete;
   end;
 
   TCancelarOperacao = class(TObjectBase)
@@ -1311,6 +1338,8 @@ type
     FObterQuitacao: Boolean;
     FObterUf: Boolean;
     FObterPostos: Boolean;
+    //ANTT
+    FAnoDeclaracao: Integer;
   public
     property IdOperacaoIntegradora: string read FIdOperacaoIntegradora write FIdOperacaoIntegradora;
     property IdOperacaoCliente: string read FIdOperacaoCliente write FIdOperacaoCliente;
@@ -1324,6 +1353,8 @@ type
     property ObterQuitacao: Boolean read FObterQuitacao write FObterQuitacao;
     property ObterUf: Boolean read FObterUf write FObterUf;
     property ObterPostos: Boolean read FObterPostos write FObterPostos;
+    //ANTT
+    property AnoDeclaracao: Integer read FAnoDeclaracao write FAnoDeclaracao;
   end;
 
   TRegistrarQuantidadeDaMercadoriaNoDesembarque = class(TObject)
@@ -1338,6 +1369,26 @@ type
 
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property NotasFiscais: TNotaFiscalCollection read FNotasFiscais write SetNotasFiscais;
+  end;
+
+  { ANTT - dados de entrada dos servicos ConsultarSituacaoTransportador,
+    ConsultarFrotaTransportador e ConsultarExcecao }
+  TConsultarTransportador = class(TObject)
+  private
+    FCpfCnpjInteressado: string;
+    FCpfCnpjTransportador: string;
+    FRNTRCTransportador: string;
+    FPlacas: TVeiculoCollection;
+
+    procedure SetPlacas(const Value: TVeiculoCollection);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property CpfCnpjInteressado: string read FCpfCnpjInteressado write FCpfCnpjInteressado;
+    property CpfCnpjTransportador: string read FCpfCnpjTransportador write FCpfCnpjTransportador;
+    property RNTRCTransportador: string read FRNTRCTransportador write FRNTRCTransportador;
+    property Placas: TVeiculoCollection read FPlacas write SetPlacas;
   end;
 
   TRegistrarPagamentoQuitacao = class(TObject)
@@ -1382,6 +1433,9 @@ type
     FIncluirRota: TIncluirRota;
     FRoterizar: TRoterizar;
     FPagamentoPedagio: TPagamentoPedagio;
+
+    //ANTT
+    FConsultarTransportador: TConsultarTransportador;
   public
     constructor Create;
     destructor Destroy; override;
@@ -1410,6 +1464,9 @@ type
     property IncluirRota: TIncluirRota read FIncluirRota write FIncluirRota;
     property Roterizar: TRoterizar read FRoterizar write FRoterizar;
     property PagamentoPedagio: TPagamentoPedagio read FPagamentoPedagio write FPagamentoPedagio;
+
+    //ANTT
+    property ConsultarTransportador: TConsultarTransportador read FConsultarTransportador write FConsultarTransportador;
   end;
 
   TConsultaTipoCargaCollectionItem = class(TObject)
@@ -1498,6 +1555,10 @@ type
     FDiferencaFreteDebito: Boolean;
     FDiferencaFreteTarifaMotorista: Double;
 
+    //ANTT
+    FCodigoVerificador: String;
+    FExcecao: Boolean;
+
     procedure SetDocumentoViagem(const Value: TMensagemCollection);
     procedure SetDocumentoPagamento(const Value: TMensagemCollection);
     procedure SetTipoCarga(const Value: TConsultaTipoCargaCollection);
@@ -1573,6 +1634,11 @@ type
     property DiferencaFreteCredito: Boolean read FDiferencaFreteCredito write FDiferencaFreteCredito;
     property DiferencaFreteDebito: Boolean read FDiferencaFreteDebito write FDiferencaFreteDebito;
     property DiferencaFreteTarifaMotorista: Double read FDiferencaFreteTarifaMotorista write FDiferencaFreteTarifaMotorista;
+
+    //ANTT
+    property CodigoVerificador: String read FCodigoVerificador write FCodigoVerificador;
+    // Retorno de ConsultarExcecao: true se o transportador esta na lista de excecoes.
+    property Excecao: Boolean read FExcecao write FExcecao;
   end;
 
 implementation
@@ -1610,6 +1676,9 @@ begin
   FIncluirRota := TIncluirRota.Create;
   FRoterizar := TRoterizar.Create;
   FPagamentoPedagio := TPagamentoPedagio.Create;
+
+  //ANTT
+  FConsultarTransportador := TConsultarTransportador.Create;
 end;
 
 destructor TCIOT.Destroy;
@@ -1638,6 +1707,9 @@ begin
   FIncluirRota.Free;
   FRoterizar.Free;
   FPagamentoPedagio.Free;
+
+  //ANTT
+  FConsultarTransportador.Free;
 
   inherited Destroy;
 end;
@@ -2258,6 +2330,27 @@ procedure TRegistrarQuantidadeDaMercadoriaNoDesembarque.SetNotasFiscais(
   const Value: TNotaFiscalCollection);
 begin
   FNotasFiscais := Value;
+end;
+
+{ TConsultarTransportador }
+
+constructor TConsultarTransportador.Create;
+begin
+  inherited Create;
+
+  FPlacas := TVeiculoCollection.Create;
+end;
+
+destructor TConsultarTransportador.Destroy;
+begin
+  FPlacas.Free;
+
+  inherited Destroy;
+end;
+
+procedure TConsultarTransportador.SetPlacas(const Value: TVeiculoCollection);
+begin
+  FPlacas := Value;
 end;
 
 { TRegistrarPagamentoQuitacao }

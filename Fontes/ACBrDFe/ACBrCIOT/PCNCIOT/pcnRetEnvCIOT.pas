@@ -44,6 +44,7 @@ uses
   pcnLeitor,
   pcnCIOT,
   ACBrCIOTConversao,
+  ACBrJSON,
   synacode;
 
 type
@@ -55,6 +56,7 @@ type
     FOperacao: TpOperacao;
 
     function PamcardTransformarXmlKeyValueParaTagsDiretas(const InputXML: string): string;
+    function LerCampoANTT(AJSon: TACBrJSONObject; const AName: string): string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -62,6 +64,7 @@ type
     function LerRetorno_eFrete: Boolean;
     function LerRetorno_Repom: Boolean;
     function LerRetorno_Pamcard: Boolean;
+    function LerRetorno_ANTT: Boolean;
 
     function LerXml: Boolean;
   published
@@ -170,11 +173,6 @@ begin
           if (leitor.rExtrai(3, 'Proprietario') <> '') then
           begin
             Proprietario.CNPJ := leitor.rCampo(tcStr, 'CNPJ');
-
-            //sAux := leitor.rCampo(tcStr, 'TipoPessoa');
-            //Proprietario.TipoPessoa := tpIndefinido;
-            //if sAux <> '' then
-            //  Proprietario.TipoPessoa := StrToTipoPessoa(sAux);
 
             Proprietario.RazaoSocial       := leitor.rCampo(tcStr, 'RazaoSocial');
             Proprietario.RNTRC             := leitor.rCampo(tcStr, 'RNTRC');
@@ -503,286 +501,23 @@ begin
         end;
 
         opConsultaViagem : begin
-          {RetEnvio.NumeroCartao := leitor.rCampo( tcStr, 'viagem.cartao.numero' );
-          RetEnvio.CartaoPortador.NumeroDocumento := leitor.rCampo( tcStr, 'viagem.cartao.portador.documento.numero' );
-          RetEnvio.CartaoPortador.TipoDocumento :=  leitor.rCampo( tcStr, 'viagem.cartao.portador.documento.tipo' );
-          RetEnvio.CartaoPortador.Nome := leitor.rCampo( tcStr, 'viagem.cartao.portador.nome' );
-          RetEnvio.CartaoPortador.RNTRC := leitor.rCampo( tcStr, 'viagem.cartao.portador.rntrc' );
-          RetEnvio.CartaoTipo := leitor.rCampo( tcStr, 'viagem.cartao.tipo' );
-          RetEnvio.ComprovacaoObs := leitor.rCampo( tcStr, 'viagem.comprovacao.observacao' );
-          RetEnvio.NumeroContrato := leitor.rCampo( tcStr, 'viagem.contrato.numero' );
-
-          RetEnvio.DataFimViagem := leitor.rCampo( tcStr, 'viagem.data.fim.viagem' );
-          RetEnvio.DataInicio := leitor.rCampo( tcStr, 'viagem.data.partida' );
-          RetEnvio.DataTermino := leitor.rCampo( tcStr, 'viagem.data.termino' );
-          RetEnvio.Rota.DestinoCidadeNome := leitor.rCampo( tcStr, 'viagem.destino.cidade.nome' );
-          RetEnvio.Rota.DestinoEstadoNome := leitor.rCampo( tcStr, 'viagem.destino.estado.nome' );
-          RetEnvio.Rota.DestinoPaisNome := leitor.rCampo( tcStr, 'viagem.destino.pais.nome' );
-          RetEnvio.Digito := leitor.rCampo( tcInt, 'viagem.digito' );
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.documento.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Documento.New do
-              begin
-                Numero := leitor.rCampo( tcDe4, Format( 'viagem.documento%d.numero', [i+1] ) );
-                Tipo := leitor.rCampo( tcStr, Format( 'viagem.documento%d.tipo', [i+1] ) );
-              end;
-            end;
-          end;
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.favorecido.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Favorecido.New do
-              begin
-                Cartao := leitor.rCampo( tcDe4, Format( 'viagem.favorecido%d.cartao', [i+1] ) );
-                InformacoesBancarias.Agencia := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.agencia', [i+1] ) );
-                InformacoesBancarias.DigitoAgencia := leitor.rCampo( tcInt, Format( 'viagem.favorecido%d.conta.agencia.digito', [i+1] ) );
-                InformacoesBancarias.InstituicaoBancaria := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.banco', [i+1] ) );
-                InformacoesBancarias.NomeInstituicaoBancaria := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.banco.nome', [i+1] ) );
-                InformacoesBancarias.Conta := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.numero', [i+1] ) );
-                InformacoesBancarias.TipoConta := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.tipo', [i+1] ) );
-                ResponsavelCPF := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.consumo.responsavel.cpf', [i+1] ) );
-                ResponsavelNome := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.consumo.responsavel.nome', [i+1] ) );
-
-                Qtd2 := leitor.rCampo( tcInt, 'viagem.favorecido%d.documento.qtde' );
-
-                for J := 0 to Qtd2 - 1 do
-                begin
-                  with RetEnvio.Favorecido.Documentos.New do
-                  begin
-                    Numero := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.documento%d.numero', [i+1, j+1] ) );
-                    Tipo := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.documento%d.tipo', [i+1, j+1] ) );
-                  end;
-                end;
-
-                TipoPagamento := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.meio.pagamento', [i+1] ) );
-                Nome := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.nome', [i+1] ) );
-                Tipo := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.tipo', [i+1] ) );
-              end;
-            end;
-          end;
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.frete.item.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Frete.Items.New do
-              begin
-                Tipo := leitor.rCampo( tcStr, Format( 'viagem.frete.item%d.tipo', [i+1] ) );
-                Valor := leitor.rCampo( tcDe2, Format( 'viagem.frete.item%d.valor', [i+1] ) );
-              end;
-            end;
-          end;
-
-          RetEnvio.Frete.ValorBruto := leitor.rCampo( tcDe2, 'viagem.frete.valor.bruto' );
-          RetEnvio.Frete.ValorLiquido := leitor.rCampo( tcDe2, 'viagem.frete.valor.liquido' );
-          RetEnvio.Id := leitor.rCampo( tcInt, 'viagem.id' );
-          RetEnvio.IdOperacaoCliente := leitor.rCampo( tcInt, 'viagem.id.cliente' );
-          RetEnvio.IdProvedorCertificacao := leitor.rCampo( tcStr, 'viagem.indicador.provedor.certificacao' );
-          RetEnvio.Rota.OrigemCidadeNome := leitor.rCampo( tcStr, 'viagem.origem.cidade.nome' );
-          RetEnvio.Rota.OrigemEstadoNome := leitor.rCampo( tcStr, 'viagem.origem.estado.nome' );
-          RetEnvio.Rota.OrigemPaisNome := leitor.rCampo( tcStr, 'viagem.origem.pais.nome' );
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.parcela.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Parcelas.Itens.New do
-              begin
-                Base := leitor.rCampo( tcStr, Format( 'viagem.parcela%d.base', [i+1] ) );
-                Data := leitor.rCampo( tcStr, Format( 'viagem.parcela%d.data', [i+1] ) );
-                EfetivacaoTipo := leitor.rCampo( tcStr, Format( 'viagem.parcela%d.efetivacao.tipo', [i+1] ) );
-                FavorecidoTipoId := leitor.rCampo( tcStr, Format( 'viagem.parcela%d.favorecido.tipo.id', [i+1] ) );
-                NumeroCliente := leitor.rCampo( tcStr, Format( 'viagem.parcela%d.numero.cliente', [i+1] ) );
-                StatusId := leitor.rCampo( tcStr, Format( 'viagem.parcela%d.status.id', [i+1] ) );
-                Tipo := leitor.rCampo( tcStr, Format( 'viagem.parcela%d.tipo', [i+1] ) );
-                Valor := leitor.rCampo( tcDe2, Format( 'viagem.parcela%d.valor', [i+1] ) );
-              end;
-            end;
-          end;
-
-          RetEnvio.Pedagio.Caminho := leitor.rCampo( tcStr, 'viagem.pedagio.caminho' );
-          RetEnvio.Pedagio.IdaVolta := leitor.rCampo( tcStr, 'viagem.pedagio.idavolta' );
-          RetEnvio.Pedagio.Km := leitor.rCampo( tcDe4, 'viagem.pedagio.km' );
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.pedagio.praca.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Pedagio.Pracas.New do
-              begin
-                km := leitor.rCampo( tcDe4, Format( 'viagem.pedagio.praca%d.km', [i+1] ) );
-                Nome := leitor.rCampo( tcStr, Format( 'viagem.pedagio.praca%d.nome', [i+1] ) );
-                Seq := leitor.rCampo( tcInt, Format( 'viagem.pedagio.praca%d.seq', [i+1] ) );
-                Valor := leitor.rCampo( tcDe2, Format( 'viagem.pedagio.praca%d.valor', [i+1] ) );
-              end;
-            end;
-          end;
-
-          RetEnvio.Pedagio.Protocolo := leitor.rCampo( tcStr, 'viagem.pedagio.protocolo' );
-          RetEnvio.Pedagio.Roteirizar := leitor.rCampo( tcStr, 'viagem.pedagio.roteirizar' );
-          RetEnvio.Pedagio.SolucaoId := leitor.rCampo( tcStr, 'viagem.pedagio.solucao.id' );
-          RetEnvio.Pedagio.Status := leitor.rCampo( tcInt, 'viagem.pedagio.status' );
-          RetEnvio.Pedagio.Tag := leitor.rCampo( tcStr, 'viagem.pedagio.tag' );
-          RetEnvio.Pedagio.Valor := leitor.rCampo( tcDe2, 'viagem.pedagio.valor' );
-          RetEnvio.Pedagio.ValorCarregado := leitor.rCampo( tcDe2, 'viagem.pedagio.valor.carregado' );
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.ponto.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Rota.Pontos.New do
-              begin
-                CidadeNome := leitor.rCampo( tcStr, Format( 'viagem.ponto%d.cidade.nome', [i+1] ) );
-                EstadoNome := leitor.rCampo( tcStr, Format( 'viagem.ponto%d.estado.nome', [i+1] ) );
-                PaisNome := leitor.rCampo( tcStr, Format( 'viagem.ponto%d.pais.nome', [i+1] ) );
-                Km := leitor.rCampo( tcDe4, Format( 'viagem.ponto%d.km', [i+1] ) );
-              end;
-            end;
-          end;
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.posto.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Postos.New do
-              begin
-                Bandeira := leitor.rCampo( tcStr, Format( 'viagem.posto%d.bandeira', [i+1] ) );
-                DocumentoNumero := leitor.rCampo( tcStr, Format( 'viagem.posto%d.documento.numero', [i+1] ) );
-                NomeFantasia := leitor.rCampo( tcStr, Format( 'viagem.posto%d.nomefantasia', [i+1] ) );
-
-                Endereco.Bairro := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.bairro', [i+1] ) );
-                Endereco.CEP := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.cep', [i+1] ) );
-                Endereco.xMunicipio := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.cidade', [i+1] ) );
-                Endereco.Complemento := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.complemento', [i+1] ) );
-                Endereco.Rua := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.logradouro', [i+1] ) );
-                Endereco.Numero := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.numero', [i+1] ) );
-                Endereco.xPais := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.pais', [i+1] ) );
-                Endereco.Uf := leitor.rCampo( tcStr, Format( 'viagem.posto%d.endereco.uf', [i+1] ) );
-              end;
-            end;
-          end;
-
-          RetEnvio.QuitacaoEntregaRessalva := leitor.rCampo( tcStr, 'viagem.quitacao.entrega.ressalva' );
-          RetEnvio.QuitacaoIndicador := leitor.rCampo( tcStr, 'viagem.quitacao.indicador' );
-          RetEnvio.QuitacaoPrazo := leitor.rCampo( tcInt, 'viagem.quitacao.prazo' );
-          RetEnvio.Rota.Id := leitor.rCampo( tcInt, 'viagem.rota.id' );
-          RetEnvio.Rota.Nome := leitor.rCampo( tcStr, 'viagem.rota.nome' );
-          RetEnvio.Status := leitor.rCampo( tcInt, 'viagem.status' );
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.uf.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Ufs.New do
-              begin
-                Sigla := leitor.rCampo( tcStr, Format( 'viagem.uf%d.sigla', [i+1] ) );
-              end;
-            end;
-          end;
-
-          RetEnvio.Valor := leitor.rCampo( tcDe2, 'viagem.valor' );
-          RetEnvio.Veiculo.Placa := leitor.rCampo( tcStr, 'viagem.veiculo.placa' );
-          RetEnvio.Veiculo.PlacaCarreta1 := leitor.rCampo( tcStr, 'viagem.veiculo.placa.carreta1' );
-          RetEnvio.Veiculo.PlacaCarreta2 := leitor.rCampo( tcStr, 'viagem.veiculo.placa.carreta2' );
-          RetEnvio.Veiculo.PlacaCarreta3 := leitor.rCampo( tcStr, 'viagem.veiculo.placa.carreta3' );}
+          //sem implementação
         end;
 
         opConsultaParcela: begin
-          {RetEnvio.Parcelas.Itens[0].StatusId := leitor.rCampo( tcInt, 'viagem.parcela.status.id' );
-          RetEnvio.Parcelas.Itens[0].StatusDescricao := leitor.rCampo( tcStr, 'viagem.parcela.status.descrição' );}
+          //sem implementação
         end;
 
         opConsultarCartao: begin
-          {RetEnvio.CartaoPortador.NumeroDocumento := leitor.rCampo( tcStr, 'viagem.cartao.portador.documento.numero' );
-          RetEnvio.CartaoPortador.TipoDocumento :=  leitor.rCampo( tcInt, 'viagem.cartao.portador.documento.tipo' );
-          RetEnvio.CartaoPortador.Nome := leitor.rCampo( tcStr, 'viagem.cartao.portador.nome' );
-          RetEnvio.CartaoStatusDesc := leitor.rCampo( tcStr, 'viagem.cartao.status.descricao' );
-          RetEnvio.CartaoStatusID := leitor.rCampo( tcInt, 'viagem.cartao.status.id' );
-          RetEnvio.CartaoTipo := leitor.rCampo( tcStr, 'viagem.cartao.tipo' );
-          RetEnvio.CartaoPortador2.NumeroDocumento := leitor.rCampo( tcStr, 'viagem.cartao.portador.documento.numero' );
-          RetEnvio.CartaoPortador2.TipoDocumento :=  leitor.rCampo( tcInt, 'viagem.cartao.portador.documento.tipo' );
-          RetEnvio.CartaoPortador2.Nome := leitor.rCampo( tcStr, 'viagem.cartao.portador.nome' );
-          RetEnvio.CartaoDataCadastro := leitor.rCampo( tcStr, 'viagem.cartao.data.cadastro' );}
+          //sem implementação
         end;
 
         opConsultarConta: begin
-          {RetEnvio.Favorecido.Documentos.Itens[0].Tipo := leitor.rCampo( tcStr, 'viagem.favorecido.documento.tipo' );
-          RetEnvio.Favorecido.Documentos.Itens[0].Numero := leitor.rCampo( tcStr, 'viagem.favorecido.documento.numero' );
-          RetEnvio.Favorecido.InformacoesBancarias.Itens[0].Agencia := leitor.rCampo( tcStr, 'viagem.favorecido.conta.agencia' );
-          RetEnvio.Favorecido.InformacoesBancarias.Itens[0].InstituicaoBancaria := leitor.rCampo( tcStr, 'viagem.favorecido.conta.banco' );
-          RetEnvio.Favorecido.InformacoesBancarias.Itens[0].NomeInstituicaoBancaria := leitor.rCampo( tcStr, 'viagem.favorecido.conta.banco.nome' );
-          RetEnvio.Favorecido.InformacoesBancarias.Itens[0].Conta := leitor.rCampo( tcStr, 'viagem.favorecido.conta.numero' );
-          RetEnvio.Favorecido.InformacoesBancarias.Itens[0].Status := leitor.rCampo( tcStr, 'viagem.favorecido.conta.status' );
-          RetEnvio.Favorecido.InformacoesBancarias.Itens[0].TipoConta := leitor.rCampo( tcStr, 'viagem.favorecido.conta.tipo' );
-          RetEnvio.Favorecido.InformacoesBancarias.Itens[0].IndicadorPamBank := leitor.rCampo( tcStr, 'viagem.favorecido.conta.pambank.indicador' );
-          RetEnvio.Favorecido.RNTRC := leitor.rCampo( tcStr, 'viagem.favorecido.rntrc.cadastro' );
-          RetEnvio.Favorecido.ResponsavelFinanceiroCPF := leitor.rCampo( tcStr, 'viagem.favorecido.conta.responsavel.financeiro.cpf' );
-          RetEnvio.Favorecido.ResponsavelFinanceiroNome := leitor.rCampo( tcStr, 'viagem.favorecido.conta.responsavel.financeiro.nome' );}
+          //sem implementação
         end;
 
         opConsultarFavorecido: begin
-          {Qtd := leitor.rCampo( tcInt, 'viagem.favorecido.cartao.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Favorecido.Cartao.Itens.New do
-              begin
-                Numero := leitor.rCampo( tcStr, Format( 'viagem.favorecido.cartao%d.numero', [i+1] ) );
-                Tipo := leitor.rCampo( tcInt, Format( 'viagem.favorecido.cartao%d.tipo', [i+1] ) );
-                Status := leitor.rCampo( tcStr, Format( 'viagem.favorecido.cartao%d.status', [i+1] ) );
-              end;
-            end;
-          end;
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.favorecido.conta.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Favorecido.InformacoesBancarias.Itens.New do
-              begin
-                Conta := leitor.rCampo( tcStr, Format( 'viagem.favorecido.conta%d.numero', [i+1] ) );
-                Agencia := leitor.rCampo( tcStr, Format( 'viagem.favorecido.conta%d.agencia', [i+1] ) );
-                DigitoAgencia := leitor.rCampo( tcInt, Format( 'viagem.favorecido.conta%d.agencia.digito', [i+1] ) );
-                InstituicaoBancaria := leitor.rCampo( tcStr, Format( 'viagem.favorecido.conta%d.banco', [i+1] ) );
-                TipoConta := leitor.rCampo( tcStr, Format( 'viagem.favorecido.conta%d.tipo', [i+1] ) );
-                Status := leitor.rCampo( tcStr, Format( 'viagem.favorecido.conta%d.status', [i+1] ) );
-                IndicadorPamBank := leitor.rCampo( tcStr, Format( 'viagem.favorecido.conta%d.pambank.indicador', [i+1] ) );
-              end;
-            end;
-          end;
-
-          RetEnvio.Favorecido.Nome := leitor.rCampo( tcStr, 'viagem.favorecido.nome' );
-          RetEnvio.Favorecido.RNTRCStatus := leitor.rCampo( tcStr, 'viagem.favorecido.status.rntrc' );
-          RetEnvio.Favorecido.RNTRC := leitor.rCampo( tcStr, 'viagem.favorecido.rntrc.cadastro' );
-          RetEnvio.RNTRCTipo := leitor.rCampo( tcStr, 'viagem.antt.rntrc.tipo' );
-          RetEnvio.RNTRCEquiparadoTac := leitor.rCampo( tcStr, 'viagem.antt.rntrc.equiparado.tac' );
-          RetEnvio.Favorecido.NumDependentes := leitor.rCampo( tcInt, 'viagem.favorecido.numDependentes' );
-          RetEnvio.Favorecido.SituacaoRNTRC := leitor.rCampo( tcStr, 'viagem.favorecido.rntrc.situacao' );}
+           // sem implementação
         end;
 
         opObterCodigoIOT: begin
@@ -804,74 +539,6 @@ begin
 
           if( Trim( RetEnvio.ProtocoloCancelamento ) <> '' )then
             RetEnvio.EstadoCiot := ecCancelado;
-
-          (*Qtd := leitor.rCampo( tcInt, 'viagem.favorecido.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              //1-Contratado, 2-Subcontratante, 3-Motorista
-              //if( leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.tipo', [i+1] ) = '1' )then
-
-
-              with RetEnvio.Favorecido.New do
-              begin
-                Tipo := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.tipo', [i+1] ) );
-
-                Qtd2 := leitor.rCampo( tcInt, 'viagem.favorecido%d.documento.qtde' );
-
-                for J := 0 to Qtd2 - 1 do
-                begin
-                  with RetEnvio.Favorecido.Documentos.New do
-                  begin
-                    Numero := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.documento%d.numero', [i+1, j+1] ) );
-                    Tipo := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.documento%d.tipo', [i+1, j+1] ) );
-                    DataEmissao := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.documento%d.emissao.data', [i+1, j+1] ) );
-                    IdEmissor := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.documento%d.emissor.id', [i+1, j+1] ) );
-                    UF := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.documento%d.uf', [i+1, j+1] ) );
-                  end;
-                end;
-
-                Nome := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.nome', [i+1] ) );
-                DataNascimento := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.data.nascimento', [i+1] ) );
-                Endereco.Logradouro := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.logradouro', [i+1] ) );
-                Endereco.Numero := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.numero', [i+1] ) );
-                Endereco.Bairro := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.bairro', [i+1] ) );
-                Endereco.Complemento := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.complemento', [i+1] ) );
-                Endereco.CEP := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.cep', [i+1] ) );
-                Endereco.CidadeIBGE := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.cidade.ibge', [i+1] ) );
-                Endereco.Pais := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.pais', [i+1] ) );
-                Endereco.UF := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.uf', [i+1] ) );
-                Endereco.Cidade := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.cidade', [i+1] ) );
-                Endereco.PropriedadeTipo := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.propriedade.tipo.id', [i+1] ) );
-                Endereco.ResideDesde := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.endereco.reside.desde', [i+1] ) );
-                Telefones.DDD := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.telefone.ddd', [i+1] ) );
-                Telefones.Numero := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.telefone.numero', [i+1] ) );
-                Celular.DDD := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.celular.ddd', [i+1] ) );
-                Celular.Numero := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.celular.numero', [i+1] ) );
-                Celular.IdOperadora := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.celular.operadora.id', [i+1] ) );
-                Email := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.email', [i+1] ) );
-                Sexo := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.sexo', [i+1] ) );
-                IdNacionalidade := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.nacionalidade.id', [i+1] ) );
-                NaturalidadeIBGE := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.naturalidade.ibge', [i+1] ) );
-
-                TipoPagamento := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.meio.pagamento', [i+1] ) );
-                InformacoesBancarias.Agencia := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.agencia', [i+1] ) );
-                InformacoesBancarias.DigitoAgencia := leitor.rCampo( tcInt, Format( 'viagem.favorecido%d.conta.agencia.digito', [i+1] ) );
-                InformacoesBancarias.InstituicaoBancaria := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.banco', [i+1] ) );
-                InformacoesBancarias.Conta := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.numero', [i+1] ) );
-                InformacoesBancarias.TipoConta := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.conta.tipo', [i+1] ) );
-                Cartao := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.cartao', [i+1] ) );
-                EmpresaNome := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.empresa.nome', [i+1] ) );
-                EmpresaCNPJ := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.empresa.cnpj', [i+1] ) );
-                EmpresaRNTRC := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.empresa.rntrc', [i+1] ) );
-
-                ResponsavelCPF := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.consumo.responsavel.cpf', [i+1] ) );
-                ResponsavelNome := leitor.rCampo( tcStr, Format( 'viagem.favorecido%d.consumo.responsavel.nome', [i+1] ) );
-              end;
-            end;
-          end;*)
 
           RetEnvio.CodigoIdentificacaoOperacaoPrincipal := leitor.rCampo( tcStr, 'viagem.contrato.numero' );
           RetEnvio.IdOperacaoCliente := leitor.rCampo( tcStr, 'viagem.id.cliente' );
@@ -898,60 +565,6 @@ begin
           RetEnvio.PesoCarga := leitor.rCampo( tcDe2, 'viagem.carga.peso' );
           RetEnvio.CargaPerfilId := leitor.rCampo( tcInt, 'viagem.carga.perfil.id' );
           RetEnvio.CargaValorUnitario := leitor.rCampo( tcDe2, 'viagem.carga.valorunitario' );
-
-          (*Qtd := leitor.rCampo( tcInt, 'viagem.documento.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.DocumentoViagem.New do
-              begin
-                Tipo := leitor.rCampo( tcStr, Format( 'viagem.documento%d.tipo', [i+1] ) );
-                Numero := leitor.rCampo( tcStr, Format( 'viagem.documento%d.numero', [i+1] ) );
-                Serie := leitor.rCampo( tcStr, Format( 'viagem.documento%d.serie', [i+1] ) );
-                Quantidade := leitor.rCampo( tcDe2, Format( 'viagem.documento%d.quantidade', [i+1] ) );
-                Especie := leitor.rCampo( tcStr, Format( 'viagem.documento%d.especie', [i+1] ) );
-                Cubagem := leitor.rCampo( tcDe3, Format( 'viagem.documento%d.cubagem', [i+1] ) );
-                Natureza := leitor.rCampo( tcStr, Format( 'viagem.documento%d.natureza', [i+1] ) );
-                Peso := leitor.rCampo( tcDe2, Format( 'viagem.documento%d.peso', [i+1] ) );
-                ValorMercadoria := leitor.rCampo( tcDe2, Format( 'viagem.documento%d.mercadoria.valor', [i+1] ) );
-
-                Qtd2 := leitor.rCampo( tcInt, 'viagem.documento%d.pessoafiscal.qtde' );
-
-                for J := 0 to Qtd2 - 1 do
-                begin
-                  with PessoaFiscal.New do
-                  begin
-                    Tipo := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.tipo', [i+1, j+1] ) );
-                    Codigo := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.codigo', [i+1, j+1] ) );
-                    TipoDocumento := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.documento.tipo', [i+1, j+1] ) );
-                    NumeroDocumento := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.documento.numero', [i+1, j+1] ) );
-                    Nome := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.nome', [i+1, j+1] ) );
-                    Endereco.Logradouro := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.endereco.logradouro', [i+1, j+1] ) );
-                    Endereco.Numero := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.endereco.numero', [i+1, j+1] ) );
-                    Endereco.Complemento := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.endereco.complemento', [i+1, j+1] ) );
-                    Endereco.Bairro := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.endereco.bairro', [i+1, j+1] ) );
-                    Endereco.CidadeIBGE := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.endereco.cidade.ibge', [i+1, j+1] ) );
-                    Endereco.CEP := leitor.rCampo( tcStr, Format( 'viagem.documento%d.pessoafiscal%d.endereco.cep', [i+1, j+1] ) );
-                  end;
-                end;
-              end;
-            end;
-          end;
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.documento.complementar.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.DocumentoComplementar.New do
-              begin
-                Tipo := leitor.rCampo( tcStr, Format( 'viagem.documento.complementar%d.tipo', [i+1] ) );
-              end;
-            end;
-          end;*)
 
           RetEnvio.Rota.Id := leitor.rCampo( tcInt, 'viagem.rota.id' );
           RetEnvio.Rota.Nome := leitor.rCampo( tcStr, 'viagem.rota.nome' );
@@ -1093,56 +706,15 @@ begin
         end;
 
         opConsultarFrota: begin
-          {RetEnvio.Favorecido.Nome := leitor.rCampo( tcStr, 'viagem.antt.nome' );
-          RetEnvio.Favorecido.RNTRC := leitor.rCampo( tcStr, 'viagem.antt.rntrc.numero' );
-          RetEnvio.RNTRCSituacao := leitor.rCampo( tcStr, 'viagem.antt.rntrc.situacao' );
-
-          Qtd := leitor.rCampo( tcInt, 'viagem.veiculo.placa.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Veiculo.New do
-              begin
-                Placa := leitor.rCampo( tcStr, Format( 'viagem.veiculo%d.placa', [i+1] ) );
-                Situacao := leitor.rCampo( tcStr, Format( 'viagem.veiculo%d.situacao', [i+1] ) );
-              end;
-            end;
-          end;}
+          // sem implementação
         end;
 
         opConsultarRNTRC: begin
-          {RetEnvio.Favorecido.Nome := leitor.rCampo( tcStr, 'viagem.antt.nome' );
-          RetEnvio.RNTRCSituacao := leitor.rCampo( tcStr, 'viagem.antt.rntrc.situacao' );
-          RetEnvio.RNTRCValidade := leitor.rCampo( tcStr, 'viagem.antt.rntrc.validade' );
-          RetEnvio.RNTRCTipo := leitor.rCampo( tcStr, 'viagem.antt.rntrc.tipo' );
-          RetEnvio.RNTRCEquiparadoTac := leitor.rCampo( tcStr, 'viagem.antt.rntrc.equiparado.tac' );
-          RetEnvio.Favorecido.RNTRC := leitor.rCampo( tcStr, 'viagem.antt.rntrc.numero' );}
+          //sem implementação
         end;
 
         opConsultarTAG: begin
-          {RetEnvio.Favorecido.Documentos.Itens[0].Numero := leitor.rCampo( tcStr, 'tag.favorecido.documento.numero' );
-          RetEnvio.Favorecido.Documentos.Itens[0].Tipo := leitor.rCampo( tcStr, 'tag.favorecido.documento.tipo' );
-          RetEnvio.Favorecido.Nome := leitor.rCampo( tcStr, 'tag. favorecido.nome' );
-
-          Qtd := leitor.rCampo( tcInt, 'tag.qtde' );
-
-          if( Qtd > 0 )then
-          begin
-            for I := 0 to Qtd - 1 do
-            begin
-              with RetEnvio.Tag.New do
-              begin
-                DataAdesao := leitor.rCampo( tcStr, Format( 'tag%d.adesao.data', [i+1] ) );
-                StatusAdesao := leitor.rCampo( tcInt, Format( 'tag%d.adesao.status', [i+1] ) ); //1: Pendente - 2:Liberada - 3:Cancelada
-                Numero := leitor.rCampo( tcStr, Format( 'tag%d.numero', [i+1] ) );
-                Placa := leitor.rCampo( tcStr, Format( 'tag%d.placa', [i+1] ) );
-                Status := leitor.rCampo( tcInt, Format( 'tag%d.status', [i+1] ) ); //1: Aguardando Ativação - 2:Ativa
-                IndicadorValePedagio := leitor.rCampo( tcStr, Format( 'tag%d.valepedagio.indicador', [i+1] ) );
-              end;
-            end;
-          end;}
+          // sem implementação
         end;
 
         opEncerrar: begin
@@ -1278,6 +850,158 @@ begin
   end;
 end;
 
+function TRetornoEnvio.LerCampoANTT(AJSon: TACBrJSONObject;
+  const AName: string): string;
+var
+  LArr: TACBrJSONArray;
+  i: Integer;
+begin
+  // Nos retornos da ANTT os campos Codigo e Mensagem podem ser retornados
+  // como string ou como array de strings.
+  Result := '';
+
+  try
+    LArr := AJSon.AsJSONArray[AName];
+
+    if Assigned(LArr) and (LArr.Count > 0) then
+    begin
+      for i := 0 to LArr.Count - 1 do
+      begin
+        if Result <> '' then
+          Result := Result + ' | ';
+
+        Result := Result + LArr.Items[i];
+      end;
+
+      Exit;
+    end;
+  except
+    // Valor nao e um array, sera lido como string abaixo
+  end;
+
+  Result := AJSon.AsString[AName];
+end;
+
+function TRetornoEnvio.LerRetorno_ANTT: Boolean;
+var
+  LJSon, LRetorno, LItem: TACBrJSONObject;
+  LFrota: TACBrJSONArray;
+  LVeiculo: TVeiculoCollectionItem;
+  LTipoTransportador: string;
+  i: Integer;
+begin
+  Result := False;
+
+  if Trim(Leitor.Arquivo) = '' then
+    Exit;
+
+  try
+    LJSon := TACBrJSONObject.Parse(Leitor.Arquivo);
+    try
+      with RetEnvio do
+      begin
+        Codigo    := LerCampoANTT(LJSon, 'Codigo');
+        Mensagem  := LerCampoANTT(LJSon, 'Mensagem');
+        Protocolo := LJSon.AsString['Protocolo'];
+        ProtocoloServico := Protocolo;
+
+        // 110 - Dados inseridos com sucesso; 111 - Consulta realizada com sucesso
+        if (Codigo = '110') or (Codigo = '111') then
+          Sucesso := 'true'
+        else
+          Sucesso := 'false';
+
+        case Operacao of
+          opConsultarSituacaoTransportador,
+          opConsultarFrota:
+            begin
+              Proprietario.CNPJ        := LJSon.AsString['CpfCnpjTransportador'];
+              Proprietario.RNTRC       := LJSon.AsString['RNTRCTransportador'];
+              Proprietario.RazaoSocial := LJSon.AsString['NomeRazaoSocialTransportador'];
+              Proprietario.RNTRCAtivo  := LJSon.AsBoolean['RNTRCAtivo'];
+
+              LTipoTransportador := LJSon.AsString['TipoTransportador'];
+
+              if LTipoTransportador <> '' then
+                Proprietario.Tipo := StrToTipoProprietario(LTipoTransportador);
+
+              Proprietario.TACouEquiparado := LJSon.AsBoolean['EquiparadoTAC'];
+
+              if Operacao = opConsultarFrota then
+              begin
+                LFrota := LJSon.AsJSONArray['Frota'];
+
+                if Assigned(LFrota) then
+                begin
+                  for i := 0 to LFrota.Count - 1 do
+                  begin
+                    LItem := LFrota.ItemAsJSONObject[i];
+
+                    LVeiculo := Veiculos.New;
+                    LVeiculo.Placa := LItem.AsString['PlacaVeiculo'];
+                    LVeiculo.SituacaoVeiculo := LItem.AsBoolean['SituacaoVeiculoFrotaTransportador'];
+                  end;
+                end;
+              end;
+            end;
+
+          opAdicionar:
+            begin
+              CodigoIdentificacaoOperacao := LJSon.AsString['CodigoIdentificacaoOperacao'];
+
+              if CodigoIdentificacaoOperacao = '' then
+                CodigoIdentificacaoOperacao := LJSon.AsString['IdOperacaoTransporte'];
+
+              CodigoVerificador  := LJSon.AsString['CodigoVerificador'];
+              AvisoTransportador := LJSon.AsString['AvisoTransportador'];
+            end;
+
+          opCancelar:
+            begin
+              CodigoIdentificacaoOperacao := LJSon.AsString['CodigoIdentificacaoOperacao'];
+              DataCancelamento      := LJSon.AsISODateTime['DataCancelamento'];
+              ProtocoloCancelamento := Protocolo;
+            end;
+
+          opRetificar:
+            begin
+              CodigoIdentificacaoOperacao := LJSon.AsString['CodigoIdentificacaoOperacao'];
+              DataRetificacao := LJSon.AsISODateTime['DataRetificacao'];
+            end;
+
+          opEncerrar:
+            begin
+              CodigoIdentificacaoOperacao := LJSon.AsString['CodigoIdentificacaoOperacao'];
+              DataEncerramento      := LJSon.AsISODateTime['DataEncerramento'];
+              ProtocoloEncerramento := Protocolo;
+            end;
+
+          opConsultarExcecao:
+            begin
+              LRetorno := LJSon.AsJSONObject['Retorno'];
+
+              if Assigned(LRetorno) then
+              begin
+                Proprietario.CNPJ := LRetorno.AsString['CpfCnpjTransportador'];
+                Excecao := LRetorno.AsBoolean['Flag'];
+              end;
+            end;
+
+          opObterCodigoIOT,
+          opConsultarCIOTGerado:
+            CodigoIdentificacaoOperacao := LJSon.AsString['CodigoIdentificacaoOperacao'];
+        end;
+      end;
+
+      Result := True;
+    finally
+      LJSon.Free;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
 function TRetornoEnvio.LerXml: Boolean;
 begin
   Leitor.Grupo := Leitor.Arquivo;
@@ -1286,6 +1010,7 @@ begin
     ieFrete:  Result := LerRetorno_eFrete;
     iRepom:   Result := LerRetorno_Repom;
     iPamcard: Result := LerRetorno_Pamcard;
+    iANTT:    Result := LerRetorno_ANTT;
   else
     Result := False;
   end;
