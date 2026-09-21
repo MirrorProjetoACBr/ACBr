@@ -5,7 +5,7 @@ inherited frlXDANFSeRLPadraoNacional: TfrlXDANFSeRLPadraoNacional
   ClientHeight = 815
   TextHeight = 13
   inherited RLNFSe: TRLReport
-    Top = 10
+    Top = 0
     Margins.LeftMargin = 6.000000000000000000
     Margins.TopMargin = 5.000000000000000000
     Margins.RightMargin = 5.099999999999999000
@@ -1001,6 +1001,19 @@ inherited frlXDANFSeRLPadraoNacional: TfrlXDANFSeRLPadraoNacional
         ParentFont = False
         Transparent = False
       end
+      object rllCodigoTrib: TRLLabel
+        Left = 170
+        Top = 15
+        Width = 54
+        Height = 12
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
     end
     object rlbBanda14_InformacoesComplementares: TRLBand
       Left = 28
@@ -1017,7 +1030,7 @@ inherited frlXDANFSeRLPadraoNacional: TfrlXDANFSeRLPadraoNacional
       object rlmDadosAdicionais: TRLMemo
         Left = 5
         Top = 21
-        Width = 743
+        Width = 662
         Height = 12
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET

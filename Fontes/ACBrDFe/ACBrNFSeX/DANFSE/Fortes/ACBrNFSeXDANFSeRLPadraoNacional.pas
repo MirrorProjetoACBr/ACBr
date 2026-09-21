@@ -298,6 +298,7 @@ type
     RLLabel62: TRLLabel;
     RLSystemInfo2: TRLSystemInfo;
     imgQRCode: TRLImage;
+    rllCodigoTrib: TRLLabel;
 
     procedure RLNFSeBeforePrint(Sender: TObject; var PrintIt: Boolean);
 
@@ -349,9 +350,7 @@ var
 implementation
 
 uses
-  StrUtils, 
-  DateUtils, 
-  Types,
+  StrUtils, DateUtils, Types,
   ACBrUtil.Base,
   ACBrUtil.Strings,
   ACBrUtil.DateTime,
@@ -383,9 +382,7 @@ end;
 procedure TfrlXDANFSeRLPadraoNacional.rlbBanda01_LogosBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
 var
-  Ambiente, Logo, TipoLogo: string;
-  Res: TResourceStream;
-  LogoStream: TStringStream;
+  Ambiente: string;
 begin
   inherited;
 
@@ -407,19 +404,14 @@ end;
 
 procedure TfrlXDANFSeRLPadraoNacional.rlbBanda02_Ide_NFSeBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
-var
-  QrCode: TDelphiZXingQRCode;
-  QrCodeBitmap: TBitmap;
-  QRCodeData: string;
-  rlImgQrCode: TRLImage;
-  Row, Column: Integer;
 begin
   inherited;
 
   if Length(fpNFSe.ChaveAcesso)=50 then
-     rllChaveAcesso.Caption := ACBrStr(fpNFSe.ChaveAcesso)
+    rllChaveAcesso.Caption := ACBrStr(fpNFSe.ChaveAcesso)
   else
-     rllChaveAcesso.Caption := ACBrStr(fpNFSe.CodigoVerificacao);
+    rllChaveAcesso.Caption := ACBrStr(fpNFSe.CodigoVerificacao);
+
   rllNumNF0.Caption := fpNFSe.Numero;
   rllNumeroDPS.Caption := fpNFSe.IdentificacaoRps.Numero;
 
@@ -445,10 +437,16 @@ end;
 
 procedure TfrlXDANFSeRLPadraoNacional.rlbBanda03_EmitenteBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
+var
+  xNome: string;
 begin
   inherited;
 
-  rllEmitenteNome.Caption := fpNFSe.infNFSe.emit.RazaoSocial;
+  xNome := fpNFSe.infNFSe.emit.RazaoSocial;
+  if Length(xNome) > 65 then
+    xNome := Copy(xNome, 1, 65) + '...';
+
+  rllEmitenteNome.Caption := xNome;
   rllEmitenteEndereco.Caption := fpNFSe.infNFSe.emit.Endereco.Endereco + ', ' +
                                  fpNFSe.infNFSe.emit.Endereco.Numero + ', ' +
                                  fpNFSe.infNFSe.emit.Endereco.Bairro;
@@ -495,10 +493,16 @@ end;
 
 procedure TfrlXDANFSeRLPadraoNacional.rlbBanda04_TomadorBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
+var
+  xNome: string;
 begin
   inherited;
 
-  rllTomaNome.Caption := fpNFSe.Tomador.RazaoSocial;
+  xNome := fpNFSe.Tomador.RazaoSocial;
+  if Length(xNome) > 65 then
+    xNome := Copy(xNome, 1, 65) + '...';
+
+  rllTomaNome.Caption := xNome;
   rllTomaEndereco.Caption := fpNFSe.Tomador.Endereco.Endereco + ', ' +
                                  fpNFSe.Tomador.Endereco.Numero + ', ' +
                                  fpNFSe.Tomador.Endereco.Bairro;
@@ -519,6 +523,8 @@ end;
 
 procedure TfrlXDANFSeRLPadraoNacional.rlbBanda05_DestinatarioBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
+var
+  xNome: string;
 begin
   inherited;
 
@@ -549,7 +555,11 @@ begin
     RLLabel85.Visible := True;
     RLLabel88.Visible := True;
 
-    rllDestNome.Caption := fpNFSe.IBSCBS.dest.xNome;
+    xNome := fpNFSe.IBSCBS.dest.xNome;
+    if Length(xNome) > 65 then
+      xNome := Copy(xNome, 1, 65) + '...';
+
+    rllDestNome.Caption := xNome;
     rllDestEndereco.Caption := fpNFSe.IBSCBS.dest.ender.xLgr + ', ' +
                                    fpNFSe.IBSCBS.dest.ender.nro + ', ' +
                                    fpNFSe.IBSCBS.dest.ender.xBairro;
@@ -571,6 +581,8 @@ end;
 
 procedure TfrlXDANFSeRLPadraoNacional.rlbBanda06_IntermediarioBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
+var
+  xNome: string;
 begin
   inherited;
 
@@ -599,7 +611,11 @@ begin
     RLLabel85.Visible := True;
     RLLabel88.Visible := True;
 
-    rllInterNome.Caption := fpNFSe.Intermediario.RazaoSocial;
+    xNome := fpNFSe.Intermediario.RazaoSocial;
+    if Length(xNome) > 65 then
+      xNome := Copy(xNome, 1, 65) + '...';
+
+    rllInterNome.Caption := xNome;
     rllInterEndereco.Caption := fpNFSe.Intermediario.Endereco.Endereco + ', ' +
                                    fpNFSe.Intermediario.Endereco.Numero + ', ' +
                                    fpNFSe.Intermediario.Endereco.Bairro;
@@ -634,15 +650,21 @@ begin
   if fpNFSe.Servico.CodigoTributacaoMunicipio <> '' then
     Codigo := Codigo + '/' + fpNFSe.Servico.CodigoTributacaoMunicipio;
 
+  rllCodigoTrib.Caption := Codigo;
+
   If fpNFSe.infNFSe.xTribMun <> '' then
     Desc := fpNFSe.infNFSe.xTribMun
   else
     Desc := fpNFSe.infNFSe.xTribNac;
 
   rlmCodTribNac.Lines.Clear;
-  rlmCodTribNac.Lines.Add(Codigo + ' - ' + Desc);
+  rlmCodTribNac.Lines.Add(Desc);
 
   rllCodigoNBS.Caption := fpNFSe.Servico.CodigoNBS;
+
+  if fpNFSe.Servico.CodigoPais = 0 then
+    fpNFSe.Servico.CodigoPais := 1058;
+
   rllLocalPrestacao.Caption := fpNFSe.Servico.MunicipioPrestacaoServico + ' / ' +
                               CodIBGEPaisToSiglaISO2(fpNFSe.Servico.CodigoPais);
 
