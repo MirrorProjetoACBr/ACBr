@@ -700,7 +700,7 @@ procedure TACBrNFSeProviderISSBarueri.PrepararConsultaSituacao(
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  XML: String;
+  XML, sProt: String;
 begin
   if EstaVazio(Response.Protocolo) then
   begin
@@ -712,10 +712,16 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  // O WS requere o prefixo ENV + protocolo
+  if pos('ENV',Response.Protocolo) = 0 then
+    sProt:= 'ENV' + Response.Protocolo
+  else
+    sProt:= Response.Protocolo;
+
   XML := '<NFeLoteStatusArquivo xmlns="http://www.barueri.sp.gov.br/nfe">';
   XML := XML + '<InscricaoMunicipal>' + Emitente.InscMun + '</InscricaoMunicipal>';
   XML := XML + '<CPFCNPJContrib>' + Emitente.CNPJ + '</CPFCNPJContrib>';
-  XML := XML + '<ProtocoloRemessa>' + Response.Protocolo + '</ProtocoloRemessa>';
+  XML := XML + '<ProtocoloRemessa>' + sProt + '</ProtocoloRemessa>';
   XML := XML + '</NFeLoteStatusArquivo>';
 
   Response.ArquivoEnvio := XML;
@@ -912,7 +918,7 @@ procedure TACBrNFSeProviderISSBarueri.PrepararConsultaLoteRps(Response: TNFSeCon
 var
   AErro: TNFSeEventoCollectionItem;
   Emitente: TEmitenteConfNFSe;
-  XML: String;
+  XML, sArq: String;
 begin
   if EstaVazio(Response.Protocolo) then
   begin
@@ -924,10 +930,18 @@ begin
 
   Emitente := TACBrNFSeX(FAOwner).Configuracoes.Geral.Emitente;
 
+  // o WS requer o nome de arquivo com prefixo RET + Protocolo + .TXT
+  if pos('ENV',Response.Protocolo) > 0 then
+    sArq:= StringReplace(Response.Protocolo, 'ENV', 'RET', [rfReplaceAll]) + '.TXT'
+  else if pos('RET',Response.Protocolo) = 0 then
+    sArq:= 'RET' + Response.Protocolo + '.TXT'
+  else
+    sArq:= Response.Protocolo + '.TXT';
+
   XML := '<NFeLoteBaixarArquivo xmlns="http://www.barueri.sp.gov.br/nfe">';
   XML := XML + '<InscricaoMunicipal>' + Emitente.InscMun + '</InscricaoMunicipal>';
   XML := XML + '<CPFCNPJContrib>' + Emitente.CNPJ + '</CPFCNPJContrib>';
-  XML := XML + '<NomeArqRetorno>' + Response.Protocolo + '</NomeArqRetorno>';
+  XML := XML + '<NomeArqRetorno>' + sArq + '</NomeArqRetorno>';  
   XML := XML + '</NFeLoteBaixarArquivo>';
 
   Response.ArquivoEnvio := XML;

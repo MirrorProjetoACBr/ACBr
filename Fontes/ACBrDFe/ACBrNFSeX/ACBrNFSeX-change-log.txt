@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/09/2026
+-- ISSBarueri.GravarXml/ISSBarueri.Provider --
+[-] ACBR-9882 - Varias alterações visando a correta geração do RPS.
+   Por: Crystiano Oliveira
 -- Giss.GravarXml --
 [*] ACBR-9885 - Acrescentado a geração da tag indTotTrib.
    Por: João Vitor Bogo

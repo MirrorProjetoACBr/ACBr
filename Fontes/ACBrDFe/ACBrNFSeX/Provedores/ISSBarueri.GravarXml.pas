@@ -89,24 +89,86 @@ end;
 procedure TNFSeW_ISSBarueri.GerarRegistroTipo2;
 var
   Quantidade: Integer;
-  SituacaoRPS, CodCancelamento, MotCancelamento, Discriminacao: String;
+  SituacaoRPS, CodCancelamento,
+  sRPS, sCNC_NFSe, sCNC_Serie,
+  MotCancelamento, Discriminacao: String;
   ValorTotalRetencoes: Double;
+
+  // Seguindo especificação do Manual versão PMB004 para o campo discriminação do Serviço
+  function StrPIPE(const AText: string; AStrPerLine: integer = 100): string;
+  const MaxLines = 13; // Limite máximo do layout de Barueri
+  var
+    sl: TStringList;
+    I: Integer;
+    S, CurrentChunk: string;
+  begin
+    Result:= '';
+    if AText = '' then Exit;
+
+    sl:= TStringList.Create;
+    try
+      // Normaliza quebras de linha existentes enviadas no texto original
+      S:= StringReplace(AText, #13#10, #10, [rfReplaceAll]);
+      S:= StringReplace(S, #13, #10, [rfReplaceAll]);
+
+      // Substitui pipes que já existam por espaços para não corromper a estrutura
+      S := StringReplace(S, '|', ' ', [rfReplaceAll]);
+
+      // Trata quebras de linha manuais do texto
+      sl.Text:= S;
+
+      // Processa linha a linha partindo pedaços de no máximo AStrPerLine (100) caracteres
+      I:= 0;
+      while (I < sl.Count) and (sl.Count < MaxLines * 2) do
+      begin
+        if Length(sl[I]) > AStrPerLine then
+        begin
+          CurrentChunk := Copy(sl[I], 1, AStrPerLine);
+          sl[I] := Copy(sl[I], AStrPerLine + 1, MaxInt);
+          sl.Insert(I, CurrentChunk);
+        end;
+        Inc(I);
+      end;
+
+      // Limita estritamente a 13 linhas
+      while sl.Count > MaxLines do
+        sl.Delete(sl.Count - 1);
+
+      // Concatena as linhas usando o delimitador '|' sem colocar na 13ª (última) linha
+      for I := 0 to pred(sl.Count) do
+      begin
+        if I > 0 then Result:= Result + '|';
+        Result:= Result + sl[I];
+      end;
+
+    finally
+      freeAndNil(sl);
+    end;
+  end;
+
 begin
   SituacaoRPS := 'E';
+  sRPS := NFSe.IdentificacaoRps.Numero;
 
   CodCancelamento := '';
+  sCNC_NFSe := '';
+  sCNC_Serie := '';
   MotCancelamento := '';
   Quantidade := 1;
 
   if NFSe.StatusRps = srCancelado then
   begin
     SituacaoRPS := 'C';
-    CodCancelamento := NFSe.CodigoCancelamento;
+    CodCancelamento := PadLeft(NFSe.CodigoCancelamento, 2, '0');
+    sRPS := ifThen(CodCancelamento = '03',sRPS,EmptyStr);
+    sCNC_NFSe := FormatFloat('0000000',StrToIntDef(NFSe.Numero,0));
     MotCancelamento := NFSe.MotivoCancelamento;
   end;
 
-  Discriminacao := StringReplace(NFSe.Servico.Discriminacao, Opcoes.QuebraLinha,
-                            FpAOwner.ConfigGeral.QuebradeLinha, [rfReplaceAll]);
+  Discriminacao := StringReplace(NFSe.Servico.Discriminacao,
+                                 Opcoes.QuebraLinha,
+                                 FpAOwner.ConfigGeral.QuebradeLinha,
+                                 [rfReplaceAll]);
 
   if (Assigned(NFSe.Servico.ItemServico)) and
      (Pred(NFSe.Servico.ItemServico.Count) > 0) then
@@ -122,13 +184,15 @@ begin
     'RPS  '+ // Tipo do RPS S Texto 5 2 6 RPS
     PadRight(NFSe.IdentificacaoRps.Serie, 4, ' ')+ // Série do RPS N Texto 4 7 10 Série do RPS
     PadRight('', 5, ' ')+ // Série da NF-e S* Texto 5 11 15 Série do NF-e. * Obrigatório somente para contribuintes com regime especial.
-    '000'+PadLeft(NFSe.IdentificacaoRps.Numero, 7, '0')+ // Número do RPS Número do RPS, iniciar no número 1, com zeros a esquerda, sendo que obrigatoriamente os 3 primeiros dígitos sejam zero
+    '000'+ PadLeft(sRPS, 7, '0') + // Número do RPS Número do RPS, iniciar no número 1, com zeros a esquerda, sendo que obrigatoriamente os 3 primeiros dígitos sejam zero
     FormatDateTime('YYYYMMDD', NFSe.DataEmissaoRps)+ // Data do RPS S AAAAMMDD 8 26 33 Data de Emissão do RPS
     FormatDateTime('HHMMSS', Trunc(NFSe.DataEmissaoRps))+ // Hora do RPS S HHMMSS 6 34 39 Hora de Emissão do RPS
     SituacaoRPS+ // Situação do RPS S Texto 1 40 40 E para RPS Enviado / C para RPS Cancelado
     PadRight(CodCancelamento, 2, ' ')+ // Código de Motivo de Cancelamento S* Texto 2 41 42
-    PadRight(IfThen(SituacaoRPS = 'C', NFSe.Numero, ''), 7, ' ')+ // Número da NF-e a ser cancelada/substituida S* Numérico 7 43
-    PadRight(IfThen(SituacaoRPS = 'C', NFSe.SeriePrestacao, ''), 5, ' ')+ // Série da NF-e a ser cancelada/substituida N Texto 5 50 54
+
+    PadRight(sCNC_NFSe, 7, ' ')+ // Número da NF-e a ser cancelada/substituida S* Numérico 7 43
+    PadRight(sCNC_Serie, 5, ' ')+ // Série da NF-e a ser cancelada/substituida N Texto 5 50 54
+
     PadRight(IfThen(SituacaoRPS = 'C', FormatDateTime('YYYYMMDD', NFSe.DataEmissao), ''), 8, ' ')+ // Data de emissão da NF-e a ser cancelada/substituida S* AAAAMMDD 8 55 62
     PadRight(IfThen(SituacaoRPS = 'C', MotCancelamento, ''), 180, ' ')+ // Descricao do Cancelamento S* Texto 180 63 242
     PadRight(NFSe.Servico.CodigoTributacaoMunicipio, 9, ' ')+ // Código do Serviço Prestado S Numérico 9 243 251
@@ -168,7 +232,7 @@ begin
     PadRight('', 6, ' ')+ // Fatura N Numérico 6 935 940 Número da Fatura
     PadLeft('', 15, ' ')+ // Valor Fatura S* Numérico 15 941 955
     PadRight('', 15, ' ')+ // Forma de Pagamento S* Texto 15 956 970
-    PadRight(Discriminacao, 1000, ' ') // Discriminação do Serviço S Texto 1000 971 1970
+    PadRight(StrPIPE(Discriminacao), 1000, ' ') // Discriminação do Serviço S Texto 1000 971 1970
   );
 end;
 
@@ -353,10 +417,10 @@ begin
     Linha := Linha + PadLeft(NFSe.IBSCBS.Dest.ender.xCpl, 30, ' ');
     Linha := Linha + PadLeft(NFSe.IBSCBS.Dest.ender.xBairro, 40, ' ');
     Linha := Linha + PadLeft(ObterNomeMunicipioUF(NFSe.IBSCBS.Dest.ender.endNac.cMun, xUF), 40, ' ');
-    Linha := Linha + IntToStr(NFSe.IBSCBS.Dest.ender.endNac.cMun);
-    Linha := Linha + NFSe.IBSCBS.Dest.ender.UF;
+    Linha := Linha + PadLeft(IntToStr(NFSe.IBSCBS.Dest.ender.endNac.cMun), 7, '0');
+    Linha := Linha + PadLeft(NFSe.IBSCBS.Dest.ender.UF, 2, ' ');
     Linha := Linha + PadLeft(IntToStr(CodIBGEPaisToCodISO(NFSe.IBSCBS.Dest.ender.endExt.cPais)), 3, '0');
-    Linha := Linha + NFSe.IBSCBS.Dest.ender.endNac.CEP;
+    Linha := Linha + PadLeft(NFSe.IBSCBS.Dest.ender.endNac.CEP, 8, '0');
     Linha := Linha + PadLeft(NFSe.IBSCBS.Dest.email, 80, ' ');
     Linha := Linha + PadLeft(NFSe.IBSCBS.Dest.NIF, 40, ' ');
     Linha := Linha + PadLeft(NFSe.IBSCBS.Dest.ender.endExt.xEstProvReg, 11, ' ');
@@ -369,6 +433,7 @@ begin
     Linha := Linha + Space(75);
     Linha := Linha + Space(9);
     Linha := Linha + Space(30);
+    Linha := Linha + Space(40);
     Linha := Linha + Space(40);
     Linha := Linha + Space(7);
     Linha := Linha + Space(2);
@@ -427,6 +492,11 @@ begin
   else
     GerarRegistroTipo1(NFSe.IdentificacaoRemessa);
 }
+
+  NFSe.IdentificacaoRemessa:= FormatDateTime('yyyymmddzzz', Now);
+
+  if NFSe.StatusRps = srCancelado then GerarRegistroTipo1(NFSe.IdentificacaoRemessa);
+
   GerarRegistroTipo2;
   GerarRegistroTipo3;
 
@@ -435,6 +505,8 @@ begin
     GerarRegistroTipo4;
     GerarRegistroTipo5;
   end;
+
+  if NFSe.StatusRps = srCancelado then GerarRegistroTipo9;
 
   Result := True;
 end;
