@@ -416,6 +416,7 @@ const
   TtpGuiaArrayStrings: array[TtpGuia] of string = ('', '1', '2', '3', '4', '5', '6', '7');
 
 // Reforma Tributária
+{
 type
   TtpNFDebito = (tdNenhum, tdTransferenciaCreditoCooperativa, tdAnulacao,
                  tdDebitosNaoProcessadas, tdMultaJuros,
@@ -425,7 +426,7 @@ type
 const
   TtpNFDebitoArrayStrings: array[TtpNFDebito] of string = ('', '01', '02', '03',
     '04', '05', '06', '07', '08');
-
+}
 type
   TtpNFCredito = (tcNenhum, tcMultaJuros, tcApropriacaoCreditoPresumido, tcRetorno,
                   tcReducaoValores, tcTransferenciaCreditoSucessao,
@@ -525,9 +526,10 @@ function TtpGuiaToStr(const t: TtpGuia): string;
 function StrToTtpGuia(const s: String): TtpGuia;
 
 // Reforma Tributária
+{
 function tpNFDebitoToStr(const t: TtpNFDebito): string;
 function StrTotpNFDebito(const s: string): TtpNFDebito;
-
+}
 function tpNFCreditoToStr(const t: TtpNFCredito): string;
 function StrTotpNFCredito(const s: string): TtpNFCredito;
 
@@ -1741,6 +1743,7 @@ begin
 end;
 
 // Reforma Tributária
+{
 function tpNFDebitoToStr(const t: TtpNFDebito): string;
 begin
   Result := TtpNFDebitoArrayStrings[t];
@@ -1760,7 +1763,7 @@ begin
   end;
   raise EACBrException.CreateFmt('Valor string inválido para TtpNFDebito: %s', [s]);
 end;
-
+}
 function tpNFCreditoToStr(const t: TtpNFCredito): string;
 begin
   Result := TtpNFCreditoArrayStrings[t];

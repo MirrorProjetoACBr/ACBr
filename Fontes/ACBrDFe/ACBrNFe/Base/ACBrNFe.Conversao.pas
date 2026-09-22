@@ -288,11 +288,12 @@ const
     'URL-ConsultaNFCe');
 
 type
-  TpcnFinalidadeNFe = (fnNormal, fnComplementar, fnAjuste, fnDevolucao);
+  TpcnFinalidadeNFe = (fnNormal, fnComplementar, fnAjuste, fnDevolucao,
+    fnCredito, fnDebito);
 
 const
   TFinalidadeNFeArrayStrings: array[TpcnFinalidadeNFe] of string = ('1', '2', '3',
-    '4');
+    '4', '5', '6');
 
 type
   TpcnModeloDF = (moNFe, moNFCe);
@@ -404,6 +405,7 @@ const
   TtpGuiaArrayStrings: array[TtpGuia] of string = ('', '1', '2', '3', '4', '5', '6', '7');
 
 // Reforma Tributária
+{
 type
   TtpNFDebito = (tdNenhum, tdTransferenciaCreditoCooperativa, tdAnulacao,
                  tdDebitosNaoProcessadas, tdMultaJuros,
@@ -413,7 +415,7 @@ type
 const
   TtpNFDebitoArrayStrings: array[TtpNFDebito] of string = ('', '01', '02', '03',
     '04', '05', '06', '07', '08');
-
+}
 type
   TtpNFCredito = (tcNenhum, tcMultaJuros, tcApropriacaoCreditoPresumido, tcRetorno,
                   tcReducaoValores, tcTransferenciaCreditoSucessao, tcRetornoRecusaParcial);
@@ -512,9 +514,10 @@ function TtpGuiaToStr(const t: TtpGuia): string;
 function StrToTtpGuia(const s: string): TtpGuia;
 
 // Reforma Tributária
+{
 function tpNFDebitoToStr(const t: TtpNFDebito): string;
 function StrTotpNFDebito(const s: string): TtpNFDebito;
-
+}
 function tpNFCreditoToStr(const t: TtpNFCredito): string;
 function StrTotpNFCredito(const s: string): TtpNFCredito;
 
@@ -1249,14 +1252,14 @@ end;
 // B25 - Finalidade de emissão da NF-e *****************************************
 function FinNFeToStr(const t: TpcnFinalidadeNFe): String;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3', '4'],
-    [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4', '5', '6'],
+    [fnNormal, fnComplementar, fnAjuste, fnDevolucao, fnCredito, fnDebito]);
 end;
 
 function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
-    [fnNormal, fnComplementar, fnAjuste, fnDevolucao]);
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4', '5', '6'],
+    [fnNormal, fnComplementar, fnAjuste, fnDevolucao, fnCredito, fnDebito]);
 end;
 
 function IndicadorNFeToStr(const t: TpcnIndicadorNFe): String;
@@ -1723,6 +1726,7 @@ begin
 end;
 
 // Reforma Tributária
+{
 function tpNFDebitoToStr(const t: TtpNFDebito): string;
 begin
   Result := TtpNFDebitoArrayStrings[t];
@@ -1742,7 +1746,7 @@ begin
   end;
   raise EACBrException.CreateFmt('Valor string inválido para TtpNFDebito: %s', [s]);
 end;
-
+}
 function tpNFCreditoToStr(const t: TtpNFCredito): string;
 begin
   Result := TtpNFCreditoArrayStrings[t];

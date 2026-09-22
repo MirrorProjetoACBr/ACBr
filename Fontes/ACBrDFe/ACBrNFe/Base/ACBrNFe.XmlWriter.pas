@@ -292,7 +292,7 @@ begin
     moNFCe: ModelosDFe := mdfNFCe;
   end;
 
-//  tpNFDebito := tdNenhum;
+  tpNFDebito := NFe.Ide.tpNFDebito;
 
   ListaDeAlertas.Clear;
 

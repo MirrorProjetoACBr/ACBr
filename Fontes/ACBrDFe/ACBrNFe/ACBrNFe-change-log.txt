@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2026
+-- ACBrNFe.Conversao/ACBrNFe.XmlWriter/pcnConversaoNFe --
+[-] ACBR-9863 - Ajuste para informar corretamente o tipo de Nota de Débito, pois não estava gerando
+    corretamente o grupo gEstornoCred.
+   Por: Italo Giurizzato Junior/Paulo Hildebrand Neto
+
 18/09/2026
 -- ACBrNFeServicos.ini --
 [-] ACBR-9424 - Altera a URL de consulta e a URL de QR Code para correta emissão de NF-e Varejo em homologação para SP.
