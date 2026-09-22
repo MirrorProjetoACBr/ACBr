@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2026
+-- NFOnline.Provider --
+[*] ACBR-9473 - Ajustes visando o envio do RPS para a API do Provedor.
+   Por: Italo Giurizzato Junior/Juliomar Marchetti
+
 21/09/2026
 -- ACBrNFSeXDANFSeRLPadraoNacional --
 [*] Alteração visando imprimir a UF do municipio de incidencia.
