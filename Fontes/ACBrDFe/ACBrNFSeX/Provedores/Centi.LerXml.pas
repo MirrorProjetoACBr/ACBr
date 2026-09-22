@@ -78,6 +78,9 @@ type
     procedure LerValoresNfse(const ANode: TACBrXmlNode);
 
     procedure LerDeclaracaoPrestacaoServico(const ANode: TACBrXmlNode);
+
+    procedure LerDadosNotaNacional(const ANode: TACBrXmlNode);
+
     {
     function LerDataHoraCancelamento(const ANode: TACBrXmlNode): TDateTime; virtual;
     function LerDataHora(const ANode: TACBrXmlNode): TDateTime; virtual;
@@ -182,6 +185,25 @@ begin
       Telefone := ObterConteudo(AuxNode.Childrens.FindAnyNs('Telefone'), tcStr);
       Email    := ObterConteudo(AuxNode.Childrens.FindAnyNs('Email'), tcStr);
     end;
+  end;
+end;
+
+procedure TNFSeR_Centi202.LerDadosNotaNacional(const ANode: TACBrXmlNode);
+var
+  AuxNode: TACBrXmlNode;
+begin
+  if not Assigned(ANode) then
+    Exit;
+
+  AuxNode := ANode.Childrens.FindAnyNs('DadosNotaNacional');
+
+  if AuxNode <> nil then
+  begin
+    NFSE.infNFSe.IBSCBS.valores.uf.pIBSUF := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliqotaIBS'), tcDe2);
+    NFSE.infNFSe.IBSCBS.valores.fed.pCBS := ObterConteudo(AuxNode.Childrens.FindAnyNs('AliquotaCBS'), tcDe2);
+    NFSE.infNFSe.IBSCBS.totCIBS.gIBS.gIBSUFTot.vIBSUF := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorIBS'), tcDe2);
+    NFSE.infNFSe.IBSCBS.totCIBS.gCBS.vCBS := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCBS'), tcDe2);
+    NFSe.ChaveAcesso := ObterConteudo(AuxNode.Childrens.FindAnyNs('ChaveAcessoNacional'), tcStr);
   end;
 end;
 
@@ -453,6 +475,7 @@ begin
     LerValoresNfse(AuxNode);
     LerDeclaracaoPrestacaoServico(AuxNode);
     LerConstrucaoCivil(AuxNode);
+    LerDadosNotaNacional(AuxNode);
     {
     NFSe.ValorCredito := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCredito'), tcDe2);
 
@@ -585,6 +608,9 @@ begin
         ResponsavelRetencao := FpAOwner.StrToResponsavelRetencao(Ok, Responsavel);
 
       ItemListaServico          := NormatizarItemListaServico(CodigoItemServico);
+      CodigoNBS :=  ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoNbs'), tcStr);
+      INDOP := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoINDOP'), tcStr);
+      cClassTrib := ObterConteudo(AuxNode.Childrens.FindAnyNs('CodigoClassTrib'), tcStr);
 
       CodigoItemServico := Copy(ItemListaServico, 1, 5);
 
@@ -740,6 +766,7 @@ end;
 procedure TNFSeR_Centi202.LerValoresNfse(const ANode: TACBrXmlNode);
 var
   AuxNode: TACBrXmlNode;
+  Ok: Boolean;
 begin
   if not Assigned(ANode) then Exit;
 
@@ -771,6 +798,23 @@ begin
       ValorServicos := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorServicos'), tcDe2);
       DescontoIncondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoIncondicionado'), tcDe2);
       DescontoCondicionado := ObterConteudo(AuxNode.Childrens.FindAnyNs('DescontoCondicionado'), tcDe2);
+
+      if ObterConteudo(AuxNode.Childrens.FindAnyNs('CstPisCofins'), tcStr) = '' then
+        NFSe.Servico.Valores.tribFed.CST := StrToCST(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('CST'), tcStr))
+      else
+        NFSe.Servico.Valores.tribFed.CST := StrToCST(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('CstPisCofins'), tcStr));
+
+      NFSe.Servico.Valores.tribFed.tpRetPisCofins := StrTotpRetPisCofins(Ok, ObterConteudo(AuxNode.Childrens.FindAnyNs('tpRetPisCofins'), tcStr));
+      NFSe.Servico.Valores.tribFed.vBCPisCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('VlBcPisCofins'), tcDe2);
+      NFSe.Servico.Valores.tribFed.pAliqPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('PAliqPis'), tcDe2);
+      NFSe.Servico.Valores.tribFed.pAliqCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('PAliqCofins'), tcDe2);
+      NFSe.Servico.Valores.tribFed.vCofins := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorCofins'), tcDe2);
+      NFSe.Servico.Valores.tribFed.vPis := ObterConteudo(AuxNode.Childrens.FindAnyNs('ValorPis'), tcDe2);
+
+      if ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCSLL'), tcDe2) > 0 then
+        NFSe.Servico.Valores.tribFed.vRetCSLL := ObterConteudo(AuxNode.Childrens.FindAnyNs('vRetCSLL'), tcDe2)
+      else
+        NFSe.Servico.Valores.tribFed.vRetCSLL := ObterConteudo(AuxNode.Childrens.FindAnyNs('VlRetCSLL'), tcDe2);
 
       BaseCalculo := NFSe.ValoresNfse.BaseCalculo;
       Aliquota := NFSe.ValoresNfse.Aliquota;

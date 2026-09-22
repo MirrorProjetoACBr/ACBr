@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/09/2026
+-- Centi.LerXml --
+[*] ACBR-9890 - Alteração visando a leitura das novas tags.
+   Por: Diego Reckziegel
 -- Agili.GravarXml --
 [*] ACBR-9579 - Alteração visando usar os campos já existentes do Padrão Nacional
     para gerar os campos da Reforma Tributária.
