@@ -107,6 +107,7 @@ type
     lblSombra: TLabel;
     ckbNaoUtilizarMsXML: TCheckBox;
     ckbUsarACBrXmlDocument: TCheckBox;
+    ckbInstalarNaIDE64Bits: TCheckBox;
     Label15: TLabel;
     Panel1: TPanel;
     Label7: TLabel;
@@ -146,8 +147,15 @@ type
     procedure clbDelphiVersionClick(Sender: TObject);
     procedure wizPgPacotesNextButtonClick(Sender: TObject; var Stop: Boolean);
     procedure wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
+    procedure lstMsgInstalacaoDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure lbInfoDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
   private
     FUmaListaPlataformasAlvos: TListaPlataformasAlvos;
+    // linha do cabeçalho onde os modos de compilação são desenhados
+    FLinhaModos: Integer;
+    FStatusModo: array[TModoCompilacao] of TStatusEtapa;
     FListaCheckBoxPlataformas: TList<TCheckBox>;
 
     FUltimoArquivoLog: string;
@@ -164,7 +172,10 @@ type
     procedure AbrirArquivoLogAtual;
 
     procedure IncrementaBarraProgresso;
-    procedure Logar(const AString: String);
+    procedure Logar(const AString: String; const ANivel: TNivelMensagem);
+    procedure StatusModoCompilacao(const AModo: TModoCompilacao; const AStatus: TStatusEtapa);
+    procedure DesenharIndicador(ACanvas: TCanvas; const AEsquerda, ATopo: Integer;
+      const AStatus: TStatusEtapa);
     procedure IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const NomeCaminhoArquivoLog: string;
           const Cabecalho: string);
     procedure MontaListaIDEsSuportadas;
@@ -182,6 +193,10 @@ uses
   ShellApi, IniFiles, StrUtils, Math, Registry, ACBrUtil.FilesIO, ACBr.InstallUtils;
 
 {$R *.dfm}
+
+const
+  // lado do indicador de status desenhado no cabeçalho
+  TAM_INDICADOR = 9;
 
 
 // retornar o caminho completo para o arquivo .ini de configurações
@@ -307,7 +322,9 @@ end;
 
 procedure TfrmPrincipal.IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const
     NomeCaminhoArquivoLog: string; const Cabecalho: string);
-//var LPath : String;
+var
+  I: Integer;
+  LModo: TModoCompilacao;
 begin
   // setar barra de progresso
   pgbInstalacao.Position := 0;
@@ -318,7 +335,143 @@ begin
   FUltimoArquivoLog := NomeCaminhoArquivoLog;
   lbInfo.Clear;
   lbInfo.Items.Text := Cabecalho;
+
+  // localiza a linha dos modos para desenhar os indicadores de andamento nela
+  FLinhaModos := -1;
+  for I := 0 to lbInfo.Items.Count - 1 do
+  begin
+    if Pos('Modos de compila', lbInfo.Items[I]) = 1 then
+    begin
+      FLinhaModos := I;
+      Break;
+    end;
+  end;
+
+  for LModo := Low(TModoCompilacao) to High(TModoCompilacao) do
+    FStatusModo[LModo] := seNenhum;
+
   lstMsgInstalacao.Clear;
+end;
+
+procedure TfrmPrincipal.StatusModoCompilacao(const AModo: TModoCompilacao;
+  const AStatus: TStatusEtapa);
+begin
+  FStatusModo[AModo] := AStatus;
+
+  if (FLinhaModos >= 0) then
+  begin
+    lbInfo.Invalidate;
+    Application.ProcessMessages;
+  end;
+end;
+
+// Indicadores desenhados no Canvas, e não com caracteres: a fonte do
+// cabeçalho (Courier New) não tem os símbolos, e assim as cores funcionam
+// sobre o fundo escuro.
+procedure TfrmPrincipal.DesenharIndicador(ACanvas: TCanvas; const AEsquerda, ATopo: Integer;
+  const AStatus: TStatusEtapa);
+const
+  clAzulEspera   = TColor($00FF9933);
+  clAmbar        = TColor($0033CCFF);
+  clVerdeOk      = TColor($0060E060);
+  clVermelhoErro = TColor($004040FF);
+var
+  L, T: Integer;
+begin
+  L := AEsquerda;
+  T := ATopo;
+  ACanvas.Pen.Width := 1;
+
+  case AStatus of
+    seAguardando:   // bola azul: ainda na fila
+      begin
+        ACanvas.Brush.Color := clAzulEspera;
+        ACanvas.Pen.Color   := clAzulEspera;
+        ACanvas.Ellipse(L, T, L + TAM_INDICADOR, T + TAM_INDICADOR);
+      end;
+
+    seExecutando:   // ampulheta: dois triângulos opostos
+      begin
+        ACanvas.Brush.Color := clAmbar;
+        ACanvas.Pen.Color   := clAmbar;
+        ACanvas.Polygon([Point(L, T), Point(L + TAM_INDICADOR, T),
+                         Point(L + TAM_INDICADOR div 2, T + TAM_INDICADOR div 2)]);
+        ACanvas.Polygon([Point(L, T + TAM_INDICADOR), Point(L + TAM_INDICADOR, T + TAM_INDICADOR),
+                         Point(L + TAM_INDICADOR div 2, T + TAM_INDICADOR div 2)]);
+      end;
+
+    seConcluido:    // check verde
+      begin
+        ACanvas.Pen.Color := clVerdeOk;
+        ACanvas.Pen.Width := 2;
+        ACanvas.Polyline([Point(L, T + TAM_INDICADOR div 2),
+                          Point(L + TAM_INDICADOR div 3, T + TAM_INDICADOR - 1),
+                          Point(L + TAM_INDICADOR, T)]);
+      end;
+
+    seErro:         // X vermelho
+      begin
+        ACanvas.Pen.Color := clVermelhoErro;
+        ACanvas.Pen.Width := 2;
+        ACanvas.MoveTo(L, T);
+        ACanvas.LineTo(L + TAM_INDICADOR, T + TAM_INDICADOR);
+        ACanvas.MoveTo(L + TAM_INDICADOR, T);
+        ACanvas.LineTo(L, T + TAM_INDICADOR);
+      end;
+  end;
+
+  ACanvas.Pen.Width := 1;
+end;
+
+procedure TfrmPrincipal.lbInfoDrawItem(Control: TWinControl; Index: Integer;
+  Rect: TRect; State: TOwnerDrawState);
+var
+  LLista: TListBox;
+  LTexto, LPrefixo, LNome: string;
+  LModo: TModoCompilacao;
+  X, LTopoIndicador: Integer;
+begin
+  LLista := TListBox(Control);
+  if (Index < 0) or (Index >= LLista.Items.Count) then
+    Exit;
+
+  LLista.Canvas.Brush.Color := LLista.Color;
+  LLista.Canvas.FillRect(Rect);
+  LLista.Canvas.Font := LLista.Font;
+  LLista.Canvas.Font.Color := clWhite;
+
+  LTexto := LLista.Items[Index];
+
+  if (Index <> FLinhaModos) then
+  begin
+    LLista.Canvas.TextOut(Rect.Left + 2, Rect.Top, LTexto);
+    Exit;
+  end;
+
+  // na linha dos modos escrevemos só até os dois pontos; o resto vira
+  // indicador + nome de cada modo
+  LPrefixo := Copy(LTexto, 1, Pos(':', LTexto));
+  if (LPrefixo = '') then
+    LPrefixo := LTexto;
+
+  LLista.Canvas.TextOut(Rect.Left + 2, Rect.Top, LPrefixo);
+  X := Rect.Left + 2 + LLista.Canvas.TextWidth(LPrefixo) + 6;
+  LTopoIndicador := Rect.Top + ((Rect.Bottom - Rect.Top) - TAM_INDICADOR) div 2;
+
+  for LModo := Low(TModoCompilacao) to High(TModoCompilacao) do
+  begin
+    if (FStatusModo[LModo] = seNenhum) then
+      Continue;
+
+    DesenharIndicador(LLista.Canvas, X, LTopoIndicador, FStatusModo[LModo]);
+    Inc(X, TAM_INDICADOR + 4);
+
+    LNome := cNomeModoCompilacao[LModo];
+    LLista.Canvas.Brush.Color := LLista.Color;
+    LLista.Canvas.Font.Color  := clWhite;
+    LLista.Canvas.TextOut(X, Rect.Top, LNome);
+    Inc(X, LLista.Canvas.TextWidth(LNome) + 12);
+  end;
 end;
 
 procedure TfrmPrincipal.MontaListaIDEsSuportadas;
@@ -420,11 +573,74 @@ begin
   FListaCheckBoxPlataformas.Free;
 end;
 
-procedure TfrmPrincipal.Logar(const AString: String);
+procedure TfrmPrincipal.Logar(const AString: String; const ANivel: TNivelMensagem);
+var
+  LLinhas: TStringList;
+  I: Integer;
 begin
-  lstMsgInstalacao.Items.Add(AString);
+  // Algumas mensagens trazem quebras de linha (títulos de etapa, mensagens de
+  // erro). Como a lista é desenhada manualmente, cada linha vira um item para
+  // não aparecer o caractere de controle no meio do texto.
+  LLinhas := TStringList.Create;
+  try
+    LLinhas.Text := AString;
+    if LLinhas.Count = 0 then
+      LLinhas.Add('');
+
+    for I := 0 to LLinhas.Count - 1 do
+      lstMsgInstalacao.Items.AddObject(LLinhas[I], TObject(NativeInt(Ord(ANivel))));
+  finally
+    LLinhas.Free;
+  end;
+
   lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
   Application.ProcessMessages;
+end;
+
+// Cores por severidade, no estilo dos logs de console: verde para sucesso,
+// vermelho para erro, laranja para aviso e azul para as demais informações.
+procedure TfrmPrincipal.lstMsgInstalacaoDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; State: TOwnerDrawState);
+const
+  clLaranja = TColor($000080FF);
+  clVerdeEscuro = TColor($00107000);
+var
+  LLista: TListBox;
+  LNivel: TNivelMensagem;
+begin
+  LLista := TListBox(Control);
+
+  if (Index < 0) or (Index >= LLista.Items.Count) then
+    Exit;
+
+  LNivel := TNivelMensagem(NativeInt(LLista.Items.Objects[Index]));
+
+  // A lista só exibe o andamento; a seleção é ignorada de propósito para que
+  // a última linha (sempre selecionada, para rolar sozinha) mantenha a cor.
+  LLista.Canvas.Brush.Color := clWindow;
+  LLista.Canvas.FillRect(Rect);
+
+  LLista.Canvas.Font := LLista.Font;
+  case LNivel of
+    nmDestaque:
+      begin
+        LLista.Canvas.Font.Color := clBlack;
+        LLista.Canvas.Font.Style := [fsBold];
+      end;
+    nmSucesso:
+      LLista.Canvas.Font.Color := clVerdeEscuro;
+    nmAviso:
+      LLista.Canvas.Font.Color := clLaranja;
+    nmErro:
+      begin
+        LLista.Canvas.Font.Color := clRed;
+        LLista.Canvas.Font.Style := [fsBold];
+      end;
+  else
+    LLista.Canvas.Font.Color := clNavy;
+  end;
+
+  LLista.Canvas.TextOut(Rect.Left + 4, Rect.Top + 1, LLista.Items[Index]);
 end;
 
 function TfrmPrincipal.ProcedeInstalacao: Boolean;
@@ -458,6 +674,7 @@ begin
       ACBrInstaladorAux.OnIniciaNovaInstalacao := IniciaNovaInstalacao;
       ACBrInstaladorAux.OnProgresso            := IncrementaBarraProgresso;
       ACBrInstaladorAux.OnInformaSituacao      := Logar;
+      ACBrInstaladorAux.OnStatusModoCompilacao := StatusModoCompilacao;
 
       AjustaConfiguracoesConformeTela(ACBrInstaladorAux.OpcoesInstall, ACBrInstaladorAux.OpcoesCompilacao);
 
@@ -512,6 +729,7 @@ begin
   OpcoesInstall.DeveCopiarOutrasDLLs      := ckbCopiarTodasDll.Checked;
   OpcoesInstall.UsarCpp                   := ckbBCB.Checked;
   OpcoesInstall.UsarUsarArquivoConfig     := ckbUsarArquivoConfig.Checked;
+  OpcoesInstall.InstalarNaIDE64Bits       := ckbInstalarNaIDE64Bits.Checked;
 
   case rdgdll.ItemIndex of
     0 : OpcoesInstall.sDestinoDLLs := tdSystem;
@@ -540,6 +758,7 @@ begin
   ckbCopiarTodasDll.Checked         := OpcoesInstall.DeveCopiarOutrasDLLs;
   ckbBCB.Checked                    := OpcoesInstall.UsarCpp;
   ckbUsarArquivoConfig.Checked      := OpcoesInstall.UsarUsarArquivoConfig;
+  ckbInstalarNaIDE64Bits.Checked    := OpcoesInstall.InstalarNaIDE64Bits;
 
   case OpcoesInstall.sDestinoDLLs of
     tdSystem: rdgdll.ItemIndex := 0;
@@ -631,16 +850,6 @@ begin
   if not ChkBoxClicado.Enabled then
   begin
     Exit;
-  end;
-
-  if MatchText(FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].InstalacaoAtual.VersionNumberStr,
-               ['d7','d9','d10','d11']) then
-  begin
-    Application.MessageBox(
-      'Atenção: Embora o ACBr continue suportando versões anteriores do Delphi, incentivamos que você atualize o quanto antes para versões mais recentes do Delphi ou considere migrar para o Lazarus.',
-      'Erro.',
-      MB_OK + MB_ICONWARNING
-    );
   end;
 
   if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].tPlatformAtual <> bpWin32) and
@@ -824,9 +1033,43 @@ begin
 end;
 
 procedure TfrmPrincipal.wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
+
+  // Nomes das IDEs antigas marcadas, sem repetir: a mesma IDE aparece na lista
+  // uma vez por plataforma (Win32, Win64, ...).
+  function IDEsAntigasMarcadas: string;
+  var
+    I: Integer;
+    LNomes: TStringList;
+  begin
+    Result := '';
+    LNomes := TStringList.Create;
+    try
+      LNomes.Sorted := True;
+      LNomes.Duplicates := dupIgnore;
+
+      for I := 0 to FListaCheckBoxPlataformas.Count - 1 do
+      begin
+        if FListaCheckBoxPlataformas[I].Checked and
+           MatchText(FUmaListaPlataformasAlvos[I].InstalacaoAtual.VersionNumberStr,
+                     ['d7', 'd9', 'd10', 'd11']) then
+          LNomes.Add(FUmaListaPlataformasAlvos[I].InstalacaoAtual.Name);
+      end;
+
+      for I := 0 to LNomes.Count - 1 do
+      begin
+        if Result <> '' then
+          Result := Result + ', ';
+        Result := Result + LNomes[I];
+      end;
+    finally
+      LNomes.Free;
+    end;
+  end;
+
 var
   iFor: Integer;
   bChk: Boolean;
+  LAntigas: string;
 begin
   bChk := False;
   for iFor := 0 to FListaCheckBoxPlataformas.Count -1 do
@@ -847,8 +1090,26 @@ begin
       'Erro.',
       MB_OK + MB_ICONERROR
     );
+    Exit;
   end;
 
+  // O aviso sobre Delphi antigo ficava no OnClick de cada caixa, mas o
+  // Checked := True que restaura a seleção do ini também dispara o OnClick: o
+  // modal subia sozinho na abertura, dentro do FormCreate, antes de a janela
+  // aparecer. Aqui ele só sai quando o usuário conclui a escolha e avança, uma
+  // única vez, listando todas as IDEs antigas de uma vez.
+  LAntigas := IDEsAntigasMarcadas;
+  if (LAntigas <> '') then
+  begin
+    Application.MessageBox(
+      PWideChar('Você selecionou: ' + LAntigas + '.' + sLineBreak + sLineBreak +
+               'Embora o ACBr continue suportando versões anteriores do Delphi, ' +
+               'incentivamos que você atualize o quanto antes para versões mais ' +
+               'recentes do Delphi ou considere migrar para o Lazarus.'),
+      'Atenção',
+      MB_OK + MB_ICONWARNING
+    );
+  end;
 end;
 
 procedure TfrmPrincipal.wizPrincipalCancelButtonClick(Sender: TObject);

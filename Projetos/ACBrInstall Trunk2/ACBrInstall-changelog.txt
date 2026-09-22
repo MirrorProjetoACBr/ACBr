@@ -40,6 +40,130 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+22/09/2026
+[-] O aviso sobre versoes antigas do Delphi aparecia sozinho ao abrir o
+    instalador, antes de a janela existir. Ele estava no OnClick das caixas de
+    selecao de IDE, e o "Checked := True" que restaura a selecao gravada no ini
+    tambem dispara o OnClick -- ou seja, quem tivesse um Delphi antigo na
+    selecao salva levava um modal em toda abertura, ainda dentro do FormCreate.
+    O aviso passou para o botao "Proximo" da pagina de selecao: sai uma unica
+    vez, depois que o usuario conclui a escolha, listando todas as IDEs antigas
+    marcadas. A legenda da caixa tambem estava errada -- era "Erro." com icone
+    de aviso, para um texto que e conselho e nao erro; agora e "Atencao".
+[*] As caixas "Compilar Release" e "Compilar Debug" sairam da tela. Os modos
+    passaram a decorrer de "Deixar somente a pasta LibXX no Library Path":
+
+      marcada   -> Release e Debug. Os projetos do usuario compilam contra os
+                   .dcu prontos, entao precisam do Release para o build normal
+                   e do Debug para quem marca "use debug .dcus".
+
+      desmarcada-> somente Release. Os fontes ficam no Library Path e cada
+                   projeto recompila o ACBr com as opcoes dele, ignorando os
+                   .dcu daqui. Sobra como consumidor so a IDE, que carrega os
+                   BPL de Release. Compilar Debug nesse caso era dobrar o tempo
+                   de instalacao para gerar algo que ninguem abre.
+
+    Eram duas escolhas independentes que podiam ser combinadas de um jeito sem
+    sentido (Debug sem ninguem para consumir, ou so Debug com a IDE precisando
+    do Release). TACBrInstallOpcoes.ModosCompilacao virou propriedade derivada,
+    entao as duas nao tem mais como sair de sincronia.
+[-] "Deixar somente a pasta LibXX" nao valia para Win64: o bpWin64 estava
+    comentado dentro do set da condicao, em InstalarOutrosRequisitos. Na pratica
+    os fontes nunca saiam do Library Path do Win64, e os .dcr/.res/.dfm/.ini/.inc
+    nao eram copiados para a pasta Lib dele. Agora Win32 e Win64 se comportam
+    igual. As demais plataformas continuam de fora, porque os pacotes delas nem
+    chegam a ser compilados.
+[-] Modo Release passou a ser realmente Release. As chaves do compilador eram
+    as mesmas nos dois modos: o ramo do Release mandava -$O- (otimizacao
+    desligada) e -$W+ (stack frames ligados), exatamente como o Debug. Agora o
+    Release usa -$O+ -$W- -$D- -$L- -$Y- -$C- e o Debug -$O- -$W+ -$D+ -$L+
+    -$Y+ -$C+. Todas as chaves sao informadas explicitamente nos dois modos,
+    para o resultado nao depender do padrao do dcc32 nem do que estiver escrito
+    dentro do .dpk. Q (overflow) e R (range) continuam desligados nos dois
+    modos: liga-los faria as rotinas de CRC/hash do ACBr, que contam com o
+    estouro de inteiro, passarem a levantar excecao.
+[-] -B e -M eram enviados juntos ao compilador, e um anula o outro: com o -B o
+    compilador refaz tudo e o -M perde o efeito. Ficou so o -B, que e o que ja
+    valia na pratica. Nao virou opcao de tela porque o -M nao seria seguro aqui:
+    na compilacao Debug o -U inclui a pasta do Release, e o -M poderia dar por
+    bom um .dcu da outra configuracao em vez de gerar o de Debug.
+[*] Quando um alvo falha, a instalacao continua parando na hora (um alvo com
+    erro quase sempre indica um problema que se repetiria nos demais), mas a
+    mensagem passou a dizer QUAL alvo interrompeu a fila, em vez de so avisar
+    que ocorreram erros.
+[-] A leitura da revisao do SVN, usada so para montar o cabecalho do log,
+    esperava o processo terminar sem prazo nenhum (WaitForSingleObject com
+    INFINITE, alem de um ReadFile bloqueante). Se o svn ficasse pendurado por
+    rede, credencial ou working copy travada, o instalador travava junto. Agora
+    ha limite de 10 segundos, o processo e encerrado se estourar, e o handle de
+    escrita do pipe nao vaza mais quando o CreateProcess falha.
+[-] Os alvos (IDE + plataforma) nunca eram liberados: a lista e um TList, que
+    nao e dono dos itens, e o destrutor so liberava a lista de instalacoes da
+    JCL.
+[*] GeraListaPlataformasAlvos foi reescrita. A montagem dos alvos de uma
+    instalacao virou uma rotina propria, sem a repeticao de
+    "InstalacaoAlvo := Result.FoACBr.Installations[i]" a cada plataforma.
+[+] Suporte a perfis de IDE (bds.exe -r <Perfil>), desligado por padrao. Com o
+    perfil, o Delphi guarda toda a configuracao em
+    HKCU\Software\Embarcadero\<Perfil>\<versao> -- Library Path, Known
+    Packages, Known Packages x64, Environment Variables e Package Cache --
+    enquanto RootDir e as personalidades continuam no HKLM, na chave real da
+    instalacao. A JCL usa a MESMA chave para os dois hives, entao um perfil e
+    descartado por ficar sem RootDir. O ajuste necessario esta em
+    Terceiros\JclIDEUtils-PerfisIDE.patch (tres pontos alterados, nenhuma
+    assinatura existente quebrada). Depois de aplicar o patch e recompilar a
+    JCL, ligue {$DEFINE ACBR_JCL_COM_PERFIS} em ACBr.PlataformaInstalacaoAlvo.
+    Os perfis aparecem na lista como "Delphi 12 [MeuPerfil] Win32". O
+    instalador nao cria perfil: quem cria e a IDE, na primeira execucao com -r.
+[*] O nome do alvo e o nome do arquivo de log passaram a incluir o perfil.
+    Sem isso, dois perfis da mesma IDE ficariam indistinguiveis na tela e
+    gravariam no mesmo log.
+[*] Terceiros\Leiame.txt reescrito: passou a descrever cada ajuste da JCL
+    separadamente e a avisar que a JCL oficial ja evoluiu alem da revisao 9823
+    usada como base do JclIDEUtils.pas que esta na pasta -- substituir o
+    arquivo de uma JCL recente por aquele seria voltar atras.
+
+21/09/2026
+[-] Corrigido o erro "Can't load package ... DCLACBr_*.bpl" ao abrir a IDE.
+    A limpeza dos pacotes registrados era feita apenas para a combinação
+    (IDE + plataforma) que estava sendo instalada, enquanto a remoção de
+    arquivos varria todos os discos. Qualquer IDE/plataforma/configuração fora
+    da execução atual ficava com registros apontando para BPLs inexistentes.
+    Agora a limpeza cobre as duas listas da IDE (32 e 64 bits), acontece uma
+    única vez por IDE em cada execução, e uma varredura inicial remove
+    registros órfãos de TODAS as IDEs detectadas, inclusive as não marcadas.
+[*] Cada combinação passa a ter a sua própria pasta de artefatos:
+    Lib\Delphi\LibD<versao>\<Plataforma>\<Configuração>. Antes o Release ficava
+    solto na pasta da plataforma e só o Debug tinha subpasta, o que fazia a
+    troca de configuração mudar o caminho do BPL e deixar o registro anterior
+    apontando para o lugar errado.
+[+] Conferência das dependências: ao registrar um pacote de design, o
+    instalador avisa se algum BPL de runtime do ACBr exigido por ele não
+    estiver na MESMA pasta (mesma versão do Delphi, plataforma e configuração).
+[*] Velocidade: os diretórios do Library/Browsing Path passaram a ser gravados
+    de uma vez só (a JCL regravava o EnvOptions.proj a cada diretório), a
+    localização dos .dpk usa um índice montado uma única vez no lugar de uma
+    busca recursiva por pacote, o ACBr.inc só é regravado quando muda, e a
+    instalação na IDE registra o BPL já compilado em vez de recompilar tudo.
+
+21/09/2026
+[+] Compilação dos pacotes nos modos Release e Debug (opções "Compilar Release" e
+    "Compilar Debug"). Os binários de Debug ficam na subpasta "Debug" da pasta Lib
+    da versão/plataforma e são registrados no Debug DCU Path da IDE.
+[+] Compilação dos pacotes também para Win64 (antes somente Win32).
+[+] Instalação dos pacotes na IDE de 64 bits do Delphi (Known Packages x64), quando a
+    versão instalada possuir bin64ds.exe e designide para Win64 (Delphi 12.3 em
+    diante). Opção "Instalar também na IDE 64 bits (se houver suporte)".
+[-] Corrigido "Can't load package" nas IDEs de 32 e 64 bits: a pasta dos BPLs voltou
+    a ser informada no PATH da IDE, agora para as DUAS plataformas. É por ali que a
+    IDE localiza os BPLs de runtime exigidos pelos pacotes de design; o Package
+    Search Path serve aos projetos e não ao carregamento dos pacotes da IDE.
+    Não há conflito entre Win32 e Win64 de mesmo nome: o loader do Windows ignora a
+    DLL de arquitetura errada e continua procurando nas pastas seguintes (é o que a
+    própria Delphi faz ao deixar Bpl e Bpl\Win64 juntos no PATH do sistema).
+    A limpeza das entradas antigas passou a ocorrer uma vez por IDE, e a inclusão
+    não duplica entradas.
+
 11/02/2020
 [-] - Acertos para funcionar corretamente a exclusão de arquivos.
     - Acertos para funcionar corretamente a alteração da variavel PATH do Delphi

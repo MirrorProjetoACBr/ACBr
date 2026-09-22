@@ -1,6 +1,82 @@
-Os arquivos aqui colocados são ajustes JCL para compilar o ACBrInstall atual que suporta outras plataformas. 
+Ajustes da JCL usados pelo ACBrInstall
+======================================
 
-Até que a JCL seja atualizada com essas alterações, se é que eles vão aceitar nossa contribuição, é necessário fazer os ajustes manualmente.
-A versão base para as modificações da JCL é a versão 9823(baixando do GitHub usando SVN).
+Esta pasta guarda alteracoes na JCL de que o ACBrInstall precisa e que ainda nao
+estao na versao oficial. Cada item abaixo e independente: aplique so o que voce
+for usar.
 
-Adicionamos tanto o arquivo patch como os arquivos alterados para que você escolha conforme sua preferência como atualizar.
+
+1) JclIDEUtils.pas  --  suporte a outras plataformas
+----------------------------------------------------
+Arquivo: JclIDEUtils.pas
+
+Ajustes feitos quando o ACBrInstall passou a compilar para plataformas alem da
+Win32. A versao base das modificacoes e a revisao 9823 da JCL (baixada do GitHub
+usando SVN).
+
+ATENCAO: a JCL oficial evoluiu bastante desde a revisao 9823 e hoje ja traz, por
+conta propria, boa parte do que esta aqui (compiladores das demais plataformas,
+listas de pacotes separadas para a IDE de 32 e 64 bits, plataforma Win64x). Se a
+sua JCL for recente, NAO substitua o arquivo dela por este -- voce estaria
+voltando atras. Confira antes se o ajuste de que voce precisa ja existe.
+
+
+2) JclIDEUtils-PerfisIDE.patch  --  perfis da IDE (bds.exe -r)
+--------------------------------------------------------------
+Arquivos: JclIDEUtils-PerfisIDE.patch  (diff unificado contra a JCL atual)
+          JclIDEUtils-PerfisIDE.pas    (o mesmo arquivo ja corrigido)
+
+O Delphi aceita ser aberto com "bds.exe -r MeuPerfil". Nesse modo ele guarda
+TODA a configuracao do usuario em
+
+    HKCU\Software\Embarcadero\MeuPerfil\<versao>
+
+em vez de ...\BDS\<versao>. Isso inclui Library Path, Known Packages, Known
+Packages x64, Environment Variables e Package Cache -- ou seja, exatamente tudo
+o que o ACBrInstall grava. O HKLM nao muda: RootDir e as personalidades da
+instalacao continuam em HKLM\...\BDS\<versao>.
+
+A JCL usa a MESMA chave para os dois hives. Em TJclBorRADToolInstallation.Create
+o parametro AConfigDataLocation vira tanto o caminho do HKCU quanto o do HKLM, e
+ReadInformation le o RootDir do HKLM nesse mesmo caminho. Passando a chave de um
+perfil, o HKLM nao tem esse caminho, o RootDir sai vazio, a propriedade Valid
+fica False e a instalacao e descartada.
+
+O patch separa as duas coisas:
+
+  - novo campo FHKLMDataLocation e propriedade HKLMDataLocation;
+  - os construtores ganham um terceiro parametro opcional AHKLMDataLocation
+    (vazio = mesmo comportamento de antes, nada muda para quem ja usa a JCL);
+  - ReadInformation passa a ler o HKCU pelo caminho da configuracao e o HKLM
+    pelo caminho da instalacao.
+
+Sao tres pontos alterados e duas linhas de leitura do HKLM; nenhuma assinatura
+existente foi quebrada.
+
+Como aplicar:
+
+  a) pela linha de comando, na raiz do repositorio da JCL:
+         git apply JclIDEUtils-PerfisIDE.patch
+     ou
+         patch -p1 < JclIDEUtils-PerfisIDE.patch
+
+  b) ou substitua jcl\source\common\JclIDEUtils.pas por
+     JclIDEUtils-PerfisIDE.pas.
+
+Depois recompile a JCL e so entao ligue o define no ACBrInstall, em
+ACBr.PlataformaInstalacaoAlvo.pas:
+
+    {$DEFINE ACBR_JCL_COM_PERFIS}
+
+Com o define ligado, o instalador passa a listar tambem os perfis existentes de
+cada IDE, identificados como "Delphi 12 [MeuPerfil] Win32". O ACBrInstall nunca
+cria perfil: quem cria e a propria IDE, na primeira vez que roda com -r. Um
+perfil so aparece na lista depois disso.
+
+Sem o patch aplicado e a JCL recompilada, o define NAO pode ser ligado: o
+construtor de tres parametros nao existe e a unit nao compila.
+
+Observacao: perfis da mesma versao do Delphi compartilham a mesma pasta de
+saida (Lib\Delphi\LibD<versao>\<Plataforma>\<Configuracao>). Os binarios sao
+os mesmos, entao isso e proposital -- mas se voce usa perfis justamente para
+testar defines diferentes no ACBr.inc, instale um perfil de cada vez.

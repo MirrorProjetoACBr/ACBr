@@ -12974,6 +12974,21 @@ object frmPrincipal: TfrmPrincipal
           ShowHint = True
           TabOrder = 5
         end
+        object ckbInstalarNaIDE64Bits: TCheckBox
+          Left = 6
+          Top = 100
+          Width = 400
+          Height = 17
+          Hint = 
+            'Registra os pacotes Win64 na IDE de 64 bits do Delphi (dispon'#237've' +
+            'l a partir do Delphi 12.3). Requer a plataforma Win64 marcada.'
+          Caption = 'Instalar tamb'#233'm na IDE 64 bits (se houver suporte)'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 9
+        end
       end
       object grpInstalacao: TGroupBox
         Left = 6
@@ -13001,9 +13016,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 40
           Width = 291
           Height = 17
-          Hint = 
-            '*Recomendado caso n'#227'o esteja alterando o componente. Quando marc' +
-            'ado n'#227' ir'#225' recompilar o componente na build das aplica'#231#245'es'
+          Hint = '*Recomendado caso n'#227'o esteja alterando o componente. Marcado, os seus projetos usam os .dcu prontos e o ACBr n'#227'o '#233' recompilado no build das aplica'#231#245'es -- por isso s'#227'o gerados Release e Debug. Desmarcado, os fontes ficam no Library Path, cada projeto recompila o ACBr com as op'#231#245'es dele e apenas o Release '#233' gerado, que '#233' o que a IDE carrega.'
           Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi'
           ParentShowHint = False
           ShowHint = True
@@ -13486,17 +13499,19 @@ object frmPrincipal: TfrmPrincipal
         Top = 104
         Width = 565
         Height = 330
+        Style = lbOwnerDrawFixed
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
+        Font.Height = -12
+        Font.Name = 'Consolas'
         Font.Style = []
-        ItemHeight = 13
+        ItemHeight = 15
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
+        OnDrawItem = lstMsgInstalacaoDrawItem
       end
       object pgbInstalacao: TProgressBar
         Left = 6
@@ -13523,6 +13538,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 0
           Width = 574
           Height = 98
+          Style = lbOwnerDrawFixed
           Align = alClient
           BorderStyle = bsNone
           Color = 5126443
@@ -13535,6 +13551,7 @@ object frmPrincipal: TfrmPrincipal
           ParentFont = False
           TabOrder = 0
           StyleElements = [seBorder]
+          OnDrawItem = lbInfoDrawItem
         end
       end
     end
