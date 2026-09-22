@@ -95,7 +95,6 @@ implementation
 
 uses
   synacode,
-  ACBrHTTPDownload,
   ACBrCompress,
   ACBrJSON,
   ACBrNFSeX,
@@ -407,7 +406,6 @@ function TACBrNFSeXWebserviceNFOnline203.DefinirMsgEnvio(const Message,
   SoapAction, SoapHeader: string; namespace: array of string): string;
 var
   UsuarioWeb, SenhaWeb: string;
-  Corpo: TStringStream;
 begin
   UsuarioWeb := Trim(TConfiguracoesNFSe(FPConfiguracoes).Geral.Emitente.WSUser);
 
@@ -420,8 +418,6 @@ begin
   if SenhaWeb = '' then
     GerarException(ACBrStr('O provedor ' + TConfiguracoesNFSe(FPConfiguracoes).Geral.xProvedor +
       ' necessita que a propriedade: Configuracoes.Geral.Emitente.WSSenha seja informada.'));
-
-  Corpo := TStringStream.Create(Message);
 
   Result := '--' + FPBound + sLineBreak +
             'Content-Disposition: form-data; name=' +
@@ -523,7 +519,7 @@ end;
 function TACBrNFSeXWebserviceNFOnline203.TratarXmlRetornado(
   const aXML: string): string;
 var
-  jDocument, JSonErro: TACBrJSONObject;
+  jDocument{, JSonErro}: TACBrJSONObject;
   Codigo, Mensagem, Xml: string;
 begin
 //  Result := inherited TratarXmlRetornado(aXML);

@@ -43,6 +43,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/09/2026
+-- NFOnline.Provider --
+[*] Remoção de código sem utilização
+   Por: Italo Giurizzato Junior
+-- PadraoNacional.Provider --
+[*] ACBR-9890 - Alteração visando retornar o nome do arquivo e o XML nas propriedades:
+    AResumo.NomeArq e AResumo.XmlRetorno
+   Por: Adriano Teodorico
 -- Centi.LerXml --
 [*] ACBR-9890 - Alteração visando a leitura das novas tags.
    Por: Diego Reckziegel
