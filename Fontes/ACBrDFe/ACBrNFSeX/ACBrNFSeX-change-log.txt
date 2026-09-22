@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/09/2026
+-- ACBrNFSeXServicos.ini --
+[*] ACBR-9879 - Alteração na Versão e inclusão dos Parâmetros para a cidade de Ji-Parana/RO
+   Por: Italo Giurizzato Junior
 -- NFOnline.Provider --
 [*] Remoção de código sem utilização
    Por: Italo Giurizzato Junior
