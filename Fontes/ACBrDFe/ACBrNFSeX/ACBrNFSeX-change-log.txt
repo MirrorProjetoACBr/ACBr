@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/09/2026
+-- Agili.GravarXml --
+[*] ACBR-9579 - Alteração visando usar os campos já existentes do Padrão Nacional
+    para gerar os campos da Reforma Tributária.
+   Por: Italo Giurizzato Junior
 -- NFOnline.Provider --
 [*] ACBR-9473 - Ajustes visando o envio do RPS para a API do Provedor.
    Por: Italo Giurizzato Junior/Juliomar Marchetti

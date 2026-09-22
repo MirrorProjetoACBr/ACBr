@@ -431,7 +431,6 @@ function TNFSeW_Agili.GerarInfDeclaracaoPrestacaoServico: TACBrXmlNode;
 var
   xmlNode: TACBrXmlNode;
   item: string;
-  aBC, aValor: Double;
 begin
   Result := CreateElement('InfDeclaracaoPrestacaoServico');
 
@@ -491,20 +490,20 @@ begin
         if FpAtividadeEconomica = 'CodigoAtividadeEconomica' then
         begin
           Result.AppendChild(AddNode(tcStr, '#1', 'CodigoAtividadeEconomica', 1, 140, 0,
-            NFSe.Servico.CodigoTributacaoMunicipio, ''));
+                                   NFSe.Servico.CodigoTributacaoMunicipio, ''));
         end
         else
         if FpAtividadeEconomica = 'CodigoCnaeAtividadeEconomica' then
         begin
           Result.AppendChild(AddNode(tcStr, '#1', 'CodigoCnaeAtividadeEconomica', 1, 140, 0,
-            FormatarCnae(NFSe.Servico.CodigoCnae), ''));
+                                    FormatarCnae(NFSe.Servico.CodigoCnae), ''));
         end
         else
         begin
           item := FormatarItemServico(NFSe.Servico.ItemListaServico, FormatoItemListaServico);
 
           Result.AppendChild(AddNode(tcStr, '#1', 'ItemLei116AtividadeEconomica', 1, 140, 0,
-            item, ''));
+                                                                     item, ''));
         end;
       end;
 
@@ -518,16 +517,14 @@ begin
       end;
   end;
 
-  if NFSe.Servico.CodigoNBS <> '' then
-  begin
-    Result.AppendChild(AddNode(tcStr, '#1', 'CodigoNBS', 4, 12, 0, NFSe.Servico.CodigoNBS, ''));
-  end;
+  Result.AppendChild(AddNode(tcStr, '#1', 'CodigoNBS', 4, 12, 0, NFSe.Servico.CodigoNBS, ''));
 
   xmlNode := GerarExigibilidadeISSQN;
   Result.AppendChild(xmlNode);
 
   Result.AppendChild(AddNode(tcStr, '#1', 'BeneficioProcesso', 1, 30, 0,
                                               NFSe.Servico.NumeroProcesso, ''));
+
   if (NFSe.OptanteMEISimei = snNao) and (NFSe.Servico.ExigibilidadeISS <> exiIsencao) then
   begin
     xmlNode := GerarMunicipioPrestacaoServico;
@@ -561,33 +558,20 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#1', 'ValorOutrasRetencoes', 1, 15, 1,
                                      NFSe.Servico.Valores.OutrasRetencoes, ''));
 
-
-  if (NFSe.OptanteSimplesNacional = snNao) and (NFSe.OptanteMEISimei = snNao) then
-  begin
-    aBC := NFSe.Servico.Valores.ValorServicos - NFSe.Servico.Valores.ValorIss -
-      NFSe.Servico.Valores.DescontoIncondicionado - NFSe.Servico.Valores.ValorPis -
-      NFSe.Servico.Valores.ValorCofins;
-  end
-  else
-  begin
-    aBC := 0;
-  end;
-
-  aValor := aBC * NFSe.Servico.ItemServico[0].AliqIBS/100;
-
-  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorIBS', 1, 15, 1, aValor, ''));
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorIBS', 1, 15, 1,
+                      NFSe.infNFSe.IBSCBS.totCIBS.gIBS.gIBSMunTot.vIBSMun, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'AliquotaIBS', 1, 15, 1,
-                                      NFSe.Servico.ItemServico[0].AliqIBS, ''));
+                                  NFSe.infNFSe.IBSCBS.Valores.mun.pIBSMun, ''));
 
-  aValor := aBC * NFSe.Servico.ItemServico[0].AliqCBS/100;
-
-  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorCBS', 1, 15, 1, aValor, ''));
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorCBS', 1, 15, 1,
+                                    NFSe.infNFSe.IBSCBS.totCIBS.gCBS.vCBS, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'AliquotaCBS', 1, 15, 1,
-                                      NFSe.Servico.ItemServico[0].AliqCBS, ''));
+                                     NFSe.infNFSe.IBSCBS.Valores.fed.pCBS, ''));
 
-  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorBaseIBSeCBS', 1, 15, 1, aBC, ''));
+  Result.AppendChild(AddNode(tcDe2, '#1', 'ValorBaseIBSeCBS', 1, 15, 1,
+                                          NFSe.infNFSe.IBSCBS.Valores.vBC, ''));
 
   Result.AppendChild(AddNode(tcDe2, '#1', 'ValorBaseCalculoISSQN', 1, 15, 0,
                                          NFSe.Servico.Valores.BaseCalculo, ''));
@@ -671,10 +655,10 @@ begin
                                          NFSe.Servico.MunicipioIncidencia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Descricao', 1, 30, 0,
-                                         NFSe.Servico.MunicipioPrestacaoServico, ''));
+                                   NFSe.Servico.MunicipioPrestacaoServico, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 0,
-                                         NFSe.Servico.UFPrestacao, ''));
+                                                 NFSe.Servico.UFPrestacao, ''));
 end;
 
 function TNFSeW_Agili.GerarMunicipioPrestacaoServico: TACBrXmlNode;
@@ -685,10 +669,10 @@ begin
                                          NFSe.Servico.MunicipioIncidencia, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Descricao', 1, 30, 0,
-                                         NFSe.Servico.MunicipioPrestacaoServico, ''));
+                                   NFSe.Servico.MunicipioPrestacaoServico, ''));
 
   Result.AppendChild(AddNode(tcStr, '#1', 'Uf', 2, 2, 0,
-                                         NFSe.Servico.UFPrestacao, ''));
+                                                 NFSe.Servico.UFPrestacao, ''));
 end;
 
 function TNFSeW_Agili.GerarPais: TACBrXmlNode;
