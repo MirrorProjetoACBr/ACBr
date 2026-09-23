@@ -154,19 +154,19 @@ function TNFSeW_Centi202.GerarDadosImovel: TACBrXmlNode;
 begin
   Result := CreateElement('DadosImovel');
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'CibImovel', 1, 8, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Cib', 1, 8, 0,
                                                   NFSe.IBSCBS.Imovel.cCIB, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'CepImovel', 1, 8, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Cep', 1, 8, 0,
                                              NFSe.IBSCBS.Imovel.ender.CEP, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'LogradouroImovel', 1, 255, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Logradouro', 1, 255, 0,
                                             NFSe.IBSCBS.Imovel.ender.xLgr, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'NumeroImovel', 1, 60, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Numero', 1, 60, 0,
                                              NFSe.IBSCBS.Imovel.ender.nro, ''));
 
-  Result.AppendChild(AddNode(tcStr, '#1', 'BairroImovel', 1, 60, 0,
+  Result.AppendChild(AddNode(tcStr, '#1', 'Bairro', 1, 60, 0,
                                          NFSe.IBSCBS.Imovel.ender.xBairro, ''));
 end;
 

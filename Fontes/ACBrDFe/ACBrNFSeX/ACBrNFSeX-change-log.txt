@@ -42,6 +42,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2026
+-- Centi.GravarXml --
+[*] ACBR-9893 - Alteração visando gerar as tags dos dados do Imóvel da forma correta.
+   Por: Diego Reckziegel
+
 22/09/2026
 -- ACBrNFSeXServicos.ini --
 [*] ACBR-9879 - Alteração na Versão e inclusão dos Parâmetros para a cidade de Ji-Parana/RO
