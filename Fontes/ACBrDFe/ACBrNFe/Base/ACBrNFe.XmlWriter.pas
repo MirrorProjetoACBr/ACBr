@@ -1534,9 +1534,9 @@ begin
       Result.AppendChild(AddNode(tcStr, 'J07', 'CM3', 04, 04,
         1, NFe.Det[i].Prod.veicProd.cilin, DSC_CILIN));
     Result.AppendChild(AddNode(tcStr, 'J08', 'pesoL', 00, 09, 1,
-      NFe.Det[i].Prod.veicProd.pesoL, DSC_PESOL));
+      NFe.Det[i].Prod.veicProd.pesoL, DSC_PESOL_TON));
     Result.AppendChild(AddNode(tcStr, 'J09', 'pesoB', 00, 09, 1,
-      NFe.Det[i].Prod.veicProd.pesoB, DSC_PESOB));
+      NFe.Det[i].Prod.veicProd.pesoB, DSC_PESOB_TON));
     Result.AppendChild(AddNode(tcStr, 'J10', 'nSerie', 00, 09, 1,
       NFe.Det[i].Prod.veicProd.nSerie, DSC_NSERIE));
     Result.AppendChild(AddNode(tcStr, 'J11', 'tpComb', 01, 02, 1,
@@ -2957,7 +2957,8 @@ var
 begin
   Result := nil;
 
-  if NFe.Ide.modelo <> 55 then   //não deve gerar grupo IPI para NFCe
+  //não deve gerar grupo IPI para NFCe ou NFe com DANFe Simplificado tipo 2 (NT 2026/002)
+  if (NFe.Ide.modelo <> 55) or (NFe.Ide.tpImp = tiSimplificadoTipo2) then
     Exit;
 
   // variavel CST00495099 usada para Ignorar Tag <IPI>
