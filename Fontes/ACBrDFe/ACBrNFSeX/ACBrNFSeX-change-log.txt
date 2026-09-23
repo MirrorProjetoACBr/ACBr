@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/09/2026
+-- ISSSaoPaulo.Provider --
+[-] ACBR-9906 - Correção visando gerar a assinatura adicional corretamente quando
+    os valores inicial e final cobrado são zeros.
+   Por: C4Dev
 -- Giss.LerXml --
 [-] ACBR-9907 - Correção visando a leitura do código de verificação.
    Por: financeiro@lpsystem.com.br

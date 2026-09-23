@@ -212,10 +212,12 @@ begin
 
       iTamanhoIM := 12;
 
-      if NFSe.Servico.Valores.ValorInicialCobrado > 0 then
+      if NFSe.Servico.Valores.ValorFinalCobrado > 0 then
+        LValorServicos := Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorFinalCobrado)), 15)
+      else if NFSe.Servico.Valores.ValorInicialCobrado > 0 then
         LValorServicos := Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorInicialCobrado)), 15)
       else
-        LValorServicos := Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorFinalCobrado)), 15);
+        LValorServicos := Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15);
     end
     else
     begin
