@@ -43,6 +43,22 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/09/2026
+-- ACBrNFSeXServicos --
+[*] ACBR09840 - O município de Cotia/SP aderiu ao Padrão Nacional
+	Veja: https://www.projetoacbr.com.br/forum/topic/94410-acbr-9840-prefeitura-de-cotia-sp-no-ambiente-nacional/
+	Por: Anderson Grolli/Claudiney Cogo
+[*] ACBR-9838 - Alteração de URLs e layout para o município de Penha/SC
+    Veja: https://www.projetoacbr.com.br/forum/topic/93129-acbr-9838-inclusao-da-cidade-penhasc-no-acbrnfsex/    
+	Por: C4Dev
+[*] ACBR-9836 - Ajuste na URL de produção do município de Linhares/ES
+	Veja: https://www.projetoacbr.com.br/forum/topic/93854-acbr-9836-acbrnfsexservicosini-linhareses-3203205-fica-sem-provedor-valido-apos-a-r47443/
+	Por: carlessoflu/Larissa Santos
+[*] ACBR-9704 - Inclusão do Provedor Equiplano para o município de Ventania/PR
+	Veja: https://www.projetoacbr.com.br/forum/topic/93942-acbr-9704-provedor-nfse-ventania-pr/
+	Por: forbostec
+[*] ACBR-9621 - Atualização de URLs do novo Layout para o município de Campinas/SP
+	Veja: https://www.projetoacbr.com.br/forum/topic/94874-acbr-9621-nfs-e-campinas-novo-emissor/
+	Por: NW Software/Larissa Santos
 -- ISSSaoPaulo.Provider --
 [-] ACBR-9906 - Correção visando gerar a assinatura adicional corretamente quando
     os valores inicial e final cobrado são zeros.
