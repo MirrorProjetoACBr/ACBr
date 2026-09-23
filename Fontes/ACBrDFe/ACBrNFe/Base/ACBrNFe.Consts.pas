@@ -99,7 +99,9 @@ resourcestring
   DSC_NSEQADIC = 'Numero seqüencial do item dentro da adição';
   DSC_NVOL = 'Numeração dos volumes transportados';
   DSC_PESOB = 'Peso Bruto (em kg)';
+  DSC_PESOB_TON = 'Peso Bruto (em toneladas)';
   DSC_PESOL = 'Peso Líquido (em kg)';
+  DSC_PESOL_TON = 'Peso Líquido (em toneladas)';
   DSC_PICMSRET = 'Alíquota da Retenção';
   DSC_PICMSST = 'Alíquota do imposto do ICMS ST';
   DSC_PIPI = 'Alíquota do IPI';

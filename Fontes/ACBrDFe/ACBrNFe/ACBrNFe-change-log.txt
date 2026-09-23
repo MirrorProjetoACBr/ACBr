@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2026
+-- ACBrNFe.Consts --
+[-] Adiciona as constantes DSC_PESOB_TON e DSC_PESOL_TON.
+   Por: Diego Folieni
+
 22/09/2026
 -- ACBrNFe.Conversao/ACBrNFe.XmlWriter/pcnConversaoNFe --
 [-] ACBR-9863 - Ajuste para informar corretamente o tipo de Nota de Débito, pois não estava gerando
