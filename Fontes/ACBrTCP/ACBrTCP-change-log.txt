@@ -36,6 +36,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2026
+-- ACBrIMendes --
+[+] Inclusão dos grupos precoFabrica e precoMaximoConsumidor no retorno do SaneamentoGrades.
+[-] Correção no TACBrIMendesPerfil.Assign: acesso a UF não criada e cópia de ponteiro do caracTrib.
+[-] Correção do perfil.municipio, que não era enviado no JSON.
+[-] Correção da chave do FCP ST de 'fCPSt' para 'fcpSt', conforme manual 3.3.25.
+    por: Elias Cesar
+
 28/08/2026
 -- ACBrSocket --
 [-] Ajuste para que TACBrHTTP.GetHeaderValue não considere Maiúsculas e minusculas
