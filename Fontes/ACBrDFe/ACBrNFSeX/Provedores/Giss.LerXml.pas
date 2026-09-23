@@ -267,7 +267,7 @@ begin
 
   lChave := ObterConteudo(ANode.Childrens.FindAnyNs('ChaveNotaNacional'), tcStr);
 
-  if lChave = '' then
+  if lChave <> '' then
     NFSe.CodigoVerificacao := lChave;
 
   LerCampoLink;

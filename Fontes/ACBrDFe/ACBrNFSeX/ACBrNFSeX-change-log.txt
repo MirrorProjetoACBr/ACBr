@@ -43,6 +43,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/09/2026
+-- Giss.LerXml --
+[-] ACBR-9907 - Correção visando a leitura do código de verificação.
+   Por: financeiro@lpsystem.com.br
 -- Centi.GravarXml --
 [*] ACBR-9893 - Alteração visando gerar as tags dos dados do Imóvel da forma correta.
    Por: Diego Reckziegel
