@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2026
+-- ACBrBPeXmlWriter, ACBrDFe.RTC.XmlWriter --
+[-] ACBR-9791 - Bpe - Implementado controle de número de ocorrências para geração dos totais de IBSCBS
+   Por: Paulo Alves N. Júnior/Renato Rubinho
+   Veja: https://www.projetoacbr.com.br/forum/topic/94325-acbr-9791erro-de-schema-no-grupo-ibscbstot-para-cst-400-bpe-tm/
+
 16/09/2026
 -- ACBrDFe.RTC.XmlWriter.pas, ACBrDFe.RTC.XmlReader.pas --
 [-] ACBR-9873 - Ajustado a escrita e a leitura da propriedade pAliqEfet para 4 casas decimais.

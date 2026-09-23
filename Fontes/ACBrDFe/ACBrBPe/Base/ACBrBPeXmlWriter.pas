@@ -233,9 +233,17 @@ begin
   Result := False;
   FpGerarGrupoIBSCBSTot := False;
 
+  NrOcorrgIBSTot := 0;
+  NrOcorrgCBSTot := 0;
+  NrOcorrgMonoTot := 0;
   case ModeloDF of
     moBPe: ModelosDFe := mdfBPe;
-    moBPeTM: ModelosDFe := mdfBPeTM;
+    moBPeTM:
+      begin
+        ModelosDFe := mdfBPeTM;
+        NrOcorrgIBSTot := 1;
+        NrOcorrgCBSTot := 1;
+      end;
     moBPeTA: ModelosDFe := mdfBPeTA;
   end;
 

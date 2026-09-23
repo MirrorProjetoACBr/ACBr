@@ -54,9 +54,14 @@ type
     FtpEnteGov: TtpEnteGov;
     FModelosDFe: TModelosDFe;
     FtpNFDebito: TtpNFDebito;
+    FNrOcorrgIBSTot: Integer;
+    FNrOcorrgCBSTot: Integer;
+    FNrOcorrgMonoTot: Integer;
   protected
     function CreateOptions: TACBrXmlWriterOptions; override;
   public
+    constructor Create;
+
     // Usado pela maioria dos DF-e
     function Gerar_gCompraGovReduzido(gCompraGov: TgCompraGovReduzido): TACBrXmlNode;
     function Gerar_gPagAntecipadoProd(gPagAntecipado: TgPagAntecipadoProd): TACBrXmlNode;
@@ -139,6 +144,9 @@ type
 
     property ModelosDFe: TModelosDFe read FModelosDFe write FModelosDFe;
     property tpNFDebito: TtpNFDebito read FtpNFDebito write FtpNFDebito;
+    property NrOcorrgIBSTot: Integer read FNrOcorrgIBSTot write FNrOcorrgIBSTot;
+    property NrOcorrgCBSTot: Integer read FNrOcorrgCBSTot write FNrOcorrgCBSTot;
+    property NrOcorrgMonoTot: Integer read FNrOcorrgMonoTot write FNrOcorrgMonoTot;
   end;
 
 implementation
@@ -148,6 +156,15 @@ uses
   ACBrDFeUtil;
 
 { TDFeRTCXmlWriter }
+
+constructor TDFeRTCXmlWriter.Create;
+begin
+  inherited Create;
+
+  FNrOcorrgIBSTot := 0;
+  FNrOcorrgCBSTot := 0;
+  FNrOcorrgMonoTot := 0;
+end;
 
 function TDFeRTCXmlWriter.CreateOptions: TACBrXmlWriterOptions;
 begin
@@ -605,19 +622,25 @@ begin
     Result.AppendChild(AddNode(tcDe2, '#1', 'vBCIBSCBS', 1, 15, 1,
                                              IBSCBSTot.vBCIBSCBS, DSC_VBCCIBS));
 
-    if (IBSCBSTot.gIBS.vIBS > 0) or
-       (IBSCBSTot.gIBS.gIBSUFTot.vDif > 0) or (IBSCBSTot.gIBS.gIBSMunTot.vDif > 0) or
-       (IBSCBSTot.gIBS.gIBSUFTot.vDevTrib > 0) or (IBSCBSTot.gIBS.gIBSMunTot.vDevTrib > 0) or
-       (IBSCBSTot.gIBS.vCredPres > 0) or (IBSCBSTot.gIBS.vCredPresCondSus > 0) then
+    if (NrOcorrgIBSTot = 1) or
+       ((NrOcorrgIBSTot = 0) and
+        ((IBSCBSTot.gIBS.vIBS > 0) or
+         (IBSCBSTot.gIBS.gIBSUFTot.vDif > 0) or (IBSCBSTot.gIBS.gIBSMunTot.vDif > 0) or
+         (IBSCBSTot.gIBS.gIBSUFTot.vDevTrib > 0) or (IBSCBSTot.gIBS.gIBSMunTot.vDevTrib > 0) or
+         (IBSCBSTot.gIBS.vCredPres > 0) or (IBSCBSTot.gIBS.vCredPresCondSus > 0))) then
       Result.AppendChild(Gerar_gIBSTot(IBSCBSTot.gIBS));
 
-    if (IBSCBSTot.gCBS.vCBS > 0) or (IBSCBSTot.gCBS.vDif > 0) or (IBSCBSTot.gCBS.vDevTrib > 0) or
-       (IBSCBSTot.gCBS.vCredPres > 0) or (IBSCBSTot.gCBS.vCredPresCondSus > 0) then
+    if (NrOcorrgCBSTot = 1) or
+       ((NrOcorrgCBSTot = 0) and
+        ((IBSCBSTot.gCBS.vCBS > 0) or (IBSCBSTot.gCBS.vDif > 0) or (IBSCBSTot.gCBS.vDevTrib > 0) or
+         (IBSCBSTot.gCBS.vCredPres > 0) or (IBSCBSTot.gCBS.vCredPresCondSus > 0))) then
       Result.AppendChild(Gerar_gCBSTot(IBSCBSTot.gCBS));
 
-    if (IBSCBSTot.gMono.vIBSMono > 0) or (IBSCBSTot.gMono.vCBSMono > 0) or
-       (IBSCBSTot.gMono.vIBSMonoReten > 0) or (IBSCBSTot.gMono.vCBSMonoReten > 0) or
-       (IBSCBSTot.gMono.vIBSMonoRet > 0) or (IBSCBSTot.gMono.vCBSMonoRet > 0) then
+    if (NrOcorrgMonoTot = 1) or
+       ((NrOcorrgMonoTot = 0) and
+        ((IBSCBSTot.gMono.vIBSMono > 0) or (IBSCBSTot.gMono.vCBSMono > 0) or
+         (IBSCBSTot.gMono.vIBSMonoReten > 0) or (IBSCBSTot.gMono.vCBSMonoReten > 0) or
+         (IBSCBSTot.gMono.vIBSMonoRet > 0) or (IBSCBSTot.gMono.vCBSMonoRet > 0))) then
       Result.AppendChild(Gerar_gMonoTot(IBSCBSTot.gMono));
 
     if (IBSCBSTot.gEstornoCred.vIBSEstCred > 0) or (IBSCBSTot.gEstornoCred.vCBSEstCred > 0) then
