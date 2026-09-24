@@ -1859,10 +1859,17 @@ end;
 begin
   ANode := RootNode.Childrens.FindAnyNs(AListTag);
 
+  //Procura dentro de ValidarXML primeiro
   if not Assigned(ANode) then
   begin
-    ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetorno');
+    ANode := RootNode.Childrens.FindAnyNs('ValidarXmlResposta');
+    if Assigned(ANode) then
+      ANode := ANode.Childrens.FindAnyNs('ListaMensagemRetorno');
   end;
+
+  //Se não achar ValidarXML procura elemento solto
+  if not Assigned(ANode) then
+    ANode := RootNode.Childrens.FindAnyNs('ListaMensagemRetorno');
 
   ProcessarErros;
 
