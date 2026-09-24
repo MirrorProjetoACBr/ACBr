@@ -43,6 +43,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/09/2026
+-- ACBrNFSeXDANFSeRLPadraoNacional --
+[-] ACBR-8331 - Ajuste visando corrigir problema de impressão no ambiente Linux.
+  Por: Daniel Morais / Diego Folieni
+  Veja: https://www.projetoacbr.com.br/forum/topic/94240-acbr-8331-libnfse-layout-danfse-v20/ 
 -- ISSNet.Provider --
 [*] Melhora a rotina ProcessarMensagemErros para considerar a tag ValidarXML.
    Por: Diego Folieni 

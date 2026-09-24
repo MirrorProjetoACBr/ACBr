@@ -899,7 +899,7 @@ begin
   else
     rllValorCSLL.Caption := '-';
 
-  rllDescCSLL.Caption := tpRetPisCofinsDescricao(fpNFSe.Servico.Valores.tribFed.tpRetPisCofins);
+  rllDescCSLL.Caption := ACBrStr(tpRetPisCofinsDescricao(fpNFSe.Servico.Valores.tribFed.tpRetPisCofins));
 end;
 
 procedure TfrlXDANFSeRLPadraoNacional.rlbBanda12_TributacaoFederalIBSCBSBeforePrint(
