@@ -658,11 +658,14 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#15', 'vIBS', 1, 15, 1,
                                                        gIBS.vIBS, DSC_VIBSTOT));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPres', 1, 15, 1,
+  if ModelosDFe in [mdfNFe, mdfNFCe] then
+  begin
+    Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPres', 1, 15, 1,
                                                 gIBS.vCredPres, DSC_VCREDPRES));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPresCondSus', 1, 15, 1,
+    Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPresCondSus', 1, 15, 1,
                                   gIBS.vCredPresCondSus, DSC_VCREDPRESCONDSUS));
+  end;
 end;
 
 function TDFeRTCXmlWriter.Gerar_gIBSUFTot(
@@ -708,11 +711,14 @@ begin
   Result.AppendChild(AddNode(tcDe2, '#21', 'vCBS', 1, 15, 1,
                                                           gCBS.vCBS, DSC_VCBS));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPres', 1, 15, 1,
+  if ModelosDFe in [mdfNFe, mdfNFCe] then
+  begin
+    Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPres', 1, 15, 1,
                                                 gCBS.vCredPres, DSC_VCREDPRES));
 
-  Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPresCondSus', 1, 15, 1,
+    Result.AppendChild(AddNode(tcDe2, '#15', 'vCredPresCondSus', 1, 15, 1,
                                   gCBS.vCredPresCondSus, DSC_VCREDPRESCONDSUS));
+  end;
 end;
 
 function TDFeRTCXmlWriter.Gerar_gEstornoCredTot(

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/09/2026
+-- ACBrDFe.RTC.XmlWriter --
+[-] As tags vCredPres e vCredPresCondSus dos grupos gIBS e gCBS só devem ser geradas se o DF-e
+    for NF-e ou NFC-e.
+   Por: Italo Giurizzato Junior
+
 23/09/2026
 -- ACBrBPeXmlWriter, ACBrDFe.RTC.XmlWriter --
 [-] ACBR-9791 - Bpe - Implementado controle de número de ocorrências para geração dos totais de IBSCBS
