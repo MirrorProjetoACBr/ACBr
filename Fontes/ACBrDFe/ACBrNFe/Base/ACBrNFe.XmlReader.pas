@@ -170,6 +170,8 @@ begin
   AuxNode := ANode.Childrens.FindAnyNs('infProt');
   if Assigned(AuxNode) then
   begin
+    if AuxNode.Childrens.Find('tpAmb') = nil then
+      raise Exception.Create('A tag <tpAmb> está ausente no grupo <infProt> do XML carregado.');
     NFe.procNFe.tpAmb    := StrToTipoAmbiente(ObterConteudo(AuxNode.Childrens.Find('tpAmb'), tcStr));
     NFe.procNFe.verAplic := ObterConteudo(AuxNode.Childrens.Find('verAplic'), tcStr);
     NFe.procNFe.chDFe    := ObterConteudo(AuxNode.Childrens.Find('chNFe'), tcStr);
