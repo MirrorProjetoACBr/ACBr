@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/09/2026
+-- ACBrDANFCeFortesFr (pas/dfm/lfm) --
+[+] ACBR-9424 - Disponibiliza o DANFe Simplificado Tipo 2 no motor de impressão Fortes Report.
+   Por: Alexandre de Paula
+   Veja: https://www.projetoacbr.com.br/forum/topic/94858-danfe-simplificado-tipo-2-sendo-disponibilizado-nos-motores-de-relat%C3%B3rio-do-acbr/ 
+   
 23/09/2026
 -- ACBrNFe.Consts --
 [-] Adiciona as constantes DSC_PESOB_TON e DSC_PESOL_TON.

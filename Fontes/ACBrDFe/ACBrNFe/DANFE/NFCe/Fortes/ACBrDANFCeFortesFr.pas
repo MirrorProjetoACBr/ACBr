@@ -147,12 +147,18 @@ type
     lTitTotalAcrescimo: TRLLabel;
     lTitTotalFrete: TRLLabel;
     lTitTotalAPagar: TRLLabel;
+    lTitTotalCBS: TRLLabel;
+    lTitTotalIBS: TRLLabel;
+    lTitTotalIS: TRLLabel;
     lTitTotalDesconto: TRLLabel;
     lTitValorPago: TRLLabel;
     lTotal: TRLLabel;
     lTotalAcrescimo: TRLLabel;
     lTotalFrete: TRLLabel;
     lTotalAPagar: TRLLabel;
+    lTotalCBS: TRLLabel;
+    lTotalIBS: TRLLabel;
+    lTotalIS: TRLLabel;
     lTotalDesconto: TRLLabel;
     lTotalItem: TRLLabel;
     lURLConsulta: TRLMemo;
@@ -169,6 +175,9 @@ type
     rlbTotalAcrescimo: TRLBand;
     rlbTotalFrete: TRLBand;
     rlbTotalAPagar: TRLBand;
+    rlbTotalCBS: TRLBand;
+    rlbTotalIBS: TRLBand;
+    rlbTotalIS: TRLBand;
     rlbTotalDesconto: TRLBand;
     pLogo: TRLPanel;
     rlpFreteItemTit: TRLPanel;
@@ -269,6 +278,9 @@ type
     procedure rlbTotalAcrescimoBeforePrint(Sender: TObject; var PrintIt: Boolean
       );
     procedure rlbTotalAPagarBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbTotalCBSBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbTotalIBSBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbTotalISBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTotalBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbTotalDescontoBeforePrint(Sender: TObject; var PrintIt: Boolean
       );
@@ -359,16 +371,26 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbChaveDeAcessoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  Via,LNNF: String;
+  Via, LNNF, LTituloDoc: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     PrintIt := True ;
 
     if EstaVazio(procNFe.nProt) then
-      Via := ' Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Empresa')
+    begin
+      if (Ide.modelo = 55) then
+        Via := ' Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'do Estabelecimento')
+      else
+        Via := ' Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Empresa');
+    end
     else
       Via := '';
+
+    if (Ide.modelo = 55) then
+      LTituloDoc := 'NF-e n' + #186 + ' '
+    else
+      LTituloDoc := 'NFC-e n' + #186 + ' ';
 
     if ACBrNFeDANFCeFortes.ImprimeQRCodeLateral then
     begin
@@ -398,7 +420,7 @@ begin
         LNNF := IntToStr(Ide.nNF);
 
       lNumeroSerie1.Lines.Text := ACBrStr(
-        'NFC-e nº ' + LNNF + ' ' + sLineBreak +
+        LTituloDoc + LNNF + ' ' + sLineBreak +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' + sLineBreak +
         FormatDateTimeBr(Ide.dEmi) + sLineBreak +
         Via
@@ -432,7 +454,7 @@ begin
         LNNF := IntToStr(Ide.nNF);
 
       lNumeroSerie.Caption := ACBrStr(
-        'NFC-e nº ' + LNNF + ' ' +
+        LTituloDoc + LNNF + ' ' +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
         FormatDateTimeBr(Ide.dEmi)+ Via );
     end;
@@ -450,13 +472,21 @@ begin
 
     if (Ide.tpEmis = teNormal ) and (procNFe.cStat = 0) then
     begin
-      lChaveDeAcesso.Lines.Text := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
+      if (Ide.modelo = 55) then
+        lChaveDeAcesso.Lines.Text := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ')
+      else
+        lChaveDeAcesso.Lines.Text := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
       lChaveDeAcesso.Font.Color := clRed;
     end;
 
     lCancelada.Visible := ACBrNFeDANFCeFortes.Cancelada;
     if ACBrNFeDANFCeFortes.Cancelada then
-      lCancelada.Caption := ACBrStr('NFC-e CANCELADA');
+    begin
+      if (Ide.modelo = 55) then
+        lCancelada.Caption := ACBrStr('NF-e CANCELADA')
+      else
+        lCancelada.Caption := ACBrStr('NFC-e CANCELADA');
+    end;
   end;
 end;
 
@@ -1118,14 +1148,22 @@ procedure TACBrNFeDANFCeFortesFr.rlbTotalAPagarBeforePrint(Sender: TObject;
 var
   vAcrescimos: Double;
 begin
-  with ACBrNFeDANFCeFortes.FpNFe.Total do
+  if (ACBrNFeDANFCeFortes.FpNFe.Ide.modelo = 55) then
   begin
-    vAcrescimos := ICMSTot.vFrete + ICMSTot.vSeg + ICMSTot.vOutro;
-  end;
-  PrintIt:= (vAcrescimos > 0) or (ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0);
+    PrintIt := True;
+    lTotalAPagar.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.vNFTot);
+  end
+  else
+  begin
+    with ACBrNFeDANFCeFortes.FpNFe.Total do
+    begin
+      vAcrescimos := ICMSTot.vFrete + ICMSTot.vSeg + ICMSTot.vOutro;
+    end;
+    PrintIt:= (vAcrescimos > 0) or (ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0);
 
-  if PrintIt then
-    lTotalAPagar.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vNF);
+    if PrintIt then
+      lTotalAPagar.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vNF);
+  end;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbLegendaBeforePrint(Sender: TObject;
@@ -1208,6 +1246,11 @@ procedure TACBrNFeDANFCeFortesFr.rlbsCabecalhoDataRecord(Sender: TObject;
 begin
   Eof := (RecNo > 1);
   RecordAction := raUseIt;
+
+  if (ACBrNFeDANFCeFortes.FpNFe.Ide.modelo = 55) then
+    lMsgDANFCe.Caption := ACBrStr('DANFE Simplificado Tipo 2')
+  else
+    lMsgDANFCe.Caption := ACBrStr('DOCUMENTO AUXILIAR DA NOTA FISCAL DE CONSUMIDOR ELETRÔNICA');
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTotalBeforePrint(Sender: TObject;
@@ -1252,6 +1295,34 @@ begin
   PrintIt := (vOutros > 0);
   if PrintIt then
     lTotalAcrescimo.Caption := '+' + FormatFloatBr(vOutros);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbTotalCBSBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := (ACBrNFeDANFCeFortes.FpNFe.Ide.modelo = 55);
+
+  if PrintIt then
+    lTotalCBS.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.IBSCBSTot.gCBS.vCBS);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbTotalIBSBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := (ACBrNFeDANFCeFortes.FpNFe.Ide.modelo = 55);
+
+  if PrintIt then
+    lTotalIBS.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.IBSCBSTot.gIBS.vIBS);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbTotalISBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := (ACBrNFeDANFCeFortes.FpNFe.Ide.modelo = 55) and
+             (ACBrNFeDANFCeFortes.FpNFe.Total.ISTot.vIS > 0);
+
+  if PrintIt then
+    lTotalIS.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ISTot.vIS);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;
